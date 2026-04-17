@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.git/
+.gitignore
+.editorconfig
+README.md
+dockerfile
+nginx.conf
+.vscode/
+.claude/
+.cursor/
+.gemini/
+.junie/
+.windsurf/
