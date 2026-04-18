@@ -5,4 +5,8 @@ export const routes: Routes = [
     path: 'admin',
     loadComponent: () => import('./pages/admin/admin.component').then((c) => c.AdminComponent),
   },
+  {
+    path: 'stats/user',
+    loadComponent: () => import('./pages/statistics-view/statistics.component').then((c) => c.StatsComponent),
+  },
 ];

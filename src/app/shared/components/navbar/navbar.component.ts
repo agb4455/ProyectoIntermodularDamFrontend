@@ -18,8 +18,9 @@ export class NavbarComponent {
   // Estado del dropdown — cerrado por defecto
   protected readonly dropdownOpen = signal<boolean>(false);
 
-  /** Alterna el dropdown al pulsar el icono de usuario */
+  /** Alterna el dropdown al pulsar el icono de usuario - solo si hay sesión */
   protected toggleDropdown(): void {
+    if (!this.authService.isLoggedIn()) return;
     this.dropdownOpen.update(open => !open);
   }
 
