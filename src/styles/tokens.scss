@@ -1,0 +1,139 @@
+// ============================================================
+// DARK THEME (default)
+// ============================================================
+:root,
+[data-theme="dark"] {
+
+  // --- Backgrounds ---
+  --color-bg-primary:   #0d0c18;   // void — deepest background
+  --color-bg-secondary: #1a1830;   // dark navy — page surface
+  --color-bg-tertiary:  #141220;   // between primary and secondary
+  --color-bg-card:      #211f38;   // card / panel surface
+  --color-bg-modal:     #252342;   // modal surface
+  --color-bg-overlay:   rgba(0, 0, 0, 0.72); // scrim behind modals
+
+  // --- Text ---
+  --color-text-primary:   #e8e0d0; // parchment — main readable text
+  --color-text-secondary: #b8a898; // aged parchment — supporting text
+  --color-text-disabled:  #5a5068; // muted — disabled states
+  --color-text-inverse:   #0d0c18; // text on gold/light backgrounds
+
+  // --- Gold Accent (primary brand color) ---
+  --color-gold:        #c9a84c;               // main gold
+  --color-gold-light:  #e8c96a;               // hover / highlight gold
+  --color-gold-dark:   #9a7a30;               // pressed / active gold
+  --color-gold-muted:  rgba(201, 168, 76, 0.15); // subtle gold tint (backgrounds)
+
+  // --- Borders ---
+  --color-border-strong:  #c9a84c;            // gold border — emphasis, active states
+  --color-border-default: #3a3555;            // subtle border — cards, inputs
+  --color-border-faint:   #252342;            // barely visible — dividers
+
+  // --- Semantic ---
+  --color-success:     #2d8a4e;
+  --color-success-bg:  rgba(45, 138, 78, 0.15);
+  --color-error:       #c0392b;
+  --color-error-bg:    rgba(192, 57, 43, 0.15);
+  --color-warning:     #c9a84c;               // gold doubles as warning
+  --color-warning-bg:  rgba(201, 168, 76, 0.15);
+  --color-info:        #4a90d9;
+  --color-info-bg:     rgba(74, 144, 217, 0.15);
+
+  // --- Phase indicators ---
+  --color-phase-preparation: #4a90d9; // blue — calm, no combat
+  --color-phase-war:         #c0392b; // red — active combat
+  --color-phase-end:         #c9a84c; // gold — endgame
+
+  // --- Clan colors ---
+  --color-clan-fury:   #c0392b; // FURY   — Berserkers  (blood red)
+  --color-clan-divine: #4a90d9; // DIVINE — Valkirias   (sky blue)
+  --color-clan-iron:   #8a9ba8; // IRON   — Jarls       (steel grey)
+  --color-clan-song:   #8b5cf6; // SONG   — Skalds      (violet)
+  --color-clan-rune:   #10b981; // RUNE   — Seidr       (emerald)
+  --color-clan-death:  #7c6b9e; // DEATH  — Draugr      (dark violet)
+
+  // --- Progress bars ---
+  --color-progress-track:    #3a3555;
+  --color-progress-health:   #2d8a4e; // green — troop health
+  --color-progress-training: #4a90d9; // blue  — training queue
+  --color-progress-research: #8b5cf6; // violet — research progress
+
+  // --- Scrollbars (webkit) ---
+  --color-scrollbar-track:  #1a1830;
+  --color-scrollbar-thumb:  #3a3555;
+}
+
+// ============================================================
+// LIGHT THEME
+// ============================================================
+
+@mixin light-theme-vars {
+
+  // --- Backgrounds ---
+  --color-bg-primary:   #f8f2e8;   // warm parchment — deepest background
+  --color-bg-secondary: #ede4d5;   // aged parchment — page surface
+  --color-bg-tertiary:  #e4d8c6;   // darker parchment
+  --color-bg-card:      #fdf8f0;   // cream — card / panel surface
+  --color-bg-modal:     #fff9f0;   // ivory — modal surface
+  --color-bg-overlay:   rgba(30, 20, 10, 0.50);
+
+  // --- Text ---
+  --color-text-primary:   #1a1410; // dark charcoal
+  --color-text-secondary: #4a3f35; // warm brown
+  --color-text-disabled:  #9a8878;
+  --color-text-inverse:   #f8f2e8; // text on dark/gold backgrounds
+
+  // --- Gold Accent ---
+  --color-gold:        #8a6020;               // darkened gold for legibility on light bg
+  --color-gold-light:  #c9a84c;               // hover
+  --color-gold-dark:   #5a3a10;               // pressed
+  --color-gold-muted:  rgba(138, 96, 32, 0.12);
+
+  // --- Borders ---
+  --color-border-strong:  #8a6020;
+  --color-border-default: #c8b898;
+  --color-border-faint:   #ddd0bc;
+
+  // --- Semantic ---
+  --color-success:     #1e6b35;
+  --color-success-bg:  rgba(30, 107, 53, 0.12);
+  --color-error:       #8b1e1e;
+  --color-error-bg:    rgba(139, 30, 30, 0.12);
+  --color-warning:     #8a6020;
+  --color-warning-bg:  rgba(138, 96, 32, 0.12);
+  --color-info:        #1a5fa0;
+  --color-info-bg:     rgba(26, 95, 160, 0.12);
+
+  // --- Phase indicators ---
+  --color-phase-preparation: #1a5fa0;
+  --color-phase-war:         #8b1e1e;
+  --color-phase-end:         #8a6020;
+
+  // --- Clan colors ---
+  --color-clan-fury:   #8b1e1e;
+  --color-clan-divine: #1a5fa0;
+  --color-clan-iron:   #4a5e6e;
+  --color-clan-song:   #5b34d6;
+  --color-clan-rune:   #0a7a54;
+  --color-clan-death:  #5a4880;
+
+  // --- Progress bars ---
+  --color-progress-track:    #c8b898;
+  --color-progress-health:   #1e6b35;
+  --color-progress-training: #1a5fa0;
+  --color-progress-research: #5b34d6;
+
+  // --- Scrollbars ---
+  --color-scrollbar-track:  #ede4d5;
+  --color-scrollbar-thumb:  #c8b898;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    @include light-theme-vars;
+  }
+}
+
+[data-theme="light"] {
+  @include light-theme-vars;
+}

@@ -1,0 +1,109 @@
+<div class="admin-dashboard">
+  <!-- LEFT PANEL: TOTALS -->
+  <aside class="sidebar">
+    <h2>Administración</h2>
+    
+    <div class="global-stats">
+      <div class="stat-card">
+        <div class="stat-label">Usuarios Totales</div>
+        <div class="stat-value">{{ globalStats().totalUsers }}</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-label">Partidas Totales</div>
+        <div class="stat-value">{{ globalStats().totalGames }}</div>
+      </div>
+      
+      <div class="stat-card danger">
+        <div class="stat-label">Usuarios Baneados</div>
+        <div class="stat-value">{{ globalStats().bannedUsers }}</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    
+    <!-- MONITORING / GRAPH AREA -->
+    <section class="metrics-container">
+      <h3>Monitoreo en Tiempo Real</h3>
+      <div class="metrics-grid">
+        
+        <div class="metric-box">
+          <div class="metric-value highlight">{{ monitoringMetrics().activeUsers }}</div>
+          <div class="metric-label">Usuarios Activos</div>
+        </div>
+
+        <div class="metric-box">
+          <div class="metric-value highlight">{{ monitoringMetrics().activeGames }}</div>
+          <div class="metric-label">Partidas Activas</div>
+        </div>
+
+        <div class="metric-box">
+          <div class="metric-value">{{ monitoringMetrics().finishedGamesLastHour }}</div>
+          <div class="metric-label">Partidas Terminadas<br>(Última hora)</div>
+        </div>
+
+        <div class="metric-box load">
+          <div class="metric-value warning">{{ monitoringMetrics().serverLoad }}<span class="unit">%</span></div>
+          <div class="metric-label">Carga del Servidor</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- BANS SECTION -->
+    <section class="bans-container">
+      <div class="bans-header">
+        <h2>Gestión de Baneos</h2>
+      </div>
+
+      <!-- Tabla de baneos activos sólamente -->
+      <div class="table-scroll-wrapper">
+        <table class="bans-table">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Motivo</th>
+              <th>Expira en</th>
+              <th>Estado</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (ban of bans(); track ban.id) {
+              <tr>
+                <td><strong>{{ ban.user }}</strong></td>
+                <td>{{ ban.reason }}</td>
+                <td>{{ ban.expiresIn }}</td>
+                <td><span class="badge badge-active">Activo</span></td>
+                <td><button class="btn" (click)="unban(ban.id)">LEVANTAR BAN</button></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Buscador para añadir ban --- al pie de la tarjeta, ancho completo -->
+      <div class="bans-footer">
+        <div class="search-wrapper">
+          <input type="text" class="search-input" placeholder="Buscar usuario para banear..." [value]="searchQuery()" (input)="updateSearch($event)">
+          @if (searchResults().length > 0) {
+            <div class="search-dropdown">
+              @for (user of searchResults(); track user.username) {
+                <div class="dropdown-item">
+                  <div class="user-info">
+                    <span class="username">{{ user.username }}</span>
+                    <span class="status">{{ user.status }}</span>
+                  </div>
+                  <button class="btn btn-danger solid" (click)="banUser(user.username)">BANEAR</button>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>

@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+@use 'styles/tokens';
+
+// Reset global — elimina márgenes del navegador y evita scroll externo
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: 'Lato', 'Inter', sans-serif;
+}
+
+// El elemento raíz de Angular también debe ocupar el 100% del alto disponible
+app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
