@@ -129,7 +129,7 @@
 
             &:hover {
               background-color: var(--color-error-bg);
-              color: #ff6b6b;
+              color: var(--color-error);
               border-left: 3px solid var(--color-error);
             }
           }

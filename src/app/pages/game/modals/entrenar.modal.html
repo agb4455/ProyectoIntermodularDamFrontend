@@ -1,0 +1,63 @@
+<!-- Modal Entrenar Tropas -->
+<div class="modal-overlay" (click)="onCloseClick()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <!-- Header -->
+    <div class="modal-header">
+      <div class="header-main">
+        <h2 class="modal-title">ENTRENAR</h2>
+        <div class="currency-badge">
+          <span class="currency-label">Ptos.</span>
+          <span class="currency-value gold">{{ gold() }}</span>
+          <span class="currency-icon">💰</span>
+        </div>
+      </div>
+      <button class="btn-close" (click)="onCloseClick()" title="Cerrar">✕</button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+      <div class="training-list">
+        @for (option of options(); track option.type) {
+          <div class="training-row" [class.affordable]="canAfford(option)">
+            <!-- Icono y Nombre -->
+            <div class="troop-info">
+              <div class="troop-icon">{{ option.icon }}</div>
+              <div class="troop-details">
+                <span class="troop-name">{{ option.name }}</span>
+                @if (option.description) {
+                  <span class="troop-desc">{{ option.description }}</span>
+                }
+              </div>
+            </div>
+
+            <!-- Precio y Acción -->
+            <div class="troop-actions">
+              <div class="cost-tag">
+                <span class="cost-value">{{ option.cost }}</span>
+                <span class="cost-icon">💰</span>
+              </div>
+              <button
+                class="btn-train"
+                [disabled]="!canAfford(option)"
+                (click)="onTrainClick(option)">
+                ENTRENAR
+              </button>
+            </div>
+          </div>
+        } @empty {
+          <div class="empty-message">
+            No hay tropas disponibles para entrenar en este momento.
+            ¡Mejora tu árbol tecnológico!
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+      <button class="btn-close-modal" (click)="onCloseClick()">
+        CERRAR
+      </button>
+    </div>
+  </div>
+</div>

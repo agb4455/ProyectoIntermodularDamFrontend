@@ -1,0 +1,183 @@
+<div class="modal-backdrop" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <!-- Cabecera del Modal -->
+    <header class="modal-header">
+      <div class="header-title">
+        <span class="header-icon">📜</span>
+        <h2>LEYES DE MIDGARD</h2>
+      </div>
+      <button class="btn-close" (click)="onClose()" title="Cerrar Reglas">✕</button>
+    </header>
+
+    <!-- Contenido de las Reglas -->
+    <div class="rules-container">
+      
+      <!-- Objetivo -->
+      <section class="rules-section">
+        <h3><span class="icon">🎯</span> OBJETIVO DEL JUEGO</h3>
+        <p>Tu misión es simple pero brutal: **sé el último clan en pie**. Destruye las capitales enemigas antes de que ellos destruyan la tuya. La gloria eterna te espera en el Valhalla, pero solo los vivos gobiernan el mundo.</p>
+      </section>
+
+      <!-- Fases -->
+      <section class="rules-section">
+        <h3><span class="icon">⏳</span> FASES DE LA LUCHA</h3>
+        <div class="phase-list">
+          <div class="phase-item preparation">
+            <span class="phase-tag">PREPARACIÓN (5 min)</span>
+            <p>Los dioses bendicen el campo con paz. No se permiten ataques. Aprovecha para entrenar tus primeras tropas y planificar tu estrategia.</p>
+          </div>
+          <div class="phase-item war">
+            <span class="phase-tag">GUERRA</span>
+            <p>Se abren las puertas del conflicto. Los recursos se entregan cada **30-60 segundos**. Es el momento de lanzar tus ataques.</p>
+          </div>
+          <div class="phase-item end">
+            <span class="phase-tag">EL FINAL (Showdown)</span>
+            <p>Cuando solo quedan 2 clanes, la victoria se decide. Sin piedad, solo gloria.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recursos -->
+      <section class="rules-section">
+        <h3><span class="icon">💰</span> RECURSOS Y ECONOMÍA</h3>
+        <div class="resources-grid">
+          <div class="resource-card gold">
+            <span class="res-icon">🪙</span>
+            <h4>Créditos Económicos</h4>
+            <p>Se obtienen automáticamente durante la Guerra. Úsalos para **entrenar tropas** en tu capital.</p>
+          </div>
+          <div class="resource-card research">
+            <span class="res-icon">🧪</span>
+            <h4>Puntos de Investigación</h4>
+            <p>Se ganan en el campo de batalla. **Cuanto más daño inflijas**, más rápido podrás avanzar en tu tecnología.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Clanes -->
+      <section class="rules-section">
+        <h3><span class="icon">⚔️</span> EL CÍRCULO DEL DESTINO (Ventajas)</h3>
+        <p>Ciertos clanes tienen una ventaja natural sobre otros. Atacar a un clan vulnerable infligirá un **1.5x de daño extra**.</p>
+        
+        <div class="advantage-graph-container">
+          <!-- Grafo SVG de Ventajas -->
+          <svg viewBox="0 0 400 340" class="advantage-svg">
+            <!-- Definiciones de marcadores (flechas) -->
+            <defs>
+              <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orientation="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="var(--color-gold)" />
+              </marker>
+            </defs>
+
+            <!-- Conexiones (Flechas) -->
+            <!-- Fury -> Song -->
+            <path d="M 285 65 L 340 145" class="arrow-path" marker-end="url(#arrowhead)" />
+            <!-- Song -> Death -->
+            <path d="M 340 195 L 285 275" class="arrow-path" marker-end="url(#arrowhead)" />
+            <!-- Death -> Divine -->
+            <path d="M 245 305 L 155 305" class="arrow-path" marker-end="url(#arrowhead)" />
+            <!-- Divine -> Rune -->
+            <path d="M 115 275 L 60 195" class="arrow-path" marker-end="url(#arrowhead)" />
+            <!-- Rune -> Iron -->
+            <path d="M 60 145 L 115 65" class="arrow-path" marker-end="url(#arrowhead)" />
+            <!-- Iron -> Fury -->
+            <path d="M 155 35 L 245 35" class="arrow-path" marker-end="url(#arrowhead)" />
+
+            <!-- Nodos de Clanes -->
+            <!-- Fury -->
+            <g class="node fury" transform="translate(300, 50)">
+              <circle r="35" class="node-bg" />
+              <text y="5" class="node-icon">🔴</text>
+              <text y="50" class="node-label">FURY</text>
+            </g>
+            <!-- Song -->
+            <g class="node song" transform="translate(350, 170)">
+              <circle r="35" class="node-bg" />
+              <text y="5" class="node-icon">🟣</text>
+              <text y="50" class="node-label">SONG</text>
+            </g>
+            <!-- Death -->
+            <g class="node death" transform="translate(300, 290)">
+              <circle r="35" class="node-bg" />
+              <text y="5" class="node-icon">💀</text>
+              <text y="50" class="node-label">DEATH</text>
+            </g>
+            <!-- Divine -->
+            <g class="node divine" transform="translate(100, 290)">
+              <circle r="35" class="node-bg" />
+              <text y="5" class="node-icon">🔵</text>
+              <text y="50" class="node-label">DIVINE</text>
+            </g>
+            <!-- Rune -->
+            <g class="node rune" transform="translate(50, 170)">
+              <circle r="35" class="node-bg" />
+              <text y="5" class="node-icon">🟢</text>
+              <text y="50" class="node-label">RUNE</text>
+            </g>
+            <!-- Iron -->
+            <g class="node iron" transform="translate(100, 50)">
+              <circle r="35" class="node-bg" />
+              <text y="5" class="node-icon">⚪</text>
+              <text y="50" class="node-label">IRON</text>
+            </g>
+
+            <!-- Centro Multiplicador -->
+            <g class="multiplier-tag" transform="translate(200, 170)">
+              <circle r="30" fill="var(--color-bg-modal)" stroke="var(--color-gold)" stroke-width="2" />
+              <text text-anchor="middle" dominant-baseline="central" fill="var(--color-gold)" font-weight="bold" font-size="14">1.5x</text>
+            </g>
+          </svg>
+        </div>
+
+        <ul class="clans-advantages-text">
+          <li><strong>Fury</strong> vence a <strong>Song</strong> (La furia acalla el canto)</li>
+          <li><strong>Song</strong> vence a <strong>Death</strong> (La armonía calma a los muertos)</li>
+          <li><strong>Death</strong> vence a <strong>Divine</strong> (La entropía consume la luz)</li>
+          <li><strong>Divine</strong> vence a <strong>Rune</strong> (El poder celestial sobre las runas)</li>
+          <li><strong>Rune</strong> vence a <strong>Iron</strong> (La magia corroe el acero)</li>
+          <li><strong>Iron</strong> vence a <strong>Fury</strong> (El blindaje resiste la rabia)</li>
+        </ul>
+      </section>
+
+      <!-- Resolución de Combate -->
+      <section class="rules-section">
+        <h3><span class="icon">🛡️</span> MECÁNICAS DE COMBATE</h3>
+        <div class="combat-mechanics-grid">
+          <div class="mechanic-card">
+            <h4>Daño Simultáneo</h4>
+            <p>Las batallas son brutales: ambos bandos se infligen daño al mismo tiempo basado en su poder total.</p>
+          </div>
+          <div class="mechanic-card">
+            <h4>Escudo de Tropas</h4>
+            <p>Las tropas en la capital protegen la estructura. La Capital solo recibe daño si todas sus tropas defensoras mueren.</p>
+          </div>
+          <div class="mechanic-card">
+            <h4>Bono de Defensa</h4>
+            <p>Cualquier clan que defienda su propia capital recibe un **+10% (1.1x)** de potencia defensiva automática.</p>
+          </div>
+          <div class="mechanic-card">
+            <h4>Supervivientes</h4>
+            <p>Si tus tropas sobreviven al intercambio, regresarán automáticamente a tu capital tras el ataque.</p>
+          </div>
+        </div>
+        
+        <div class="rule-tip">
+          <span class="tip-icon">💡</span>
+          <p><strong>Nota:</strong> Los multiplicadores (1.5x ataque / 1.1x defensa) solo aumentan el daño que haces, no tu supervivencia.</p>
+        </div>
+      </section>
+
+       <!-- Tecnología -->
+       <section class="rules-section">
+        <h3><span class="icon">⚡</span> ARBOL TECNOLÓGICO</h3>
+        <p>Existen **8 niveles de tecnología**. Cada uno desbloquea tipos de tropas más poderosas y eficientes. Invierte tus Puntos de Investigación con cabeza.</p>
+      </section>
+
+    </div>
+
+    <!-- Pie del Modal -->
+    <footer class="modal-footer">
+      <button class="btn-primary" (click)="onClose()">LO ENTIENDO</button>
+    </footer>
+  </div>
+</div>

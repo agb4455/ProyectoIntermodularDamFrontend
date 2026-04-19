@@ -1,6 +1,11 @@
-import { Component, ChangeDetectionStrategy, signal, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, computed, inject } from '@angular/core';
+import { ThemeService } from '../../core/theme/theme.service';
 import { AtacarModalComponent } from './modals/atacar.modal';
-import { Troop, EnemyTarget, ClanId, TroopType } from './modals/attack.types';
+import { VisualizarTropasModalComponent } from './modals/visualizar-tropas.modal';
+import { EntrenarModalComponent } from './modals/entrenar.modal';
+import { GameLogModalComponent } from './modals/game-log.modal';
+import { ReglasModalComponent } from './modals/reglas.modal';
+import { Troop, EnemyTarget, ClanId, TroopType, TrainableTroopOption, GameLogEntry } from './modals/attack.types';
 
 // Tipos del clan para tipado estricto
 type GamePhase = 'PREPARACIÓN' | 'GUERRA' | 'FIN';
@@ -23,7 +28,13 @@ interface ActiveAttack {
 @Component({
   selector: 'app-game-page',
   standalone: true,
-  imports: [AtacarModalComponent],
+  imports: [
+    AtacarModalComponent,
+    VisualizarTropasModalComponent,
+    EntrenarModalComponent,
+    GameLogModalComponent,
+    ReglasModalComponent
+  ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -50,13 +61,21 @@ export class GamePageComponent {
     { clan: 'death',  username: 'Death',  position: { x: 38, y: 56 }, health: { current: 2600, max: 3000 } },
   ]);
 
-  // --- Estado del modal de ataque ---
+  // --- Estado de los modales ---
   protected readonly showAtacarModal = signal(false);
+  protected readonly showVisualizarTropasModal = signal(false);
+  protected readonly showEntrenarModal = signal(false);
+  protected readonly showLogModal = signal(false);
+  protected readonly showReglasModal = signal(false);
+  protected readonly showDebugPanel = signal(false);
   protected readonly targetEnemy = signal<EnemyTarget | null>(null);
   protected readonly selectedTroopsForAttack = signal<string[]>([]);
 
   // --- Ataque activo (camino visual) ---
   protected readonly activeAttack = signal<ActiveAttack | null>(null);
+
+  // --- Log de la partida ---
+  protected readonly gameLogs = signal<GameLogEntry[]>([]);
 
   // --- Tropas disponibles (mock, vendrá del servidor) ---
   private readonly troopDeployTimeMs: Record<TroopType, number> = {
@@ -142,13 +161,88 @@ export class GamePageComponent {
     },
   ]);
 
-  // --- Acciones de los botones laterales (modales pendientes) ---
+  // --- Estado de entrenamiento secuencial ---
+  protected readonly trainingQueue = computed(() =>
+    this.availableTroops().filter(t => t.isTraining)
+  );
+
+  protected readonly activeTrainingTroop = computed(() =>
+    this.trainingQueue().length > 0 ? this.trainingQueue()[0] : null
+  );
+
+  protected readonly trainingProgress = computed(() => {
+    const troop = this.activeTrainingTroop();
+    return troop ? (troop.trainingProgress ?? 0) : 0;
+  });
+
+  // --- Opciones de entrenamiento (Mock, vendrá del middle server según tech tree) ---
+  protected readonly trainableTroopOptions = signal<TrainableTroopOption[]>([
+    {
+      type: TroopType.INFANTERIA,
+      name: 'Infantería',
+      cost: 50,
+      icon: '⚔️',
+      description: 'Guerreros básicos con hachas y escudos.'
+    },
+    {
+      type: TroopType.ARQUERIA,
+      name: 'Arquería',
+      cost: 75,
+      icon: '🏹',
+      description: 'Unidades a distancia para hostigar al enemigo.'
+    },
+    {
+      type: TroopType.CABALLERIA,
+      name: 'Caballería',
+      cost: 150,
+      icon: '🐴',
+      description: 'Unidades rápidas y poderosas montadas.'
+    }
+  ]);
+
+  // --- Acciones de los botones laterales ---
   protected openEntrenarTropas(): void {
-    // TODO: abrir modal EntrenarTropasModalComponent
+    this.showEntrenarModal.set(true);
+  }
+
+  protected closeEntrenarModal(): void {
+    this.showEntrenarModal.set(false);
+  }
+
+  protected onTrainTroop(type: TroopType): void {
+    const option = this.trainableTroopOptions().find(o => o.type === type);
+    if (!option || this.gold() < option.cost) return;
+
+    // Descontar oro (Mock)
+    this.gold.update(g => g - option.cost);
+
+    // Añadir tropa a la lista (Mock)
+    const newTroop: Troop = {
+      id: `troop-${Date.now()}`,
+      name: `${option.name} ${this.availableTroops().length + 1}`,
+      type: option.type,
+      clan: 'fury',
+      currentHealth: 100,
+      maxHealth: 100,
+      icon: option.icon,
+      cost: option.cost,
+      isTraining: true,
+      trainingProgress: 0, // Inicia en 0 (En cola si no es el primero)
+      deployed: false
+    };
+
+    this.availableTroops.update(ts => [...ts, newTroop]);
+
+    // Registrar en el log
+    this.addLogEntry(`ha entrenado ${option.name}`, 'train');
   }
 
   protected openTropas(): void {
-    // TODO: abrir modal TropasModalComponent
+    this.showVisualizarTropasModal.set(true);
+  }
+
+  protected closeVisualizarTropasModal(): void {
+    this.showVisualizarTropasModal.set(false);
   }
 
   protected openArbolTecnologico(): void {
@@ -156,12 +250,38 @@ export class GamePageComponent {
   }
 
   protected openLog(): void {
-    // TODO: abrir modal LogModalComponent
+    this.showLogModal.set(true);
+  }
+
+  protected closeLogModal(): void {
+    this.showLogModal.set(false);
+  }
+
+  /**
+   * Añade una entrada al log de la partida
+   */
+  private addLogEntry(action: string, type: GameLogEntry['type'], performer: string = this.username()): void {
+    const now = new Date();
+    const timestamp = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    
+    const newEntry: GameLogEntry = {
+      id: `log-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+      performer,
+      action,
+      timestamp,
+      type
+    };
+
+    this.gameLogs.update(logs => [newEntry, ...logs]); // Nuevo arriba
   }
 
   // --- Acciones de la barra superior ---
   protected openRules(): void {
-    // TODO: abrir modal de Reglas del juego
+    this.showReglasModal.set(true);
+  }
+
+  protected closeReglasModal(): void {
+    this.showReglasModal.set(false);
   }
 
   protected openAbandon(): void {
@@ -228,6 +348,11 @@ export class GamePageComponent {
       }, durationMs);
     }
     
+    // Registrar en el log
+    if (this.targetEnemy()) {
+      this.addLogEntry(`ha lanzado un ataque contra ${this.targetEnemy()?.username}`, 'attack');
+    }
+
     this.closeAtacarModal();
   }
 
@@ -258,5 +383,48 @@ export class GamePageComponent {
     const selectedTroops = this.availableTroops().filter((troop) => troopIds.includes(troop.id));
     const durations = selectedTroops.map((troop) => this.troopDeployTimeMs[troop.type as TroopType] ?? this.defaultDeployTimeMs);
     return durations.length > 0 ? Math.max(...durations) : this.defaultDeployTimeMs;
+  }
+
+  // --- MÉTODOS DE DEBUG (Solo para desarrollo) ---
+  protected toggleDebugPanel(): void {
+    this.showDebugPanel.update(v => !v);
+  }
+
+  protected debugAddGold(amount: number): void {
+    this.gold.update(g => g + amount);
+  }
+
+  protected debugTogglePhase(): void {
+    const phases: GamePhase[] = ['PREPARACIÓN', 'GUERRA', 'FIN'];
+    const current = this.currentPhase();
+    const nextIndex = (phases.indexOf(current) + 1) % phases.length;
+    this.currentPhase.set(phases[nextIndex]);
+  }
+
+  protected debugAddProgress(step: number): void {
+    const troop = this.activeTrainingTroop();
+    if (!troop) return;
+
+    const current = troop.trainingProgress ?? 0;
+    const next = Math.min(100, Math.max(0, current + step));
+
+    this.availableTroops.update(ts => ts.map(t =>
+      t.id === troop.id ? { ...t, trainingProgress: next } : t
+    ));
+  }
+
+  protected debugCompleteTraining(): void {
+    const troop = this.activeTrainingTroop();
+    if (troop) {
+      this.availableTroops.update(ts => ts.map(t =>
+        t.id === troop.id ? { ...t, isTraining: false, trainingProgress: 100 } : t
+      ));
+    }
+  }
+
+  protected readonly themeService = inject(ThemeService);
+
+  protected debugToggleTheme(): void {
+    this.themeService.toggle();
   }
 }

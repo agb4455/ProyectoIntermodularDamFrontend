@@ -1,6 +1,6 @@
 /**
- * Estilos del Modal de Ataque (AtacarModal)
- * Diseño tipo Forge of Empires con grid de tropas
+ * Estilos del Modal de Visualización de Tropas
+ * Basado en el diseño de AtacarModal (tipo Forge of Empires)
  */
 
 @use "../../../../styles/variables" as *;
@@ -21,12 +21,8 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .modal-content {
@@ -43,14 +39,8 @@
 }
 
 @keyframes slideIn {
-  from {
-    transform: scale(0.9) translateY(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
+  from { transform: scale(0.9) translateY(-20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
 }
 
 .modal-header {
@@ -103,11 +93,12 @@
 
 .troops-grid {
   display: grid;
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
   min-height: 100px;
   background: $color-overlay-strong;
-  padding: 12px;
-  border-radius: 6px;
+  padding: 16px;
+  border-radius: 8px;
   border: 1px dashed $color-gold;
 
   &.empty {
@@ -120,23 +111,63 @@
 .grid-cell {
   background: linear-gradient(135deg, $color-bg-card 0%, $color-bg-secondary 100%);
   border: 1px solid $color-border-default;
-  border-radius: 6px;
-  padding: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
+  border-radius: 8px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   aspect-ratio: 1;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
 
-  &:hover {
-    background: linear-gradient(135deg, $color-bg-tertiary 0%, $color-bg-card 100%);
-    border-color: $color-gold;
-    box-shadow: 0 0 10px $color-gold-muted;
-    transform: translateY(-2px);
+  &.read-only {
+    cursor: default;
   }
+
+  // --- ESTADOS DE ENTRENAMIENTO ---
+
+  // 1. LISTO (Normal)
+  &.ready {
+    border-color: $color-gold;
+  }
+
+  // 2. EN PROGRESO (Fondo como Progress Bar)
+  &.training {
+    border-color: var(--color-progress-training);
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: var(--progress, 0%);
+      background: var(--color-progress-training);
+      opacity: 0.25;
+      z-index: 0;
+      transition: height 0.5s ease-in-out;
+    }
+  }
+
+  // 3. EN COLA (Deshabilitado)
+  &.queued {
+    opacity: 0.5;
+    filter: grayscale(0.8);
+    border-style: dashed;
+    border-color: $color-border-default;
+  }
+}
+
+.cell-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
 }
 
 .troop-icon {
@@ -160,6 +191,35 @@
   transition: width 0.2s;
 }
 
+// Badges de estado
+.status-badge {
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+
+  &.status-ready {
+    background: $color-success-bg;
+    color: $color-success;
+    border: 1px solid $color-success;
+  }
+
+  &.status-training {
+    background: $color-info-bg;
+    color: $color-progress-training;
+    border: 1px solid $color-progress-training;
+  }
+
+  &.status-queued {
+    background: $color-bg-tertiary;
+    color: $color-text-secondary;
+    border: 1px solid $color-border-default;
+  }
+}
+
 .health-text {
   font-size: 10px;
   color: $color-text-secondary;
@@ -176,74 +236,34 @@
   padding: 20px;
 }
 
-.add-troop-section {
-  display: flex;
-  justify-content: center;
-}
-
-.btn-add-troop {
-  background: linear-gradient(135deg, $color-gold 0%, $color-gold-dark 100%);
-  border: none;
-  border-radius: 8px;
-  width: 48px;
-  height: 48px;
-  font-size: 24px;
-  color: $color-text-inverse;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 4px 12px $color-gold-muted;
-
-  &:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px $color-gold-muted;
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-
-  .plus-icon {
-    display: block;
-    line-height: 1;
-  }
-}
-
 .modal-footer {
   padding: 16px 20px;
   border-top: 1px solid $color-gold;
   background: $color-gold-muted;
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
 }
 
-.btn-attack {
-  background: linear-gradient(135deg, $color-error 0%, color-mix(in srgb, $color-error, black 20%) 100%);
-  border: none;
+.btn-close-modal {
+  background: linear-gradient(135deg, $color-bg-tertiary 0%, $color-bg-primary 100%);
+  border: 1px solid $color-border-default;
   border-radius: 6px;
   padding: 10px 24px;
-  color: $color-text-inverse;
+  color: $color-text-primary;
   font-weight: bold;
   font-size: 14px;
   cursor: pointer;
   transition: all 0.2s;
   text-transform: uppercase;
   letter-spacing: 1px;
-  box-shadow: 0 4px 12px $color-error-bg;
 
-  &:hover:not(:disabled) {
-    filter: brightness(1.1);
-    box-shadow: 0 6px 16px $color-error-bg;
+  &:hover {
+    background: $color-bg-card;
+    border-color: $color-gold;
     transform: translateY(-2px);
   }
 
-  &:active:not(:disabled) {
+  &:active {
     transform: translateY(0);
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
   }
 }

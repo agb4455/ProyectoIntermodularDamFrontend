@@ -1,3 +1,5 @@
+@use "../../../styles/variables" as *;
+
 // Componente raíz: ocupa toda la pantalla sin navbar
 :host {
   display: flex;
@@ -92,21 +94,21 @@
   padding: 8px 24px;
   border-radius: 12px;
 
-  // Color dinámico según fase (se maneja via datos, aquí el default)
+  // Color dinámico según fase
   color: var(--color-phase-preparation);
   border: 2px solid var(--color-phase-preparation);
-  box-shadow: 0 0 12px rgba(74, 144, 217, 0.15);
+  box-shadow: 0 0 12px var(--color-info-bg);
 
   &[data-phase="GUERRA"] {
     color: var(--color-phase-war);
     border-color: var(--color-phase-war);
-    box-shadow: 0 0 12px rgba(192, 57, 43, 0.2);
+    box-shadow: 0 0 12px var(--color-error-bg);
   }
 
   &[data-phase="FIN"] {
     color: var(--color-phase-end);
     border-color: var(--color-phase-end);
-    box-shadow: 0 0 12px rgba(201, 168, 76, 0.2);
+    box-shadow: 0 0 12px var(--color-warning-bg);
   }
 }
 
@@ -151,7 +153,7 @@
 
   &:hover {
     background-color: var(--color-error);
-    color: white;
+    color: var(--color-text-inverse);
   }
 }
 
@@ -169,10 +171,10 @@
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(33, 31, 56, 0.7);
+  background-color: var(--color-bg-glass);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(201, 168, 76, 0.4);
+  border: 1px solid var(--color-gold-muted);
   border-radius: 12px;
   padding: 10px 20px;
   display: flex;
@@ -181,13 +183,13 @@
   font-size: 0.9rem;
   color: var(--color-text-secondary);
   z-index: 20;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 16px $color-overlay-strong;
 }
 
 .stats-divider {
   width: 1px;
   height: 36px;
-  background-color: rgba(201, 168, 76, 0.3);
+  background-color: var(--color-border-faint);
 }
 
 .stat-health-block {
@@ -265,16 +267,16 @@
   color: var(--color-text-primary);
   cursor: pointer;
   pointer-events: auto;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 15px $color-overlay-strong;
   transition: all 0.2s ease-out;
-  text-shadow: 1px 1px 3px black;
+  text-shadow: 1px 1px 3px $color-overlay-strong;
   font-size: 0.85rem;
   text-transform: uppercase;
   transform: translate(-50%, -50%); // Centra el nodo exactamente en su coordenada %
 
   &:hover {
     transform: translate(-50%, -50%) scale(1.15);
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 25px $color-bg-glass;
     z-index: 5;
   }
 
@@ -286,26 +288,26 @@
     width: 48px;
     height: 5px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.15);
+    background: $color-overlay-soft;
     overflow: hidden;
-    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 4px $color-overlay-soft;
   }
 
   .player-health-fill {
     height: 100%;
     border-radius: 999px;
-    background: linear-gradient(90deg, var(--color-error), #f59e0b);
+    background: linear-gradient(90deg, var(--color-error), var(--color-progress-health-warning));
     transition: width 0.25s ease;
   }
 }
 
 // Posiciones por continente
-.node-divine { top: 26%; left: 23%; background-color: rgba(74, 144, 217, 0.5);  border: 2px solid var(--color-clan-divine); } // Niflheim
-.node-iron   { top: 17%; left: 66%; background-color: rgba(138, 155, 168, 0.5); border: 2px solid var(--color-clan-iron);   } // Jötunheim
-.node-song   { top: 78%; left: 22%; background-color: rgba(139, 92, 246, 0.5);  border: 2px solid var(--color-clan-song);   } // Muspelheim
-.node-fury   { top: 51%; left: 71%; background-color: rgba(192, 57, 43, 0.5);   border: 2px solid var(--color-clan-fury);   } // Midgard
-.node-rune   { top: 81%; left: 77%; background-color: rgba(16, 185, 129, 0.5);  border: 2px solid var(--color-clan-rune);   } // Vanaheim
-.node-death  { top: 56%; left: 38%; background-color: rgba(124, 107, 158, 0.5); border: 2px solid var(--color-clan-death);  } // Åsgard (centro)
+.node-divine { top: 26%; left: 23%; background-color: color-mix(in srgb, var(--color-clan-divine), transparent 50%);  border: 2px solid var(--color-clan-divine); } // Niflheim
+.node-iron   { top: 17%; left: 66%; background-color: color-mix(in srgb, var(--color-clan-iron), transparent 50%); border: 2px solid var(--color-clan-iron);   } // Jötunheim
+.node-song   { top: 78%; left: 22%; background-color: color-mix(in srgb, var(--color-clan-song), transparent 50%);  border: 2px solid var(--color-clan-song);   } // Muspelheim
+.node-fury   { top: 51%; left: 71%; background-color: color-mix(in srgb, var(--color-clan-fury), transparent 50%);   border: 2px solid var(--color-clan-fury);   } // Midgard
+.node-rune   { top: 81%; left: 77%; background-color: color-mix(in srgb, var(--color-clan-rune), transparent 50%);  border: 2px solid var(--color-clan-rune);   } // Vanaheim
+.node-death  { top: 56%; left: 38%; background-color: color-mix(in srgb, var(--color-clan-death), transparent 50%); border: 2px solid var(--color-clan-death);  } // Åsgard (centro)
 
 // ─── FLOATING ACTION BUTTONS (Right) ─────────────────────────
 .actions-overlay {
@@ -320,11 +322,11 @@
 }
 
 .action-btn {
-  background-color: rgba(33, 31, 56, 0.7);
+  background-color: var(--color-bg-glass);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   color: var(--color-gold-light);
-  border: 2px solid rgba(201, 168, 76, 0.4);
+  border: 2px solid var(--color-gold-muted);
   width: 56px;
   height: 56px;
   border-radius: 14px;
@@ -334,12 +336,34 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+
+  // Llenado de progreso de entrenamiento
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--progress, 0%);
+    background: var(--color-progress-training);
+    opacity: 0.25;
+    z-index: 0;
+    transition: height 0.3s ease-in-out;
+  }
+
+  // Asegurar que el icono esté por encima
+  svg {
+    position: relative;
+    z-index: 1;
+  }
 
   &:hover {
     border-color: var(--color-gold);
     background-color: rgba(201, 168, 76, 0.15);
     transform: scale(1.1) translateY(-2px);
-    color: white;
+    color: var(--color-gold-light);
   }
 }
 
@@ -380,7 +404,7 @@
 }
 
 .attack-avatar-ring {
-  fill: rgba(255, 255, 255, 0.18);
+  fill: $color-overlay-soft;
   stroke: var(--color-gold);
   stroke-width: 0.3;
   filter: drop-shadow(0 0 1.2px rgba(255, 223, 112, 0.5));
@@ -391,5 +415,126 @@
   font-size: 3px;
   fill: var(--color-gold);
   font-weight: 800;
-  text-shadow: 0 0 1px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 0 1px $color-overlay-strong;
+}
+
+// ─── DEBUG PANEL ─────────────────────────────────────────────
+.debug-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 9999;
+}
+
+.debug-trigger {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: rotate(45deg) scale(1.1);
+  }
+}
+
+.debug-panel {
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  width: 250px;
+  background: linear-gradient(135deg, $color-bg-modal 0%, $color-bg-primary 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--color-gold);
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 10px 30px var(--color-bg-overlay);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  animation: slideUp 0.2s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.debug-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  font-size: 0.8rem;
+  color: var(--color-gold);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.3);
+  padding-bottom: 5px;
+}
+
+.btn-close-debug {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  &:hover { color: var(--color-error); }
+}
+
+.debug-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+  }
+}
+
+.debug-row {
+  display: flex;
+  gap: 5px;
+
+  button {
+    flex: 1;
+    padding: 5px;
+    font-size: 0.75rem;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-default);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:hover { background: var(--color-bg-tertiary); border-color: var(--color-gold); }
+  }
+}
+
+.btn-full {
+  width: 100%;
+  padding: 8px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  cursor: pointer;
+  border-radius: 4px;
+
+  &:hover { background: var(--color-gold); color: var(--color-text-inverse); }
+
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.btn-success {
+  border-color: var(--color-success);
+  color: var(--color-success);
+  &:hover { background: var(--color-success); color: var(--color-text-inverse); }
 }

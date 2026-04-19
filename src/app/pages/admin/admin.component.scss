@@ -269,10 +269,11 @@
     
     &.solid {
       background-color: var(--color-error);
-      color: #fff;
+      color: var(--color-text-inverse);
       
       &:hover {
-        background-color: #a02d22;
+        background-color: var(--color-error);
+        filter: brightness(0.9);
       }
     }
   }

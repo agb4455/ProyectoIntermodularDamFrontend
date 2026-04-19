@@ -47,3 +47,21 @@ export interface TroopGridCell {
   position: number; // Posición en la grilla (0-N)
   troop: Troop; // Datos completos de la tropa
 }
+
+// Opción para el modal de entrenamiento
+export interface TrainableTroopOption {
+  type: TroopType;
+  name: string;
+  cost: number;
+  icon: string;
+  description?: string;
+}
+
+// Registro de log global
+export interface GameLogEntry {
+  id: string;
+  performer: string;  // Nombre del jugador
+  action: string;     // Descripción (ej: "ha entrenado Infantería")
+  timestamp: string;  // Hora formateada (ej: "18:45")
+  type: 'attack' | 'train' | 'research' | 'system';
+}

@@ -47,7 +47,14 @@ $color-clan-rune:   var(--color-clan-rune);
 $color-clan-death:  var(--color-clan-death);
 
 // Progress
-$color-progress-track:    var(--color-progress-track);
-$color-progress-health:   var(--color-progress-health);
-$color-progress-training: var(--color-progress-training);
-$color-progress-research: var(--color-progress-research);
+$color-progress-track:          var(--color-progress-track);
+$color-progress-health:         var(--color-progress-health);
+$color-progress-health-warning: var(--color-progress-health-warning);
+$color-progress-training:       var(--color-progress-training);
+$color-progress-research:       var(--color-progress-research);
+
+// Glass & Effects
+$color-bg-glass:      var(--color-bg-glass);
+$color-bg-glass-rich: var(--color-bg-glass-rich);
+$color-overlay-soft:  var(--color-overlay-soft);
+$color-overlay-strong: var(--color-overlay-strong);

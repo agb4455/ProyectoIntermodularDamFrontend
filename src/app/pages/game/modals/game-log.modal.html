@@ -1,0 +1,39 @@
+<div class="modal-backdrop" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <!-- Cabecera del Modal -->
+    <header class="modal-header">
+      <div class="header-title">
+        <span class="header-icon">📜</span>
+        <h2>LOG DE BATALLA GLOBAL</h2>
+      </div>
+      <button class="btn-close" (click)="onClose()" title="Cerrar Log">✕</button>
+    </header>
+
+    <!-- Lista de Logs -->
+    <div class="logs-container">
+      @if (logs().length === 0) {
+        <div class="empty-logs">
+          <p>No hay eventos registrados en este momento.</p>
+        </div>
+      } @else {
+        <div class="logs-list">
+          @for (log of logs(); track log.id) {
+            <div class="log-entry" [attr.data-type]="log.type">
+              <div class="log-time">{{ log.timestamp }}</div>
+              <div class="log-icon">{{ getLogIcon(log.type) }}</div>
+              <div class="log-message">
+                <span class="performer">[{{ log.performer }}]</span>
+                <span class="action">{{ log.action }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Pie del Modal -->
+    <footer class="modal-footer">
+      <button class="btn-secondary" (click)="onClose()">CERRAR</button>
+    </footer>
+  </div>
+</div>

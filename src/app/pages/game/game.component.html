@@ -139,7 +139,11 @@
     </button>
 
     <!-- Ver Tropas -->
-    <button class="action-btn" title="Ver Tropas" (click)="openTropas()">
+    <button
+      class="action-btn"
+      title="Ver Tropas"
+      (click)="openTropas()"
+      [style.--progress]="trainingProgress() + '%'">
       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -183,3 +187,89 @@
     (launchAttack)="onLaunchAttack($event)">
   </app-atacar-modal>
 }
+
+<!-- Modal de Visualización de Tropas -->
+@if (showVisualizarTropasModal()) {
+  <app-visualizar-tropas-modal
+    [title]="'TROPAS EN TERRITORIO'"
+    [troops]="availableTroops()"
+    (closeModal)="closeVisualizarTropasModal()">
+  </app-visualizar-tropas-modal>
+}
+
+<!-- Modal de Entrenamiento -->
+@if (showEntrenarModal()) {
+  <app-entrenar-modal
+    [gold]="gold()"
+    [options]="trainableTroopOptions()"
+    (closeModal)="closeEntrenarModal()"
+    (train)="onTrainTroop($event)">
+  </app-entrenar-modal>
+}
+
+<!-- Modal de Log Global -->
+@if (showLogModal()) {
+  <app-game-log-modal
+    [logs]="gameLogs()"
+    (closeModal)="closeLogModal()">
+  </app-game-log-modal>
+}
+
+<!-- Modal de Reglas -->
+@if (showReglasModal()) {
+  <app-reglas-modal
+    (closeModal)="closeReglasModal()">
+  </app-reglas-modal>
+}
+
+<!-- PANEL DE DEBUG (Solo Desarrollo) -->
+<div class="debug-container">
+  <button class="debug-trigger" (click)="toggleDebugPanel()" title="Abrir Panel Debug">
+    ⚙️
+  </button>
+
+  @if (showDebugPanel()) {
+    <div class="debug-panel">
+      <div class="debug-header">
+        <span>DEBUG TOOLS</span>
+        <button (click)="toggleDebugPanel()" class="btn-close-debug">✕</button>
+      </div>
+
+      <div class="debug-section">
+        <label>Economía (Oro)</label>
+        <div class="debug-row">
+          <button (click)="debugAddGold(50)">+50</button>
+          <button (click)="debugAddGold(500)">+500</button>
+          <button (click)="debugAddGold(-100)">-100</button>
+        </div>
+      </div>
+
+      <div class="debug-section">
+        <label>Fase de Juego</label>
+        <button class="btn-full" (click)="debugTogglePhase()">Siguiente Fase</button>
+      </div>
+
+      <div class="debug-section">
+        <label>Entrenamiento (Tropa Activa)</label>
+        <div class="debug-row">
+          <button (click)="debugAddProgress(-10)">-10%</button>
+          <button (click)="debugAddProgress(10)">+10%</button>
+          <button (click)="debugAddProgress(25)">+25%</button>
+        </div>
+        <button
+          class="btn-full btn-success"
+          [disabled]="!activeTrainingTroop()"
+          (click)="debugCompleteTraining()">
+          Completar Entrenamiento
+        </button>
+      </div>
+
+      <div class="debug-section">
+        <label>Sistema (Tema)</label>
+        <button class="btn-full" (click)="debugToggleTheme()">
+          {{ themeService.theme() === 'dark' ? '☀️ Cambiar a Claro' : '🌙 Cambiar a Oscuro' }}
+        </button>
+      </div>
+    </div>
+  }
+</div>
