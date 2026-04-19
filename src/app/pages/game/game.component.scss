@@ -1,0 +1,324 @@
+// Componente raíz: ocupa toda la pantalla sin navbar
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+// ─── TOP BAR ─────────────────────────────────────────────────
+.topbar {
+  height: 64px;
+  background-color: var(--color-bg-card);
+  border-bottom: 2px solid var(--color-border-default);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+// Izquierda
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 20%;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  &:hover { color: var(--color-gold); }
+}
+
+.game-logo {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--color-bg-card), var(--color-bg-tertiary));
+  border: 2px solid var(--color-gold);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gold);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.player-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.game-number {
+  font-size: 0.72rem;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.5px;
+}
+
+// Centro: indicador de fase
+.topbar-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.phase-indicator {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background-color: var(--color-bg-tertiary);
+  padding: 8px 24px;
+  border-radius: 12px;
+
+  // Color dinámico según fase (se maneja via datos, aquí el default)
+  color: var(--color-phase-preparation);
+  border: 2px solid var(--color-phase-preparation);
+  box-shadow: 0 0 12px rgba(74, 144, 217, 0.15);
+
+  &[data-phase="GUERRA"] {
+    color: var(--color-phase-war);
+    border-color: var(--color-phase-war);
+    box-shadow: 0 0 12px rgba(192, 57, 43, 0.2);
+  }
+
+  &[data-phase="FIN"] {
+    color: var(--color-phase-end);
+    border-color: var(--color-phase-end);
+    box-shadow: 0 0 12px rgba(201, 168, 76, 0.2);
+  }
+}
+
+// Derecha: reglas + abandonar
+.topbar-right {
+  width: 25%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-rules {
+  background-color: transparent;
+  border: 1px solid var(--color-border-default);
+  color: var(--color-text-secondary);
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+  }
+}
+
+.btn-abandon {
+  background-color: transparent;
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: var(--color-error);
+    color: white;
+  }
+}
+
+// ─── MAIN AREA ───────────────────────────────────────────────
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+// ─── FLOATING STATS CARD ─────────────────────────────────────
+.stats-card {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(33, 31, 56, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  border-radius: 12px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  z-index: 20;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.stats-divider {
+  width: 1px;
+  height: 36px;
+  background-color: rgba(201, 168, 76, 0.3);
+}
+
+.stat-health-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stat-health-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-secondary);
+}
+
+.stat-health-value {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-progress-health);
+}
+
+.stat-right-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+}
+
+.stat-value {
+  color: var(--color-text-primary);
+  font-weight: bold;
+  &.gold { color: var(--color-gold); }
+}
+
+// ─── MAP ─────────────────────────────────────────────────────
+.map-container {
+  flex: 1;
+  position: relative;
+  background-color: var(--color-bg-primary);
+  overflow: hidden;
+}
+
+.map-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('/viking-map-continents.png');
+  background-size: 100% 100%; // Estira para cubrir el contenedor sin mantener relación de aspecto
+  background-repeat: no-repeat;
+  opacity: 0.8;
+}
+
+// ─── TERRITORY OVERLAY ───────────────────────────────────────
+.territory-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.player-node {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s ease-out;
+  text-shadow: 1px 1px 3px black;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  transform: translate(-50%, -50%); // Centra el nodo exactamente en su coordenada %
+
+  &:hover {
+    transform: translate(-50%, -50%) scale(1.15);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+    z-index: 5;
+  }
+}
+
+// Posiciones por continente
+.node-divine { top: 26%; left: 23%; background-color: rgba(74, 144, 217, 0.5);  border: 2px solid var(--color-clan-divine); } // Niflheim
+.node-iron   { top: 17%; left: 66%; background-color: rgba(138, 155, 168, 0.5); border: 2px solid var(--color-clan-iron);   } // Jötunheim
+.node-song   { top: 78%; left: 22%; background-color: rgba(139, 92, 246, 0.5);  border: 2px solid var(--color-clan-song);   } // Muspelheim
+.node-fury   { top: 51%; left: 71%; background-color: rgba(192, 57, 43, 0.5);   border: 2px solid var(--color-clan-fury);   } // Midgard
+.node-rune   { top: 81%; left: 77%; background-color: rgba(16, 185, 129, 0.5);  border: 2px solid var(--color-clan-rune);   } // Vanaheim
+.node-death  { top: 56%; left: 38%; background-color: rgba(124, 107, 158, 0.5); border: 2px solid var(--color-clan-death);  } // Åsgard (centro)
+
+// ─── FLOATING ACTION BUTTONS (Right) ─────────────────────────
+.actions-overlay {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 20;
+}
+
+.action-btn {
+  background-color: rgba(33, 31, 56, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--color-gold-light);
+  border: 2px solid rgba(201, 168, 76, 0.4);
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+
+  &:hover {
+    border-color: var(--color-gold);
+    background-color: rgba(201, 168, 76, 0.15);
+    transform: scale(1.1) translateY(-2px);
+    color: white;
+  }
+}

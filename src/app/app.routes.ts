@@ -9,4 +9,8 @@ export const routes: Routes = [
     path: 'stats/user',
     loadComponent: () => import('./pages/statistics-view/statistics.component').then((c) => c.StatsComponent),
   },
+  {
+    path: 'game',
+    loadComponent: () => import('./pages/game/game.component').then((c) => c.GamePageComponent),
+  },
 ];

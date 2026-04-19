@@ -1,0 +1,124 @@
+<!-- TOP BAR -->
+<header class="topbar">
+  <!-- Izquierda: volver + logo + usuario -->
+  <div class="topbar-left">
+    <button class="btn-back" title="Volver al Lobby">←</button>
+    <div class="game-logo" title="Viking Clan Wars">⚔️</div>
+    <div class="player-info">
+      <span class="player-name">{{ username() }}</span>
+      <span class="game-number">#{{ gameCode() }}</span>
+    </div>
+  </div>
+
+  <!-- Centro: fase actual -->
+  <div class="topbar-center">
+    <div class="phase-indicator" [attr.data-phase]="currentPhase()">
+      FASE: {{ currentPhase() }}
+    </div>
+  </div>
+
+  <!-- Derecha: reglas + abandonar -->
+  <div class="topbar-right">
+    <button class="btn-rules" title="Ver Reglas del Juego" (click)="openRules()">
+      <!-- Icono info -->
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      Reglas
+    </button>
+    <button class="btn-abandon" (click)="openAbandon()">Abandonar</button>
+  </div>
+</header>
+
+<!-- MAIN AREA -->
+<main class="main-content">
+
+  <!-- Tarjeta de stats flotante centrada -->
+  <div class="stats-card">
+    <!-- Izquierda: Vida -->
+    <div class="stat-health-block">
+      <span class="stat-health-label">Vida</span>
+      <span class="stat-health-value">{{ health().current }} / {{ health().max }}</span>
+    </div>
+    <!-- Divisor -->
+    <div class="stats-divider"></div>
+    <!-- Derecha: Dinero + Ptos. Investigación -->
+    <div class="stat-right-block">
+      <div class="stat-item">
+        <span>Dinero:</span>
+        <span class="stat-value gold">{{ gold() }} 💰</span>
+      </div>
+      <div class="stat-item">
+        <span>Ptos. Inv:</span>
+        <span class="stat-value">{{ researchPts() }} 🧪</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mapa principal -->
+  <div class="map-container">
+    <div class="map-bg"></div>
+
+    <!-- Nodos de jugadores sobre los continentes -->
+    <div class="territory-overlay">
+      @for (player of players(); track player.clan) {
+        <div
+          class="player-node"
+          [class]="'player-node node-' + player.clan"
+          [title]="player.username"
+          (click)="onTerritoryClick(player)">
+          {{ player.username }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Botones flotantes de acciones (derecha) -->
+  <div class="actions-overlay">
+    <!-- Entrenar Tropas -->
+    <button class="action-btn" title="Entrenar Tropas" (click)="openEntrenarTropas()">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <path d="M14.5 17.5L3 6V3h3l11.5 11.5"></path>
+        <path d="M13 19l6-6"></path>
+        <path d="M16 16l4 4"></path>
+        <path d="M19 21l2-2"></path>
+      </svg>
+    </button>
+
+    <!-- Ver Tropas -->
+    <button class="action-btn" title="Ver Tropas" (click)="openTropas()">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+        <circle cx="9" cy="7" r="4"></circle>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+      </svg>
+    </button>
+
+    <!-- Árbol Tecnológico -->
+    <button class="action-btn" title="Árbol Tecnológico" (click)="openArbolTecnologico()">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+      </svg>
+    </button>
+
+    <!-- Log de Batalla -->
+    <button class="action-btn" title="Log de Batalla" (click)="openLog()">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+        <polyline points="10 9 9 9 8 9"></polyline>
+      </svg>
+    </button>
+  </div>
+
+</main>
