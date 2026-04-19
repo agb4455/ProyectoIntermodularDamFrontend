@@ -277,6 +277,26 @@
     box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
     z-index: 5;
   }
+
+  .player-health-bar {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .player-health-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--color-error), #f59e0b);
+    transition: width 0.25s ease;
+  }
 }
 
 // Posiciones por continente
@@ -321,4 +341,55 @@
     transform: scale(1.1) translateY(-2px);
     color: white;
   }
+}
+
+// ─── ATTACK PATH (SVG) ───────────────────────────────────────
+.attack-path-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.attack-path {
+  stroke: var(--color-gold);
+  stroke-width: 0.8;
+  fill: none;
+  opacity: 0.18;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 2px rgba(201, 168, 76, 0.45));
+}
+
+.attack-text {
+  font-family: var(--font-title, 'Inter'), system-ui, sans-serif;
+  font-size: 3px;
+  fill: var(--color-gold);
+  fill-opacity: 0.6;
+  font-weight: 900;
+  pointer-events: none;
+}
+
+.attack-text textPath {
+  dominant-baseline: central;
+}
+
+.attack-avatar-group {
+  pointer-events: none;
+}
+
+.attack-avatar-ring {
+  fill: rgba(255, 255, 255, 0.18);
+  stroke: var(--color-gold);
+  stroke-width: 0.3;
+  filter: drop-shadow(0 0 1.2px rgba(255, 223, 112, 0.5));
+}
+
+.attack-avatar-icon {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 3px;
+  fill: var(--color-gold);
+  font-weight: 800;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.35);
 }

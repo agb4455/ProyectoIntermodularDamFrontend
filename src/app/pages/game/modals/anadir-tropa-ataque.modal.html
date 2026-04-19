@@ -1,0 +1,61 @@
+<!-- Modal Añadir Tropa Ataque -->
+<div class="modal-overlay" (click)="onOverlayClick()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <!-- Header -->
+    <div class="modal-header">
+      <h2 class="modal-title">Tropas Disponibles</h2>
+    </div>
+
+    <!-- Body - Grid de tropas -->
+    <div class="modal-body">
+      <div
+        class="troops-grid"
+        [style.grid-template-columns]="'repeat(' + gridCols() + ', 1fr)'">
+        @for (troop of availableTroops(); track troop.id) {
+          <div
+            class="grid-cell troop-card"
+            [class.selected]="isTroopSelected(troop.id)"
+            (click)="onTroopClick(troop)"
+            [title]="troop.name + (isTroopSelected(troop.id) ? ' (seleccionada)' : '')">
+            
+            <!-- Checkmark si está seleccionada -->
+            @if (isTroopSelected(troop.id)) {
+              <div class="selection-badge">✓</div>
+            }
+
+            <!-- Icono de tropa -->
+            <div class="troop-icon">
+              {{ troop.icon || troop.type }}
+            </div>
+
+            <!-- Nombre de la tropa -->
+            <span class="troop-name">{{ troop.name }}</span>
+
+            <!-- Health bar -->
+            <div class="health-bar">
+              <div
+                class="health-fill"
+                [style.width.%]="getHealthPercentage(troop)"></div>
+            </div>
+
+            <!-- Health text -->
+            <span class="health-text">
+              {{ troop.currentHealth }}/{{ troop.maxHealth }}
+            </span>
+
+            <!-- Cost badge -->
+            <div class="cost-badge">
+              💰 {{ troop.cost }}
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="onCancelClick()">CANCELAR</button>
+      <button class="btn-ok" (click)="onOkClick()">OK</button>
+    </div>
+  </div>
+</div>
