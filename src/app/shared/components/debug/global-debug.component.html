@@ -1,0 +1,65 @@
+@if (debugService.isVisible()) {
+  <div class="debug-container" [class.expanded]="isExpanded">
+    
+    <!-- Botón flotante / trigger -->
+    <button class="debug-trigger" (click)="toggleExpanded()" title="Herramientas de Debug">
+      <span class="icon">🛠️</span>
+      @if (!isExpanded) {
+        <span class="status-dot" [class.active]="authService.isLoggedIn()"></span>
+      }
+    </button>
+
+    <!-- Panel de herramientas -->
+    @if (isExpanded) {
+      <div class="debug-panel">
+        <div class="debug-header">
+          <h3>DEBUG TOOLS</h3>
+          <button class="close-btn" (click)="toggleExpanded()">×</button>
+        </div>
+
+        <div class="debug-content">
+          <!-- Bloque de Tema -->
+          <div class="debug-section">
+            <label>Tema</label>
+            <button (click)="toggleTheme()" class="action-btn">
+              {{ themeService.theme() === 'dark' ? '🌙 Dark' : '☀️ Light' }}
+            </button>
+          </div>
+
+          <!-- Bloque de Auth -->
+          <div class="debug-section">
+            <label>Sesión</label>
+            <div class="button-group">
+              <button (click)="toggleAuth()" [class.active]="authService.isLoggedIn()" class="action-btn">
+                {{ authService.isLoggedIn() ? '🔓 Logout' : '🔒 Login' }}
+              </button>
+            </div>
+            @if (authService.isLoggedIn()) {
+              <div class="user-info">
+                <span>👤 {{ authService.username() }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- Bloque de Rol -->
+          <div class="debug-section">
+            <label>Rol de Usuario</label>
+            <button 
+              (click)="toggleAdmin()" 
+              [disabled]="!authService.isLoggedIn()" 
+              [class.admin]="authService.isAdmin()"
+              class="action-btn"
+            >
+              {{ authService.isAdmin() ? '🛡️ ADMIN' : '👤 USER' }}
+            </button>
+          </div>
+
+          <!-- Info de Sistema -->
+          <div class="debug-footer">
+            <p>Viking Clan Wars v0.1.0-debug</p>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+}

@@ -60,6 +60,22 @@ export class AuthService {
   }
 
   /**
+   * ESTADOS DE DEBUG — PARA TESTING LOCAL SOLAMENTE
+   * Permiten simular estados de sesión sin un backend real.
+   */
+  mockLogin(role: UserRole = 'USER'): void {
+    this.#session.set({
+      username: role === 'ADMIN' ? 'DebugAdmin' : 'Ragnar_Fury',
+      role: role,
+      token: 'mock-jwt-token-for-debug',
+    });
+  }
+
+  mockLogout(): void {
+    this.clearSession();
+  }
+
+  /**
    * Decodifica el payload base64 del JWT sin verificar la firma.
    * La verificación real ocurre en el Middle Server en cada petición.
    */

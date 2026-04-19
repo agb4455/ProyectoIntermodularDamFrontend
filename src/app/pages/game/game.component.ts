@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, signal, computed, inject } from '@angular/core';
-import { ThemeService } from '../../core/theme/theme.service';
 import { AtacarModalComponent } from './modals/atacar.modal';
 import { VisualizarTropasModalComponent } from './modals/visualizar-tropas.modal';
 import { EntrenarModalComponent } from './modals/entrenar.modal';
@@ -421,10 +420,5 @@ export class GamePageComponent {
       ));
     }
   }
-
-  protected readonly themeService = inject(ThemeService);
-
-  protected debugToggleTheme(): void {
-    this.themeService.toggle();
-  }
 }
+
