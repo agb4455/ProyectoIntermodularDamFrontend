@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -11,41 +11,48 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigComponent {
-  // Placeholder signals. These should be wired up to a UserService / AuthService later.
-  readonly userName = signal<string>('Viking Warrior');
-  readonly userEmail = signal<string>('viking@valhalla.com');
+  // Signals para manejar el estado del usuario.
+  // En producción estos vendrán de un AuthService / UserService.
+  readonly userName = signal<string>('Ragnar Lothbrok');
+  readonly userEmail = signal<string>('ragnar@vikingwars.com');
+  readonly userClan = signal<string>('Jarl del Clan Furia');
   
   readonly language = signal<'ES' | 'EN'>('ES');
-  readonly isDarkMode = signal<boolean>(true); // Assuming dark mode by default given the theme
+  readonly isDarkMode = signal<boolean>(true);
 
+  // Acción: Gestionar / Cambiar Contraseña
   onChangePassword(): void {
-    console.log('Change password clicked');
-    // Implement password change logic or open a modal
+    console.log('Navegando a cambio de contraseña...');
+    // TODO: Abrir modal cambiarContraseña especificado en ui_screens.md
   }
 
+  // Acción: Alternar Idioma
   onChangeLanguage(): void {
-    console.log('Change language clicked');
     const newLang = this.language() === 'ES' ? 'EN' : 'ES';
     this.language.set(newLang);
+    console.log('Idioma cambiado a:', newLang);
   }
 
+  // Acción: Editar Foto de Perfil
   onEditAvatar(): void {
-    console.log('Edit avatar clicked');
-    // Implement avatar edit logic
+    console.log('Abriendo selector de avatar...');
+    // TODO: Implementar lógica de subida a MinIO (Magic bytes + resize 200x200)
   }
 
+  // Acción: Guardar cambios en el servidor
   onSave(): void {
-    console.log('Settings saved:', {
-      userName: this.userName(),
-      userEmail: this.userEmail(),
-      language: this.language(),
-      isDarkMode: this.isDarkMode()
+    console.log('Guardando cambios en el servidor...', {
+      nombre: this.userName(),
+      email: this.userEmail(),
+      idioma: this.language(),
+      darkMode: this.isDarkMode()
     });
-    // Implement actual backend save logic here
+    // TODO: Llamada REST al DB Server via Middle Server
   }
 
+  // Acción: Descartar cambios
   onCancel(): void {
-    console.log('Settings cancelled');
-    // Reset or navigate away
+    console.log('Cambios descartados');
+    // Reiniciar valores o volver al Lobby
   }
 }

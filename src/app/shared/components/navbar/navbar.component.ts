@@ -2,11 +2,12 @@ import { Component, ChangeDetectionStrategy, signal, inject, HostListener } from
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
 import { AuthComponent } from '../auth/auth.component';
+import { LogoComponent } from '../logo/logo.component';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, AuthComponent],
+  imports: [RouterLink, RouterLinkActive, AuthComponent, LogoComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -6,7 +6,10 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="logo-wrapper" [style.transform]="'scale(' + scale() + ')'">
+    <div class="logo-wrapper" 
+         [class.horizontal]="direction() === 'horizontal'" 
+         [class.vertical]="direction() === 'vertical'"
+         [style.transform]="'scale(' + scale() + ')'">
       <svg viewBox="0 0 100 100" class="mythic-logo" [attr.title]="'Viking Clan Wars Logo'">
         <defs>
           <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -53,11 +56,25 @@ import { CommonModule } from '@angular/common';
   styles: [`
     .logo-wrapper {
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       transition: transform 0.3s ease;
       user-select: none;
+      
+      &.vertical {
+        flex-direction: column;
+      }
+      
+      &.horizontal {
+        flex-direction: row;
+        gap: 15px;
+        
+        .logo-text {
+          margin-top: 0;
+          align-items: flex-start;
+          transform: translateY(-2px);
+        }
+      }
     }
     .mythic-logo {
       width: 120px;
@@ -102,4 +119,5 @@ import { CommonModule } from '@angular/common';
 export class LogoComponent {
   readonly scale = input<number>(1);
   readonly showText = input<boolean>(true);
+  readonly direction = input<'vertical' | 'horizontal'>('vertical');
 }

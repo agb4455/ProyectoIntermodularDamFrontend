@@ -1,4 +1,8 @@
 <nav class="navbar">
+  <div class="logo-section" [routerLink]="['/']">
+    <app-logo [scale]="0.45" [showText]="true" [direction]="'horizontal'"></app-logo>
+  </div>
+
   <div class="nav-group">
     <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Home</a>
     @if (authService.isLoggedIn()) {
@@ -8,10 +12,8 @@
     <a [routerLink]="['/reglas']" routerLinkActive="active" class="nav-link">Reglas</a>
   </div>
   
-  <div class="spacer"></div>
-  
   <div class="navbar-actions">
-    <!-- Menú de usuario -- se abre al hacer click, no al hover -->
+    <!-- Menú de usuario -->
     <div class="user-menu" title="Perfil / Menú de Usuario">
       <div class="user-avatar" (click)="handleUserClick()">
         <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
