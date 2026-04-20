@@ -1,0 +1,60 @@
+<div class="config-container">
+  <div class="config-card">
+    <div class="config-header">
+      <div class="avatar-wrapper">
+        <div class="avatar-container" title="Cambiar Avatar" (click)="onEditAvatar()">
+          <svg fill="currentColor" viewBox="0 0 24 24" width="40" height="40">
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z">
+            </path>
+          </svg>
+        </div>
+        <div class="edit-avatar-btn" title="Editar Avatar" (click)="onEditAvatar()">
+          <svg fill="currentColor" viewBox="0 0 24 24" width="16" height="16">
+            <path
+              d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z">
+            </path>
+          </svg>
+        </div>
+      </div>
+      <div class="user-info">
+        <div class="user-name-text">{{ userName() }}</div>
+        <div class="user-email-text">{{ userEmail() }}</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="config-body">
+      <div class="action-row">
+        <button class="btn btn-secondary" (click)="onChangeEmail()">Cambiar correo</button>
+        <button class="btn btn-secondary" (click)="onChangePassword()">Cambiar contraseña</button>
+      </div>
+
+      <div class="setting-row">
+        <span class="setting-label">Idioma</span>
+        <div class="setting-control">
+          <select class="custom-select" [(ngModel)]="language">
+            <option value="ES">Español</option>
+            <option value="EN">Inglés</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <span class="setting-label">Modo oscuro</span>
+        <div class="setting-control">
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="isDarkMode">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="config-footer">
+      <button class="btn btn-primary" (click)="onSave()">Guardar</button>
+      <button class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+    </div>
+  </div>
+</div>
