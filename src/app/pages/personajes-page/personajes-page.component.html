@@ -1,0 +1,60 @@
+<div class="personajes-container">
+  <!-- Efectos de Ambiente (Sutiles) -->
+  <div class="sky-fx">
+    <div class="aurora"></div>
+  </div>
+  
+  <div class="embers">
+    @for (i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]; track i) {
+      <div class="ember"></div>
+    }
+  </div>
+
+  <header class="page-header">
+    <h1 class="animate-glow">LINAJES DEL NORTE</h1>
+    <div class="title-divider"></div>
+  </header>
+
+  <main class="clans-explorer">
+    <div class="clans-list">
+      @for (clan of clans(); track clan.id) {
+        <section class="clan-detail-card forged-border glass-panel" [style.--clan-color]="'var(' + clan.colorVar + ')'">
+          <div class="clan-visual">
+            <div class="clan-ring"></div>
+            <div class="clan-icon">{{ clan.icon }}</div>
+          </div>
+          
+          <div class="clan-header">
+            <span class="archetype-tag">{{ clan.archetype }}</span>
+            <h2 class="clan-name">{{ clan.name }}</h2>
+          </div>
+          
+          <p class="clan-desc">{{ clan.description }}</p>
+          
+          <div class="advantage-section">
+            <div class="advantage-item positive">
+              <span class="label">SUPERIOR A:</span>
+              <div class="value">{{ clan.beats }}</div>
+              <p class="reason">{{ clan.beatsReason }}</p>
+            </div>
+            
+            <div class="advantage-item negative">
+              <span class="label">VULNERABLE A:</span>
+              <div class="value">{{ clan.beatenBy }}</div>
+            </div>
+          </div>
+
+          <div class="clan-decoration">
+            <span class="rune">ᚦ</span>
+            <span class="rune">ᛟ</span>
+          </div>
+        </section>
+      }
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    <div class="footer-divider"></div>
+    <p>QUE LOS DIOSES GUÍEN TU ELECCIÓN EN EL CAMPO DE BATALLA</p>
+  </footer>
+</div>

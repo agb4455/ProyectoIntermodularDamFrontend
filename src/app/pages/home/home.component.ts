@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
 import { LogoComponent } from '../../shared/components/logo/logo.component';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 interface ClanPreview {
   id: string;
@@ -13,7 +14,7 @@ interface ClanPreview {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, LogoComponent],
+  imports: [CommonModule, LogoComponent, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
