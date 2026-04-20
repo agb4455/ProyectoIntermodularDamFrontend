@@ -1,9 +1,9 @@
 <div class="auth-wrapper" [class.is-modal]="isModal()" (click)="isModal() ? closeModal.emit() : null">
-  <div class="auth-card glass-panel forged-border" (click)="$event.stopPropagation()">
+  <div class="auth-card" (click)="$event.stopPropagation()">
     @if (isModal()) {
-      <button class="modal-close-btn" (click)="closeModal.emit()" aria-label="Cerrar modal">×</button>
+      <button class="modal-close-btn" (click)="closeModal.emit()" title="Cerrar">&times;</button>
     }
-    
+
     <header class="auth-header">
       <h1 class="auth-title">Viking Strategy</h1>
       <p class="auth-subtitle">FORJA TU DESTINO EN EL VALHALLA</p>
@@ -11,131 +11,128 @@
 
     @if (error()) {
       <div class="error-message">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="8" x2="12" y2="12"></line>
-          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        <svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
         </svg>
-        <span>{{ error() }}</span>
+        {{ error() }}
       </div>
     }
 
-    <!-- Login Form -->
+    <!-- LOGIN FORM -->
     @if (isLogin()) {
-      <div class="auth-form-container">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="auth-form">
         <h2 class="form-title">Iniciar Sesión</h2>
-        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-          <div class="form-group">
-            <label for="login-username">Guerrero / Usuario</label>
-            <div class="input-container">
-              <input
-                id="login-username"
-                type="text"
-                formControlName="username"
-                placeholder="Nombre de tu clan"
-                [attr.disabled]="loading() ? '' : null"
-              />
-            </div>
-            @if (loginForm.get('username')?.invalid && loginForm.get('username')?.touched) {
-              <small class="validation-error">Mínimo 3 caracteres</small>
-            }
+        
+        <div class="form-group">
+          <label for="login-username">Usuario</label>
+          <div class="input-container">
+            <input 
+              id="login-username"
+              type="text" 
+              formControlName="username" 
+              placeholder="Tu nombre de usuario"
+              autocomplete="username">
           </div>
+        </div>
 
-          <div class="form-group">
-            <label for="login-password">Secreto de Guerra</label>
-            <div class="input-container">
-              <input
-                id="login-password"
-                type="password"
-                formControlName="password"
-                placeholder="Contraseña"
-                [attr.disabled]="loading() ? '' : null"
-              />
-            </div>
-            @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-              <small class="validation-error">Mínimo 8 caracteres</small>
-            }
+        <div class="form-group">
+          <label for="login-password">Contraseña</label>
+          <div class="input-container">
+            <input 
+              id="login-password"
+              type="password" 
+              formControlName="password" 
+              placeholder="Tu contraseña"
+              autocomplete="current-password">
           </div>
+        </div>
 
-          <button type="submit" class="btn-viking-primary" [disabled]="loading() || loginForm.invalid">
-            <span class="btn-text">{{ loading() ? 'Invocando...' : 'Entrar en Batalla' }}</span>
+        <div class="forgot-link-container">
+          <a href="javascript:void(0)" class="forgot-link">¿Has olvidado la contraseña?</a>
+        </div>
+
+        <button type="submit" class="btn-viking-primary" [disabled]="loading()">
+          @if (loading()) {
+            <span class="loader"></span>
+          } @else {
+            <span class="btn-text">Entrar en Batalla</span>
             <div class="btn-shine"></div>
-          </button>
-        </form>
+          }
+        </button>
 
         <footer class="auth-footer">
-          <p>¿Aún no tienes un clan?</p>
-          <button type="button" class="link-viking" (click)="toggleMode()" [disabled]="loading()">
-            Únete a la expedición
-          </button>
+          <p>¿Aún no tienes cuenta?</p>
+          <button type="button" class="link-viking" (click)="toggleMode()">Regístrate aquí</button>
         </footer>
-      </div>
-    } @else {
-      <!-- Register Form -->
-      <div class="auth-form-container">
-        <h2 class="form-title">Registrar Clan</h2>
-        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-          <div class="form-group">
-            <label for="reg-username">Nombre del Clan</label>
-            <div class="input-container">
-              <input
-                id="reg-username"
-                type="text"
-                formControlName="username"
-                placeholder="Ej: Hijos de Odín"
-                [attr.disabled]="loading() ? '' : null"
-              />
-            </div>
-            @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
-              <small class="validation-error">Entre 3 y 50 caracteres</small>
-            }
-          </div>
+      </form>
+    }
 
-          <div class="form-group">
-            <label for="reg-email">Cuervo Mensajero (Email)</label>
-            <div class="input-container">
-              <input
-                id="reg-email"
-                type="email"
-                formControlName="email"
-                placeholder="tu@valhalla.com"
-                [attr.disabled]="loading() ? '' : null"
-              />
-            </div>
-            @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
-              <small class="validation-error">Email válido requerido</small>
-            }
+    <!-- REGISTER FORM -->
+    @if (!isLogin()) {
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="auth-form">
+        <h2 class="form-title">Registrarse</h2>
+        
+        <div class="form-group">
+          <label for="reg-username">Usuario</label>
+          <div class="input-container">
+            <input 
+              id="reg-username"
+              type="text" 
+              formControlName="username" 
+              placeholder="Tu nombre de usuario">
           </div>
+        </div>
 
-          <div class="form-group">
-            <label for="reg-password">Secreto de Guerra</label>
-            <div class="input-container">
-              <input
-                id="reg-password"
-                type="password"
-                formControlName="password"
-                placeholder="Mínimo 8 caracteres"
-                [attr.disabled]="loading() ? '' : null"
-              />
-            </div>
-            @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
-              <small class="validation-error">Mínimo 8 caracteres</small>
-            }
+        <div class="form-group">
+          <label for="reg-email">Email</label>
+          <div class="input-container">
+            <input 
+              id="reg-email"
+              type="email" 
+              formControlName="email" 
+              placeholder="tu@email.com">
           </div>
+        </div>
 
-          <button type="submit" class="btn-viking-primary" [disabled]="loading() || registerForm.invalid">
-            <span class="btn-text">{{ loading() ? 'Preparando escudo...' : 'Forjar Alianza' }}</span>
+        <div class="form-group">
+          <label for="reg-password">Contraseña</label>
+          <div class="input-container">
+            <input 
+              id="reg-password"
+              type="password" 
+              formControlName="password" 
+              placeholder="Mínimo 8 caracteres">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-confirm">Confirmar Contraseña</label>
+          <div class="input-container">
+            <input 
+              id="reg-confirm"
+              type="password" 
+              formControlName="confirmPassword" 
+              placeholder="Repite tu contraseña">
+          </div>
+          @if (registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched) {
+            <span class="validation-error">Las contraseñas no coinciden</span>
+          }
+        </div>
+
+        <button type="submit" class="btn-viking-primary" [disabled]="loading() || (registerForm.invalid && registerForm.touched)">
+          @if (loading()) {
+            <span class="loader"></span>
+          } @else {
+            <span class="btn-text">Crear Cuenta</span>
             <div class="btn-shine"></div>
-          </button>
-        </form>
+          }
+        </button>
 
         <footer class="auth-footer">
-          <p>¿Ya tienes un clan registrado?</p>
-          <button type="button" class="link-viking" (click)="toggleMode()" [disabled]="loading()">
-            Vuelve al frente
-          </button>
+          <p>¿Ya tienes cuenta?</p>
+          <button type="button" class="link-viking" (click)="toggleMode()">Inicia sesión aquí</button>
         </footer>
-      </div>
+      </form>
     }
   </div>
 </div>
