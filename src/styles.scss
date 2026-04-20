@@ -10,7 +10,8 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
   font-family: 'Lato', 'Inter', sans-serif;

@@ -1,4 +1,5 @@
 import { Injectable, signal, computed } from '@angular/core';
+import { Observable, of, delay, tap } from 'rxjs';
 
 // Payload decodificado del JWT emitido por el Middle Server
 interface JwtPayload {
@@ -73,6 +74,38 @@ export class AuthService {
 
   mockLogout(): void {
     this.clearSession();
+  }
+
+  /**
+   * Simula una llamada de login a la API.
+   */
+  login(username: string, password: string): Observable<void> {
+    return of(undefined).pipe(
+      delay(800),
+      tap(() => {
+        this.#session.set({
+          username,
+          role: 'USER',
+          token: 'mock-jwt-token-from-login',
+        });
+      })
+    );
+  }
+
+  /**
+   * Simula una llamada de registro a la API.
+   */
+  register(username: string, email: string, password: string): Observable<void> {
+    return of(undefined).pipe(
+      delay(1200),
+      tap(() => {
+        this.#session.set({
+          username,
+          role: 'USER',
+          token: 'mock-jwt-token-from-register',
+        });
+      })
+    );
   }
 
   /**
