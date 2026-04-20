@@ -82,7 +82,7 @@
 
         <!-- Texto con chevrons '>' siguiendo el camino -->
         <text class="attack-text">
-          <textPath [attr.xlink:href]="'#' + activeAttack()!.pathId" startOffset="0%">
+          <textPath [attr.href]="'#' + activeAttack()!.pathId" startOffset="0%">
             >
             <animate attributeName="startOffset" from="0%" to="100%" [attr.dur]="(activeAttack()!.durationMs / 1000) + 's'" repeatCount="indefinite" />
           </textPath>
@@ -95,7 +95,7 @@
             {{ activeAttack()!.attacker.username.charAt(0) }}
           </text>
           <animateMotion [attr.dur]="(activeAttack()!.durationMs / 1000) + 's'" fill="freeze">
-            <mpath [attr.xlink:href]="'#' + activeAttack()!.pathId"></mpath>
+            <mpath [attr.href]="'#' + activeAttack()!.pathId"></mpath>
           </animateMotion>
         </g>
       </svg>

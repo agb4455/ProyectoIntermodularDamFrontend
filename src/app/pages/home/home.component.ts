@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
 import { LogoComponent } from '../../shared/components/logo/logo.component';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,7 @@ interface ClanPreview {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, LogoComponent],
+  imports: [CommonModule, LogoComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,12 +34,12 @@ export class HomeComponent {
 
   protected enterValhalla(): void {
     if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/lobby']);
+      this.router.navigate(['/game']);
     } else {
       // Como el modal de auth está en la Navbar, podríamos disparar un evento global
       // o simplemente navegar a /lobby y que el guard de auth (si existiera) lo pida.
       // Aquí, por simplicidad y siguiendo la estructura actual, navegamos a lobby.
-      this.router.navigate(['/lobby']);
+      this.router.navigate(['/game']);
     }
   }
 

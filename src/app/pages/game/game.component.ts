@@ -89,7 +89,7 @@ export class GamePageComponent {
     {
       id: 'troop-1',
       name: 'Guerrero 1',
-      type: 'infanteria' as any,
+      type: TroopType.INFANTERIA,
       clan: 'fury',
       currentHealth: 100,
       maxHealth: 100,
@@ -101,7 +101,7 @@ export class GamePageComponent {
     {
       id: 'troop-2',
       name: 'Guerrero 2',
-      type: 'infanteria' as any,
+      type: TroopType.INFANTERIA,
       clan: 'fury',
       currentHealth: 75,
       maxHealth: 100,
@@ -113,7 +113,7 @@ export class GamePageComponent {
     {
       id: 'troop-3',
       name: 'Arquero 1',
-      type: 'arqueria' as any,
+      type: TroopType.ARQUERIA,
       clan: 'fury',
       currentHealth: 60,
       maxHealth: 80,
@@ -125,7 +125,7 @@ export class GamePageComponent {
     {
       id: 'troop-4',
       name: 'Arquero 2',
-      type: 'arqueria' as any,
+      type: TroopType.ARQUERIA,
       clan: 'fury',
       currentHealth: 80,
       maxHealth: 80,
@@ -137,7 +137,7 @@ export class GamePageComponent {
     {
       id: 'troop-5',
       name: 'Caballería 1',
-      type: 'caballeria' as any,
+      type: TroopType.CABALLERIA,
       clan: 'fury',
       currentHealth: 120,
       maxHealth: 150,
@@ -149,7 +149,7 @@ export class GamePageComponent {
     {
       id: 'troop-6',
       name: 'Caballería 2',
-      type: 'caballeria' as any,
+      type: TroopType.CABALLERIA,
       clan: 'fury',
       currentHealth: 50,
       maxHealth: 150,
