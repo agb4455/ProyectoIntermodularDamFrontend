@@ -23,9 +23,10 @@ export class ConfigComponent {
     // Implement password change logic or open a modal
   }
 
-  onChangeEmail(): void {
-    console.log('Change email clicked');
-    // Implement email change logic
+  onChangeLanguage(): void {
+    console.log('Change language clicked');
+    const newLang = this.language() === 'ES' ? 'EN' : 'ES';
+    this.language.set(newLang);
   }
 
   onEditAvatar(): void {
@@ -35,14 +36,16 @@ export class ConfigComponent {
 
   onSave(): void {
     console.log('Settings saved:', {
+      userName: this.userName(),
+      userEmail: this.userEmail(),
       language: this.language(),
       isDarkMode: this.isDarkMode()
     });
-    // Implement save logic
+    // Implement actual backend save logic here
   }
 
   onCancel(): void {
     console.log('Settings cancelled');
-    // Implement cancel logic (e.g., reset signals to original state or navigate away)
+    // Reset or navigate away
   }
 }

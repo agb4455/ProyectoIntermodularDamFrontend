@@ -1,78 +1,65 @@
-<div class="config-page">
-  <h1 class="page-title">Configuración</h1>
+<div class="config-page-container">
+  <header class="hero-banner">
+    <h1>CONFIGURACIÓN DE GUERRERO</h1>
+  </header>
 
-  <!-- Sidebar profile -->
-  <div class="profile-sidebar">
-    <div class="avatar-wrapper">
-      <div class="avatar-container" title="Cambiar Avatar" (click)="onEditAvatar()">
-        <svg fill="currentColor" viewBox="0 0 24 24" width="60" height="60">
-          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
-        </svg>
-      </div>
-      <div class="edit-avatar-btn" title="Editar Avatar" (click)="onEditAvatar()">
-        <svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18">
-          <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
-        </svg>
-      </div>
-    </div>
-    
-    <div class="user-name-text">{{ userName() }}</div>
-    <div class="user-email-text">{{ userEmail() }}</div>
-  </div>
-
-  <!-- Settings area -->
-  <div class="settings-area">
-    <div class="settings-section">
-      <h2 class="section-title">Credenciales</h2>
-      
-      <div class="setting-row">
-        <div>
-          <div class="setting-label">Correo electrónico</div>
-          <div class="setting-description">Actualiza la dirección asociada a tu cuenta</div>
+  <main class="config-content">
+    <aside class="profile-sidebar">
+      <div class="avatar-container">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ userName() }}" alt="Avatar">
+        <div class="edit-badge" title="Cambiar Avatar" (click)="onEditAvatar()">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         </div>
-        <button class="btn btn-secondary" (click)="onChangeEmail()">Cambiar correo</button>
+      </div>
+      <div class="username-display">
+        <h2>{{ userName() }}</h2>
+      </div>
+    </aside>
+
+    <section class="config-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" [ngModel]="userEmail()" (ngModelChange)="userEmail.set($event)" placeholder="tu@email.com">
       </div>
 
-      <div class="setting-row">
-        <div>
-          <div class="setting-label">Contraseña</div>
-          <div class="setting-description">Modifica tu contraseña de acceso</div>
+      <div class="form-group">
+        <label>Seguridad</label>
+        <div class="action-card">
+          <div class="card-row">
+            <div class="info">
+              <p class="label">Contraseña</p>
+            </div>
+            <button class="btn btn-outline btn-sm" (click)="onChangePassword()">GESTIONAR CLAVE</button>
+          </div>
         </div>
-        <button class="btn btn-secondary" (click)="onChangePassword()">Cambiar contraseña</button>
       </div>
-    </div>
-  </div>
 
-  <!-- Full width settings section -->
-  <div class="full-width-section">
-    <h2 class="section-title">Preferencias de aplicación</h2>
-
-    <div class="setting-row">
-      <div>
-        <div class="setting-label">Idioma</div>
-        <div class="setting-description">Selecciona el idioma de la interfaz</div>
+      <div class="form-group">
+        <label>Preferencias</label>
+        <div class="action-card glass-style">
+          <div class="card-row divider">
+            <div class="info">
+              <p class="label">Lengua del Clan</p>
+              <p class="description">{{ language() === 'ES' ? 'Español (ES)' : 'English (EN)' }}</p>
+            </div>
+            <button class="btn btn-outline btn-sm secondary" (click)="onChangeLanguage()">CAMBIAR IDIOMA</button>
+          </div>
+          <div class="card-row">
+            <div class="info">
+              <p class="label">Modo Oscuro</p>
+              <p class="description">Actívalo para descansar la vista</p>
+            </div>
+            <div class="toggle-switch" [class.active]="isDarkMode()" (click)="isDarkMode.set(!isDarkMode())">
+              <div class="toggle-knob"></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <select class="input-field" style="width: 150px;" [(ngModel)]="language">
-        <option value="ES">Español</option>
-        <option value="EN">Inglés</option>
-      </select>
-    </div>
 
-    <div class="setting-row">
-      <div>
-        <div class="setting-label">Modo oscuro</div>
-        <div class="setting-description">Cambia entre el tema claro y oscuro</div>
+      <div class="actions">
+        <button class="btn btn-secondary" (click)="onCancel()">DESCARTAR</button>
+        <button class="btn btn-gold" (click)="onSave()">GUARDAR CAMBIOS</button>
       </div>
-      <label class="switch">
-        <input type="checkbox" [(ngModel)]="isDarkMode">
-        <span class="slider round"></span>
-      </label>
-    </div>
-  </div>
-
-  <!-- FOOTER: Actions -->
-  <div class="config-footer">
-    <button class="btn btn-primary" (click)="onSave()">Guardar cambios</button>
-    <button class="btn btn-secondary" (click)="onCancel()">Descartar</button>
-  </div>
+    </section>
+  </main>
 </div>
