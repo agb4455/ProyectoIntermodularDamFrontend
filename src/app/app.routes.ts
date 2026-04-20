@@ -21,4 +21,12 @@ export const routes: Routes = [
     path: 'config',
     loadComponent: () => import('./pages/config/config.component').then((c) => c.ConfigComponent),
   },
+  {
+    path: 'personajes',
+    loadComponent: () => import('./pages/personajes-page/personajes-page.component').then((c) => c.PersonajesPageComponent),
+  },
+  {
+    path: 'reglas',
+    loadComponent: () => import('./pages/reglas-page/reglas-page.component').then((c) => c.ReglasPageComponent),
+  },
 ];

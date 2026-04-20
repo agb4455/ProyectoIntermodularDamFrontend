@@ -1,0 +1,323 @@
+@use '../../../styles/variables' as *;
+
+.reglas-container {
+  min-height: 100vh;
+  background: radial-gradient(circle at center, $color-bg-secondary 0%, $color-bg-primary 100%);
+  color: $color-text-primary;
+  font-family: 'Inter', sans-serif;
+  padding: 8rem 2rem 4rem; // Account for Navbar
+  position: relative;
+  overflow-x: hidden;
+}
+
+// Background FX (reused for consistency)
+.sky-fx {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.page-header {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto 5rem;
+
+  h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2.2rem, 6vw, 3.5rem);
+    letter-spacing: 0.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    background: linear-gradient(to bottom, $color-gold-light 0%, $color-gold 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .title-divider {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, $color-gold, transparent);
+    width: 200px;
+    margin: 1.5rem auto;
+    border-radius: 2px;
+    box-shadow: 0 0 15px $color-gold-muted;
+  }
+}
+
+.rules-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+  position: relative;
+  z-index: 10;
+}
+
+.rules-section {
+  position: relative;
+  
+  .section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: $color-gold-light;
+    text-align: center;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+}
+
+// Global patterns
+.glass-panel {
+  background: $color-bg-glass;
+  backdrop-filter: blur(12px);
+}
+
+.forged-border {
+  border: 1px solid $color-border-default;
+  position: relative;
+  transition: all 0.4s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border: 1px solid transparent;
+    transition: all 0.4s ease;
+    pointer-events: none;
+  }
+
+  &:hover {
+    border-color: $color-gold;
+    &::before {
+      border-color: $color-gold-light;
+      margin: -2px;
+      opacity: 0.5;
+    }
+  }
+}
+
+// 1. Advantage Matrix Style
+.matrix-card {
+  padding: 3rem;
+  border-radius: 4px;
+
+  .matrix-intro {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: $color-text-secondary;
+    font-size: 1.1rem;
+    font-weight: 300;
+    
+    strong { color: $color-gold; font-weight: 700; }
+  }
+
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .matrix-row {
+    background: $color-bg-tertiary;
+    padding: 1.2rem;
+    border-radius: 2px;
+    border: 1px solid $color-border-faint;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: scale(1.02);
+      border-color: $color-gold;
+      background: $color-bg-card;
+    }
+
+    .attacker { color: $color-success; font-weight: 800; }
+    .arrow { color: $color-gold; font-size: 1.2rem; opacity: 0.6; }
+    .defender { color: $color-error; font-weight: 800; }
+  }
+}
+
+// 2. Combat Resolution Style
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+
+  .rule-box {
+    padding: 3rem 2.5rem;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+
+    h3 {
+      font-family: 'Outfit', sans-serif;
+      color: $color-gold;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid $color-border-faint;
+      padding-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    p { color: $color-text-secondary; line-height: 1.7; font-weight: 300; }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        margin-bottom: 1rem;
+        padding-left: 2rem;
+        position: relative;
+        color: $color-text-secondary;
+        font-weight: 300;
+        &::before {
+          content: '◈';
+          position: absolute;
+          left: 0;
+          color: $color-gold;
+          opacity: 0.6;
+        }
+        strong { color: $color-text-primary; font-weight: 600; }
+      }
+    }
+  }
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
+
+  .warning-box {
+    margin-top: 2rem;
+    background: $color-error-bg;
+    border: 1px solid $color-error;
+    padding: 1.5rem;
+    color: $color-error;
+    text-align: center;
+    border-radius: 2px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    letter-spacing: 2px;
+    animation: pulse 2s infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(0.99); }
+}
+
+// 3. Era Timeline Style
+.era-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding-left: 2rem;
+  border-left: 2px dashed $color-border-faint;
+
+  .era-point {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -2.3rem;
+      top: 1rem;
+      width: 1rem;
+      height: 1rem;
+      background: $color-bg-primary;
+      border: 2px solid $color-gold;
+      border-radius: 50%;
+      box-shadow: 0 0 15px $color-gold;
+    }
+
+    .era-indicator {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: $color-bg-card;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      flex-shrink: 0;
+      border: 2px solid transparent;
+
+      &.prep { color: $color-phase-preparation; border-color: $color-phase-preparation; }
+      &.war { color: $color-phase-war; border-color: $color-phase-war; }
+    }
+
+    .era-info {
+      h3 {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin: 0 0 1rem 0;
+        color: $color-text-primary;
+      }
+      p {
+        color: $color-text-secondary;
+        line-height: 1.6;
+        font-size: 1.1rem;
+        font-weight: 300;
+      }
+    }
+  }
+}
+
+// 4. Economy Cards
+.economy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+
+  .econ-card {
+    padding: 3.5rem 2.5rem;
+    text-align: center;
+    border-radius: 4px;
+
+    .econ-icon {
+      font-size: 3.5rem;
+      margin-bottom: 2rem;
+      opacity: 0.8;
+    }
+    
+    h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      color: $color-gold;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    p {
+      color: $color-text-secondary;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .page-header h1 { font-size: 2.2rem; }
+  .reglas-container { padding-top: 6rem; }
+  .rules-grid, .economy-grid { grid-template-columns: 1fr; }
+  .era-point { flex-direction: column; gap: 1.5rem; }
+}
