@@ -1,0 +1,151 @@
+<div class="home-container">
+  <!-- Capa Atmosférica -->
+  <div class="hero-bg-fx">
+    <div class="fog-layer"></div>
+    <div class="particles-layer"></div>
+  </div>
+
+  <!-- Hero Section -->
+  <header class="hero-section">
+    <div class="hero-content">
+      <app-logo [scale]="1.5" class="animate-drop-in"></app-logo>
+      
+      <h1 class="hero-title animate-glow">VIKING CLAN WARS</h1>
+      <p class="hero-subtitle animate-slide-up">
+        Conquista las Tierras del Norte. Forja tu leyenda. Arrasa con tus enemigos.
+      </p>
+      
+      <div class="hero-actions animate-fade-in-slow">
+        <button class="btn-mithic-primary" (click)="enterValhalla()">
+          <span class="rune">᚛</span> ¡A LAS ARMAS! <span class="rune">᚜</span>
+        </button>
+      </div>
+
+      <div class="scroll-hint">
+        <p>Explora el Códice</p>
+        <div class="arrow-down"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="codex-content">
+    
+    <!-- 1. LAS ERAS -->
+    <section class="section-era glass-panel">
+      <div class="section-header">
+        <h2 class="section-title">La Cronología de la Guerra</h2>
+        <div class="title-divider"></div>
+        <p class="section-desc">Toda saga se divide en tres eras ancestrales.</p>
+      </div>
+
+      <div class="era-grid">
+        <div class="era-card forged-border">
+          <div class="era-num">I</div>
+          <h3 class="era-name">Preparación</h3>
+          <p class="era-detail">
+            Los ataques están prohibidos. Es el momento de realizar rituales, entrenar tus tropas y acumular sabiduría. Los costos son elevados, pero la paz es temporal.
+          </p>
+        </div>
+        <div class="era-card forged-border highlight">
+          <div class="era-num">II</div>
+          <h3 class="era-name">Guerra Total</h3>
+          <p class="era-detail">
+            El Ragnarök comienza. Los costos de leva se reducen y la sangre corre por las tierras. Es la era de la conquista y la destrucción mutua.
+          </p>
+        </div>
+        <div class="era-card forged-border">
+          <div class="era-num">III</div>
+          <h3 class="era-name">El Veredicto</h3>
+          <p class="era-detail">
+            Solo los clanes más fuertes permanecen. La magia fluye con facilidad mientras el fin se acerca. El arma definitiva está lista para ser forjada.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. LOS CLANES -->
+    <section class="section-clans">
+      <div class="section-header">
+        <h2 class="section-title">Elige tu Linaje</h2>
+        <div class="title-divider"></div>
+        <p class="section-desc">Seis clanes ancestrales luchan por el trono supremo.</p>
+      </div>
+
+      <div class="clans-grid">
+        @for (clan of clans(); track clan.id) {
+          <div class="clan-mythic-card">
+            <div class="clan-card-inner forged-border">
+              <div class="clan-bg-symbol">{{ getArchetypeIcon(clan.archetype) }}</div>
+              <div class="clan-top">
+                <div class="archetype-label">{{ clan.archetype | uppercase }}</div>
+                <h3 class="clan-name">{{ clan.name }}</h3>
+              </div>
+              <p class="clan-lore">
+                Maestros del {{ clan.archetype }}, estos guerreros dominan tácticas sagradas para prevalecer en el campo de batalla.
+              </p>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- 3. SISTEMA MILITAR -->
+    <section class="section-system glass-panel">
+      <div class="system-container">
+        <div class="system-text">
+          <h2 class="section-title">Arte de la Guerra</h2>
+          <div class="title-divider left"></div>
+          
+          <div class="mechanic">
+            <h4>Puntos de Acción (AP)</h4>
+            <p>Recurso vital para el reclutamiento y despliegue. Se regeneran con el flujo de las mareas del norte.</p>
+          </div>
+          
+          <div class="mechanic">
+            <h4>Tecnología Sagrada (RP)</h4>
+            <p>Invierte en el Árbol Tecnológico para desbloquear unidades de élite y hechizos que alteran el destino.</p>
+          </div>
+
+          <div class="mechanic">
+            <h4>Mapa Táctico</h4>
+            <p>Visualiza el frente de batalla y las capitales enemigas. Planifica tus incursiones con precisión rúnica.</p>
+          </div>
+        </div>
+        
+        <div class="system-visual forged-border">
+          <div class="placeholder-map-fx">
+            <div class="pulse-ring"></div>
+            <span class="rune-mark">ᛟ</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Final CTA -->
+  <section class="cta-section">
+    <div class="final-cta-card glass-panel forged-border">
+      <h2 class="title-font">¿Estás preparado para el Valhalla?</h2>
+      <p>Únete a la asamblea de clanes y reclama tu trono en el Norte.</p>
+      <button class="btn-mithic-primary big" (click)="enterValhalla()">
+        FORJAR MI LEYENDA
+      </button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="home-footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <app-logo [scale]="0.5" [showText]="false"></app-logo>
+        <span>VIKING CLAN WARS</span>
+      </div>
+      <p class="copy">&copy; 2026 VIKING CLAN WARS - Una saga de Estrategia Eterna</p>
+      <div class="social-links">
+        <a href="#" target="_blank">Discord 🛡️</a>
+        <a href="#" target="_blank">Códice 📜</a>
+      </div>
+    </div>
+  </footer>
+</div>
