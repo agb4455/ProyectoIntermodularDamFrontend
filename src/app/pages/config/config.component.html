@@ -1,60 +1,78 @@
-<div class="config-container">
-  <div class="config-card">
-    <div class="config-header">
-      <div class="avatar-wrapper">
-        <div class="avatar-container" title="Cambiar Avatar" (click)="onEditAvatar()">
-          <svg fill="currentColor" viewBox="0 0 24 24" width="40" height="40">
-            <path
-              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z">
-            </path>
-          </svg>
-        </div>
-        <div class="edit-avatar-btn" title="Editar Avatar" (click)="onEditAvatar()">
-          <svg fill="currentColor" viewBox="0 0 24 24" width="16" height="16">
-            <path
-              d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z">
-            </path>
-          </svg>
-        </div>
+<div class="config-page">
+  <h1 class="page-title">Configuración</h1>
+
+  <!-- Sidebar profile -->
+  <div class="profile-sidebar">
+    <div class="avatar-wrapper">
+      <div class="avatar-container" title="Cambiar Avatar" (click)="onEditAvatar()">
+        <svg fill="currentColor" viewBox="0 0 24 24" width="60" height="60">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+        </svg>
       </div>
-      <div class="user-info">
-        <div class="user-name-text">{{ userName() }}</div>
-        <div class="user-email-text">{{ userEmail() }}</div>
+      <div class="edit-avatar-btn" title="Editar Avatar" (click)="onEditAvatar()">
+        <svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18">
+          <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+        </svg>
       </div>
     </div>
+    
+    <div class="user-name-text">{{ userName() }}</div>
+    <div class="user-email-text">{{ userEmail() }}</div>
+  </div>
 
-    <div class="divider"></div>
-
-    <div class="config-body">
-      <div class="action-row">
+  <!-- Settings area -->
+  <div class="settings-area">
+    <div class="settings-section">
+      <h2 class="section-title">Credenciales</h2>
+      
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Correo electrónico</div>
+          <div class="setting-description">Actualiza la dirección asociada a tu cuenta</div>
+        </div>
         <button class="btn btn-secondary" (click)="onChangeEmail()">Cambiar correo</button>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Contraseña</div>
+          <div class="setting-description">Modifica tu contraseña de acceso</div>
+        </div>
         <button class="btn btn-secondary" (click)="onChangePassword()">Cambiar contraseña</button>
       </div>
+    </div>
+  </div>
 
-      <div class="setting-row">
-        <span class="setting-label">Idioma</span>
-        <div class="setting-control">
-          <select class="custom-select" [(ngModel)]="language">
-            <option value="ES">Español</option>
-            <option value="EN">Inglés</option>
-          </select>
-        </div>
-      </div>
+  <!-- Full width settings section -->
+  <div class="full-width-section">
+    <h2 class="section-title">Preferencias de aplicación</h2>
 
-      <div class="setting-row">
-        <span class="setting-label">Modo oscuro</span>
-        <div class="setting-control">
-          <label class="switch">
-            <input type="checkbox" [(ngModel)]="isDarkMode">
-            <span class="slider round"></span>
-          </label>
-        </div>
+    <div class="setting-row">
+      <div>
+        <div class="setting-label">Idioma</div>
+        <div class="setting-description">Selecciona el idioma de la interfaz</div>
       </div>
+      <select class="input-field" style="width: 150px;" [(ngModel)]="language">
+        <option value="ES">Español</option>
+        <option value="EN">Inglés</option>
+      </select>
     </div>
 
-    <div class="config-footer">
-      <button class="btn btn-primary" (click)="onSave()">Guardar</button>
-      <button class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+    <div class="setting-row">
+      <div>
+        <div class="setting-label">Modo oscuro</div>
+        <div class="setting-description">Cambia entre el tema claro y oscuro</div>
+      </div>
+      <label class="switch">
+        <input type="checkbox" [(ngModel)]="isDarkMode">
+        <span class="slider round"></span>
+      </label>
     </div>
+  </div>
+
+  <!-- FOOTER: Actions -->
+  <div class="config-footer">
+    <button class="btn btn-primary" (click)="onSave()">Guardar cambios</button>
+    <button class="btn btn-secondary" (click)="onCancel()">Descartar</button>
   </div>
 </div>

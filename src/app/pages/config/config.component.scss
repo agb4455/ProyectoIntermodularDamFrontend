@@ -1,47 +1,56 @@
-.config-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: calc(100vh - 64px); // Adjusting for navbar height
-  padding: 3rem 1rem;
+.config-page {
+  flex-grow: 1;
+  padding: 1.5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1.5rem;
   background-color: var(--color-bg-primary);
+  min-height: calc(100vh - 64px);
 }
 
-.config-card {
-  width: 100%;
-  max-width: 500px;
-  background-color: var(--color-bg-card);
-  border: 1px solid var(--color-border-faint);
-  border-radius: 8px;
-  box-shadow: 0 8px 24px var(--color-bg-overlay);
-  padding: 2rem;
+.page-title {
+  grid-column: 1 / -1;
+  font-size: 2rem;
+  color: var(--color-gold);
+  margin: 0 0 1rem 0;
+  border-bottom: 2px solid var(--color-border-default);
+  padding-bottom: 1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar profile */
+.profile-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-
-.config-header {
-  display: flex;
   align-items: center;
-  gap: 1.5rem;
+  justify-content: center;
+  background-color: var(--color-bg-card);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-sizing: border-box;
 }
 
 .avatar-wrapper {
   position: relative;
   display: inline-block;
+  margin-bottom: 1.5rem;
 }
 
 .avatar-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background-color: var(--color-bg-tertiary);
   color: var(--color-gold);
   border: 3px solid var(--color-border-default);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
 
   &:hover {
     border-color: var(--color-gold);
@@ -51,17 +60,17 @@
 
 .edit-avatar-btn {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 28px;
-  height: 28px;
+  bottom: 5px;
+  right: 5px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background-color: var(--color-gold);
   color: #000;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid var(--color-bg-card);
+  border: 3px solid var(--color-bg-secondary);
   cursor: pointer;
   transition: all 0.2s ease;
 
@@ -71,62 +80,79 @@
   }
 }
 
-.user-info {
+.user-name-text {
+  color: var(--color-text-primary);
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.user-email-text {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  margin: 0;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Settings area */
+.settings-area {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  justify-content: center;
-
-  .user-name-text {
-    color: var(--color-text-primary);
-    font-size: 1.5rem;
-    font-weight: bold;
-    padding: 0;
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-  }
-
-  .user-email-text {
-    color: var(--color-text-secondary);
-    font-size: 0.9rem;
-    font-weight: 400;
-    padding: 0;
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-  }
+  height: 100%;
 }
 
-.divider {
-  height: 1px;
-  background-color: var(--color-border-default);
-  opacity: 0.5;
-  width: 100%;
-}
-
-.config-body {
+.settings-section {
+  background-color: var(--color-bg-card);
+  border-radius: 8px;
+  padding: 1.5rem;
+  height: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  justify-content: center;
 }
 
-.action-row {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
+.full-width-section {
+  grid-column: 1 / -1;
+  background-color: var(--color-bg-card);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  color: var(--color-text-primary);
+  margin: 0 0 1.5rem 0;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
 }
 
 .setting-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-border-default);
 
-  .setting-label {
-    color: var(--color-text-primary);
-    font-size: 1rem;
-    font-weight: 500;
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
   }
+}
+
+.setting-label {
+  font-size: 1.05rem;
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.setting-description {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.25rem;
 }
 
 /* UI Elements */
@@ -165,14 +191,14 @@
   }
 }
 
-.custom-select {
+.input-field {
   padding: 0.5rem 2rem 0.5rem 1rem;
   border-radius: 4px;
   background-color: var(--color-bg-tertiary);
   color: var(--color-text-primary);
   border: 1px solid var(--color-border-default);
   font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
+  font-size: 1rem;
   appearance: none;
   cursor: pointer;
   background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23b3b3b3%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
@@ -246,8 +272,17 @@ input:focus + .slider {
 }
 
 .config-footer {
+  grid-column: 1 / -1;
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
   margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border-default);
+}
+
+@media (max-width: 768px) {
+  .config-page {
+    grid-template-columns: 1fr;
+  }
 }
