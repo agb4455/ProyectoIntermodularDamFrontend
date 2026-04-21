@@ -1,0 +1,302 @@
+@use "../../../styles/variables" as *;
+@use 'sass:color';
+
+// Lobby layout
+.lobby-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  // Account for navbar height
+  min-height: calc(100% - 72px);
+  
+  @media (max-width: 768px) {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+}
+
+// Glassmorphism panels
+.glass-panel {
+  background-color: $color-bg-glass;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid $color-border-default;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+// Hero Section
+.hero-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 2rem;
+}
+
+.actions-grid {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  justify-content: center;
+  
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+// Typography
+.section-title {
+  color: $color-text-primary;
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-header {
+  cursor: pointer;
+  user-select: none;
+  
+  h2 {
+    margin-bottom: 0;
+    transition: color 0.2s ease;
+  }
+
+  &:hover h2 {
+    color: $color-gold;
+  }
+  
+  .toggle-icon {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+    display: inline-block;
+    
+    &.collapsed {
+      transform: rotate(-90deg);
+    }
+  }
+}
+
+// Game Lists
+.games-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.game-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $color-bg-card;
+  border: 1px solid $color-border-faint;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    border-color: $color-border-strong;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+}
+
+.game-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.game-name {
+  color: $color-text-primary;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.game-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.game-code-label {
+  color: $color-text-disabled;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.game-code {
+  color: $color-gold-light;
+  font-family: monospace;
+  font-weight: 700;
+  background-color: $color-bg-tertiary;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  letter-spacing: 2px;
+}
+
+.game-result {
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+
+  &.victoria {
+    color: $color-success;
+    background-color: $color-success-bg;
+    border: 1px solid $color-success;
+  }
+
+  &.derrota {
+    color: $color-error;
+    background-color: $color-error-bg;
+    border: 1px solid $color-error;
+  }
+}
+
+.game-actions {
+  display: flex;
+  gap: 0.75rem;
+  
+  @media (max-width: 640px) {
+    width: 100%;
+    
+    button {
+      flex: 1;
+    }
+  }
+}
+
+.empty-state {
+  color: $color-text-secondary;
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+  background-color: $color-bg-card;
+  border-radius: 8px;
+  border: 1px dashed $color-border-default;
+}
+
+// Badges
+.badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  
+  &[data-clan="fury"] { background-color: rgba(192, 57, 43, 0.2); color: $color-clan-fury; border: 1px solid $color-clan-fury; }
+  &[data-clan="divine"] { background-color: rgba(74, 144, 217, 0.2); color: $color-clan-divine; border: 1px solid $color-clan-divine; }
+  &[data-clan="iron"] { background-color: rgba(138, 155, 168, 0.2); color: $color-clan-iron; border: 1px solid $color-clan-iron; }
+  &[data-clan="song"] { background-color: rgba(139, 92, 246, 0.2); color: $color-clan-song; border: 1px solid $color-clan-song; }
+  &[data-clan="rune"] { background-color: rgba(16, 185, 129, 0.2); color: $color-clan-rune; border: 1px solid $color-clan-rune; }
+  &[data-clan="death"] { background-color: rgba(124, 107, 158, 0.2); color: $color-clan-death; border: 1px solid $color-clan-death; }
+}
+
+// Buttons
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  &.btn-large {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  &:not(.btn-large) {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.btn-primary {
+  background-color: $color-gold;
+  color: $color-text-inverse;
+  
+  &:hover {
+    background-color: $color-gold-light;
+    box-shadow: 0 0 15px rgba(201, 168, 76, 0.4);
+  }
+}
+
+.btn-secondary {
+  background-color: $color-bg-tertiary;
+  color: $color-text-primary;
+  border: 1px solid $color-border-strong;
+  
+  &:hover {
+    background-color: $color-gold-muted;
+    border-color: $color-gold-light;
+  }
+}
+
+.btn-gold {
+  background-color: $color-gold;
+  color: $color-text-inverse;
+  
+  &:hover {
+    background-color: $color-gold-light;
+  }
+}
+
+.btn-info {
+  background-color: $color-bg-tertiary;
+  color: $color-info;
+  border: 1px solid $color-info;
+  
+  &:hover {
+    background-color: $color-info-bg;
+  }
+}
+
+.btn-danger {
+  background-color: $color-error;
+  color: $color-text-inverse;
+}
+
+.btn-danger-outline {
+  background-color: transparent;
+  color: $color-error;
+  border: 1px solid $color-error;
+  
+  &:hover {
+    background-color: $color-error-bg;
+  }
+}
+
+// Adjust hover for danger button properly
+.btn-danger:hover {
+  background-color: color.adjust(#c0392b, $lightness: 10%);
+}

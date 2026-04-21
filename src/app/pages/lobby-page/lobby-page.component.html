@@ -1,0 +1,67 @@
+<main class="lobby-container">
+  
+  <section class="hero-section glass-panel">
+    <div class="actions-grid">
+      <button class="btn-primary btn-large" (click)="onNewGame()">Nueva Partida</button>
+      <button class="btn-secondary btn-large" (click)="onJoinGame()">Unirse a Partida</button>
+    </div>
+  </section>
+
+  <section class="active-games-section glass-panel">
+    <h2 class="section-title">Partidas activas</h2>
+    <div class="games-list">
+      @for (game of activeGames(); track game.id) {
+        <div class="game-card">
+          <div class="game-info">
+            <h3 class="game-name">{{ game.name }}</h3>
+            <div class="game-meta">
+              <span class="game-code-label">CÓDICE:</span>
+              <span class="game-code">{{ game.code }}</span>
+              <span class="game-clan badge" [attr.data-clan]="game.clan">{{ game.clanName }}</span>
+            </div>
+          </div>
+          <div class="game-actions">
+            <button class="btn-gold" (click)="onEnterGame(game.id)">Entrar</button>
+            <button class="btn-danger" (click)="onLeaveGame(game.id)">Salir</button>
+          </div>
+        </div>
+      } @empty {
+        <p class="empty-state">No tienes partidas activas. ¡Forja tu legado creando o uniéndote a una batalla!</p>
+      }
+    </div>
+  </section>
+
+  <section class="finished-games-section glass-panel">
+    <div class="section-header" (click)="toggleFinishedGames()" role="button" tabindex="0">
+      <h2 class="section-title">
+        <span class="toggle-icon" [class.collapsed]="finishedGamesCollapsed()">▼</span>
+        Partidas terminadas 
+      </h2>
+    </div>
+    
+    @if (!finishedGamesCollapsed()) {
+      <div class="games-list">
+        @for (game of finishedGames(); track game.id) {
+          <div class="game-card finished">
+            <div class="game-info">
+              <h3 class="game-name">{{ game.name }}</h3>
+              <div class="game-meta">
+                <span class="game-code">{{ game.code }}</span>
+                <span class="game-result" [class.victoria]="game.result === 'Victoria'" [class.derrota]="game.result === 'Derrota'">
+                  {{ game.result }}
+                </span>
+              </div>
+            </div>
+            <div class="game-actions">
+              <button class="btn-info" (click)="onViewStats(game.id)">Estadísticas</button>
+              <button class="btn-danger-outline" (click)="onDeleteFinished(game.id)">Borrar</button>
+            </div>
+          </div>
+        } @empty {
+          <p class="empty-state">Las crónicas están vacías. Aún no hay registros de batallas pasadas.</p>
+        }
+      </div>
+    }
+  </section>
+
+</main>

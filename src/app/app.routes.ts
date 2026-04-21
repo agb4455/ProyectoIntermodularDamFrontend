@@ -6,6 +6,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/home/home.component').then((c) => c.HomeComponent),
   },
   {
+    path: 'lobby',
+    loadComponent: () => import('./pages/lobby-page/lobby-page.component').then((c) => c.LobbyPageComponent),
+  },
+  {
     path: 'admin',
     loadComponent: () => import('./pages/admin-page/admin-page.component').then((c) => c.AdminPageComponent),
   },
