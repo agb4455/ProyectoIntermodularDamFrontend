@@ -18,7 +18,7 @@
   overflow: hidden;
   background: 
     radial-gradient(circle at center, var(--color-gold-muted) 0%, transparent 70%),
-    linear-gradient(to bottom, rgba(13, 12, 24, 0.4), var(--color-bg-primary)),
+    linear-gradient(to bottom, var(--color-bg-overlay), var(--color-bg-primary)),
     url('/viking_hero.png') no-repeat center center;
   background-size: cover;
   z-index: 2;
@@ -455,7 +455,7 @@
 // RESPONSIVE
 @media (max-width: 1024px) {
   .system-container { grid-template-columns: 1fr; gap: 40px; }
-  .clans-grid { grid-template-columns: 1fr; }
+.clans-grid { grid-template-columns: 1fr; }
   .section-system { padding: 40px 20px; }
 }
 

@@ -1,15 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-/**
- * Interfaz para definir una métrica de estadística
- */
-export interface StatMetric {
-  id: string;
-  label: string;
-  value: string;
-  icon: string; // Tipo de icono o path a SVG
-}
+import { StatMetric } from './statistics.model';
 
 @Component({
   selector: 'app-stats',
@@ -19,7 +10,7 @@ export interface StatMetric {
   styleUrl: './statistics.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StatsComponent {
+export class StatisticsComponent {
   
   // Datos hardcodeados siguiendo el mockup y requerimientos
   // Estos datos se conectarán al backend en una fase posterior

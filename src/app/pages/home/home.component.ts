@@ -4,12 +4,7 @@ import { AuthService } from '../../core/auth/auth.service';
 import { LogoComponent } from '../../shared/components/logo/logo.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
-interface ClanPreview {
-  id: string;
-  name: string;
-  archetype: string;
-}
+import { ClanPreview } from './home.model';
 
 @Component({
   selector: 'app-home',

@@ -1,22 +1,16 @@
 import { Component, ChangeDetectionStrategy, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface BanRecord {
-  id: string;
-  user: string;
-  reason: string;
-  expiresIn: string;
-}
+import { BanRecord } from './admin-page.model';
 
 @Component({
-  selector: 'app-admin',
+  selector: 'app-admin-page',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './admin.component.html',
-  styleUrl: './admin.component.scss',
+  templateUrl: './admin-page.component.html',
+  styleUrl: './admin-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdminComponent {
+export class AdminPageComponent {
   
   public readonly globalStats = signal({
     totalUsers: 1248,

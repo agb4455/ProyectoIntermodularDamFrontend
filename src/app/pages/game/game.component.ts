@@ -6,23 +6,7 @@ import { GameLogModalComponent } from './modals/game-log.modal';
 import { ReglasModalComponent } from './modals/reglas.modal';
 import { Troop, EnemyTarget, ClanId, TroopType, TrainableTroopOption, GameLogEntry } from './modals/attack.types';
 
-// Tipos del clan para tipado estricto
-type GamePhase = 'PREPARACIÓN' | 'GUERRA' | 'FIN';
-
-interface PlayerNode {
-  clan: ClanId;
-  username: string;
-  position?: { x: number; y: number }; // Posición en porcentaje
-  health?: { current: number; max: number };
-}
-
-interface ActiveAttack {
-  attacker: PlayerNode;
-  defender: PlayerNode;
-  troopIds: string[];
-  pathId: string; // ID único para el path
-  durationMs: number; // Duración del despliegue / animación del camino
-}
+import { GamePhase, PlayerNode, ActiveAttack } from './game.model';
 
 @Component({
   selector: 'app-game-page',

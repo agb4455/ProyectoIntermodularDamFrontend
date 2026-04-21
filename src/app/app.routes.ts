@@ -7,11 +7,11 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    loadComponent: () => import('./pages/admin/admin.component').then((c) => c.AdminComponent),
+    loadComponent: () => import('./pages/admin-page/admin-page.component').then((c) => c.AdminPageComponent),
   },
   {
     path: 'stats/user',
-    loadComponent: () => import('./pages/statistics-view/statistics.component').then((c) => c.StatsComponent),
+    loadComponent: () => import('./pages/statistics/statistics.component').then((c) => c.StatisticsComponent),
   },
   {
     path: 'game',
@@ -19,14 +19,14 @@ export const routes: Routes = [
   },
   {
     path: 'config',
-    loadComponent: () => import('./pages/config/config.component').then((c) => c.ConfigComponent),
+    loadComponent: () => import('./pages/user-config/user-config.component').then((c) => c.UserConfigComponent),
   },
   {
     path: 'personajes',
-    loadComponent: () => import('./pages/personajes-page/personajes-page.component').then((c) => c.PersonajesPageComponent),
+    loadComponent: () => import('./pages/characters-page/characters-page.component').then((c) => c.CharactersPageComponent),
   },
   {
     path: 'reglas',
-    loadComponent: () => import('./pages/reglas-page/reglas-page.component').then((c) => c.ReglasPageComponent),
+    loadComponent: () => import('./pages/rules-page/rules-page.component').then((c) => c.RulesPageComponent),
   },
 ];

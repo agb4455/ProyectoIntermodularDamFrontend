@@ -1,23 +1,7 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { Observable, of, delay, tap } from 'rxjs';
 
-// Payload decodificado del JWT emitido por el Middle Server
-interface JwtPayload {
-  sub: string;        // username del usuario
-  role: UserRole;     // rol del usuario
-  iat: number;        // issued at
-  exp: number;        // expiration
-}
-
-// Roles posibles según la arquitectura del proyecto
-export type UserRole = 'USER' | 'ADMIN';
-
-// Estado de sesión que expone el servicio
-export interface SessionState {
-  username: string;
-  role: UserRole;
-  token: string;
-}
+import { JwtPayload, UserRole, SessionState } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

@@ -22,7 +22,7 @@
   background: $color-bg-glass-rich;
   border: 1px solid $color-gold-muted;
   border-radius: 8px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px $color-gold-muted;
+  box-shadow: 0 20px 50px var(--color-bg-overlay), inset 0 0 20px $color-gold-muted;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -46,7 +46,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(201, 168, 76, 0.05);
+  background: var(--color-gold-muted);
 
   .header-title {
     display: flex;
@@ -64,7 +64,7 @@
       letter-spacing: 0.2em;
       text-transform: uppercase;
       font-weight: 800;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      text-shadow: 0 2px 4px var(--color-bg-overlay);
     }
   }
 
@@ -183,7 +183,7 @@
 
 .resource-card {
   padding: 1.25rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
   border: 1px solid $color-border-faint;
   border-radius: 8px;
   text-align: center;
@@ -218,7 +218,7 @@
     color: $color-text-secondary;
     font-size: 0.9rem;
     padding: 0.5rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
     border-radius: 4px;
     
     strong {
@@ -229,7 +229,7 @@
 
 .advantage-graph-container {
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--color-bg-overlay);
   border-radius: 12px;
   display: flex;
   justify-content: center;
@@ -294,7 +294,7 @@
   margin-top: 1rem;
 
   .mechanic-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
     padding: 1rem;
     border-radius: 8px;
     border-left: 3px solid var(--color-gold-muted);
@@ -319,7 +319,7 @@
 .rule-tip {
   margin-top: 1.5rem;
   padding: 1rem;
-  background: rgba(var(--color-gold-rgb), 0.05);
+  background: var(--color-gold-muted);
   border: 1px dashed var(--color-gold-muted);
   border-radius: 8px;
   display: flex;
@@ -389,12 +389,12 @@
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 4px 15px rgba(201, 168, 76, 0.3);
+  box-shadow: 0 4px 15px var(--color-gold-muted);
 
   &:hover {
     background: $color-gold-light;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(201, 168, 76, 0.4);
+    box-shadow: 0 6px 20px var(--color-gold-muted);
   }
 
   &:active {

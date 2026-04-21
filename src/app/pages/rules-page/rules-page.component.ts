@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-reglas-page',
+  selector: 'app-rules-page',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './reglas-page.component.html',
-  styleUrl: './reglas-page.component.scss',
+  templateUrl: './rules-page.component.html',
+  styleUrl: './rules-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReglasPageComponent {}
+export class RulesPageComponent {}

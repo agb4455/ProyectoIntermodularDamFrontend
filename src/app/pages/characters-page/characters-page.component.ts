@@ -1,28 +1,17 @@
 import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
-interface ClanDetail {
-  id: string;
-  name: string;
-  archetype: string;
-  description: string;
-  beats: string;
-  beatsReason: string;
-  beatenBy: string;
-  colorVar: string;
-  icon: string;
-}
+import { ClanDetail } from './characters.model';
 
 @Component({
-  selector: 'app-personajes-page',
+  selector: 'app-characters-page',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './personajes-page.component.html',
-  styleUrl: './personajes-page.component.scss',
+  templateUrl: './characters-page.component.html',
+  styleUrl: './characters-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PersonajesPageComponent {
+export class CharactersPageComponent {
   protected readonly clans = signal<ClanDetail[]>([
     {
       id: 'berserkers',

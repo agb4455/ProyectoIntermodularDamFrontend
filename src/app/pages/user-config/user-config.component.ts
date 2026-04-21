@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-config',
+  selector: 'app-user-config',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './config.component.html',
-  styleUrl: './config.component.scss',
+  templateUrl: './user-config.component.html',
+  styleUrl: './user-config.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ConfigComponent {
+export class UserConfigComponent {
   // Signals para manejar el estado del usuario.
   // En producción estos vendrán de un AuthService / UserService.
   readonly userName = signal<string>('Ragnar Lothbrok');

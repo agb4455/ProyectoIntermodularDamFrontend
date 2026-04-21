@@ -32,7 +32,7 @@
     font-family: 'Cinzel', serif;
     font-size: clamp(1.2rem, 4vw, 2.22rem);
     color: $color-gold;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 4px 15px var(--color-bg-overlay);
     letter-spacing: 3px;
     margin: 0;
   }
@@ -104,7 +104,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 25px var(--color-bg-overlay);
   border: 3px solid $color-bg-primary;
   transition: all 0.3s ease;
 
@@ -179,7 +179,7 @@
   border: 1px solid $color-border-default;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 40px var(--color-bg-overlay);
   transition: border-color 0.3s;
 
   &.glass-style {
@@ -322,7 +322,7 @@
     &:hover {
       background: $color-gold-light;
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(201, 168, 76, 0.4);
+      box-shadow: 0 8px 25px var(--color-gold-muted);
     }
   }
 
@@ -331,7 +331,7 @@
     border: 1px solid $color-gold;
     color: $color-gold;
     &:hover {
-      background: rgba(201, 168, 76, 0.08);
+      background: var(--color-gold-muted);
       border-color: $color-gold-light;
     }
   }
