@@ -17,33 +17,52 @@
   <!-- Input de Códice -->
   <div class="code-section">
     <label for="game-code-input" class="code-label">CÓDICE DE BATALLA</label>
-    <input 
-      id="game-code-input"
-      type="text" 
-      class="code-input"
-      placeholder="Introduce el Códice" 
-      [value]="gameCode()" 
-      (input)="updateCode($event)"
-      autocomplete="off"
-      maxlength="10"
-    />
+    <div class="code-input-wrapper">
+      <input 
+        id="game-code-input"
+        type="text" 
+        class="code-input"
+        placeholder="Introduce el Códice" 
+        [value]="gameCode()" 
+        (input)="updateCode($event)"
+        autocomplete="off"
+        maxlength="10"
+      />
+      <button class="btn-verify" [disabled]="!gameCode() || isVerifying()" (click)="verifyCode()">
+        @if (isVerifying()) {
+          <span class="joining-spinner spinner-small" aria-hidden="true"></span>
+        } @else {
+          VERIFICAR
+        }
+      </button>
+    </div>
   </div>
 
   <!-- Círculos de Clanes -->
-  <div class="clanes-circles-container">
-    @for (clan of clanes(); track clan.id) {
-      <button
-        class="clan-circle"
-        [class.selected]="selectedClan() === clan.id"
-        [attr.data-clan]="clan.id"
-        (click)="selectClan(clan.id)"
-        [attr.aria-pressed]="selectedClan() === clan.id"
-        [attr.aria-label]="'Seleccionar clan ' + clan.name"
-      >
-        <span class="clan-icon" aria-hidden="true">{{ clan.icon }}</span>
-      </button>
-    }
-  </div>
+  @if (isCodeVerified()) {
+    <div class="clanes-section">
+      <label class="code-label">ELIGE TU DESTINO</label>
+      <div class="clanes-circles-container">
+        @for (clan of clanes(); track clan.id) {
+          <div class="clan-wrapper">
+            <button
+              class="clan-circle"
+              [class.selected]="selectedClan() === clan.id"
+              [class.disabled]="!clan.available"
+              [attr.data-clan]="clan.id"
+              (click)="selectClan(clan.id)"
+              [attr.aria-pressed]="selectedClan() === clan.id"
+              [attr.aria-label]="'Seleccionar clan ' + clan.name"
+              [disabled]="!clan.available"
+            >
+              <span class="clan-icon" aria-hidden="true">{{ clan.icon }}</span>
+            </button>
+            <span class="clan-name" [class.disabled]="!clan.available" aria-hidden="true">{{ clan.name }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
 
   <!-- Botón CTA -->
   <footer class="modal-footer">

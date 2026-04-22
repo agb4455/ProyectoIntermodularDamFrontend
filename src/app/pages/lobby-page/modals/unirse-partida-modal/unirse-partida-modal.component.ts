@@ -14,15 +14,16 @@ interface ClanOption {
   name: string;
   archetype: string;
   icon: string;
+  available?: boolean;
 }
 
 const CLANES: ClanOption[] = [
-  { id: 'fury',   name: 'Berserkers', archetype: 'FURY',   icon: '🪓' },
-  { id: 'divine', name: 'Valkirias',  archetype: 'DIVINE', icon: '⚡' },
-  { id: 'iron',   name: 'Jarls',      archetype: 'IRON',   icon: '🛡️' },
-  { id: 'song',   name: 'Skalds',     archetype: 'SONG',   icon: '🎵' },
-  { id: 'rune',   name: 'Seidr',      archetype: 'RUNE',   icon: '🌿' },
-  { id: 'death',  name: 'Draugr',     archetype: 'DEATH',  icon: '💀' },
+  { id: 'fury',   name: 'Berserkers', archetype: 'FURY',   icon: '🪓', available: true },
+  { id: 'divine', name: 'Valkirias',  archetype: 'DIVINE', icon: '⚡', available: true },
+  { id: 'iron',   name: 'Jarls',      archetype: 'IRON',   icon: '🛡️', available: true },
+  { id: 'song',   name: 'Skalds',     archetype: 'SONG',   icon: '🎵', available: true },
+  { id: 'rune',   name: 'Seidr',      archetype: 'RUNE',   icon: '🌿', available: true },
+  { id: 'death',  name: 'Draugr',     archetype: 'DEATH',  icon: '💀', available: true },
 ];
 
 @Component({
@@ -54,14 +55,45 @@ export class UnirsePartidaModalComponent {
   // Estado de carga tras pulsar "Entrar en Combate"
   readonly isJoining = signal<boolean>(false);
 
+  // Estado de la verificación del código
+  readonly isCodeVerified = signal<boolean>(false);
+  readonly isVerifying = signal<boolean>(false);
+
   // Actualiza el código del juego introducido
   updateCode(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.gameCode.set(input.value.toUpperCase());
+    
+    // Si cambia el código, resetear la verificación y clanes
+    this.isCodeVerified.set(false);
+    this.selectedClan.set(null);
+  }
+
+  // Verifica el código contra el servidor y obtiene los clanes disponibles
+  verifyCode(): void {
+    if (!this.gameCode().trim()) return;
+    this.isVerifying.set(true);
+
+    // TODO: Llamar al servidor para obtener los clanes disponibles
+    // Ej: const availableClans = await this.gameService.getAvailableClans(this.gameCode());
+    
+    // Simulación: FURY y RUNE están cogidos
+    setTimeout(() => {
+      const clanesActualizados = CLANES.map(clan => ({
+        ...clan,
+        available: clan.id !== 'fury' && clan.id !== 'rune'
+      }));
+      
+      this.clanes.set(clanesActualizados);
+      this.isCodeVerified.set(true);
+      this.isVerifying.set(false);
+    }, 600);
   }
 
   // Selecciona o deselecciona un clan
   selectClan(clanId: string): void {
+    const clan = this.clanes().find(c => c.id === clanId);
+    if (!clan || !clan.available) return;
     this.selectedClan.update(current => (current === clanId ? null : clanId));
   }
 

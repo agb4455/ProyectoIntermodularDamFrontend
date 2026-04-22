@@ -1,3 +1,5 @@
+@use '../../../styles/variables' as *;
+
 // Uses CSS custom properties defined globally. No hardcoded hex values.
 
 :host {
@@ -340,6 +342,43 @@
 
 .badge-active {
   background-color: var(--color-error-bg);
-  color: var(--color-error);
   border: 1px solid var(--color-error);
+}
+
+@include tablet {
+  .admin-dashboard {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border-default);
+    flex-shrink: 0;
+  }
+  .main-content {
+    overflow-y: visible;
+  }
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@include mobile {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .bans-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  // Para que la tabla no se rompa
+  .bans-container {
+    padding: 15px;
+  }
+  .table-scroll-wrapper {
+    overflow-x: auto;
+  }
 }

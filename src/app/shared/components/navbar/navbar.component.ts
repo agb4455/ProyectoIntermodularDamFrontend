@@ -24,6 +24,9 @@ export class NavbarComponent {
   // Estado del modal de autenticación
   protected readonly authModalOpen = signal<boolean>(false);
 
+  // Estado del menú móvil
+  protected readonly mobileMenuOpen = signal<boolean>(false);
+
   constructor() {
     // Escuchamos parámetros de consulta para abrir el modal si es necesario
     // Usamos un effect para reaccionar a los cambios de queryParams (que es un Observable)
@@ -63,5 +66,15 @@ export class NavbarComponent {
   /** Cierra el dropdown tras navegar a una opción */
   protected closeDropdown(): void {
     this.dropdownOpen.set(false);
+  }
+
+  /** Alterna el menú móvil */
+  protected toggleMobileMenu(): void {
+    this.mobileMenuOpen.update(open => !open);
+  }
+
+  /** Cierra el menú móvil */
+  protected closeMobileMenu(): void {
+    this.mobileMenuOpen.set(false);
   }
 }

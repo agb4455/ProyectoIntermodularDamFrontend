@@ -58,3 +58,21 @@ $color-bg-glass:      var(--color-bg-glass);
 $color-bg-glass-rich: var(--color-bg-glass-rich);
 $color-overlay-soft:  var(--color-overlay-soft);
 $color-overlay-strong: var(--color-overlay-strong);
+
+// Breakpoints
+$bp-mobile: 600px;
+$bp-tablet: 1024px;
+
+// Mixins
+@mixin mobile {
+  @media (max-width: #{$bp-mobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{$bp-tablet}) {
+    @content;
+  }
+}
+

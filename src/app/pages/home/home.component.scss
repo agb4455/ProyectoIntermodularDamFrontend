@@ -453,13 +453,13 @@
 }
 
 // RESPONSIVE
-@media (max-width: 1024px) {
+@include tablet {
   .system-container { grid-template-columns: 1fr; gap: 40px; }
-.clans-grid { grid-template-columns: 1fr; }
+  .clans-grid { grid-template-columns: 1fr; }
   .section-system { padding: 40px 20px; }
 }
 
-@media (max-width: 768px) {
+@include mobile {
   .footer-content { flex-direction: column; text-align: center; }
   .hero-subtitle { letter-spacing: 1px; }
 }
