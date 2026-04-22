@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, signal, inject, HostListener } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, ChangeDetectionStrategy, signal, inject, HostListener, effect } from '@angular/core';
+import { RouterLink, RouterLinkActive, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
 import { AuthComponent } from '../auth/auth.component';
 import { LogoComponent } from '../logo/logo.component';
@@ -16,12 +16,24 @@ export class NavbarComponent {
 
   // Inyección del servicio de autenticación para acceder al rol y sesión
   protected readonly authService = inject(AuthService);
+  private readonly route = inject(ActivatedRoute);
 
   // Estado del dropdown — cerrado por defecto
   protected readonly dropdownOpen = signal<boolean>(false);
 
   // Estado del modal de autenticación
   protected readonly authModalOpen = signal<boolean>(false);
+
+  constructor() {
+    // Escuchamos parámetros de consulta para abrir el modal si es necesario
+    // Usamos un effect para reaccionar a los cambios de queryParams (que es un Observable)
+    // Pero como queryParams es un observable, mejor nos suscribimos en el constructor o ngOnInit.
+    this.route.queryParams.subscribe(params => {
+      if (params['login'] === 'true' && !this.authService.isLoggedIn()) {
+        this.authModalOpen.set(true);
+      }
+    });
+  }
 
   /** Maneja el click en el avatar de usuario */
   protected handleUserClick(): void {

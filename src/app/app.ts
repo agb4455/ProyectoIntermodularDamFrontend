@@ -1,4 +1,4 @@
-import { Component, signal, inject, computed } from '@angular/core';
+import { Component, signal, inject, computed, isDevMode } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { GlobalDebugComponent } from './shared/components/debug/global-debug.component';
@@ -13,6 +13,7 @@ import { filter, map } from 'rxjs';
 })
 export class App {
   protected readonly title = signal('ProyectoIntermodularDamFrontend');
+  protected readonly isDevelopment = signal(isDevMode());
   
   private readonly router = inject(Router);
   

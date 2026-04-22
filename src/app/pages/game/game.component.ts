@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, signal, computed, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, computed, inject, isDevMode } from '@angular/core';
 import { AtacarModalComponent } from './modals/atacar.modal';
 import { VisualizarTropasModalComponent } from './modals/visualizar-tropas.modal';
 import { EntrenarModalComponent } from './modals/entrenar.modal';
@@ -23,6 +23,8 @@ import { GamePhase, PlayerNode, ActiveAttack } from './game.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GamePageComponent {
+
+  protected readonly isDevelopment = signal(isDevMode());
 
   // --- Estado de la partida (llegará vía Socket.IO) ---
   protected readonly currentPhase = signal<GamePhase>('GUERRA');

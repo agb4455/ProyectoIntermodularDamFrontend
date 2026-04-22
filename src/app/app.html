@@ -6,4 +6,6 @@
   <router-outlet />
 </main>
 
-<app-global-debug />
+@if (isDevelopment()) {
+  <app-global-debug />
+}
