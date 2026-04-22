@@ -51,7 +51,7 @@ export class AnadirTropaAtaqueModalComponent {
         return ids.filter((id) => id !== troop.id);
       } else {
         // No está seleccionada → añadirla
-        return [...ids, troop.id];
+        return [...ids, troop.id];  //mirar que son los ...
       }
     });
   }
