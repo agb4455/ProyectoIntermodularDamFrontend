@@ -1,0 +1,60 @@
+<div class="scrim"></div>
+
+<div class="lobby-modal">
+  <h2 class="modal-title">
+    {{ isHost() ? 'INCURSIÓN LISTA' : 'LOBBY DE PARTIDA' }}
+  </h2>
+
+  <!-- Caja de Código -->
+  <div class="code-section">
+    <div class="code-label">Código de Guerra</div>
+    <div class="code-value">{{ gameCode() }}</div>
+  </div>
+
+  <!-- Lista de Jugadores -->
+  <div class="players-list">
+    @for (player of players(); track player.username; let i = $index) {
+      <div class="player-item" (click)="onPlayerClick(player)">
+        <div class="clan-icon" [class]="'clan-' + player.clan">
+          @switch (player.clan) {
+            @case ('fury') { 🪓 }
+            @case ('divine') { ⚡ }
+            @case ('iron') { 🛡️ }
+            @case ('song') { 🎵 }
+            @case ('rune') { 🌿 }
+            @case ('death') { 💀 }
+            @default { ⚔️ }
+          }
+        </div>
+        <div class="player-name">{{ player.username }}</div>
+        @if (i === 0) {
+          <span class="host-badge">HOST</span>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Zona de Mensajes/Errores -->
+  <div class="status-zone">
+    @if (isHost() && errorMessage()) {
+      <span class="error-msg">⚠️ {{ errorMessage() }}</span>
+    } @else if (!isHost()) {
+      <span class="waiting-msg">Esperando a que el anfitrión inicie la incursión...</span>
+    }
+  </div>
+
+  <!-- Botón Iniciar (Solo Host) -->
+  @if (isHost()) {
+    <button 
+      class="btn-start" 
+      [disabled]="!canStart()"
+      (click)="onStartClick()">
+      INICIAR PARTIDA
+    </button>
+  } @else {
+    <!-- Espaciador para mantener dimensiones -->
+    <div class="guest-spacer"></div>
+  }
+</div>

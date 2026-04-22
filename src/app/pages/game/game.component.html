@@ -103,7 +103,7 @@
 
     <!-- Nodos de jugadores sobre los continentes -->
     <div class="territory-overlay">
-      @for (player of players(); track player.clan) {
+      @for (player of players(); track player.username) {
         <div
           class="player-node"
           [class]="'player-node node-' + player.clan"
@@ -222,6 +222,17 @@
   </app-reglas-modal>
 }
 
+<!-- Modal de Lobby (Espera) -->
+@if (currentPhase() === 'WAITING') {
+  <app-lobby-modal
+    [gameCode]="gameCode()"
+    [players]="players()"
+    [isHost]="isHost()"
+    (startGame)="onStartGame()"
+    (playerClick)="onTerritoryClick($event)">
+  </app-lobby-modal>
+}
+
 @if (isDevelopment()) {
   <!-- PANEL DE DEBUG (Solo Desarrollo) -->
   <div class="debug-container">
@@ -248,6 +259,14 @@
         <div class="debug-section">
           <label>Fase de Juego</label>
           <button class="btn-full" (click)="debugTogglePhase()">Siguiente Fase</button>
+        </div>
+
+        <div class="debug-section">
+          <label>Jugadores ({{ players().length }})</label>
+          <div class="debug-row">
+            <button (click)="debugAddPlayer()">Añadir</button>
+            <button (click)="debugRemovePlayer()">Quitar</button>
+          </div>
         </div>
 
         <div class="debug-section">

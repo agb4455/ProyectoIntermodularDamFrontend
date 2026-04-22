@@ -1,0 +1,222 @@
+@use "../../../../styles/variables" as *;
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg-overlay);
+  z-index: 100;
+  backdrop-filter: blur(4px);
+}
+
+.lobby-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  background: var(--color-bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid var(--color-gold-muted);
+  border-radius: 20px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(201, 168, 76, 0.05);
+  z-index: 101;
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -40%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.modal-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  color: var(--color-gold);
+  margin: 0 0 20px 0;
+  text-shadow: 0 0 10px rgba(201, 168, 76, 0.3);
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+/* Caja de Código */
+.code-section {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--color-border-default);
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+  text-align: center;
+  width: 100%;
+}
+
+.code-label {
+  font-size: 0.7rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.code-value {
+  font-family: 'Inter', monospace;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: 4px;
+}
+
+/* Lista de Jugadores */
+.players-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 5px;
+
+  /* Scrollbar personalizado */
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: var(--color-gold-muted); border-radius: 10px; }
+}
+
+.player-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 15px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba(201, 168, 76, 0.05);
+    border-color: rgba(201, 168, 76, 0.2);
+  }
+}
+
+.clan-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+
+  &.clan-fury { background: rgba(192, 57, 43, 0.2); color: var(--color-clan-fury); border-color: var(--color-clan-fury); }
+  &.clan-divine { background: rgba(74, 144, 217, 0.2); color: var(--color-clan-divine); border-color: var(--color-clan-divine); }
+  &.clan-iron { background: rgba(138, 155, 168, 0.2); color: var(--color-clan-iron); border-color: var(--color-clan-iron); }
+  &.clan-song { background: rgba(139, 92, 246, 0.2); color: var(--color-clan-song); border-color: var(--color-clan-song); }
+  &.clan-rune { background: rgba(16, 185, 129, 0.2); color: var(--color-clan-rune); border-color: var(--color-clan-rune); }
+  &.clan-death { background: rgba(124, 107, 158, 0.2); color: var(--color-clan-death); border-color: var(--color-clan-death); }
+}
+
+.player-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex: 1;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.host-badge {
+  font-size: 0.6rem;
+  background: var(--color-gold);
+  color: var(--color-text-inverse);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* Línea Divisoria */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-border-default), transparent);
+  margin: 10px 0;
+}
+
+/* Zona de Mensajes/Errores */
+.status-zone {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.error-msg {
+  color: var(--color-error);
+  font-size: 0.8rem;
+  font-weight: 600;
+  animation: shake 0.5s ease-in-out;
+}
+
+.waiting-msg {
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Botón Iniciar */
+.btn-start {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(to bottom, var(--color-gold-light), var(--color-gold));
+  border: none;
+  border-radius: 12px;
+  color: var(--color-text-inverse);
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 15px rgba(201, 168, 76, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  &:hover:not(:disabled) {
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201, 168, 76, 0.5);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    background: #4a4a4a;
+    color: #888;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.guest-spacer {
+  height: 50px;
+}

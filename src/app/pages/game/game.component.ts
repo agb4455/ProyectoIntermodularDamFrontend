@@ -4,6 +4,9 @@ import { VisualizarTropasModalComponent } from './modals/visualizar-tropas.modal
 import { EntrenarModalComponent } from './modals/entrenar.modal';
 import { GameLogModalComponent } from './modals/game-log.modal';
 import { ReglasModalComponent } from './modals/reglas.modal';
+import { LobbyModalComponent } from './modals/lobby.modal';
+import { GameService } from '../../core/game/game.service';
+import { AuthService } from '../../core/auth/auth.service';
 import { Troop, EnemyTarget, ClanId, TroopType, TrainableTroopOption, GameLogEntry } from './modals/attack.types';
 
 import { GamePhase, PlayerNode, ActiveAttack } from './game.model';
@@ -16,7 +19,8 @@ import { GamePhase, PlayerNode, ActiveAttack } from './game.model';
     VisualizarTropasModalComponent,
     EntrenarModalComponent,
     GameLogModalComponent,
-    ReglasModalComponent
+    ReglasModalComponent,
+    LobbyModalComponent
   ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
@@ -24,24 +28,41 @@ import { GamePhase, PlayerNode, ActiveAttack } from './game.model';
 })
 export class GamePageComponent {
 
+  private readonly gameService = inject(GameService);
+  private readonly authService = inject(AuthService);
   protected readonly isDevelopment = signal(isDevMode());
 
   // --- Estado de la partida (llegará vía Socket.IO) ---
-  protected readonly currentPhase = signal<GamePhase>('GUERRA');
+  protected readonly currentPhase = signal<GamePhase>('WAITING');
   protected readonly health = signal({ current: 3000, max: 3000 });
   protected readonly gold = signal(150);
   protected readonly researchPts = signal(25);
 
   // --- Info del jugador local ---
-  protected readonly username = signal('Ragnar_Fury');
-  protected readonly gameCode = signal('3F8A2C');
+  protected readonly username = this.authService.username;
+  protected readonly gameCode = signal(this.gameService.gameContext()?.code ?? '3F8A2C');
+
+  // Determina si el usuario actual es el anfitrión (el primero en la lista en este mock)
+  protected readonly isHost = computed(() => {
+    // Si venimos del lobby con contexto, lo usamos. Si no, usamos el orden de la lista.
+    const context = this.gameService.gameContext();
+    if (context) return context.isHost;
+
+    const list = this.players();
+    return list.length > 0 && list[0].username === this.username();
+  });
 
   // --- Jugadores en el mapa (mock, vendrá del Socket.IO) ---
   protected readonly players = signal<PlayerNode[]>([
     { clan: 'divine', username: 'Divine', position: { x: 23, y: 26 }, health: { current: 2200, max: 3000 } },
     { clan: 'iron',   username: 'Iron',   position: { x: 66, y: 17 }, health: { current: 2700, max: 3000 } },
     { clan: 'song',   username: 'Song',   position: { x: 22, y: 78 }, health: { current: 1900, max: 3000 } },
-    { clan: 'fury',   username: 'Ragnar_Fury',   position: { x: 71, y: 51 }, health: { current: 3000, max: 3000 } },
+    { 
+      clan: (this.gameService.gameContext()?.clan as ClanId) ?? 'fury', 
+      username: 'Ragnar_Fury', 
+      position: { x: 71, y: 51 }, 
+      health: { current: 3000, max: 3000 } 
+    },
     { clan: 'rune',   username: 'Rune',   position: { x: 77, y: 81 }, health: { current: 2400, max: 3000 } },
     { clan: 'death',  username: 'Death',  position: { x: 38, y: 56 }, health: { current: 2600, max: 3000 } },
   ]);
@@ -273,17 +294,21 @@ export class GamePageComponent {
     // TODO: mostrar confirmación de abandono
   }
 
+  // --- Acciones del Lobby ---
+  protected onStartGame(): void {
+    // En un caso real, esto enviaría un evento al servidor
+    // Para el prototipo, simplemente cambiamos de fase
+    this.currentPhase.set('PREPARACIÓN');
+    this.addLogEntry('ha iniciado la partida', 'system');
+  }
+
   // --- Clic en territorio enemigo ---
   protected onTerritoryClick(player: PlayerNode): void {
     // No abrir si es el jugador local
     if (player.username === this.username()) {
       return;
     }
-    // No abrir en fase PREPARACIÓN
-    if (this.currentPhase() === 'PREPARACIÓN') {
-      return;
-    }
-    // Abrir modal de ataque
+    // Abrir modal de ataque (permitido en PREPARACIÓN para consulta)
     this.targetEnemy.set({
       clan: player.clan,
       username: player.username,
@@ -380,10 +405,27 @@ export class GamePageComponent {
   }
 
   protected debugTogglePhase(): void {
-    const phases: GamePhase[] = ['PREPARACIÓN', 'GUERRA', 'FIN'];
+    const phases: GamePhase[] = ['WAITING', 'PREPARACIÓN', 'GUERRA', 'FIN'];
     const current = this.currentPhase();
     const nextIndex = (phases.indexOf(current) + 1) % phases.length;
     this.currentPhase.set(phases[nextIndex]);
+  }
+
+  protected debugAddPlayer(): void {
+    const clans: ClanId[] = ['divine', 'iron', 'song', 'rune', 'death', 'fury'];
+    const clan = clans[Math.floor(Math.random() * clans.length)];
+    const id = Math.floor(Math.random() * 1000); // ID más aleatorio para evitar colisiones
+    
+    this.players.update(ps => [...ps, {
+      clan,
+      username: `Guerrero_${id}`,
+      position: { x: Math.random() * 80 + 10, y: Math.random() * 80 + 10 },
+      health: { current: 3000, max: 3000 }
+    }]);
+  }
+
+  protected debugRemovePlayer(): void {
+    this.players.update(ps => ps.length > 1 ? ps.slice(0, -1) : ps);
   }
 
   protected debugAddProgress(step: number): void {

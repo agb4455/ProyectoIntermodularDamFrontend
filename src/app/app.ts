@@ -2,6 +2,7 @@ import { Component, signal, inject, computed, isDevMode } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { GlobalDebugComponent } from './shared/components/debug/global-debug.component';
+import { ThemeService } from './core/theme/theme.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 
@@ -15,6 +16,7 @@ export class App {
   protected readonly title = signal('ProyectoIntermodularDamFrontend');
   protected readonly isDevelopment = signal(isDevMode());
   
+  private readonly themeService = inject(ThemeService);
   private readonly router = inject(Router);
   
   // Track the current URL from router events

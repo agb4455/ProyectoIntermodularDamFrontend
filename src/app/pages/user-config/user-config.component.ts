@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ThemeService } from '../../core/theme/theme.service';
 
 @Component({
   selector: 'app-user-config',
@@ -18,7 +19,13 @@ export class UserConfigComponent {
   readonly userClan = signal<string>('Jarl del Clan Furia');
   
   readonly language = signal<'ES' | 'EN'>('ES');
-  readonly isDarkMode = signal<boolean>(true);
+  
+  private themeService = inject(ThemeService);
+  readonly isDarkMode = computed(() => this.themeService.theme() === 'dark');
+
+  toggleTheme(): void {
+    this.themeService.toggle();
+  }
 
   // Acción: Gestionar / Cambiar Contraseña
   onChangePassword(): void {

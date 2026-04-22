@@ -6,6 +6,7 @@ import {
   inject,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { GameService } from '../../../../core/game/game.service';
 
 // Definición de los 6 clanes disponibles
 interface ClanOption {
@@ -37,6 +38,7 @@ export class CrearPartidaModalComponent {
   readonly closed = output<void>();
 
   private readonly router = inject(Router);
+  private readonly gameService = inject(GameService);
 
   // Lista de clanes disponibles
   readonly clanes = signal<ClanOption[]>(CLANES);
@@ -62,11 +64,18 @@ export class CrearPartidaModalComponent {
     if (!this.selectedClan()) return;
     this.isCreating.set(true);
 
-    // TODO: llamar al servicio real cuando esté implementado
-    // Por ahora simula un breve delay y navega
+    // Simulación: Generar un código aleatorio y establecer contexto como HOST
+    const generatedCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+    
+    this.gameService.setGameContext({
+      code: generatedCode,
+      clan: this.selectedClan()!,
+      isHost: true
+    });
+
     setTimeout(() => {
       this.close();
-      this.router.navigate(['/lobby-previa']);
+      this.router.navigate(['/game']);
     }, 400);
   }
 }

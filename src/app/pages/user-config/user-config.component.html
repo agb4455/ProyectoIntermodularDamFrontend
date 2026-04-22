@@ -34,15 +34,7 @@
         </div>
         
         <div class="action-card">
-          <div class="card-row">
-            <div class="info-group">
-              <span class="label">Nombre de Guerrero</span>
-              <span class="desc">Tu nombre visible en el campo de batalla</span>
-            </div>
-            <div class="input-wrapper">
-              <input type="text" [ngModel]="userName()" (ngModelChange)="userName.set($event)">
-            </div>
-          </div>
+
           <div class="card-row">
             <div class="info-group">
               <span class="label">Correo sagrado</span>
@@ -94,7 +86,7 @@
               <span class="label">Modo Oscuro</span>
               <span class="desc">Noche eterna en Midgard</span>
             </div>
-            <div class="toggle-switch" [class.active]="isDarkMode()" (click)="isDarkMode.set(!isDarkMode())"></div>
+            <div class="toggle-switch" [class.active]="isDarkMode()" (click)="toggleTheme()"></div>
           </div>
         </div>
       </section>
