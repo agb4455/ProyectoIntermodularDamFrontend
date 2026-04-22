@@ -1,10 +1,12 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, of, delay, tap } from 'rxjs';
 
 import { JwtPayload, UserRole, SessionState } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private readonly router = inject(Router);
 
   // Estado interno privado — el token se guarda solo en memoria (nunca en localStorage)
   readonly #session = signal<SessionState | null>(null);
@@ -31,10 +33,11 @@ export class AuthService {
   }
 
   /**
-   * Limpia la sesión (logout).
+   * Limpia la sesión (logout) y redirige a la home.
    */
   clearSession(): void {
     this.#session.set(null);
+    this.router.navigate(['/']);
   }
 
   /**
