@@ -32,9 +32,36 @@
 // Hero Section
 .hero-section {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 3rem 2rem;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+// Texto de bienvenida en la hero card
+.hero-welcome {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  .welcome-label {
+    color: $color-text-secondary;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .welcome-username {
+    color: $color-gold;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    text-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
+  }
 }
 
 .actions-grid {

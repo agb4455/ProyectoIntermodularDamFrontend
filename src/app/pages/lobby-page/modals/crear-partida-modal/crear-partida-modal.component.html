@@ -1,0 +1,63 @@
+<!-- CREAR PARTIDA MODAL — CrearPartidaModalComponent -->
+
+<!-- Scrim de fondo — click fuera cierra el modal -->
+<div class="modal-overlay" (click)="close()" aria-label="Cerrar modal"></div>
+
+<div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+
+  <!-- Botón cerrar -->
+  <button class="btn-close" (click)="close()" aria-label="Cerrar">✕</button>
+
+  <!-- Cabecera -->
+  <header class="modal-header">
+    <h2 class="modal-title" id="modal-title">JURAMENTAR CLAN</h2>
+    <p class="modal-subtitle">Elige tu linaje. Tu destino depende de ello.</p>
+  </header>
+
+  <!-- Grid de clanes -->
+  <div class="clanes-grid">
+    @for (clan of clanes(); track clan.id) {
+      <button
+        class="clan-card"
+        [class.selected]="selectedClan() === clan.id"
+        [attr.data-clan]="clan.id"
+        (click)="selectClan(clan.id)"
+        [attr.aria-pressed]="selectedClan() === clan.id"
+        [attr.aria-label]="'Seleccionar clan ' + clan.name"
+        id="clan-{{ clan.id }}"
+      >
+        <span class="clan-icon" aria-hidden="true">{{ clan.icon }}</span>
+        <span class="clan-name">{{ clan.name }}</span>
+        <span class="clan-archetype">{{ clan.archetype }}</span>
+        <div class="selected-indicator" aria-hidden="true"></div>
+      </button>
+    }
+  </div>
+
+  <!-- Mensaje de selección -->
+  <p class="selection-hint">
+    @if (selectedClan()) {
+      <span class="hint-active">Clan seleccionado — listo para la batalla</span>
+    } @else {
+      <span class="hint-empty">Selecciona un clan para continuar</span>
+    }
+  </p>
+
+  <!-- Botón CTA -->
+  <footer class="modal-footer">
+    <button
+      class="btn-create"
+      id="btn-crear-partida"
+      [disabled]="!selectedClan() || isCreating()"
+      (click)="createGame()"
+    >
+      @if (isCreating()) {
+        <span class="creating-spinner" aria-hidden="true"></span>
+        Forjando partida…
+      } @else {
+        CREAR PARTIDA
+      }
+    </button>
+  </footer>
+
+</div>

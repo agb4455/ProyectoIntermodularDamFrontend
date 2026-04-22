@@ -1,5 +1,8 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../core/auth/auth.service';
+import { CrearPartidaModalComponent } from './modals/crear-partida-modal/crear-partida-modal.component';
+import { UnirsePartidaModalComponent } from './modals/unirse-partida-modal/unirse-partida-modal.component';
 
 interface ActiveGameMock {
   id: string;
@@ -19,7 +22,7 @@ interface FinishedGameMock {
 @Component({
   selector: 'app-lobby-page',
   standalone: true,
-  imports: [],
+  imports: [CrearPartidaModalComponent, UnirsePartidaModalComponent],
   templateUrl: './lobby-page.component.html',
   styleUrl: './lobby-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -40,20 +43,28 @@ export class LobbyPageComponent {
   // UI state
   readonly finishedGamesCollapsed = signal<boolean>(false);
 
+  // Estado de visibilidad de modales
+  readonly showCrearPartida = signal<boolean>(false);
+  readonly showUnirsePartida = signal<boolean>(false);
+
+  // Nombre del usuario autenticado
+  private readonly authService = inject(AuthService);
+  readonly username = this.authService.username;
+
   constructor(private router: Router) {}
 
   toggleFinishedGames() {
     this.finishedGamesCollapsed.update(v => !v);
   }
 
-  // Action Methods (To be implemented with real logic/modals later)
+  // Action Methods
   
   onNewGame() {
-    alert('Abrir modal de Crear Partida (Por implementar)');
+    this.showCrearPartida.set(true);
   }
 
   onJoinGame() {
-    alert('Abrir modal de Unirse a Partida (Por implementar)');
+    this.showUnirsePartida.set(true);
   }
 
   onEnterGame(gameId: string) {

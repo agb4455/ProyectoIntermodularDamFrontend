@@ -1,0 +1,247 @@
+@use "../../../../../styles/variables" as *;
+
+// ─── Overlay ────────────────────────────────────────────────────────────────
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: $color-bg-overlay;
+  z-index: 100;
+  cursor: pointer;
+  animation: fade-in 0.2s ease;
+}
+
+// ─── Contenedor principal ────────────────────────────────────────────────────
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 101;
+
+  width: min(580px, 92vw);
+  background-color: $color-bg-modal;
+  border: 1px solid $color-border-default;
+  border-radius: 12px;
+  padding: 2.5rem 3rem;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  animation: slide-up 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+// ─── Botón cerrar ────────────────────────────────────────────────────────────
+.btn-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: 1px solid $color-border-default;
+  border-radius: 50%;
+  color: $color-text-secondary;
+  font-size: 1rem;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+
+  &:hover {
+    border-color: $color-gold;
+    color: $color-gold;
+    background-color: $color-gold-muted;
+  }
+}
+
+// ─── Cabecera ────────────────────────────────────────────────────────────────
+.modal-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.modal-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $color-gold;
+  margin: 0;
+  letter-spacing: 3px;
+  text-shadow: 0 0 24px rgba(201, 168, 76, 0.3);
+}
+
+.modal-subtitle {
+  color: $color-text-secondary;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+// ─── Input Code Section ──────────────────────────────────────────────────────
+.code-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.code-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: $color-gold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.code-input {
+  width: 100%;
+  background-color: $color-bg-card;
+  border: 1px solid $color-border-default;
+  border-radius: 6px;
+  padding: 1.25rem;
+  font-family: monospace, 'Courier New', Courier;
+  font-size: 1.2rem;
+  color: $color-text-primary;
+  text-align: center;
+  outline: none;
+  transition: all 0.2s ease;
+
+  &:focus {
+    border-color: $color-gold;
+    box-shadow: 0 0 0 2px $color-gold-muted;
+  }
+
+  &::placeholder {
+    color: $color-text-disabled;
+    font-family: monospace;
+  }
+}
+
+// ─── Círculos de Clanes ──────────────────────────────────────────────────────
+.clanes-circles-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+
+.clan-circle {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 1px solid $color-gold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: $color-text-primary;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  // Estado seleccionado
+  &.selected {
+    opacity: 1;
+    border-width: 2px;
+    box-shadow: 0 0 0 4px var(--clan-color-bg, rgba(201, 168, 76, 0.15)),
+                0 4px 12px rgba(0, 0, 0, 0.3);
+    border-color: var(--clan-color, #{$color-gold});
+    background-color: var(--clan-color-bg, rgba(201, 168, 76, 0.15));
+  }
+
+  // Colores por clan
+  &[data-clan="fury"] { --clan-color: #{$color-clan-fury}; --clan-color-bg: rgba(192, 57, 43, 0.15); }
+  &[data-clan="divine"] { --clan-color: #{$color-clan-divine}; --clan-color-bg: rgba(74, 144, 217, 0.15); }
+  &[data-clan="iron"] { --clan-color: #{$color-clan-iron}; --clan-color-bg: rgba(138, 155, 168, 0.15); }
+  &[data-clan="song"] { --clan-color: #{$color-clan-song}; --clan-color-bg: rgba(139, 92, 246, 0.15); }
+  &[data-clan="rune"] { --clan-color: #{$color-clan-rune}; --clan-color-bg: rgba(16, 185, 129, 0.15); }
+  &[data-clan="death"] { --clan-color: #{$color-clan-death}; --clan-color-bg: rgba(124, 107, 158, 0.15); }
+}
+
+.clan-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+// ─── Footer / CTA ────────────────────────────────────────────────────────────
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.btn-join {
+  width: 100%;
+  padding: 1.1rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: 1px solid $color-gold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: transparent;
+  color: $color-gold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+
+  &:hover:not(:disabled) {
+    background-color: $color-gold-muted;
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.2);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    border-color: $color-border-default;
+    color: $color-text-disabled;
+    cursor: not-allowed;
+    background-color: transparent;
+  }
+}
+
+// Spinner de carga
+.joining-spinner {
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 2px solid rgba(201, 168, 76, 0.2);
+  border-top-color: $color-gold;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+// ─── Animaciones ─────────────────────────────────────────────────────────────
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translate(-50%, calc(-50% + 24px)); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

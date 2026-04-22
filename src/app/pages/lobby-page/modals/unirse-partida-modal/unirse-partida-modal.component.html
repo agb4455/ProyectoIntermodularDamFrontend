@@ -1,0 +1,64 @@
+<!-- UNIRSE PARTIDA MODAL — UnirsePartidaModalComponent -->
+
+<!-- Scrim de fondo — click fuera cierra el modal -->
+<div class="modal-overlay" (click)="close()" aria-label="Cerrar modal"></div>
+
+<div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+
+  <!-- Botón cerrar -->
+  <button class="btn-close" (click)="close()" aria-label="Cerrar">✕</button>
+
+  <!-- Cabecera -->
+  <header class="modal-header">
+    <h2 class="modal-title" id="modal-title">UNIRSE AL FRENTE</h2>
+    <p class="modal-subtitle">Presentad el código sagrado de la batalla.</p>
+  </header>
+
+  <!-- Input de Códice -->
+  <div class="code-section">
+    <label for="game-code-input" class="code-label">CÓDICE DE BATALLA</label>
+    <input 
+      id="game-code-input"
+      type="text" 
+      class="code-input"
+      placeholder="Introduce el Códice" 
+      [value]="gameCode()" 
+      (input)="updateCode($event)"
+      autocomplete="off"
+      maxlength="10"
+    />
+  </div>
+
+  <!-- Círculos de Clanes -->
+  <div class="clanes-circles-container">
+    @for (clan of clanes(); track clan.id) {
+      <button
+        class="clan-circle"
+        [class.selected]="selectedClan() === clan.id"
+        [attr.data-clan]="clan.id"
+        (click)="selectClan(clan.id)"
+        [attr.aria-pressed]="selectedClan() === clan.id"
+        [attr.aria-label]="'Seleccionar clan ' + clan.name"
+      >
+        <span class="clan-icon" aria-hidden="true">{{ clan.icon }}</span>
+      </button>
+    }
+  </div>
+
+  <!-- Botón CTA -->
+  <footer class="modal-footer">
+    <button
+      class="btn-join"
+      [disabled]="!selectedClan() || !gameCode() || isJoining()"
+      (click)="joinGame()"
+    >
+      @if (isJoining()) {
+        <span class="joining-spinner" aria-hidden="true"></span>
+        Entrando…
+      } @else {
+        ENTRAR EN COMBATE
+      }
+    </button>
+  </footer>
+
+</div>

@@ -1,6 +1,9 @@
 <main class="lobby-container">
   
   <section class="hero-section glass-panel">
+    <div class="hero-welcome">
+      <p class="welcome-label">Bienvenido, <span class="welcome-username">{{ username() }}</span></p>
+    </div>
     <div class="actions-grid">
       <button class="btn-primary btn-large" (click)="onNewGame()">Nueva Partida</button>
       <button class="btn-secondary btn-large" (click)="onJoinGame()">Unirse a Partida</button>
@@ -60,8 +63,17 @@
         } @empty {
           <p class="empty-state">Las crónicas están vacías. Aún no hay registros de batallas pasadas.</p>
         }
+
       </div>
     }
   </section>
 
 </main>
+
+@if (showCrearPartida()) {
+  <app-crear-partida-modal (closed)="showCrearPartida.set(false)" />
+}
+
+@if (showUnirsePartida()) {
+  <app-unirse-partida-modal (closed)="showUnirsePartida.set(false)" />
+}
