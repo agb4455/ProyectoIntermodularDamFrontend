@@ -22,7 +22,10 @@
             <span class="card-title">{{ game.name }}</span>
             <div class="card-meta">
               <span>COD: {{ game.id }}</span>
-              <button class="btn btn-gold" (click)="onEnterGame(game.id)">ENTRAR</button>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-gold" (click)="onEnterGame(game.id)">ENTRAR</button>
+                <button class="btn btn-danger" (click)="onLeaveGame(game.id)">ABANDONAR</button>
+              </div>
             </div>
           </div>
         }
@@ -45,8 +48,13 @@
           <div class="card">
             <span class="card-title">{{ game.name }}</span>
             <div class="card-meta">
-              <span style="color: var(--color-success)">VICTORIA</span>
-              <button class="btn btn-ghost">ESTADÍSTICAS</button>
+              <span [style.color]="game.result === 'Victoria' ? 'var(--color-success)' : 'var(--color-error)'">
+                {{ game.result.toUpperCase() }}
+              </span>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-ghost" (click)="onViewStats(game.id)">ESTADÍSTICAS</button>
+                <button class="btn btn-danger" (click)="onDeleteFinished(game.id)">BORRAR</button>
+              </div>
             </div>
           </div>
         }

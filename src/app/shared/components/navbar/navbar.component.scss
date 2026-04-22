@@ -10,7 +10,11 @@
   background-color: var(--color-bg-card);
   border-bottom: 2px solid var(--color-border-faint);
   box-shadow: 0 4px 15px var(--color-bg-overlay);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 1000;
   /* overflow: hidden; -- ELIMINADO: permitía ver el logo pero cortaba el dropdown de usuario */
 
@@ -258,6 +262,7 @@
       position: fixed;
       top: 0;
       left: -280px;
+      right: auto;
       width: 280px;
       height: 100vh;
       background-color: var(--color-bg-card);
@@ -313,9 +318,128 @@
           background-color: var(--color-bg-tertiary);
           color: var(--color-gold);
           border-left: 4px solid var(--color-gold);
+          border-right: none;
           padding-left: calc(1.5rem - 4px);
         }
       }
+
+      .mobile-user-section {
+        margin-top: auto;
+        padding-bottom: 2rem;
+        display: block; // Show on mobile
+      }
+
+      .mobile-user-divider {
+        height: 1px;
+        background: linear-gradient(to right, transparent, var(--color-gold), transparent);
+        margin: 1rem 0;
+        opacity: 0.3;
+
+        &.faint {
+          margin: 0.5rem 1.5rem;
+          background: var(--color-border-faint);
+        }
+      }
+
+      .mobile-user-header {
+        padding: 1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        &.anonymous {
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+          border-radius: 4px;
+          margin: 0 0.5rem;
+          padding: 0.8rem 1rem;
+
+          &:hover {
+            background-color: var(--color-bg-tertiary);
+            .login-link-text { color: var(--color-gold); }
+          }
+        }
+
+        .mobile-avatar {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: var(--color-bg-tertiary);
+          border: 2px solid var(--color-gold-muted);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--color-gold);
+
+          svg { width: 24px; height: 24px; }
+        }
+      }
+
+      .mobile-user-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .user-label {
+          font-size: 0.65rem;
+          color: var(--color-text-disabled);
+          letter-spacing: 1px;
+        }
+
+        .user-name {
+          font-family: 'Cinzel', serif;
+          font-size: 1rem;
+          color: var(--color-gold-light);
+          font-weight: 700;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 150px;
+        }
+
+        .login-link-text {
+          font-family: 'Cinzel', serif;
+          font-size: 1rem;
+          color: var(--color-gold-light);
+          font-weight: 700;
+          letter-spacing: 1px;
+          transition: color 0.2s ease;
+        }
+      }
+
+      .mobile-user-links {
+        display: flex;
+        flex-direction: column;
+
+        .mobile-nav-link {
+          padding: 0.8rem 1.5rem;
+          color: var(--color-text-secondary);
+          text-decoration: none;
+          font-size: 1rem;
+          transition: all 0.2s ease;
+
+          &:hover {
+            color: var(--color-gold);
+            background-color: var(--color-bg-tertiary);
+          }
+
+          &.danger {
+            color: var(--color-error);
+            &:hover {
+              background-color: var(--color-error-bg);
+            }
+          }
+        }
+      }
+    }
+
+    .navbar-actions {
+      display: none; // Hide top bar avatar on mobile
     }
   }
+}
+
+// Global Hide for Mobile User Section (Desktop)
+.mobile-user-section {
+  display: none;
 }

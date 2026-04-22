@@ -46,11 +46,17 @@
 
   // --- Clan colors ---
   --color-clan-fury:   #c0392b; // FURY   — Berserkers  (blood red)
+  --color-clan-fury-bg: rgba(192, 57, 43, 0.15);
   --color-clan-divine: #4a90d9; // DIVINE — Valkirias   (sky blue)
+  --color-clan-divine-bg: rgba(74, 144, 217, 0.15);
   --color-clan-iron:   #8a9ba8; // IRON   — Jarls       (steel grey)
+  --color-clan-iron-bg: rgba(138, 155, 168, 0.15);
   --color-clan-song:   #8b5cf6; // SONG   — Skalds      (violet)
+  --color-clan-song-bg: rgba(139, 92, 246, 0.15);
   --color-clan-rune:   #10b981; // RUNE   — Seidr       (emerald)
+  --color-clan-rune-bg: rgba(16, 185, 129, 0.15);
   --color-clan-death:  #7c6b9e; // DEATH  — Draugr      (dark violet)
+  --color-clan-death-bg: rgba(124, 107, 158, 0.15);
 
   // --- Progress bars ---
   --color-progress-track:    #3a3555;
@@ -118,11 +124,17 @@
 
   // --- Clan colors ---
   --color-clan-fury:   #8b1e1e;
+  --color-clan-fury-bg: rgba(139, 30, 30, 0.12);
   --color-clan-divine: #1a5fa0;
+  --color-clan-divine-bg: rgba(26, 95, 160, 0.12);
   --color-clan-iron:   #4a5e6e;
+  --color-clan-iron-bg: rgba(74, 94, 110, 0.12);
   --color-clan-song:   #5b34d6;
+  --color-clan-song-bg: rgba(91, 52, 214, 0.12);
   --color-clan-rune:   #0a7a54;
+  --color-clan-rune-bg: rgba(10, 122, 84, 0.12);
   --color-clan-death:  #5a4880;
+  --color-clan-death-bg: rgba(90, 72, 128, 0.12);
 
   // --- Progress bars ---
   --color-progress-track:    #c8b898;

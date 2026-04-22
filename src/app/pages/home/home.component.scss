@@ -135,6 +135,13 @@
       border-bottom: 2px solid var(--color-gold);
     }
   }
+
+  @include mobile {
+    margin-top: 30px;
+    .arrow-down {
+      height: 20px;
+    }
+  }
 }
 
 // 3. MAIN CONTENT
@@ -142,11 +149,19 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 24px 100px;
+
+  @include mobile {
+    padding: 0 16px 60px;
+  }
 }
 
 .section-header {
   text-align: center;
   margin-bottom: 80px;
+
+  @include mobile {
+    margin-bottom: 40px;
+  }
 }
 
 .section-title {
@@ -203,6 +218,10 @@
   background: var(--color-bg-glass);
   backdrop-filter: blur(12px);
   padding: 60px 40px;
+
+  @include mobile {
+    padding: 40px 20px;
+  }
 }
 
 // ERAS GRID
@@ -210,6 +229,11 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 
 .era-card {
@@ -240,12 +264,20 @@
     line-height: 1.7;
     color: var(--color-text-primary);
     opacity: 0.8;
+
+    @include mobile {
+      font-size: 0.95rem;
+    }
   }
 }
 
 // CLANS SECTION
 .section-clans {
   padding: 100px 0;
+
+  @include mobile {
+    padding: 60px 0;
+  }
 }
 
 .clans-grid {
@@ -303,6 +335,11 @@
 .section-system {
   padding: 80px;
   margin-top: 50px;
+
+  @include mobile {
+    padding: 40px 20px;
+    margin-top: 30px;
+  }
 }
 
 .system-container {
@@ -454,12 +491,79 @@
 
 // RESPONSIVE
 @include tablet {
-  .system-container { grid-template-columns: 1fr; gap: 40px; }
-  .clans-grid { grid-template-columns: 1fr; }
-  .section-system { padding: 40px 20px; }
+  .system-container { 
+    grid-template-columns: 1fr; 
+    gap: 40px; 
+  }
+  .clans-grid { 
+    grid-template-columns: 1fr; 
+  }
+  .section-system { 
+    padding: 40px 20px; 
+  }
+  
+  .hero-section {
+    height: auto;
+    min-height: 100vh;
+    padding: 120px 0 80px;
+  }
 }
 
 @include mobile {
-  .footer-content { flex-direction: column; text-align: center; }
-  .hero-subtitle { letter-spacing: 1px; }
+  .footer-content { 
+    flex-direction: column; 
+    text-align: center; 
+    gap: 40px;
+  }
+  
+  .hero-title {
+    letter-spacing: 0.05em;
+    margin: 15px 0;
+  }
+
+  app-logo {
+    transform: scale(0.7);
+    display: block;
+    margin-bottom: -10px;
+  }
+
+  .hero-subtitle { 
+    letter-spacing: 1px; 
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+  }
+
+  .btn-mithic-primary {
+    padding: 16px 32px;
+    font-size: 0.95rem;
+
+    &.big {
+      padding: 20px 40px;
+      font-size: 1.1rem;
+    }
+  }
+
+  .system-text {
+    text-align: center;
+    
+    .title-divider.left {
+      margin: 20px auto;
+    }
+  }
+
+  .system-visual {
+    height: 250px;
+  }
+
+  .final-cta-card {
+    padding: 50px 24px;
+    
+    h2 {
+      font-size: 1.8rem;
+    }
+    
+    p {
+      font-size: 1rem;
+    }
+  }
 }

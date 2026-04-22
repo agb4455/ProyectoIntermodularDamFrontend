@@ -40,9 +40,16 @@ export class NavbarComponent {
 
   /** Maneja el click en el avatar de usuario */
   protected handleUserClick(): void {
+    const isMobile = window.innerWidth <= 950;
+
     if (this.authService.isLoggedIn()) {
-      this.dropdownOpen.update(open => !open);
+      if (isMobile) {
+        this.toggleMobileMenu();
+      } else {
+        this.dropdownOpen.update(open => !open);
+      }
     } else {
+      if (isMobile) this.closeMobileMenu();
       this.authModalOpen.set(true);
     }
   }

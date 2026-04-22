@@ -242,12 +242,12 @@
   }
 
   // Colores por clan
-  &[data-clan="fury"] { --clan-color: #{$color-clan-fury}; --clan-color-bg: rgba(192, 57, 43, 0.15); }
-  &[data-clan="divine"] { --clan-color: #{$color-clan-divine}; --clan-color-bg: rgba(74, 144, 217, 0.15); }
-  &[data-clan="iron"] { --clan-color: #{$color-clan-iron}; --clan-color-bg: rgba(138, 155, 168, 0.15); }
-  &[data-clan="song"] { --clan-color: #{$color-clan-song}; --clan-color-bg: rgba(139, 92, 246, 0.15); }
-  &[data-clan="rune"] { --clan-color: #{$color-clan-rune}; --clan-color-bg: rgba(16, 185, 129, 0.15); }
-  &[data-clan="death"] { --clan-color: #{$color-clan-death}; --clan-color-bg: rgba(124, 107, 158, 0.15); }
+  &[data-clan="fury"] { --clan-color: #{$color-clan-fury}; --clan-color-bg: #{$color-clan-fury-bg}; }
+  &[data-clan="divine"] { --clan-color: #{$color-clan-divine}; --clan-color-bg: #{$color-clan-divine-bg}; }
+  &[data-clan="iron"] { --clan-color: #{$color-clan-iron}; --clan-color-bg: #{$color-clan-iron-bg}; }
+  &[data-clan="song"] { --clan-color: #{$color-clan-song}; --clan-color-bg: #{$color-clan-song-bg}; }
+  &[data-clan="rune"] { --clan-color: #{$color-clan-rune}; --clan-color-bg: #{$color-clan-rune-bg}; }
+  &[data-clan="death"] { --clan-color: #{$color-clan-death}; --clan-color-bg: #{$color-clan-death-bg}; }
 }
 
 .clan-icon {

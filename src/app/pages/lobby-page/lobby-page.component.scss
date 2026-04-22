@@ -256,3 +256,10 @@
   color: $color-text-secondary;
   &:hover { color: $color-text-primary; background: $color-bg-card; }
 }
+
+.btn-danger {
+  background: transparent;
+  border: 1px solid $color-error;
+  color: $color-error;
+  &:hover { background: $color-error-bg; }
+}
