@@ -2,7 +2,7 @@
   <app-navbar></app-navbar>
 }
 
-<main class="main-layout">
+<main class="main-layout" [class.no-navbar]="!showNavbar()">
   <router-outlet />
 </main>
 

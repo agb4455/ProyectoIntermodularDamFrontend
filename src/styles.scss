@@ -33,4 +33,8 @@ app-root {
   padding-top: 72px; /* Altura de la Navbar Fixed */
   display: flex;
   flex-direction: column;
+
+  &.no-navbar {
+    padding-top: 0;
+  }
 }
