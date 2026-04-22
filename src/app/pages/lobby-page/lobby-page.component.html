@@ -13,7 +13,7 @@
   <div class="lists-grid">
     <!-- Columna 1: Activas -->
     <section class="list-column">
-      <div class="column-header" style="cursor: default; border: none;">
+      <div class="column-header">
         <h2>PARTIDAS ACTIVAS</h2>
       </div>
       <div class="scroll-area">
@@ -32,15 +32,11 @@
       </div>
     </section>
 
-    <!-- Columna 2: Terminadas -->
+    <!-- Columna 2: Terminadas (Ahora debajo en el grid) -->
     <section class="list-column" [class.collapsed]="finishedGamesCollapsed()" id="finished-column">
-      <div class="vertical-tab" (click)="toggleFinishedGames()">
-        <p class="vertical-text">PARTIDAS FINALIZADAS</p>
-      </div>
-      
       <div class="column-header" (click)="toggleFinishedGames()">
         <h2>PARTIDAS FINALIZADAS</h2>
-        <span class="header-icon">▲ ESCONDER</span>
+        <span class="header-icon">{{ finishedGamesCollapsed() ? '▼ MOSTRAR' : '▲ ESCONDER' }}</span>
       </div>
 
       <div class="scroll-area">

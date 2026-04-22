@@ -234,18 +234,25 @@
 // Media query para responsividad de la navbar
 @media (max-width: 950px) {
   .navbar {
-    grid-template-columns: auto 1fr auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 0 1rem;
-    gap: 1rem;
+    position: fixed;
 
     .hamburger-icon {
       display: flex;
+      position: absolute;
+      left: 1.5rem;
     }
 
     .logo-section {
+      display: flex;
       justify-content: center;
+      margin: 0 auto;
+      
       ::ng-deep .logo-text {
-        display: none; // Ocultar texto en móviles si es necesario
+        display: none; // Ocultar texto en móviles para que quepa mejor el símbolo centrado
       }
     }
 

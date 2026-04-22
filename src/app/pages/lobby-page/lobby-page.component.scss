@@ -61,14 +61,11 @@
 
 .lists-grid {
   display: flex;
+  flex-direction: column;
   gap: 1.5rem;
   flex-grow: 1;
   min-height: 0;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-
-  @include tablet {
-    flex-direction: column;
-  }
 }
 
 .list-column {
@@ -80,7 +77,7 @@
   border-radius: 12px;
   padding: 1.5rem;
   min-width: 0;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 
@@ -90,59 +87,17 @@
 
   &.collapsed {
     flex: 0;
-    padding: 0;
-    width: 60px;
-    min-width: 60px;
-    cursor: pointer;
+    min-height: 70px;
+    height: 70px;
     background: $color-bg-tertiary;
-    border-color: $color-gold;
 
-    @include tablet {
-      width: 100%;
-      min-width: 0;
-      height: 60px;
-      flex: none;
-    }
-
-    .column-header, .scroll-area {
+    .scroll-area {
       display: none;
     }
 
-    .vertical-tab {
-      display: flex;
-    }
-  }
-}
-
-.vertical-tab {
-  display: none;
-  height: 100%;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  
-  .vertical-text {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    margin: 0;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Cinzel', serif;
-    color: $color-gold;
-    letter-spacing: 4px;
-    font-size: 1rem;
-    white-space: nowrap;
-    user-select: none;
-
-    @include tablet {
-      writing-mode: horizontal-tb;
-      letter-spacing: 2px;
-      white-space: normal; // Permitir que baje de línea si no cabe
-      text-align: center;
-      padding: 0 1rem;
+    .column-header {
+      margin-bottom: 0;
+      border-bottom: none;
     }
   }
 }
@@ -156,10 +111,11 @@
   cursor: pointer;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
+  transition: all 0.2s;
 
   &:hover {
     border-color: $color-gold;
+    .header-icon { opacity: 1; }
   }
 
   h2 {
@@ -182,7 +138,10 @@
   opacity: 0.6;
   font-weight: 700;
   letter-spacing: 1px;
+  transition: opacity 0.2s;
 }
+
+
 
 .scroll-area {
   flex-grow: 1;
