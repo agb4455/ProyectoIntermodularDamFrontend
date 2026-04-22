@@ -99,4 +99,8 @@
 
     </div>
   </main>
+
+@if (showPasswordModal()) {
+  <app-cambiar-contrasena-modal (closed)="onPasswordModalClosed()" />
+}
 </div>

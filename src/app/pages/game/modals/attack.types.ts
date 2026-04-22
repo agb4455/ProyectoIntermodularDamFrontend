@@ -65,3 +65,22 @@ export interface GameLogEntry {
   timestamp: string;  // Hora formateada (ej: "18:45")
   type: 'attack' | 'train' | 'research' | 'system';
 }
+
+// Ciclo de ventajas de clanes (FURY → SONG → DEATH → DIVINE → RUNE → IRON → FURY)
+export const CLAN_ADVANTAGES: Record<ClanId, ClanId> = {
+  fury: 'song',
+  song: 'death',
+  death: 'divine',
+  divine: 'rune',
+  rune: 'iron',
+  iron: 'fury'
+};
+
+export const CLAN_NAMES: Record<ClanId, string> = {
+  fury: 'Berserkers',
+  song: 'Skalds',
+  death: 'Draugr',
+  divine: 'Valkirias',
+  rune: 'Seidr',
+  iron: 'Jarls'
+};

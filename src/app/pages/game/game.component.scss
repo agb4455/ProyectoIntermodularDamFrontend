@@ -378,12 +378,19 @@
 }
 
 .attack-path {
-  stroke: var(--color-gold);
-  stroke-width: 0.8;
+  stroke: #ff4d4d; 
+  stroke-width: 1.2; 
   fill: none;
-  opacity: 0.18;
+  opacity: 0.9; 
   stroke-linecap: round;
-  filter: drop-shadow(0 0 2px var(--color-gold-muted));
+  stroke-dasharray: 2 2;
+  animation: dashMove 1s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(255, 77, 77, 0.6));
+}
+
+@keyframes dashMove {
+  from { stroke-dashoffset: 4; }
+  to { stroke-dashoffset: 0; }
 }
 
 .attack-text {

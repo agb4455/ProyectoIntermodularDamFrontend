@@ -1,10 +1,13 @@
-import { Component, ChangeDetectionStrategy, signal, computed, inject, isDevMode } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, computed, inject, isDevMode, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AtacarModalComponent } from './modals/atacar.modal';
 import { VisualizarTropasModalComponent } from './modals/visualizar-tropas.modal';
 import { EntrenarModalComponent } from './modals/entrenar.modal';
 import { GameLogModalComponent } from './modals/game-log.modal';
 import { ReglasModalComponent } from './modals/reglas.modal';
 import { LobbyModalComponent } from './modals/lobby.modal';
+import { AvisoModalComponent } from './modals/aviso.modal';
+import { ConfirmAbandonModalComponent } from './modals/confirm-abandon.modal';
 import { GameService } from '../../core/game/game.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { Troop, EnemyTarget, ClanId, TroopType, TrainableTroopOption, GameLogEntry } from './modals/attack.types';
@@ -20,17 +23,31 @@ import { GamePhase, PlayerNode, ActiveAttack } from './game.model';
     EntrenarModalComponent,
     GameLogModalComponent,
     ReglasModalComponent,
-    LobbyModalComponent
+    LobbyModalComponent,
+    AvisoModalComponent,
+    ConfirmAbandonModalComponent
   ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GamePageComponent {
+export class GamePageComponent implements OnInit {
 
   private readonly gameService = inject(GameService);
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
   protected readonly isDevelopment = signal(isDevMode());
+
+  private shouldRedirectToLobby = false;
+
+  private readonly continentCoords = [
+    { x: 22, y: 28 }, // Niflheim (Top Left)
+    { x: 65, y: 20 }, // Jötunheim (Top Right)
+    { x: 40, y: 50 }, // Asgard (Center Left)
+    { x: 75, y: 50 }, // Midgard (Center Right)
+    { x: 22, y: 80 }, // Muspelheim (Bottom Left)
+    { x: 72, y: 82 }  // Vanaheim (Bottom Right)
+  ];
 
   // --- Estado de la partida (llegará vía Socket.IO) ---
   protected readonly currentPhase = signal<GamePhase>('WAITING');
@@ -52,20 +69,62 @@ export class GamePageComponent {
     return list.length > 0 && list[0].username === this.username();
   });
 
+  protected readonly localClan = computed(() => {
+    const context = this.gameService.gameContext();
+    return (context?.clan as ClanId) ?? 'fury';
+  });
+
   // --- Jugadores en el mapa (mock, vendrá del Socket.IO) ---
-  protected readonly players = signal<PlayerNode[]>([
-    { clan: 'divine', username: 'Divine', position: { x: 23, y: 26 }, health: { current: 2200, max: 3000 } },
-    { clan: 'iron',   username: 'Iron',   position: { x: 66, y: 17 }, health: { current: 2700, max: 3000 } },
-    { clan: 'song',   username: 'Song',   position: { x: 22, y: 78 }, health: { current: 1900, max: 3000 } },
-    { 
-      clan: (this.gameService.gameContext()?.clan as ClanId) ?? 'fury', 
-      username: 'Ragnar_Fury', 
-      position: { x: 71, y: 51 }, 
-      health: { current: 3000, max: 3000 } 
-    },
-    { clan: 'rune',   username: 'Rune',   position: { x: 77, y: 81 }, health: { current: 2400, max: 3000 } },
-    { clan: 'death',  username: 'Death',  position: { x: 38, y: 56 }, health: { current: 2600, max: 3000 } },
-  ]);
+  protected readonly players = signal<PlayerNode[]>(this.getInitialPlayers());
+
+  ngOnInit(): void {
+    // Validar capacidad de sala
+    if (this.players().length >= 6) {
+      this.shouldRedirectToLobby = true;
+      this.avisoMessage.set('ESTA SALA ESTÁ LLENA. Volviendo al lobby...');
+      this.showAvisoModal.set(true);
+      return;
+    }
+
+    // Preparar suscripciones (Dejado preparado para integración real)
+    this.setupGameSubscriptions();
+  }
+
+  /**
+   * [PREPARADO] Configura las suscripciones a eventos de Socket.IO
+   * Actualmente desconectado ya que el Middle Server está en desarrollo
+   */
+  private setupGameSubscriptions(): void {
+    // TODO: Suscribirse a game:state-update para sincronizar fase, oro y puntos
+    // TODO: Suscribirse a game:attack-launched para mostrar ataques de otros jugadores
+    // TODO: Suscribirse a game:battle-resolved para actualizar salud de capitales
+    console.log('[GAME] Suscripciones preparadas. Esperando Middle Server...');
+  }
+
+  private getInitialPlayers(): PlayerNode[] {
+    const context = this.gameService.gameContext();
+    const localUser: PlayerNode = {
+      clan: (context?.clan as ClanId) ?? 'fury',
+      username: this.authService.username(),
+      health: { current: 3000, max: 3000 }
+    };
+
+    const others: PlayerNode[] = [
+      { clan: 'divine', username: 'Divine', health: { current: 2200, max: 3000 } },
+      { clan: 'iron',   username: 'Iron',   health: { current: 2700, max: 3000 } },
+      { clan: 'song',   username: 'Song',   health: { current: 1900, max: 3000 } },
+      { clan: 'rune',   username: 'Rune',   health: { current: 2400, max: 3000 } },
+      { clan: 'death',  username: 'Death',  health: { current: 2600, max: 3000 } },
+    ];
+
+    let list = context?.isHost ? [localUser, ...others] : [...others, localUser];
+    
+    // Asignar coordenadas fijas por orden
+    return list.map((p, i) => ({
+      ...p,
+      position: this.continentCoords[i] || this.continentCoords[5]
+    }));
+  }
 
   // --- Estado de los modales ---
   protected readonly showAtacarModal = signal(false);
@@ -74,6 +133,9 @@ export class GamePageComponent {
   protected readonly showLogModal = signal(false);
   protected readonly showReglasModal = signal(false);
   protected readonly showDebugPanel = signal(false);
+  protected readonly showAvisoModal = signal(false);
+  protected readonly showAbandonModal = signal(false);
+  protected readonly avisoMessage = signal('');
   protected readonly targetEnemy = signal<EnemyTarget | null>(null);
   protected readonly selectedTroopsForAttack = signal<string[]>([]);
 
@@ -282,6 +344,10 @@ export class GamePageComponent {
   }
 
   // --- Acciones de la barra superior ---
+  protected goBack(): void {
+    this.router.navigate(['/lobby']);
+  }
+
   protected openRules(): void {
     this.showReglasModal.set(true);
   }
@@ -291,7 +357,16 @@ export class GamePageComponent {
   }
 
   protected openAbandon(): void {
-    // TODO: mostrar confirmación de abandono
+    this.showAbandonModal.set(true);
+  }
+
+  protected onConfirmAbandon(): void {
+    this.showAbandonModal.set(false);
+    this.router.navigate(['/lobby']);
+  }
+
+  protected onCancelAbandon(): void {
+    this.showAbandonModal.set(false);
   }
 
   // --- Acciones del Lobby ---
@@ -308,7 +383,15 @@ export class GamePageComponent {
     if (player.username === this.username()) {
       return;
     }
-    // Abrir modal de ataque (permitido en PREPARACIÓN para consulta)
+
+    // Si estamos en PREPARACIÓN, no se puede atacar. Mostrar aviso.
+    if (this.currentPhase() === 'PREPARACIÓN') {
+      this.avisoMessage.set('En la fase de preparación no se puede atacar. Aprovecha para entrenar tropas y mejorar tu clan.');
+      this.showAvisoModal.set(true);
+      return;
+    }
+
+    // Abrir modal de ataque (permitido en otras fases)
     this.targetEnemy.set({
       clan: player.clan,
       username: player.username,
@@ -322,6 +405,15 @@ export class GamePageComponent {
     this.showAtacarModal.set(false);
     this.targetEnemy.set(null);
     this.selectedTroopsForAttack.set([]);
+  }
+
+  protected closeAvisoModal(): void {
+    this.showAvisoModal.set(false);
+    this.avisoMessage.set('');
+    
+    if (this.shouldRedirectToLobby) {
+      this.router.navigate(['/lobby']);
+    }
   }
 
   protected onLaunchAttack(troopIds: string[]): void {
@@ -366,13 +458,6 @@ export class GamePageComponent {
     this.closeAtacarModal();
   }
 
-  /**
-   * Genera un ID único y determinista para el path basado en atacante y defensor
-   * Diferente en cada dirección (A->B ≠ B->A)
-   */
-  private generatePathId(attacker: PlayerNode, defender: PlayerNode): string {
-    return `attack-${attacker.username}-to-${defender.username}-${Date.now()}`;
-  }
 
   /**
    * Genera un path SVG directo entre dos puntos
@@ -383,10 +468,32 @@ export class GamePageComponent {
       return '';
     }
 
-    const start = attack.attacker.position;
-    const end = attack.defender.position;
+    const p0 = attack.attacker.position;
+    const p2 = attack.defender.position;
 
-    return `M ${start.x} ${start.y} L ${end.x} ${end.y}`;
+    // Calcular punto de control desplazado perpendicularmente (inspirado en prueba_ia)
+    const midX = (p0.x + p2.x) / 2;
+    const midY = (p0.y + p2.y) / 2;
+
+    const dx = p2.x - p0.x;
+    const dy = p2.y - p0.y;
+    const len = Math.sqrt(dx * dx + dy * dy) || 1;
+
+    // El desplazamiento es proporcional a la distancia, limitado a un máximo
+    const offset = Math.min(15, len * 0.25);
+
+    // Vector normal (-dy, dx) para desplazar hacia un lado
+    const midX_offset = midX + (-dy / len) * offset;
+    const midY_offset = midY + (dx / len) * offset;
+
+    return `M ${p0.x} ${p0.y} Q ${midX_offset} ${midY_offset} ${p2.x} ${p2.y}`;
+  }
+
+  private generatePathId(attacker: PlayerNode, defender: PlayerNode): string {
+    // Sanitizar IDs (quitar espacios)
+    const a = attacker.username.replace(/\s+/g, '-');
+    const d = defender.username.replace(/\s+/g, '-');
+    return `attack-path-${a}-${d}-${Date.now()}`;
   }
 
   private estimateDeploymentDurationMs(troopIds: string[]): number {
@@ -412,16 +519,25 @@ export class GamePageComponent {
   }
 
   protected debugAddPlayer(): void {
+    if (this.players().length >= 6) {
+      this.avisoMessage.set('SALA LLENA. No se permiten más de 6 jugadores.');
+      this.showAvisoModal.set(true);
+      return;
+    }
+
     const clans: ClanId[] = ['divine', 'iron', 'song', 'rune', 'death', 'fury'];
     const clan = clans[Math.floor(Math.random() * clans.length)];
     const id = Math.floor(Math.random() * 1000); // ID más aleatorio para evitar colisiones
     
-    this.players.update(ps => [...ps, {
-      clan,
-      username: `Guerrero_${id}`,
-      position: { x: Math.random() * 80 + 10, y: Math.random() * 80 + 10 },
-      health: { current: 3000, max: 3000 }
-    }]);
+    this.players.update(ps => {
+      const nextIndex = ps.length;
+      return [...ps, {
+        clan,
+        username: `Guerrero_${id}`,
+        position: this.continentCoords[nextIndex] || this.continentCoords[5],
+        health: { current: 3000, max: 3000 }
+      }];
+    });
   }
 
   protected debugRemovePlayer(): void {

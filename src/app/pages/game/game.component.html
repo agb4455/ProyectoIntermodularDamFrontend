@@ -2,7 +2,7 @@
 <header class="topbar">
   <!-- Izquierda: volver + logo + usuario -->
   <div class="topbar-left">
-    <button class="btn-back" title="Volver al Lobby">←</button>
+    <button class="btn-back" title="Volver al Lobby" (click)="goBack()">←</button>
     <div class="game-logo" title="Viking Clan Wars">⚔️</div>
     <div class="player-info">
       <span class="player-name">{{ username() }}</span>
@@ -62,14 +62,49 @@
   <div class="map-container">
     <div class="map-bg"></div>
 
-    <!-- SVG Overlay para camino de ataque -->
+
+    <!-- Nodos de jugadores sobre los continentes -->
+    <div class="territory-overlay">
+      @for (player of players(); track player.username) {
+        <div
+          class="player-node"
+          [class]="'player-node node-' + player.clan"
+          [style.left.%]="player.position?.x ?? 0"
+          [style.top.%]="player.position?.y ?? 0"
+          [title]="player.username"
+          (click)="onTerritoryClick(player)">
+
+          @if (player.username !== username() && player.health) {
+            <div class="player-health-bar">
+              <div
+                class="player-health-fill"
+                [style.width.%]="(player.health.current / player.health.max) * 100">
+              </div>
+            </div>
+          }
+
+          <div class="player-clan-icon" [class]="'clan-' + player.clan">
+            @switch (player.clan) {
+              @case ('fury') { 🪓 }
+              @case ('iron') { 🛡️ }
+              @case ('song') { 🎼 }
+              @case ('rune') { ᛒ }
+              @case ('death') { 💀 }
+              @case ('divine') { ✨ }
+            }
+          </div>
+          <span class="player-name">{{ player.username }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- SVG Overlay para camino de ataque (al final para estar encima) -->
     @if (activeAttack()) {
       <svg class="attack-path-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
         <defs>
           <linearGradient id="attack-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color: #e74c3c; stop-opacity: 0.95" />
-            <stop offset="50%" style="stop-color: #c0392b; stop-opacity: 0.8" />
-            <stop offset="100%" style="stop-color: #a93226; stop-opacity: 0.6" />
+            <stop offset="0%" style="stop-color: #ff4d4d; stop-opacity: 0.95" />
+            <stop offset="100%" style="stop-color: #ff4d4d; stop-opacity: 0.3" />
           </linearGradient>
         </defs>
 
@@ -83,14 +118,14 @@
         <!-- Texto con chevrons '>' siguiendo el camino -->
         <text class="attack-text">
           <textPath [attr.href]="'#' + activeAttack()!.pathId" startOffset="0%">
-            >
+            >>>>>>>>>>>>>
             <animate attributeName="startOffset" from="0%" to="100%" [attr.dur]="(activeAttack()!.durationMs / 1000) + 's'" repeatCount="indefinite" />
           </textPath>
         </text>
 
         <!-- Marcador móvil con avatar del atacante -->
         <g class="attack-avatar-group">
-          <circle class="attack-avatar-ring" cx="0" cy="0" r="2.5" />
+          <circle class="attack-avatar-ring" cx="0" cy="0" r="3" />
           <text class="attack-avatar-icon" x="0" y="0" text-anchor="middle" dominant-baseline="central">
             {{ activeAttack()!.attacker.username.charAt(0) }}
           </text>
@@ -100,29 +135,6 @@
         </g>
       </svg>
     }
-
-    <!-- Nodos de jugadores sobre los continentes -->
-    <div class="territory-overlay">
-      @for (player of players(); track player.username) {
-        <div
-          class="player-node"
-          [class]="'player-node node-' + player.clan"
-          [title]="player.username"
-          (click)="onTerritoryClick(player)">
-
-          @if (player.username !== username() && player.health) {
-            <div class="player-health-bar">
-              <div
-                class="player-health-fill"
-                [style.width.%]="(player.health.current / player.health.max) * 100">
-              </div>
-            </div>
-          }
-
-          {{ player.username }}
-        </div>
-      }
-    </div>
   </div>
 
   <!-- Botones flotantes de acciones (derecha) -->
@@ -183,9 +195,17 @@
   <app-atacar-modal
     [target]="targetEnemy()!"
     [availableTroops]="availableTroops()"
+    [localClan]="localClan()"
     (closeModal)="closeAtacarModal()"
     (launchAttack)="onLaunchAttack($event)">
   </app-atacar-modal>
+}
+
+@if (showAbandonModal()) {
+  <app-confirm-abandon-modal
+    (confirm)="onConfirmAbandon()"
+    (cancel)="onCancelAbandon()">
+  </app-confirm-abandon-modal>
 }
 
 <!-- Modal de Visualización de Tropas -->
@@ -220,6 +240,14 @@
   <app-reglas-modal
     (closeModal)="closeReglasModal()">
   </app-reglas-modal>
+}
+
+<!-- Modal de Aviso (Preparación / Errores) -->
+@if (showAvisoModal()) {
+  <app-aviso-modal
+    [message]="avisoMessage()"
+    (closeModal)="closeAvisoModal()">
+  </app-aviso-modal>
 }
 
 <!-- Modal de Lobby (Espera) -->

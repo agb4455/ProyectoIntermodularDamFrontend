@@ -55,11 +55,51 @@
 
 .modal-header {
   padding: 16px 20px;
-  border-bottom: 1px solid $color-gold;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   background: $color-gold-muted;
+}
+
+.advantage-banner {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  animation: slideInBanner 0.3s ease-out;
+
+  &[data-type="advantage"] {
+    background: rgba(74, 222, 128, 0.15);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    color: #4ade80;
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.1);
+  }
+
+  &[data-type="disadvantage"] {
+    background: rgba(251, 191, 36, 0.15);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    color: #fbbf24;
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.1);
+  }
+
+  .advantage-icon {
+    font-size: 1.25rem;
+  }
+
+  .advantage-message {
+    margin: 0;
+    line-height: 1.4;
+  }
+}
+
+@keyframes slideInBanner {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .modal-title {

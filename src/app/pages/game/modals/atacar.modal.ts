@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, input, output, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EnemyTarget, Troop, TroopGridCell } from './attack.types';
+import { EnemyTarget, Troop, TroopGridCell, ClanId, CLAN_ADVANTAGES, CLAN_NAMES } from './attack.types';
 import { AnadirTropaAtaqueModalComponent } from './anadir-tropa-ataque.modal';
 
 /**
@@ -20,6 +20,7 @@ export class AtacarModalComponent {
   // --- Inputs ---
   readonly target = input.required<EnemyTarget>();
   readonly availableTroops = input.required<Troop[]>();
+  readonly localClan = input.required<ClanId>();
 
   // --- Outputs ---
   readonly closeModal = output<void>();
@@ -49,6 +50,26 @@ export class AtacarModalComponent {
   });
 
   readonly canLaunchAttack = computed(() => this.selectedTroopIds().length > 0);
+
+  readonly advantageState = computed(() => {
+    const attackerClan = this.localClan();
+    const defenderClan = this.target().clan;
+
+    if (CLAN_ADVANTAGES[attackerClan] === defenderClan) {
+      return {
+        type: 'advantage' as const,
+        message: `¡VENTAJA TÁCTICA! Tus tropas infligen un 50% más de daño a los ${CLAN_NAMES[defenderClan]}.`,
+        icon: '⚡'
+      };
+    } else if (CLAN_ADVANTAGES[defenderClan] === attackerClan) {
+      return {
+        type: 'disadvantage' as const,
+        message: `¡CUIDADO! El clan ${CLAN_NAMES[defenderClan]} tiene ventaja defensiva sobre ti (daño reducido).`,
+        icon: '🛡️'
+      };
+    }
+    return null;
+  });
 
   // --- Métodos ---
   protected onAddTroopClick(): void {

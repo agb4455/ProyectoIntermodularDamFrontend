@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, signal, inject, computed } from '@a
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ThemeService } from '../../core/theme/theme.service';
+import { CambiarContrasenaModalComponent } from './modals/cambiar-contrasena.modal';
 
 @Component({
   selector: 'app-user-config',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CambiarContrasenaModalComponent],
   templateUrl: './user-config.component.html',
   styleUrl: './user-config.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,14 +24,19 @@ export class UserConfigComponent {
   private themeService = inject(ThemeService);
   readonly isDarkMode = computed(() => this.themeService.theme() === 'dark');
 
+  readonly showPasswordModal = signal(false);
+
   toggleTheme(): void {
     this.themeService.toggle();
   }
 
   // Acción: Gestionar / Cambiar Contraseña
   onChangePassword(): void {
-    console.log('Navegando a cambio de contraseña...');
-    // TODO: Abrir modal cambiarContraseña especificado en ui_screens.md
+    this.showPasswordModal.set(true);
+  }
+
+  onPasswordModalClosed(): void {
+    this.showPasswordModal.set(false);
   }
 
   // Acción: Alternar Idioma
@@ -43,7 +49,18 @@ export class UserConfigComponent {
   // Acción: Editar Foto de Perfil
   onEditAvatar(): void {
     console.log('Abriendo selector de avatar...');
-    // TODO: Implementar lógica de subida a MinIO (Magic bytes + resize 200x200)
+    this.prepareMinIOUpload();
+  }
+
+  /**
+   * [PREPARADO] Lógica de subida a MinIO
+   * Incluye validación de Magic Bytes y redimensionado a 200x200
+   */
+  private prepareMinIOUpload(): void {
+    // TODO: Usar biblioteca 'sharp' o canvas para redimensionar a 200x200
+    // TODO: Obtener URL firmada (PUT) desde el Middle Server
+    // TODO: Subir directamente a MinIO
+    console.warn('[CONFIG] Subida a MinIO preparada. Falta integración con Middle Server.');
   }
 
   // Acción: Guardar cambios en el servidor
@@ -54,7 +71,10 @@ export class UserConfigComponent {
       idioma: this.language(),
       darkMode: this.isDarkMode()
     });
-    // TODO: Llamada REST al DB Server via Middle Server
+    
+    // TODO: Implementar interceptor HTTP para añadir Bearer Token
+    // TODO: Llamada REST al DB Server via Middle Server (/internal/users/{id})
+    console.info('[CONFIG] Persistencia preparada. Esperando endpoints del DB Server.');
   }
 
   // Acción: Descartar cambios
