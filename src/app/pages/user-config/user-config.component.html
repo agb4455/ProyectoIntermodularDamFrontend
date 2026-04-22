@@ -1,106 +1,70 @@
 <div class="config-page-container">
-  <!-- Banner Hero con temática nórdica -->
-  <header class="hero-banner">
-    <h1>CONFIGURACIÓN DE GUERRERO</h1>
-  </header>
-
-  <main class="config-content">
-    <!-- Sidebar: Identidad y Avatar -->
-    <aside class="profile-sidebar">
-      <div class="avatar-wrapper">
-        <div class="avatar-container">
-          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ userName() }}" alt="Avatar">
-        </div>
-        <div class="edit-badge" title="Cambiar Avatar" (click)="onEditAvatar()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-          </svg>
-        </div>
-      </div>
-      <div class="profile-info">
-        <h2>{{ userName() }}</h2>
-        <p>{{ userClan() }}</p>
-      </div>
-    </aside>
-
-    <!-- Formulario de Configuración -->
-    <div class="config-form">
-      
-      <!-- Sección: Identidad -->
-      <section class="form-section">
-        <div class="section-header">
-          <h3>Identidad</h3>
-          <div class="line"></div>
-        </div>
-        
-        <div class="action-card">
-
-          <div class="card-row">
-            <div class="info-group">
-              <span class="label">Correo sagrado</span>
-              <span class="desc">Vinculado a tu alma de combate</span>
+    <header class="header">
+        <h1>CONFIGURACIÓN</h1>
+    </header>
+    
+    <div class="main-layout">
+        <aside class="sidebar">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ userName() }}" alt="Avatar" class="avatar-preview">
+            <div style="text-align: center;">
+                <h2 style="margin: 0; font-family: 'Cinzel', serif; color: var(--color-gold);">{{ userName() }}</h2>
+                <p style="margin: 5px 0; color: var(--color-text-secondary); font-size: 0.9rem;">{{ userClan() }}</p>
             </div>
-            <div class="input-wrapper">
-              <input type="email" [ngModel]="userEmail()" (ngModelChange)="userEmail.set($event)">
-            </div>
-          </div>
-        </div>
-      </section>
+            <button class="btn btn-ghost" style="border: 1px solid var(--color-gold); color: var(--color-gold); font-size: 0.7rem; padding: 0.5rem 1rem;" (click)="onEditAvatar()">CAMBIAR AVATAR</button>
+        </aside>
 
-      <!-- Sección: Seguridad -->
-      <section class="form-section">
-        <div class="section-header">
-          <h3>Seguridad</h3>
-          <div class="line"></div>
-        </div>
-        <div class="action-card">
-          <div class="card-row">
-            <div class="info-group">
-              <span class="label">Contraseña</span>
-              <span class="desc">Protege tu acceso al Valhalla</span>
-            </div>
-            <button class="btn btn-outline" (click)="onChangePassword()">CAMBIAR CLAVE</button>
-          </div>
-        </div>
-      </section>
+        <div class="form-scroll-area">
+            <section class="card">
+                <div class="card-header">IDENTIDAD</div>
+                <div class="form-row stack-mobile">
+                    <div class="info-txt">
+                        <span class="label">Correo Sagrado</span>
+                        <span class="desc">Tu vínculo con el Valhalla</span>
+                    </div>
+                    <input type="email" [ngModel]="userEmail()" (ngModelChange)="userEmail.set($event)" class="viking-input">
+                </div>
+            </section>
 
-      <!-- Sección: Preferencias -->
-      <section class="form-section">
-        <div class="section-header">
-          <h3>Preferencias</h3>
-          <div class="line"></div>
-        </div>
-        <div class="action-card glass-style">
-          <div class="card-row">
-            <div class="info-group">
-              <span class="label">Lengua del Clan</span>
-              <span class="desc">Idioma de la interfaz</span>
-            </div>
-            <select class="select-themed" (change)="onChangeLanguage()">
-              <option [selected]="language() === 'ES'">Español (ES)</option>
-              <option [selected]="language() === 'EN'">English (EN)</option>
-            </select>
-          </div>
-          <div class="card-row">
-            <div class="info-group">
-              <span class="label">Modo Oscuro</span>
-              <span class="desc">Noche eterna en Midgard</span>
-            </div>
-            <div class="toggle-switch" [class.active]="isDarkMode()" (click)="toggleTheme()"></div>
-          </div>
-        </div>
-      </section>
+            <section class="card">
+                <div class="card-header">SEGURIDAD</div>
+                <div class="form-row">
+                    <div class="info-txt">
+                        <span class="label">Contraseña</span>
+                        <span class="desc">Asegura tu acceso</span>
+                    </div>
+                    <button class="btn btn-ghost btn-mobile-small" style="border: 1px solid var(--color-gold); color: var(--color-gold); font-family: 'Outfit';" (click)="onChangePassword()">CAMBIAR CLAVE</button>
+                </div>
+            </section>
 
-      <!-- Acciones Finales -->
-      <footer class="config-footer">
+            <section class="card">
+                <div class="card-header">PREFERENCIAS</div>
+                <div class="form-row">
+                    <div class="info-txt">
+                        <span class="label">Lengua del Clan</span>
+                        <span class="desc">Idioma de la batalla</span>
+                    </div>
+                    <div class="flag-selector">
+                        <button class="flag-btn" [class.active]="language() === 'ES'" (click)="setLanguage('ES')">🇪🇸</button>
+                        <button class="flag-btn" [class.active]="language() === 'EN'" (click)="setLanguage('EN')">🇬🇧</button>
+                    </div>
+                </div>
+                <div class="form-row" style="margin-top: 1rem;">
+                    <div class="info-txt">
+                        <span class="label">Modo Oscuro</span>
+                        <span class="desc">Noche eterna</span>
+                    </div>
+                    <div class="toggle-switch" [class.active]="isDarkMode()" (click)="toggleTheme()"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer class="footer">
         <button class="btn btn-ghost" (click)="onCancel()">DESCARTAR</button>
         <button class="btn btn-gold" (click)="onSave()">GUARDAR CAMBIOS</button>
-      </footer>
-
-    </div>
-  </main>
+    </footer>
+</div>
 
 @if (showPasswordModal()) {
-  <app-cambiar-contrasena-modal (closed)="onPasswordModalClosed()" />
+    <app-cambiar-contrasena-modal (closeModal)="onPasswordModalClosed()"></app-cambiar-contrasena-modal>
 }
-</div>

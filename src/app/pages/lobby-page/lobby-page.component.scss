@@ -1,329 +1,258 @@
 @use "../../../styles/variables" as *;
 @use 'sass:color';
 
-// Lobby layout
 .lobby-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  height: calc(100dvh - 74px); // Usar dvh para mejor soporte móvil y restar altura real del navbar (72px + 2px borde)
   padding: 2rem;
-  max-width: 1000px;
+  gap: 2rem;
+  max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
-  // Account for navbar height
-  min-height: calc(100% - 72px);
-  
+  box-sizing: border-box;
+  overflow-x: hidden;
+
   @include tablet {
     padding: 1rem;
     gap: 1.5rem;
-  }
-}
-
-// Glassmorphism panels
-.glass-panel {
-  background-color: $color-bg-glass;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid $color-border-default;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-}
-
-// Hero Section
-.hero-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 3rem 2rem;
-  gap: 2rem;
-
-  @include tablet {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-// Texto de bienvenida en la hero card
-.hero-welcome {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-
-  .welcome-label {
-    color: $color-text-secondary;
-    font-size: 1.4rem;
-    font-weight: 500;
-    margin: 0;
+    height: calc(100dvh - 74px); // Mantener la resta correcta
   }
 
-  .welcome-username {
-    color: $color-gold;
-    font-family: 'Cinzel', serif;
-    font-weight: 700;
-    text-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
-  }
-}
-
-.actions-grid {
-  display: flex;
-  gap: 2rem;
-  width: 100%;
-  justify-content: center;
-  
   @include mobile {
-    flex-direction: column;
+    padding: 0.75rem;
     gap: 1rem;
   }
 }
 
-// Typography
-.section-title {
-  color: $color-text-primary;
-  font-family: 'Cinzel', serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 0 0 1.5rem 0;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.section-header {
-  cursor: pointer;
-  user-select: none;
-  
-  h2 {
-    margin-bottom: 0;
-    transition: color 0.2s ease;
-  }
-
-  &:hover h2 {
-    color: $color-gold;
-  }
-  
-  .toggle-icon {
-    font-size: 1rem;
-    transition: transform 0.3s ease;
-    display: inline-block;
-    
-    &.collapsed {
-      transform: rotate(-90deg);
-    }
-  }
-}
-
-// Game Lists
-.games-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.game-card {
+.hero-section {
+  background: $color-bg-glass;
+  border: 1px solid $color-border-default;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: $color-bg-card;
-  border: 1px solid $color-border-faint;
-  border-radius: 8px;
-  padding: 1.25rem 1.5rem;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
 
-  &:hover {
-    border-color: $color-border-strong;
-    transform: translateY(-2px);
+  @include tablet {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+    padding: 1.5rem 1rem;
   }
 
   @include mobile {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
+    padding: 1.25rem 0.75rem;
+    gap: 1.25rem;
   }
 }
 
-.game-info {
+.hero-welcome h2 {
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  color: $color-gold;
+  font-size: 1.8rem;
+
+  @include mobile {
+    font-size: 1.4rem;
+  }
+}
+
+.lists-grid {
+  display: flex;
+  gap: 1.5rem;
+  flex-grow: 1;
+  min-height: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @include tablet {
+    flex-direction: column;
+  }
+}
+
+.list-column {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-}
+  background: $color-bg-glass;
+  border: 1px solid $color-border-default;
+  border-radius: 12px;
+  padding: 1.5rem;
+  min-width: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 
-.game-name {
-  color: $color-text-primary;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin: 0;
-}
-
-.game-meta {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: 0.9rem;
-  flex-wrap: wrap;
-}
-
-.game-code-label {
-  color: $color-text-disabled;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-.game-code {
-  color: $color-gold-light;
-  font-family: monospace;
-  font-weight: 700;
-  background-color: $color-bg-tertiary;
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-  letter-spacing: 2px;
-}
-
-.game-result {
-  font-weight: 700;
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 1px;
-
-  &.victoria {
-    color: $color-success;
-    background-color: $color-success-bg;
-    border: 1px solid $color-success;
-  }
-
-  &.derrota {
-    color: $color-error;
-    background-color: $color-error-bg;
-    border: 1px solid $color-error;
-  }
-}
-
-.game-actions {
-  display: flex;
-  gap: 0.75rem;
-  
   @include mobile {
-    width: 100%;
-    
-    button {
-      flex: 1;
+    padding: 1rem;
+  }
+
+  &.collapsed {
+    flex: 0;
+    padding: 0;
+    width: 60px;
+    min-width: 60px;
+    cursor: pointer;
+    background: $color-bg-tertiary;
+    border-color: $color-gold;
+
+    @include tablet {
+      width: 100%;
+      min-width: 0;
+      height: 60px;
+      flex: none;
+    }
+
+    .column-header, .scroll-area {
+      display: none;
+    }
+
+    .vertical-tab {
+      display: flex;
     }
   }
 }
 
-.empty-state {
-  color: $color-text-secondary;
-  font-style: italic;
-  text-align: center;
-  padding: 2rem;
-  background-color: $color-bg-card;
-  border-radius: 8px;
-  border: 1px dashed $color-border-default;
-}
-
-// Badges
-.badge {
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 0.25rem 0.75rem;
-  border-radius: 99px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  
-  &[data-clan="fury"] { background-color: rgba(192, 57, 43, 0.2); color: $color-clan-fury; border: 1px solid $color-clan-fury; }
-  &[data-clan="divine"] { background-color: rgba(74, 144, 217, 0.2); color: $color-clan-divine; border: 1px solid $color-clan-divine; }
-  &[data-clan="iron"] { background-color: rgba(138, 155, 168, 0.2); color: $color-clan-iron; border: 1px solid $color-clan-iron; }
-  &[data-clan="song"] { background-color: rgba(139, 92, 246, 0.2); color: $color-clan-song; border: 1px solid $color-clan-song; }
-  &[data-clan="rune"] { background-color: rgba(16, 185, 129, 0.2); color: $color-clan-rune; border: 1px solid $color-clan-rune; }
-  &[data-clan="death"] { background-color: rgba(124, 107, 158, 0.2); color: $color-clan-death; border: 1px solid $color-clan-death; }
-}
-
-// Buttons
-button {
-  cursor: pointer;
-  border: none;
-  border-radius: 6px;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  display: inline-flex;
+.vertical-tab {
+  display: none;
+  height: 100%;
+  width: 100%;
   align-items: center;
   justify-content: center;
   
-  &.btn-large {
-    padding: 1rem 2.5rem;
-    font-size: 1.1rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  
-  &:not(.btn-large) {
-    padding: 0.6rem 1.25rem;
-    font-size: 0.95rem;
-  }
+  .vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    color: $color-gold;
+    letter-spacing: 4px;
+    font-size: 1rem;
+    white-space: nowrap;
+    user-select: none;
 
-  &:active {
-    transform: scale(0.98);
+    @include tablet {
+      writing-mode: horizontal-tb;
+      letter-spacing: 2px;
+      white-space: normal; // Permitir que baje de línea si no cabe
+      text-align: center;
+      padding: 0 1rem;
+    }
   }
 }
 
-.btn-primary {
-  background-color: $color-gold;
-  color: $color-text-inverse;
-  
+.column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-shrink: 0;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+
   &:hover {
-    background-color: $color-gold-light;
-    box-shadow: 0 0 15px rgba(201, 168, 76, 0.4);
+    border-color: $color-gold;
+  }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    margin: 0;
+    white-space: nowrap;
+    color: $color-text-primary;
+
+    @include mobile {
+      font-size: 1rem;
+      white-space: normal;
+    }
   }
 }
 
-.btn-secondary {
-  background-color: $color-bg-tertiary;
-  color: $color-text-primary;
-  border: 1px solid $color-border-strong;
-  
+.header-icon {
+  color: $color-gold;
+  font-size: 0.7rem;
+  opacity: 0.6;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.scroll-area {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-thumb { background: $color-border-default; border-radius: 10px; }
+}
+
+.card {
+  background: $color-bg-card;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid $color-border-default;
+
   &:hover {
-    background-color: $color-gold-muted;
-    border-color: $color-gold-light;
+    border-color: $color-gold-muted;
   }
+}
+
+.card-title {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  color: white;
+}
+
+.card-meta {
+  font-size: 0.85rem;
+  color: $color-text-secondary;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Buttons from Preview */
+.btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-size: 0.85rem;
+  font-family: 'Outfit', sans-serif;
+  text-transform: uppercase;
+  transition: all 0.2s;
+
+  &:active { transform: scale(0.95); }
 }
 
 .btn-gold {
-  background-color: $color-gold;
-  color: $color-text-inverse;
-  
-  &:hover {
-    background-color: $color-gold-light;
-  }
+  background: $color-gold;
+  color: black;
+  &:hover { background: $color-gold-light; }
 }
 
-.btn-info {
-  background-color: $color-bg-tertiary;
-  color: $color-info;
-  border: 1px solid $color-info;
-  
-  &:hover {
-    background-color: $color-info-bg;
-  }
+.btn-outline {
+  background: transparent;
+  border: 1px solid $color-gold;
+  color: $color-gold;
+  &:hover { background: rgba($color-gold, 0.1); }
 }
 
-.btn-danger {
-  background-color: $color-error;
-  color: $color-text-inverse;
-}
-
-.btn-danger-outline {
-  background-color: transparent;
-  color: $color-error;
-  border: 1px solid $color-error;
-  
-  &:hover {
-    background-color: $color-error-bg;
-  }
-}
-
-// Adjust hover for danger button properly
-.btn-danger:hover {
-  background-color: color.adjust(#c0392b, $lightness: 10%);
+.btn-ghost {
+  background: $color-bg-tertiary;
+  color: $color-text-secondary;
+  &:hover { color: white; background: $color-bg-card; }
 }

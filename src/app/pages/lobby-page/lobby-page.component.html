@@ -1,86 +1,73 @@
-<main class="lobby-container">
+<div class="lobby-container">
   
-  <section class="hero-section glass-panel">
+  <section class="hero-section">
     <div class="hero-welcome">
-      <p class="welcome-label">Bienvenido, <span class="welcome-username">{{ username() }}</span></p>
+      <h2>BIENVENIDO, GUERRERO</h2>
     </div>
-    <div class="actions-grid">
-      <button class="btn-primary btn-large" (click)="onNewGame()">Nueva Partida</button>
-      <button class="btn-secondary btn-large" (click)="onJoinGame()">Unirse a Partida</button>
-    </div>
-  </section>
-
-  <section class="active-games-section glass-panel">
-    <h2 class="section-title">Partidas activas</h2>
-    <div class="games-list">
-      @for (game of activeGames(); track game.id) {
-        <div class="game-card">
-          <div class="game-info">
-            <h3 class="game-name">{{ game.name }}</h3>
-            <div class="game-meta">
-              <span class="game-code-label">CÓDICE:</span>
-              <span class="game-code">{{ game.code }}</span>
-              <span class="game-clan badge" [attr.data-clan]="game.clan">{{ game.clanName }}</span>
-            </div>
-          </div>
-          <div class="game-actions">
-            <button class="btn-gold" (click)="onEnterGame(game.id)">Entrar</button>
-            <button class="btn-danger" (click)="onLeaveGame(game.id)">Salir</button>
-          </div>
-        </div>
-      } @empty {
-        <p class="empty-state">No tienes partidas activas. ¡Forja tu legado creando o uniéndote a una batalla!</p>
-      }
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+      <button class="btn btn-gold" (click)="onNewGame()">NUEVA PARTIDA</button>
+      <button class="btn btn-outline" (click)="onJoinGame()">UNIRSE A PARTIDA</button>
     </div>
   </section>
 
-  <section class="finished-games-section glass-panel">
-    <div class="section-header" (click)="toggleFinishedGames()" role="button" tabindex="0">
-      <h2 class="section-title">
-        <span class="toggle-icon" [class.collapsed]="finishedGamesCollapsed()">▼</span>
-        Partidas terminadas 
-      </h2>
-    </div>
-    
-    @if (!finishedGamesCollapsed()) {
-      <div class="games-list">
-        @for (game of finishedGames(); track game.id) {
-          <div class="game-card finished">
-            <div class="game-info">
-              <h3 class="game-name">{{ game.name }}</h3>
-              <div class="game-meta">
-                <span class="game-code">{{ game.code }}</span>
-                <span class="game-result" [class.victoria]="game.result === 'Victoria'" [class.derrota]="game.result === 'Derrota'">
-                  {{ game.result }}
-                </span>
-              </div>
-            </div>
-            <div class="game-actions">
-              <button class="btn-info" (click)="onViewStats(game.id)">Estadísticas</button>
-              <button class="btn-danger-outline" (click)="onDeleteFinished(game.id)">Borrar</button>
-            </div>
-          </div>
-        } @empty {
-          <p class="empty-state">Las crónicas están vacías. Aún no hay registros de batallas pasadas.</p>
-        }
-
+  <div class="lists-grid">
+    <!-- Columna 1: Activas -->
+    <section class="list-column">
+      <div class="column-header" style="cursor: default; border: none;">
+        <h2>PARTIDAS ACTIVAS</h2>
       </div>
-    }
-  </section>
+      <div class="scroll-area">
+        @for (game of activeGames(); track game.id) {
+          <div class="card">
+            <span class="card-title">{{ game.name }}</span>
+            <div class="card-meta">
+              <span>COD: {{ game.id }}</span>
+              <button class="btn btn-gold" (click)="onEnterGame(game.id)">ENTRAR</button>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
 
-</main>
+    <!-- Columna 2: Terminadas -->
+    <section class="list-column" [class.collapsed]="finishedGamesCollapsed()" id="finished-column">
+      <div class="vertical-tab" (click)="toggleFinishedGames()">
+        <p class="vertical-text">PARTIDAS FINALIZADAS</p>
+      </div>
+      
+      <div class="column-header" (click)="toggleFinishedGames()">
+        <h2>PARTIDAS FINALIZADAS</h2>
+        <span class="header-icon">▲ ESCONDER</span>
+      </div>
 
+      <div class="scroll-area">
+        @for (game of finishedGames(); track game.id) {
+          <div class="card">
+            <span class="card-title">{{ game.name }}</span>
+            <div class="card-meta">
+              <span style="color: var(--color-success)">VICTORIA</span>
+              <button class="btn btn-ghost">ESTADÍSTICAS</button>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  </div>
+
+</div>
+
+<!-- Modales -->
 @if (showCrearPartida()) {
-  <app-crear-partida-modal (closed)="showCrearPartida.set(false)" />
+  <app-crear-partida-modal (closeModal)="showCrearPartida.set(false)"></app-crear-partida-modal>
 }
 
 @if (showUnirsePartida()) {
   <app-unirse-partida-modal 
-    (closed)="showUnirsePartida.set(false)"
+    (closeModal)="showUnirsePartida.set(false)"
     (lobbyFull)="onLobbyFull()"
   ></app-unirse-partida-modal>
 }
 
 @if (showSalaLlena()) {
-  <app-sala-llena-modal (closed)="showSalaLlena.set(false)"></app-sala-llena-modal>
+  <app-sala-llena-modal (closeModal)="showSalaLlena.set(false)"></app-sala-llena-modal>
 }

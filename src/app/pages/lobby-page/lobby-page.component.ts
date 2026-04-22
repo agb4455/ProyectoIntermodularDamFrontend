@@ -42,7 +42,7 @@ export class LobbyPageComponent {
   ]);
 
   // UI state
-  readonly finishedGamesCollapsed = signal<boolean>(false);
+  readonly finishedGamesCollapsed = signal<boolean>(true);
 
   // Estado de visibilidad de modales
   readonly showCrearPartida = signal<boolean>(false);

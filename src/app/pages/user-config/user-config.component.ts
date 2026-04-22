@@ -39,11 +39,10 @@ export class UserConfigComponent {
     this.showPasswordModal.set(false);
   }
 
-  // Acción: Alternar Idioma
-  onChangeLanguage(): void {
-    const newLang = this.language() === 'ES' ? 'EN' : 'ES';
-    this.language.set(newLang);
-    console.log('Idioma cambiado a:', newLang);
+  // Acción: Seleccionar Idioma
+  setLanguage(lang: 'ES' | 'EN'): void {
+    this.language.set(lang);
+    console.log('Idioma cambiado a:', lang);
   }
 
   // Acción: Editar Foto de Perfil
