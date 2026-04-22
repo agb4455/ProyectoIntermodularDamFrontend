@@ -2,14 +2,14 @@ export const es = {
   NAV: {
     HOME: 'Inicio',
     MENU: 'Menú',
-    LOBBY: 'Guerra',
-    CHARACTERS: 'Linajes',
-    ADMIN: 'Oráculo',
+    LOBBY: 'Lobby',
+    CHARACTERS: 'Personajes',
+    ADMIN: 'Admin',
     CONFIG: 'Ajustes',
-    STATS: 'Sagas',
-    LOGOUT: 'Partir al Valhalla',
+    STATS: 'Estadisticas',
+    LOGOUT: 'Cerrar sesion',
     LOGIN: 'Iniciar Sesión',
-    RULES: 'Leyes de Midgard'
+    RULES: 'reglas del Juego'
   },
   SHOW: '▼ MOSTRAR',
   HIDE: '▲ ESCONDER',
@@ -23,8 +23,8 @@ export const es = {
         TITLE: 'La Cronología de la Guerra',
         DESC: 'Toda saga se divide en tres eras ancestrales.',
         ERA_1_NAME: 'Preparación',
-        ERA_1_DESC: 'Los ataques están prohibidos. Es el momento de realizar rituales, entrenar tus tropas y acumular sabiduría. Los costos son elevados, pero la paz es temporal.',
-        ERA_2_NAME: 'Guerra Total',
+        ERA_1_DESC: 'Los ataques están prohibidos. Es el momento de entrenar tus tropas y acumular sabiduría. Los costos son elevados, pero la paz es temporal.',
+        ERA_2_NAME: 'Ragnarök',
         ERA_2_DESC: 'El Ragnarök comienza. Los costos de leva se reducen y la sangre corre por las tierras. Es la era de la conquista y la destrucción mutua.',
         ERA_3_NAME: 'El Veredicto',
         ERA_3_DESC: 'Solo los clanes más fuertes permanecen. La magia fluye con facilidad mientras el fin se acerca. El arma definitiva está lista para ser forjada.'
@@ -53,13 +53,13 @@ export const es = {
   LOBBY: {
     TITLE: 'CÁMARA DE GUERRA',
     ACTIVE_GAMES: 'Partidas Activas',
-    FINISHED_GAMES: 'Gestas Finalizadas',
+    FINISHED_GAMES: 'Partidas Finalizadas',
     NO_GAMES: 'No hay batallas en curso...',
-    CREATE_GAME: 'FORJAR PARTIDA',
-    JOIN_GAME: 'UNIRSE A LA GESTA',
+    CREATE_GAME: 'EMPEZAR PARTIDA',
+    JOIN_GAME: 'UNIRSE A PARTIDA',
     ABANDON: 'ABANDONAR',
     DELETE: 'BORRAR',
-    STATS: 'Sagas',
+    STATS: 'ESTADISTICAS',
     GAME_RESULT: {
       VICTORY: 'Victoria',
       DEFEAT: 'Derrota'
@@ -69,7 +69,7 @@ export const es = {
     },
     MODALS: {
       CREATE: {
-        TITLE: 'JURAMENTAR CLAN',
+        TITLE: 'ELEGIR CLAN',
         SUBTITLE: 'Elige tu linaje. Tu destino depende de ello.',
         HINT_ACTIVE: 'Clan seleccionado — listo para la batalla',
         HINT_EMPTY: 'Selecciona un clan para continuar',
@@ -77,15 +77,15 @@ export const es = {
         BTN: 'CREAR PARTIDA'
       },
       JOIN: {
-        TITLE: 'UNIRSE A LA GESTA',
-        SUBTITLE: 'Introduce el Códice de Guerra para entrar en batalla.',
-        CODE_PLACEHOLDER: 'Códice (Ej: A7X9-B)',
+        TITLE: 'UNIRSE A LA PARTIDA',
+        SUBTITLE: 'Introduce el Codigo de Partida para entrar en batalla.',
+        CODE_PLACEHOLDER: 'Codigo (Ej: A7X9-B)',
         BTN: 'ENTRAR EN BATALLA',
         JOINING: 'Buscando clan…'
       },
       FULL: {
         TITLE: 'SALA LLENA',
-        MESSAGE: 'El salón de guerra ya está completo. Otros guerreros han llegado antes que tú.',
+        MESSAGE: 'El salón de guerra ya está completo. Otros guerreros han llegado antes que tú. Inicia o unete a otra partida distinta',
         BTN: 'ENTENDIDO'
       }
     }
@@ -123,9 +123,9 @@ export const es = {
     }
   },
   CONFIG: {
-    TITLE: 'AJUSTES DEL GUERRERO',
+    TITLE: 'AJUSTES DEL USUARIO',
     PROFILE: 'Perfil de Guerrero',
-    LANGUAGE: 'Lengua del Clan',
+    LANGUAGE: 'IDIOMA',
     THEME: 'Atmósfera',
     DARK_MODE: 'Noche Eterna',
     LIGHT_MODE: 'Día de Odín',
@@ -137,13 +137,13 @@ export const es = {
     PHASES: {
       WAITING: 'ESPERANDO',
       PREPARATION: 'PREPARACIÓN',
-      WAR: 'GUERRA',
+      WAR: 'Ragnarök',
       END: 'FIN'
     },
     STATS: {
       HEALTH: 'Vida',
       GOLD: 'Oro',
-      RESEARCH: 'Ptos. Inv'
+      RESEARCH: 'Sabiduria'
     },
     troop_types: {
       infanteria: 'Infantería',
