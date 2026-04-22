@@ -510,6 +510,22 @@
 }
 
 @include mobile {
+  .codex-content, 
+  .cta-section, 
+  .home-footer,
+  .scroll-hint {
+    display: none !important;
+  }
+
+  .hero-section {
+    height: calc(100dvh - 72px);
+    min-height: calc(100dvh - 72px);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .footer-content { 
     flex-direction: column; 
     text-align: center; 
@@ -517,29 +533,31 @@
   }
   
   .hero-title {
+    font-size: clamp(2rem, 12vw, 3.5rem);
     letter-spacing: 0.05em;
-    margin: 15px 0;
+    margin: 10px 0;
   }
 
   app-logo {
-    transform: scale(0.7);
+    transform: scale(0.65);
     display: block;
-    margin-bottom: -10px;
+    margin-bottom: -15px;
   }
 
   .hero-subtitle { 
     letter-spacing: 1px; 
-    margin-bottom: 30px;
-    font-size: 1.1rem;
+    margin-bottom: 25px;
+    font-size: 1rem;
+    padding: 0 10px;
   }
 
   .btn-mithic-primary {
-    padding: 16px 32px;
-    font-size: 0.95rem;
+    padding: 14px 28px;
+    font-size: 0.9rem;
 
     &.big {
-      padding: 20px 40px;
-      font-size: 1.1rem;
+      padding: 18px 36px;
+      font-size: 1rem;
     }
   }
 
