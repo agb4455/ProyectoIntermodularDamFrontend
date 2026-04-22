@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
 import { CrearPartidaModalComponent } from './modals/crear-partida-modal/crear-partida-modal.component';
 import { UnirsePartidaModalComponent } from './modals/unirse-partida-modal/unirse-partida-modal.component';
+import { SalaLlenaModalComponent } from './modals/sala-llena-modal/sala-llena-modal.component';
 
 interface ActiveGameMock {
   id: string;
@@ -22,7 +23,7 @@ interface FinishedGameMock {
 @Component({
   selector: 'app-lobby-page',
   standalone: true,
-  imports: [CrearPartidaModalComponent, UnirsePartidaModalComponent],
+  imports: [CrearPartidaModalComponent, UnirsePartidaModalComponent, SalaLlenaModalComponent],
   templateUrl: './lobby-page.component.html',
   styleUrl: './lobby-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -46,6 +47,7 @@ export class LobbyPageComponent {
   // Estado de visibilidad de modales
   readonly showCrearPartida = signal<boolean>(false);
   readonly showUnirsePartida = signal<boolean>(false);
+  readonly showSalaLlena = signal<boolean>(false);
 
   // Nombre del usuario autenticado
   private readonly authService = inject(AuthService);
@@ -65,6 +67,11 @@ export class LobbyPageComponent {
 
   onJoinGame() {
     this.showUnirsePartida.set(true);
+  }
+
+  onLobbyFull() {
+    this.showUnirsePartida.set(false);
+    this.showSalaLlena.set(true);
   }
 
   onEnterGame(gameId: string) {

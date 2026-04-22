@@ -1,0 +1,35 @@
+<div class="modal-overlay" (click)="close()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <!-- Decoración rúnica de fondo -->
+    <div class="runic-bg"></div>
+
+    <div class="modal-header">
+      <div class="warning-icon">
+        <span>⚔️</span>
+      </div>
+      <h2>¡SALA LLENA, GUERRERO!</h2>
+      <div class="header-line"></div>
+    </div>
+
+    <div class="modal-body">
+      <p class="warning-text">
+        El gran salón ya está abarrotado de combatientes. 
+        No hay espacio para más hachas en esta batalla.
+      </p>
+      
+      <div class="info-box">
+        <p>Límite máximo: <strong>6 Clanes</strong></p>
+        <p>Estado: <strong>Completo</strong></p>
+      </div>
+
+      <p class="action-text">Busca otro código de batalla o crea tu propio clan para la guerra.</p>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-primary" (click)="close()">
+        <span class="btn-text">VOLVER AL LOBBY</span>
+        <span class="btn-glint"></span>
+      </button>
+    </div>
+  </div>
+</div>

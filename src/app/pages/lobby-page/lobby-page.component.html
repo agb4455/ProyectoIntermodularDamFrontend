@@ -75,5 +75,12 @@
 }
 
 @if (showUnirsePartida()) {
-  <app-unirse-partida-modal (closed)="showUnirsePartida.set(false)" />
+  <app-unirse-partida-modal 
+    (closed)="showUnirsePartida.set(false)"
+    (lobbyFull)="onLobbyFull()"
+  ></app-unirse-partida-modal>
+}
+
+@if (showSalaLlena()) {
+  <app-sala-llena-modal (closed)="showSalaLlena.set(false)"></app-sala-llena-modal>
 }

@@ -36,6 +36,8 @@ const CLANES: ClanOption[] = [
 export class UnirsePartidaModalComponent {
   // Output para notificar al padre que debe cerrar el modal
   readonly closed = output<void>();
+  // Output para notificar que la sala está llena
+  readonly lobbyFull = output<void>();
 
   private readonly router = inject(Router);
   private readonly gameService = inject(GameService);
@@ -73,12 +75,25 @@ export class UnirsePartidaModalComponent {
     if (!this.selectedClan() || !this.gameCode().trim()) return;
     this.isJoining.set(true);
 
+    // TODO: Llamar al servidor para validar código y unirse
+    // const result = await this.gameService.joinGame(this.gameCode(), this.selectedClan()!);
+    // Si el servidor responde que la sala está llena, disparar lobbyFull.emit()
+
     // Simulación: Establecer contexto como JUGADOR (no host)
     this.gameService.setGameContext({
       code: this.gameCode(),
       clan: this.selectedClan()!,
       isHost: false
     });
+
+    // SIMULACIÓN: Si el código es 'FULL', disparamos el modal de sala llena
+    if (this.gameCode() === 'FULL') {
+      setTimeout(() => {
+        this.isJoining.set(false);
+        this.lobbyFull.emit();
+      }, 800);
+      return;
+    }
 
     setTimeout(() => {
       this.close();

@@ -38,8 +38,6 @@ export class GamePageComponent implements OnInit {
   private readonly router = inject(Router);
   protected readonly isDevelopment = signal(isDevMode());
 
-  private shouldRedirectToLobby = false;
-
   private readonly continentCoords = [
     { x: 22, y: 28 }, // Niflheim (Top Left)
     { x: 65, y: 20 }, // Jötunheim (Top Right)
@@ -78,14 +76,6 @@ export class GamePageComponent implements OnInit {
   protected readonly players = signal<PlayerNode[]>(this.getInitialPlayers());
 
   ngOnInit(): void {
-    // Validar capacidad de sala
-    if (this.players().length >= 6) {
-      this.shouldRedirectToLobby = true;
-      this.avisoMessage.set('ESTA SALA ESTÁ LLENA. Volviendo al lobby...');
-      this.showAvisoModal.set(true);
-      return;
-    }
-
     // Preparar suscripciones (Dejado preparado para integración real)
     this.setupGameSubscriptions();
   }
@@ -410,10 +400,6 @@ export class GamePageComponent implements OnInit {
   protected closeAvisoModal(): void {
     this.showAvisoModal.set(false);
     this.avisoMessage.set('');
-    
-    if (this.shouldRedirectToLobby) {
-      this.router.navigate(['/lobby']);
-    }
   }
 
   protected onLaunchAttack(troopIds: string[]): void {

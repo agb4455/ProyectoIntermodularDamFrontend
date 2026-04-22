@@ -64,7 +64,8 @@ export class CrearPartidaModalComponent {
     if (!this.selectedClan()) return;
     this.isCreating.set(true);
 
-    // Simulación: Generar un código aleatorio y establecer contexto como HOST
+    // TODO: Llamar al servidor para crear partida y obtener el código real
+    // const generatedCode = await this.gameService.createGame(this.selectedClan()!);
     const generatedCode = Math.random().toString(36).substring(2, 8).toUpperCase();
     
     this.gameService.setGameContext({

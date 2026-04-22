@@ -16,6 +16,7 @@ export class GameService {
 
   /**
    * Establece el contexto de la partida antes de entrar
+   * TODO: Integrar con el Middle Server para validar códigos y obtener estado real
    */
   setGameContext(context: GameContext): void {
     this.#gameContext.set(context);
@@ -27,4 +28,8 @@ export class GameService {
   clearGameContext(): void {
     this.#gameContext.set(null);
   }
+
+  // TODO: Implementar métodos para llamar al servidor:
+  // - createGame(clanId): Observable<GameContext>
+  // - joinGame(code, clanId): Observable<GameContext>
 }
