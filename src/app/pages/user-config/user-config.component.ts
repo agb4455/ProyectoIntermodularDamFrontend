@@ -53,14 +53,15 @@ export class UserConfigComponent {
   }
 
   /**
-   * [PREPARADO] Lógica de subida a MinIO
-   * Incluye validación de Magic Bytes y redimensionado a 200x200
+   * [PREPARADO] Envío de avatar al Middle Server
+   * El Middle Server se encargará de:
+   * 1. Redimensionar a 200x200 (sharp)
+   * 2. Subir a MinIO
+   * 3. Persistir la URL en el DB Server
    */
   private prepareMinIOUpload(): void {
-    // TODO: Usar biblioteca 'sharp' o canvas para redimensionar a 200x200
-    // TODO: Obtener URL firmada (PUT) desde el Middle Server
-    // TODO: Subir directamente a MinIO
-    console.warn('[CONFIG] Subida a MinIO preparada. Falta integración con Middle Server.');
+    // TODO: Implementar input type="file" y enviar multipart/form-data al Middle Server
+    console.warn('[CONFIG] Envío de avatar preparado. El Middle Server procesará la imagen.');
   }
 
   // Acción: Guardar cambios en el servidor
@@ -72,9 +73,8 @@ export class UserConfigComponent {
       darkMode: this.isDarkMode()
     });
     
-    // TODO: Implementar interceptor HTTP para añadir Bearer Token
-    // TODO: Llamada REST al DB Server via Middle Server (/internal/users/{id})
-    console.info('[CONFIG] Persistencia preparada. Esperando endpoints del DB Server.');
+    // TODO: Delegar persistencia al Middle Server (quien se comunica con el DB Server)
+    console.info('[CONFIG] Solicitud de guardado preparada para el Middle Server.');
   }
 
   // Acción: Descartar cambios
