@@ -378,14 +378,14 @@
 }
 
 .attack-path {
-  stroke: #ff4d4d; 
+  stroke: var(--color-phase-war); 
   stroke-width: 1.2; 
   fill: none;
   opacity: 0.9; 
   stroke-linecap: round;
   stroke-dasharray: 2 2;
   animation: dashMove 1s linear infinite;
-  filter: drop-shadow(0 0 6px rgba(255, 77, 77, 0.6));
+  filter: drop-shadow(0 0 6px var(--color-error-bg));
 }
 
 @keyframes dashMove {

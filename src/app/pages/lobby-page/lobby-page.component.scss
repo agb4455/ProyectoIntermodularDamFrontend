@@ -210,7 +210,7 @@
   display: block;
   margin-bottom: 0.75rem;
   font-size: 1.1rem;
-  color: white;
+  color: $color-text-primary;
 }
 
 .card-meta {
@@ -240,7 +240,7 @@
 
 .btn-gold {
   background: $color-gold;
-  color: black;
+  color: $color-text-inverse;
   &:hover { background: $color-gold-light; }
 }
 
@@ -248,11 +248,11 @@
   background: transparent;
   border: 1px solid $color-gold;
   color: $color-gold;
-  &:hover { background: rgba($color-gold, 0.1); }
+  &:hover { background: $color-gold-muted; }
 }
 
 .btn-ghost {
   background: $color-bg-tertiary;
   color: $color-text-secondary;
-  &:hover { color: white; background: $color-bg-card; }
+  &:hover { color: $color-text-primary; background: $color-bg-card; }
 }

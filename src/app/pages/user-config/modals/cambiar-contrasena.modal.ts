@@ -54,7 +54,7 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7);
+      background: $color-bg-overlay;
       display: flex; align-items: center; justify-content: center;
       z-index: 2000;
       backdrop-filter: blur(4px);
@@ -66,12 +66,12 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
       border-radius: 12px;
       width: 400px;
       max-width: 90%;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 40px $color-bg-overlay;
     }
 
     .modal-header {
       padding: 1.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid $color-border-faint;
       display: flex; justify-content: space-between; align-items: center;
     }
 
@@ -83,7 +83,7 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
     }
 
     .btn-close {
-      background: none; border: none; color: #666; font-size: 1.5rem; cursor: pointer;
+      background: none; border: none; color: $color-text-secondary; font-size: 1.5rem; cursor: pointer;
       &:hover { color: $color-gold; }
     }
 
@@ -94,11 +94,11 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 
     .form-group {
       display: flex; flex-direction: column; gap: 0.5rem;
-      label { font-size: 0.9rem; color: #aaa; }
+      label { font-size: 0.9rem; color: $color-text-secondary; }
       input {
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.1);
-        padding: 0.8rem; border-radius: 6px; color: #fff;
+        background: $color-bg-tertiary;
+        border: 1px solid $color-border-default;
+        padding: 0.8rem; border-radius: 6px; color: $color-text-primary;
         &:focus { border-color: $color-gold; outline: none; }
       }
     }
@@ -117,12 +117,12 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
     }
 
     .btn-secondary {
-      background: transparent; border: 1px solid #444; color: #aaa;
-      &:hover { border-color: #666; color: #fff; }
+      background: transparent; border: 1px solid $color-border-default; color: $color-text-secondary;
+      &:hover { border-color: $color-gold; color: $color-text-primary; }
     }
 
     .btn-primary {
-      background: $color-gold; border: none; color: #000;
+      background: $color-gold; border: none; color: $color-text-inverse;
       &:disabled { opacity: 0.5; cursor: not-allowed; }
       &:hover:not(:disabled) { filter: brightness(1.1); }
     }

@@ -33,7 +33,7 @@ import { CommonModule } from '@angular/common';
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.85);
+      background: $color-bg-overlay;
       display: flex; align-items: center; justify-content: center;
       z-index: 2000;
       backdrop-filter: blur(4px);
@@ -41,13 +41,13 @@ import { CommonModule } from '@angular/common';
     }
 
     .modal-content {
-      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+      background: $color-bg-modal;
       border: 2px solid $color-error;
       border-radius: 12px;
       padding: 2rem;
       max-width: 450px;
       width: 90%;
-      box-shadow: 0 0 50px rgba(255, 77, 77, 0.2);
+      box-shadow: 0 0 50px $color-error-bg;
       text-align: center;
     }
 
@@ -59,7 +59,7 @@ import { CommonModule } from '@angular/common';
     }
 
     .warning-text {
-      color: #ccc;
+      color: $color-text-secondary;
       line-height: 1.6;
       margin-bottom: 1.5rem;
     }
@@ -71,7 +71,7 @@ import { CommonModule } from '@angular/common';
       margin-bottom: 2rem;
       padding: 1rem;
       border-left: 3px solid $color-gold-muted;
-      background: rgba(255, 215, 0, 0.05);
+      background: $color-gold-muted;
     }
 
     .modal-footer {
@@ -93,7 +93,7 @@ import { CommonModule } from '@angular/common';
 
     .btn-cancel {
       background: $color-gold;
-      color: #000;
+      color: $color-text-inverse;
       &:hover { filter: brightness(1.2); transform: scale(1.02); }
     }
 
@@ -101,7 +101,7 @@ import { CommonModule } from '@angular/common';
       background: transparent;
       color: $color-error;
       border: 1px solid $color-error;
-      &:hover { background: rgba(255, 77, 77, 0.1); }
+      &:hover { background: $color-error-bg; }
     }
 
     @keyframes fadeIn {

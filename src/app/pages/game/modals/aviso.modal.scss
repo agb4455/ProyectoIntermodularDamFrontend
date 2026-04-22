@@ -25,7 +25,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(230, 126, 34, 0.1);
+  box-shadow: 0 20px 50px var(--color-bg-overlay), inset 0 0 20px var(--color-warning-bg);
   z-index: 201;
   animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -38,7 +38,7 @@
 .warning-icon {
   width: 80px;
   height: 80px;
-  background: rgba(230, 126, 34, 0.1);
+  background: var(--color-warning-bg);
   border: 2px solid var(--color-warning);
   border-radius: 50%;
   display: flex;
@@ -46,7 +46,7 @@
   justify-content: center;
   color: var(--color-warning);
   margin-bottom: 20px;
-  box-shadow: 0 0 20px rgba(230, 126, 34, 0.2);
+  box-shadow: 0 0 20px var(--color-warning-bg);
 }
 
 .modal-title {
@@ -68,7 +68,7 @@
 .btn-confirm {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(to bottom, var(--color-warning), #d35400);
+  background: linear-gradient(to bottom, var(--color-warning), var(--color-gold-dark));
   border: none;
   border-radius: 12px;
   color: var(--color-text-inverse);
@@ -77,13 +77,13 @@
   font-weight: 900;
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 4px 15px rgba(230, 126, 34, 0.4);
+  box-shadow: 0 4px 15px var(--color-warning-bg);
   text-transform: uppercase;
   letter-spacing: 1px;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(230, 126, 34, 0.6);
+    box-shadow: 0 6px 20px var(--color-warning-bg);
   }
 
   &:active {

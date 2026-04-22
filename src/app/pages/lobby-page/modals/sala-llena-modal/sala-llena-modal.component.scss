@@ -1,10 +1,12 @@
+@use "../../../../styles/variables" as *;
+
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
+  background: $color-bg-overlay;
   backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
@@ -14,14 +16,14 @@
 }
 
 .modal-content {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  border: 2px solid #c5a059; // Oro Vikingo
+  background: $color-bg-modal;
+  border: 2px solid $color-gold; // Oro Vikingo
   border-radius: 4px;
   width: 90%;
   max-width: 500px;
   padding: 2.5rem;
   position: relative;
-  box-shadow: 0 0 40px rgba(197, 160, 89, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 40px $color-gold-muted, inset 0 0 20px $color-bg-primary;
   overflow: hidden;
   text-align: center;
   animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -44,12 +46,12 @@
   .warning-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
-    filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.5));
+    filter: drop-shadow(0 0 10px $color-gold-muted);
     animation: pulse 2s infinite;
   }
 
   h2 {
-    color: #c5a059;
+    color: $color-gold;
     font-family: 'Cinzel', serif; // O la tipografía del proyecto
     font-size: 1.8rem;
     letter-spacing: 2px;
@@ -59,7 +61,7 @@
 
   .header-line {
     height: 2px;
-    background: linear-gradient(90deg, transparent, #c5a059, transparent);
+    background: linear-gradient(90deg, transparent, $color-gold, transparent);
     margin-top: 1rem;
     width: 100%;
   }
@@ -69,41 +71,41 @@
   margin-bottom: 2.5rem;
 
   .warning-text {
-    color: #e0e0e0;
+    color: $color-text-primary;
     font-size: 1.1rem;
     line-height: 1.6;
     margin-bottom: 2rem;
   }
 
   .info-box {
-    background: rgba(197, 160, 89, 0.1);
-    border: 1px solid rgba(197, 160, 89, 0.3);
+    background: $color-gold-muted;
+    border: 1px solid $color-border-strong;
     padding: 1rem;
     border-radius: 4px;
     margin-bottom: 2rem;
 
     p {
       margin: 0.5rem 0;
-      color: #c5a059;
+      color: $color-gold;
       font-size: 1rem;
 
       strong {
-        color: #fff;
+        color: $color-text-primary;
         font-size: 1.2rem;
       }
     }
   }
 
   .action-text {
-    color: #888;
+    color: $color-text-disabled;
     font-style: italic;
     font-size: 0.9rem;
   }
 }
 
 .btn-primary {
-  background: #c5a059;
-  color: #1a1a2e;
+  background: $color-gold;
+  color: $color-text-inverse;
   border: none;
   padding: 1rem 2.5rem;
   font-family: 'Cinzel', serif;
@@ -117,9 +119,9 @@
   clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
 
   &:hover {
-    background: #d4b477;
+    background: $color-gold-light;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4);
+    box-shadow: 0 5px 15px $color-gold-muted;
 
     .btn-glint {
       left: 100%;
@@ -136,7 +138,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: left 0.6s ease;
   }
 }
@@ -152,7 +154,8 @@
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.5)); }
-  50% { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(197, 160, 89, 0.8)); }
-  100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.5)); }
+  0% { transform: scale(1); filter: drop-shadow(0 0 10px $color-gold-muted); }
+  50% { transform: scale(1.1); filter: drop-shadow(0 0 20px $color-gold-muted); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 10px $color-gold-muted); }
 }
+

@@ -165,7 +165,7 @@
 
   &.active {
     border-color: $color-gold;
-    box-shadow: 0 0 10px rgba($color-gold, 0.3);
+    box-shadow: 0 0 10px $color-gold-muted;
   }
 }
 
@@ -173,7 +173,7 @@
 .viking-input {
   background: $color-bg-tertiary;
   border: 1px solid $color-border-default;
-  color: white;
+  color: $color-text-primary;
   padding: 0.7rem;
   border-radius: 6px;
   width: 250px;
@@ -208,7 +208,7 @@
     left: 2px;
     width: 16px;
     height: 16px;
-    background: white;
+    background: $color-text-inverse;
     border-radius: 50%;
     transition: 0.3s;
   }
@@ -253,7 +253,7 @@
 
 .btn-gold {
   background: $color-gold;
-  color: black;
+  color: $color-text-inverse;
 }
 
 .btn-ghost {

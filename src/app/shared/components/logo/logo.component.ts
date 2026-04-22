@@ -79,7 +79,7 @@ import { CommonModule } from '@angular/common';
     .mythic-logo {
       width: 120px;
       height: 120px;
-      filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.2));
+      filter: drop-shadow(0 0 10px var(--color-gold-muted));
     }
     .wolf-head {
       animation: runePulse 4s infinite ease-in-out;

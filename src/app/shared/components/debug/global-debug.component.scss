@@ -1,3 +1,5 @@
+@use "../../../../styles/variables" as *;
+
 .debug-container {
   position: fixed;
   bottom: 20px;
@@ -13,10 +15,10 @@
     right: 0;
     height: 100vh;
     width: 300px;
-    background: rgba(0, 0, 0, 0.85);
+    background: $color-bg-overlay;
     backdrop-filter: blur(10px);
-    border-left: 2px solid var(--color-gold, #d4af37);
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+    border-left: 2px solid $color-gold;
+    box-shadow: -5px 0 20px $color-bg-overlay;
     animation: slideInRight 0.3s ease-out;
   }
 }
@@ -25,14 +27,14 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: #2a2a2a;
-  border: 2px solid var(--color-gold, #d4af37);
+  background: $color-bg-tertiary;
+  border: 2px solid $color-gold;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 24px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px $color-bg-overlay;
   transition: all 0.2s ease;
   position: relative;
 
@@ -47,12 +49,12 @@
     right: 5px;
     width: 10px;
     height: 10px;
-    background: #ff4d4d;
+    background: $color-error;
     border-radius: 50%;
-    border: 1px solid white;
+    border: 1px solid $color-text-primary;
 
     &.active {
-      background: #2ecc71;
+      background: $color-success;
     }
   }
 }
@@ -76,7 +78,7 @@
     margin: 0;
     font-size: 14px;
     letter-spacing: 2px;
-    color: var(--color-gold, #d4af37);
+    color: $color-gold;
   }
 
   .close-btn {
@@ -129,15 +131,15 @@
     }
 
     &.active {
-      background: rgba(46, 204, 113, 0.2);
-      border-color: #2ecc71;
-      color: #2ecc71;
+      background: $color-success-bg;
+      border-color: $color-success;
+      color: $color-success;
     }
 
     &.admin {
-      background: rgba(212, 175, 55, 0.2);
-      border-color: #d4af37;
-      color: #d4af37;
+      background: $color-gold-muted;
+      border-color: $color-gold;
+      color: $color-gold;
     }
   }
 
