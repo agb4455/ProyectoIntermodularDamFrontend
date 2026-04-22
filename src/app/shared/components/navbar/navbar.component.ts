@@ -1,13 +1,16 @@
 import { Component, ChangeDetectionStrategy, signal, inject, HostListener, effect } from '@angular/core';
+import { UpperCasePipe } from '@angular/common';
 import { RouterLink, RouterLinkActive, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
 import { AuthComponent } from '../auth/auth.component';
 import { LogoComponent } from '../logo/logo.component';
+import { TranslatePipe } from '../../../core/i18n/translate.pipe';
+import { I18nService } from '../../../core/i18n/i18n.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, AuthComponent, LogoComponent],
+  imports: [RouterLink, RouterLinkActive, AuthComponent, LogoComponent, TranslatePipe, UpperCasePipe],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,6 +19,7 @@ export class NavbarComponent {
 
   // Inyección del servicio de autenticación para acceder al rol y sesión
   protected readonly authService = inject(AuthService);
+  protected readonly i18n = inject(I18nService);
   private readonly route = inject(ActivatedRoute);
 
   // Estado del dropdown — cerrado por defecto

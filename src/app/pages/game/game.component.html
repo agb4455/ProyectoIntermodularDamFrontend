@@ -2,7 +2,7 @@
 <header class="topbar">
   <!-- Izquierda: volver + logo + usuario -->
   <div class="topbar-left">
-    <button class="btn-back" title="Volver al Lobby" (click)="goBack()">←</button>
+    <button class="btn-back" [title]="'LOBBY.ABANDON' | translate" (click)="goBack()">←</button>
     <div class="game-logo" title="Viking Clan Wars">⚔️</div>
     <div class="player-info">
       <span class="player-name">{{ username() }}</span>
@@ -13,7 +13,7 @@
   <!-- Centro: fase actual -->
   <div class="topbar-center">
     <div class="phase-indicator" [attr.data-phase]="currentPhase()">
-      FASE: {{ currentPhase() }}
+      {{ 'NAV.LOBBY' | translate | uppercase }}: {{ 'GAME.PHASES.' + currentPhase() | translate }}
     </div>
   </div>
 
@@ -27,9 +27,9 @@
         <line x1="12" y1="8" x2="12" y2="12"></line>
         <line x1="12" y1="16" x2="12.01" y2="16"></line>
       </svg>
-      Reglas
+      {{ 'NAV.RULES' | translate }}
     </button>
-    <button class="btn-abandon" (click)="openAbandon()">Abandonar</button>
+    <button class="btn-abandon" (click)="openAbandon()">{{ 'LOBBY.ABANDON' | translate }}</button>
   </div>
 </header>
 
@@ -40,7 +40,7 @@
   <div class="stats-card">
     <!-- Izquierda: Vida -->
     <div class="stat-health-block">
-      <span class="stat-health-label">Vida</span>
+      <span class="stat-health-label">{{ 'GAME.STATS.HEALTH' | translate }}</span>
       <span class="stat-health-value">{{ health().current }} / {{ health().max }}</span>
     </div>
     <!-- Divisor -->
@@ -48,11 +48,11 @@
     <!-- Derecha: Dinero + Ptos. Investigación -->
     <div class="stat-right-block">
       <div class="stat-item">
-        <span>Dinero:</span>
+        <span>{{ 'GAME.STATS.GOLD' | translate }}:</span>
         <span class="stat-value gold">{{ gold() }} 💰</span>
       </div>
       <div class="stat-item">
-        <span>Ptos. Inv:</span>
+        <span>{{ 'GAME.STATS.RESEARCH' | translate }}:</span>
         <span class="stat-value">{{ researchPts() }} 🧪</span>
       </div>
     </div>
@@ -140,7 +140,7 @@
   <!-- Botones flotantes de acciones (derecha) -->
   <div class="actions-overlay">
     <!-- Entrenar Tropas -->
-    <button class="action-btn" title="Entrenar Tropas" (click)="openEntrenarTropas()">
+    <button class="action-btn" [title]="'GAME.ACTIONS.TRAIN' | translate" (click)="openEntrenarTropas()">
       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
         <path d="M14.5 17.5L3 6V3h3l11.5 11.5"></path>
@@ -153,7 +153,7 @@
     <!-- Ver Tropas -->
     <button
       class="action-btn"
-      title="Ver Tropas"
+      [title]="'GAME.ACTIONS.TROOPS' | translate"
       (click)="openTropas()"
       [style.--progress]="trainingProgress() + '%'">
       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
@@ -166,7 +166,7 @@
     </button>
 
     <!-- Árbol Tecnológico -->
-    <button class="action-btn" title="Árbol Tecnológico" (click)="openArbolTecnologico()">
+    <button class="action-btn" [title]="'GAME.ACTIONS.TECH' | translate" (click)="openArbolTecnologico()">
       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
@@ -174,7 +174,7 @@
     </button>
 
     <!-- Log de Batalla -->
-    <button class="action-btn" title="Log de Batalla" (click)="openLog()">
+    <button class="action-btn" [title]="'GAME.ACTIONS.LOG' | translate" (click)="openLog()">
       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -211,7 +211,7 @@
 <!-- Modal de Visualización de Tropas -->
 @if (showVisualizarTropasModal()) {
   <app-visualizar-tropas-modal
-    [title]="'TROPAS EN TERRITORIO'"
+    [title]="'GAME.ACTIONS.TROOPS' | translate | uppercase"
     [troops]="availableTroops()"
     (closeModal)="closeVisualizarTropasModal()">
   </app-visualizar-tropas-modal>

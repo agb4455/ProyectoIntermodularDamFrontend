@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameService } from '../../../../core/game/game.service';
+import { TranslatePipe } from '../../../../core/i18n/translate.pipe';
 
 // Definición de los 6 clanes disponibles
 interface ClanOption {
@@ -28,7 +29,7 @@ const CLANES: ClanOption[] = [
 @Component({
   selector: 'app-crear-partida-modal',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './crear-partida-modal.component.html',
   styleUrl: './crear-partida-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

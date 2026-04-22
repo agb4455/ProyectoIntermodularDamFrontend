@@ -2,12 +2,14 @@ import { ChangeDetectionStrategy, Component, signal, inject, computed } from '@a
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ThemeService } from '../../core/theme/theme.service';
+import { I18nService, Language } from '../../core/i18n/i18n.service';
+import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { CambiarContrasenaModalComponent } from './modals/cambiar-contrasena.modal';
 
 @Component({
   selector: 'app-user-config',
   standalone: true,
-  imports: [CommonModule, FormsModule, CambiarContrasenaModalComponent],
+  imports: [CommonModule, FormsModule, CambiarContrasenaModalComponent, TranslatePipe],
   templateUrl: './user-config.component.html',
   styleUrl: './user-config.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,8 +21,7 @@ export class UserConfigComponent {
   readonly userEmail = signal<string>('ragnar@vikingwars.com');
   readonly userClan = signal<string>('Jarl del Clan Furia');
   
-  readonly language = signal<'ES' | 'EN'>('ES');
-  
+  readonly i18n = inject(I18nService);
   private themeService = inject(ThemeService);
   readonly isDarkMode = computed(() => this.themeService.theme() === 'dark');
 
@@ -40,9 +41,8 @@ export class UserConfigComponent {
   }
 
   // Acción: Seleccionar Idioma
-  setLanguage(lang: 'ES' | 'EN'): void {
-    this.language.set(lang);
-    console.log('Idioma cambiado a:', lang);
+  setLanguage(lang: string): void {
+    this.i18n.setLanguage(lang.toLowerCase() as Language);
   }
 
   // Acción: Editar Foto de Perfil
@@ -68,7 +68,7 @@ export class UserConfigComponent {
     console.log('Guardando cambios en el servidor...', {
       nombre: this.userName(),
       email: this.userEmail(),
-      idioma: this.language(),
+      idioma: this.i18n.currentLang(),
       darkMode: this.isDarkMode()
     });
     

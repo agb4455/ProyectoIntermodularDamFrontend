@@ -5,8 +5,8 @@
     }
 
     <header class="auth-header">
-      <h1 class="auth-title">Viking Strategy</h1>
-      <p class="auth-subtitle">FORJA TU DESTINO EN EL VALHALLA</p>
+      <h1 class="auth-title">{{ 'AUTH.TITLE' | translate }}</h1>
+      <p class="auth-subtitle">{{ 'AUTH.SUBTITLE' | translate }}</p>
     </header>
 
     @if (error()) {
@@ -21,48 +21,48 @@
     <!-- LOGIN FORM -->
     @if (isLogin()) {
       <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="auth-form">
-        <h2 class="form-title">Iniciar Sesión</h2>
+        <h2 class="form-title">{{ 'AUTH.LOGIN.TITLE' | translate }}</h2>
         
         <div class="form-group">
-          <label for="login-username">Usuario</label>
+          <label for="login-username">{{ 'AUTH.USERNAME' | translate }}</label>
           <div class="input-container">
             <input 
               id="login-username"
               type="text" 
               formControlName="username" 
-              placeholder="Tu nombre de usuario"
+              [placeholder]="'AUTH.LOGIN.USER_PLACEHOLDER' | translate"
               autocomplete="username">
           </div>
         </div>
 
         <div class="form-group">
-          <label for="login-password">Contraseña</label>
+          <label for="login-password">{{ 'AUTH.PASSWORD' | translate }}</label>
           <div class="input-container">
             <input 
               id="login-password"
               type="password" 
               formControlName="password" 
-              placeholder="Tu contraseña"
+              [placeholder]="'AUTH.LOGIN.PASS_PLACEHOLDER' | translate"
               autocomplete="current-password">
           </div>
         </div>
 
         <div class="forgot-link-container">
-          <a href="javascript:void(0)" class="forgot-link">¿Has olvidado la contraseña?</a>
+          <a href="javascript:void(0)" class="forgot-link">{{ 'AUTH.LOGIN.FORGOT' | translate }}</a>
         </div>
 
         <button type="submit" class="btn-viking-primary" [disabled]="loading()">
           @if (loading()) {
             <span class="loader"></span>
           } @else {
-            <span class="btn-text">Entrar en Batalla</span>
+            <span class="btn-text">{{ 'AUTH.LOGIN.BTN' | translate }}</span>
             <div class="btn-shine"></div>
           }
         </button>
 
         <footer class="auth-footer">
-          <p>¿Aún no tienes cuenta?</p>
-          <button type="button" class="link-viking" (click)="toggleMode()">Regístrate aquí</button>
+          <p>{{ 'AUTH.LOGIN.NO_ACCOUNT' | translate }}</p>
+          <button type="button" class="link-viking" (click)="toggleMode()">{{ 'AUTH.LOGIN.REGISTER_LINK' | translate }}</button>
         </footer>
       </form>
     }
@@ -70,16 +70,16 @@
     <!-- REGISTER FORM -->
     @if (!isLogin()) {
       <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="auth-form">
-        <h2 class="form-title">Registrarse</h2>
+        <h2 class="form-title">{{ 'AUTH.REGISTER.TITLE' | translate }}</h2>
         
         <div class="form-group">
-          <label for="reg-username">Usuario</label>
+          <label for="reg-username">{{ 'AUTH.USERNAME' | translate }}</label>
           <div class="input-container">
             <input 
               id="reg-username"
               type="text" 
               formControlName="username" 
-              placeholder="Tu nombre de usuario">
+              [placeholder]="'AUTH.REGISTER.USER_PLACEHOLDER' | translate">
           </div>
         </div>
 
@@ -90,32 +90,32 @@
               id="reg-email"
               type="email" 
               formControlName="email" 
-              placeholder="tu@email.com">
+              [placeholder]="'AUTH.REGISTER.EMAIL_PLACEHOLDER' | translate">
           </div>
         </div>
 
         <div class="form-group">
-          <label for="reg-password">Contraseña</label>
+          <label for="reg-password">{{ 'AUTH.PASSWORD' | translate }}</label>
           <div class="input-container">
             <input 
               id="reg-password"
               type="password" 
               formControlName="password" 
-              placeholder="Mínimo 8 caracteres">
+              [placeholder]="'AUTH.REGISTER.PASS_PLACEHOLDER' | translate">
           </div>
         </div>
 
         <div class="form-group">
-          <label for="reg-confirm">Confirmar Contraseña</label>
+          <label for="reg-confirm">{{ 'AUTH.REGISTER.CONFIRM_LABEL' | translate }}</label>
           <div class="input-container">
             <input 
               id="reg-confirm"
               type="password" 
               formControlName="confirmPassword" 
-              placeholder="Repite tu contraseña">
+              [placeholder]="'AUTH.REGISTER.CONFIRM_PLACEHOLDER' | translate">
           </div>
           @if (registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched) {
-            <span class="validation-error">Las contraseñas no coinciden</span>
+            <span class="validation-error">{{ 'AUTH.REGISTER.MISMATCH' | translate }}</span>
           }
         </div>
 
@@ -123,14 +123,14 @@
           @if (loading()) {
             <span class="loader"></span>
           } @else {
-            <span class="btn-text">Crear Cuenta</span>
+            <span class="btn-text">{{ 'AUTH.REGISTER.BTN' | translate }}</span>
             <div class="btn-shine"></div>
           }
         </button>
 
         <footer class="auth-footer">
-          <p>¿Ya tienes cuenta?</p>
-          <button type="button" class="link-viking" (click)="toggleMode()">Inicia sesión aquí</button>
+          <p>{{ 'AUTH.REGISTER.HAS_ACCOUNT' | translate }}</p>
+          <button type="button" class="link-viking" (click)="toggleMode()">{{ 'AUTH.REGISTER.LOGIN_LINK' | translate }}</button>
         </footer>
       </form>
     }

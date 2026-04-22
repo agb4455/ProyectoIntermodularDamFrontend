@@ -1,28 +1,28 @@
 import { Component, ChangeDetectionStrategy, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 
 @Component({
   selector: 'app-confirm-abandon-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   template: `
     <div class="modal-overlay" (click)="onCancel()">
       <div class="modal-content" (click)="$event.stopPropagation()">
         <div class="modal-header">
-          <h2 class="modal-title">¿ABANDONAR BATALLA?</h2>
+          <h2 class="modal-title">{{ 'GAME.MODALS.LEAVE_CONFIRM.TITLE' | translate }}</h2>
         </div>
         <div class="modal-body">
           <p class="warning-text">
-            Si abandonas ahora, tus tropas se dispersarán y perderás todo el progreso en esta partida.
-            Los demás clanes verán tu retirada como un acto de cobardía.
+            {{ 'GAME.MODALS.LEAVE_CONFIRM.BODY' | translate }}
           </p>
           <div class="viking-quote">
-            "Un cobarde cree que vivirá para siempre si evita la guerra."
+            {{ 'GAME.MODALS.LEAVE_CONFIRM.QUOTE' | translate }}
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn-cancel" (click)="onCancel()">QUEDARSE Y LUCHAR</button>
-          <button class="btn-confirm" (click)="onConfirm()">RETIRADA</button>
+          <button class="btn-cancel" (click)="onCancel()">{{ 'GAME.MODALS.LEAVE_CONFIRM.BTN_STAY' | translate }}</button>
+          <button class="btn-confirm" (click)="onConfirm()">{{ 'GAME.MODALS.LEAVE_CONFIRM.BTN_LEAVE' | translate }}</button>
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, input, output, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { Troop } from './attack.types';
 
 /**
@@ -9,7 +10,7 @@ import { Troop } from './attack.types';
 @Component({
   selector: 'app-visualizar-tropas-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './visualizar-tropas.modal.html',
   styleUrl: './visualizar-tropas.modal.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

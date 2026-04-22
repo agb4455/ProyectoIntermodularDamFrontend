@@ -10,8 +10,8 @@
 
   <!-- Cabecera -->
   <header class="modal-header">
-    <h2 class="modal-title" id="modal-title">JURAMENTAR CLAN</h2>
-    <p class="modal-subtitle">Elige tu linaje. Tu destino depende de ello.</p>
+    <h2 class="modal-title" id="modal-title">{{ 'MODALS.CREATE.TITLE' | translate }}</h2>
+    <p class="modal-subtitle">{{ 'MODALS.CREATE.SUBTITLE' | translate }}</p>
   </header>
 
   <!-- Grid de clanes -->
@@ -37,9 +37,9 @@
   <!-- Mensaje de selección -->
   <p class="selection-hint">
     @if (selectedClan()) {
-      <span class="hint-active">Clan seleccionado — listo para la batalla</span>
+      <span class="hint-active">{{ 'MODALS.CREATE.HINT_ACTIVE' | translate }}</span>
     } @else {
-      <span class="hint-empty">Selecciona un clan para continuar</span>
+      <span class="hint-empty">{{ 'MODALS.CREATE.HINT_EMPTY' | translate }}</span>
     }
   </p>
 
@@ -53,9 +53,9 @@
     >
       @if (isCreating()) {
         <span class="creating-spinner" aria-hidden="true"></span>
-        Forjando partida…
+        {{ 'MODALS.CREATE.FORGING' | translate }}
       } @else {
-        CREAR PARTIDA
+        {{ 'MODALS.CREATE.BTN' | translate }}
       }
     </button>
   </footer>

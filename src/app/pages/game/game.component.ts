@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy, signal, computed, inject, isDevMode, OnInit } from '@angular/core';
+import { UpperCasePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { AtacarModalComponent } from './modals/atacar.modal';
 import { VisualizarTropasModalComponent } from './modals/visualizar-tropas.modal';
@@ -10,6 +11,8 @@ import { AvisoModalComponent } from './modals/aviso.modal';
 import { ConfirmAbandonModalComponent } from './modals/confirm-abandon.modal';
 import { GameService } from '../../core/game/game.service';
 import { AuthService } from '../../core/auth/auth.service';
+import { I18nService } from '../../core/i18n/i18n.service';
+import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { Troop, EnemyTarget, ClanId, TroopType, TrainableTroopOption, GameLogEntry } from './modals/attack.types';
 
 import { GamePhase, PlayerNode, ActiveAttack } from './game.model';
@@ -25,7 +28,9 @@ import { GamePhase, PlayerNode, ActiveAttack } from './game.model';
     ReglasModalComponent,
     LobbyModalComponent,
     AvisoModalComponent,
-    ConfirmAbandonModalComponent
+    ConfirmAbandonModalComponent,
+    TranslatePipe,
+    UpperCasePipe
   ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
@@ -36,6 +41,7 @@ export class GamePageComponent implements OnInit {
   private readonly gameService = inject(GameService);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly i18n: I18nService = inject(I18nService);
   protected readonly isDevelopment = signal(isDevMode());
 
   private readonly continentCoords = [
@@ -292,7 +298,8 @@ export class GamePageComponent implements OnInit {
     this.availableTroops.update(ts => [...ts, newTroop]);
 
     // Registrar en el log
-    this.addLogEntry(`ha entrenado ${option.name}`, 'train');
+    const troopName = this.i18n.translate(`GAME.troop_types.${option.type}`);
+    this.addLogEntry(this.i18n.translate('GAME.LOG_TRAIN', { troop: troopName }), 'train');
   }
 
   protected openTropas(): void {
@@ -363,8 +370,8 @@ export class GamePageComponent implements OnInit {
   protected onStartGame(): void {
     // En un caso real, esto enviaría un evento al servidor
     // Para el prototipo, simplemente cambiamos de fase
-    this.currentPhase.set('PREPARACIÓN');
-    this.addLogEntry('ha iniciado la partida', 'system');
+    this.currentPhase.set('PREPARATION');
+    this.addLogEntry(this.i18n.translate('GAME.LOG_START'), 'system');
   }
 
   // --- Clic en territorio enemigo ---
@@ -375,8 +382,8 @@ export class GamePageComponent implements OnInit {
     }
 
     // Si estamos en PREPARACIÓN, no se puede atacar. Mostrar aviso.
-    if (this.currentPhase() === 'PREPARACIÓN') {
-      this.avisoMessage.set('En la fase de preparación no se puede atacar. Aprovecha para entrenar tropas y mejorar tu clan.');
+    if (this.currentPhase() === 'PREPARATION') {
+      this.avisoMessage.set(this.i18n.translate('GAME.MODALS.PREPARATION_AVISO'));
       this.showAvisoModal.set(true);
       return;
     }
@@ -438,7 +445,8 @@ export class GamePageComponent implements OnInit {
     
     // Registrar en el log
     if (this.targetEnemy()) {
-      this.addLogEntry(`ha lanzado un ataque contra ${this.targetEnemy()?.username}`, 'attack');
+      const msg = this.i18n.translate('GAME.LOG_ATTACK', { target: this.targetEnemy()?.username ?? '' });
+      this.addLogEntry(msg, 'attack');
     }
 
     this.closeAtacarModal();
@@ -498,7 +506,7 @@ export class GamePageComponent implements OnInit {
   }
 
   protected debugTogglePhase(): void {
-    const phases: GamePhase[] = ['WAITING', 'PREPARACIÓN', 'GUERRA', 'FIN'];
+    const phases: GamePhase[] = ['WAITING', 'PREPARATION', 'WAR', 'END'];
     const current = this.currentPhase();
     const nextIndex = (phases.indexOf(current) + 1) % phases.length;
     this.currentPhase.set(phases[nextIndex]);

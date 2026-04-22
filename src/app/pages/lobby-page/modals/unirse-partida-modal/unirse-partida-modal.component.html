@@ -10,19 +10,19 @@
 
   <!-- Cabecera -->
   <header class="modal-header">
-    <h2 class="modal-title" id="modal-title">UNIRSE AL FRENTE</h2>
-    <p class="modal-subtitle">Presentad el código sagrado de la batalla.</p>
+    <h2 class="modal-title" id="modal-title">{{ 'MODALS.JOIN.TITLE' | translate }}</h2>
+    <p class="modal-subtitle">{{ 'MODALS.JOIN.SUBTITLE' | translate }}</p>
   </header>
 
   <!-- Input de Códice -->
   <div class="code-section">
-    <label for="game-code-input" class="code-label">CÓDICE DE BATALLA</label>
+    <label for="game-code-input" class="code-label">{{ 'MODALS.JOIN.CODE_PLACEHOLDER' | translate | uppercase }}</label>
     <div class="code-input-wrapper">
       <input 
         id="game-code-input"
         type="text" 
         class="code-input"
-        placeholder="Introduce el Códice" 
+        [placeholder]="'MODALS.JOIN.CODE_PLACEHOLDER' | translate" 
         [value]="gameCode()" 
         (input)="updateCode($event)"
         autocomplete="off"
@@ -32,7 +32,7 @@
         @if (isVerifying()) {
           <span class="joining-spinner spinner-small" aria-hidden="true"></span>
         } @else {
-          VERIFICAR
+          {{ 'MODALS.JOIN.BTN' | translate | uppercase }}
         }
       </button>
     </div>
@@ -73,9 +73,9 @@
     >
       @if (isJoining()) {
         <span class="joining-spinner" aria-hidden="true"></span>
-        Entrando…
+        {{ 'MODALS.JOIN.JOINING' | translate }}
       } @else {
-        ENTRAR EN COMBATE
+        {{ 'MODALS.JOIN.BTN' | translate }}
       }
     </button>
   </footer>

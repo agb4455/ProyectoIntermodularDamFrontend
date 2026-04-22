@@ -16,15 +16,15 @@
 
   <div class="nav-group" [class.mobile-open]="mobileMenuOpen()">
     <div class="mobile-menu-header">
-       <span class="mobile-menu-title">Menú</span>
+       <span class="mobile-menu-title">{{ 'NAV.MENU' | translate }}</span>
        <button class="close-mobile-btn" (click)="closeMobileMenu()">✕</button>
     </div>
-    <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" (click)="closeMobileMenu()">Home</a>
+    <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" (click)="closeMobileMenu()">{{ 'NAV.HOME' | translate }}</a>
     @if (authService.isLoggedIn()) {
-      <a [routerLink]="['/lobby']" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">Lobby</a>
+      <a [routerLink]="['/lobby']" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">{{ 'NAV.LOBBY' | translate }}</a>
     }
-    <a [routerLink]="['/personajes']" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">Personajes</a>
-    <a [routerLink]="['/reglas']" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">Reglas</a>
+    <a [routerLink]="['/personajes']" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">{{ 'NAV.CHARACTERS' | translate }}</a>
+    <a [routerLink]="['/reglas']" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">{{ 'NAV.RULES' | translate }}</a>
     <div class="mobile-user-section">
       <div class="mobile-user-divider"></div>
       
@@ -36,18 +36,18 @@
             </svg>
           </div>
           <div class="mobile-user-info">
-            <span class="user-label">GUERRERO:</span>
+            <span class="user-label">{{ 'AUTH.USERNAME' | translate | uppercase }}:</span>
             <span class="user-name">{{ authService.username() }}</span>
           </div>
         </div>
         <div class="mobile-user-links">
-          <a [routerLink]="['/config']" class="mobile-nav-link" (click)="closeMobileMenu()">Configuración</a>
-          <a [routerLink]="['/stats/user']" class="mobile-nav-link" (click)="closeMobileMenu()">Estadísticas</a>
+          <a [routerLink]="['/config']" class="mobile-nav-link" (click)="closeMobileMenu()">{{ 'NAV.CONFIG' | translate }}</a>
+          <a [routerLink]="['/stats/user']" class="mobile-nav-link" (click)="closeMobileMenu()">{{ 'NAV.STATS' | translate }}</a>
           @if (authService.isAdmin()) {
-            <a [routerLink]="['/admin']" class="mobile-nav-link" (click)="closeMobileMenu()">Administración</a>
+            <a [routerLink]="['/admin']" class="mobile-nav-link" (click)="closeMobileMenu()">{{ 'NAV.ADMIN' | translate }}</a>
           }
           <div class="mobile-user-divider faint"></div>
-          <a [routerLink]="['/signin']" class="mobile-nav-link danger" (click)="closeMobileMenu()" (click)="authService.clearSession()">Cerrar Sesión</a>
+          <a [routerLink]="['/signin']" class="mobile-nav-link danger" (click)="closeMobileMenu()" (click)="authService.clearSession()">{{ 'NAV.LOGOUT' | translate }}</a>
         </div>
       } @else {
         <div class="mobile-user-header anonymous" (click)="handleUserClick()">
@@ -57,7 +57,7 @@
             </svg>
           </div>
           <div class="mobile-user-info">
-            <span class="login-link-text">INICIAR SESIÓN</span>
+            <span class="login-link-text">{{ 'NAV.LOGIN' | translate | uppercase }}</span>
           </div>
         </div>
       }
@@ -65,6 +65,11 @@
   </div>
   
   <div class="navbar-actions">
+    <!-- Language Switcher -->
+    <div class="lang-switcher" (click)="i18n.toggleLanguage()" [title]="'CONFIG.LANGUAGE' | translate">
+      <span class="lang-code">{{ i18n.currentLang() | uppercase }}</span>
+    </div>
+
     <!-- Menú de usuario -->
     <div class="user-menu" title="Perfil / Menú de Usuario">
       <div class="user-avatar" (click)="handleUserClick()">
@@ -75,13 +80,13 @@
 
       @if (dropdownOpen() && authService.isLoggedIn()) {
         <div class="dropdown-content">
-          <a [routerLink]="['/config']" class="dropdown-item" (click)="closeDropdown()">Configuración</a>
-          <a [routerLink]="['/stats/user']" class="dropdown-item" (click)="closeDropdown()">Estadísticas</a>
+          <a [routerLink]="['/config']" class="dropdown-item" (click)="closeDropdown()">{{ 'NAV.CONFIG' | translate }}</a>
+          <a [routerLink]="['/stats/user']" class="dropdown-item" (click)="closeDropdown()">{{ 'NAV.STATS' | translate }}</a>
           @if (authService.isAdmin()) {
-            <a [routerLink]="['/admin']" class="dropdown-item" (click)="closeDropdown()">Administración</a>
+            <a [routerLink]="['/admin']" class="dropdown-item" (click)="closeDropdown()">{{ 'NAV.ADMIN' | translate }}</a>
           }
           <div class="dropdown-divider"></div>
-          <a [routerLink]="['/signin']" class="dropdown-item danger" (click)="closeDropdown()" (click)="authService.clearSession()">Salir de la cuenta</a>
+          <a [routerLink]="['/signin']" class="dropdown-item danger" (click)="closeDropdown()" (click)="authService.clearSession()">{{ 'NAV.LOGOUT' | translate }}</a>
         </div>
       }
     </div>

@@ -10,19 +10,19 @@
     <div class="hero-content">
       <app-logo [scale]="1.5" class="animate-drop-in"></app-logo>
       
-      <h1 class="hero-title animate-glow">VIKING CLAN WARS</h1>
+      <h1 class="hero-title animate-glow">{{ 'HOME.HERO_TITLE' | translate }}</h1>
       <p class="hero-subtitle animate-slide-up">
-        Conquista las Tierras del Norte. Forja tu leyenda. Arrasa con tus enemigos.
+        {{ 'HOME.HERO_SUBTITLE' | translate }}
       </p>
       
       <div class="hero-actions animate-fade-in-slow">
         <button class="btn-mithic-primary" (click)="enterValhalla()">
-          <span class="rune">᚛</span> ¡A LAS ARMAS! <span class="rune">᚜</span>
+          <span class="rune">᚛</span> {{ 'HOME.START_ADVENTURE' | translate }} <span class="rune">᚜</span>
         </button>
       </div>
 
       <div class="scroll-hint">
-        <p>Explora el Códice</p>
+        <p>{{ 'HOME.EXPLORE_ERA' | translate }}</p>
         <div class="arrow-down"></div>
       </div>
     </div>
@@ -33,31 +33,31 @@
     <!-- 1. LAS ERAS -->
     <section class="section-era glass-panel">
       <div class="section-header">
-        <h2 class="section-title">La Cronología de la Guerra</h2>
+        <h2 class="section-title">{{ 'HOME.SECTIONS.ERAS.TITLE' | translate }}</h2>
         <div class="title-divider"></div>
-        <p class="section-desc">Toda saga se divide en tres eras ancestrales.</p>
+        <p class="section-desc">{{ 'HOME.SECTIONS.ERAS.DESC' | translate }}</p>
       </div>
 
       <div class="era-grid">
         <div class="era-card forged-border">
           <div class="era-num">I</div>
-          <h3 class="era-name">Preparación</h3>
+          <h3 class="era-name">{{ 'HOME.SECTIONS.ERAS.ERA_1_NAME' | translate }}</h3>
           <p class="era-detail">
-            Los ataques están prohibidos. Es el momento de realizar rituales, entrenar tus tropas y acumular sabiduría. Los costos son elevados, pero la paz es temporal.
+            {{ 'HOME.SECTIONS.ERAS.ERA_1_DESC' | translate }}
           </p>
         </div>
         <div class="era-card forged-border highlight">
           <div class="era-num">II</div>
-          <h3 class="era-name">Guerra Total</h3>
+          <h3 class="era-name">{{ 'HOME.SECTIONS.ERAS.ERA_2_NAME' | translate }}</h3>
           <p class="era-detail">
-            El Ragnarök comienza. Los costos de leva se reducen y la sangre corre por las tierras. Es la era de la conquista y la destrucción mutua.
+            {{ 'HOME.SECTIONS.ERAS.ERA_2_DESC' | translate }}
           </p>
         </div>
         <div class="era-card forged-border">
           <div class="era-num">III</div>
-          <h3 class="era-name">El Veredicto</h3>
+          <h3 class="era-name">{{ 'HOME.SECTIONS.ERAS.ERA_3_NAME' | translate }}</h3>
           <p class="era-detail">
-            Solo los clanes más fuertes permanecen. La magia fluye con facilidad mientras el fin se acerca. El arma definitiva está lista para ser forjada.
+            {{ 'HOME.SECTIONS.ERAS.ERA_3_DESC' | translate }}
           </p>
         </div>
       </div>
@@ -66,9 +66,9 @@
     <!-- 2. LOS CLANES -->
     <section class="section-clans">
       <div class="section-header">
-        <h2 class="section-title">Elige tu Linaje</h2>
+        <h2 class="section-title">{{ 'HOME.SECTIONS.CLANS.TITLE' | translate }}</h2>
         <div class="title-divider"></div>
-        <p class="section-desc">Seis clanes ancestrales luchan por el trono supremo.</p>
+        <p class="section-desc">{{ 'HOME.SECTIONS.CLANS.DESC' | translate }}</p>
       </div>
 
       <div class="clans-grid">
@@ -81,7 +81,7 @@
                 <h3 class="clan-name">{{ clan.name }}</h3>
               </div>
               <p class="clan-lore">
-                Maestros del {{ clan.archetype }}, estos guerreros dominan tácticas sagradas para prevalecer en el campo de batalla.
+                {{ 'HOME.SECTIONS.CLANS.LORE' | translate:{ archetype: (clan.archetype | uppercase) } }}
               </p>
             </div>
           </div>
@@ -93,22 +93,22 @@
     <section class="section-system glass-panel">
       <div class="system-container">
         <div class="system-text">
-          <h2 class="section-title">Arte de la Guerra</h2>
+          <h2 class="section-title">{{ 'HOME.SECTIONS.MILITARY.TITLE' | translate }}</h2>
           <div class="title-divider left"></div>
           
           <div class="mechanic">
-            <h4>Puntos de Acción (AP)</h4>
-            <p>Recurso vital para el reclutamiento y despliegue. Se regeneran con el flujo de las mareas del norte.</p>
+            <h4>{{ 'HOME.SECTIONS.MILITARY.AP_TITLE' | translate }}</h4>
+            <p>{{ 'HOME.SECTIONS.MILITARY.AP_DESC' | translate }}</p>
           </div>
           
           <div class="mechanic">
-            <h4>Tecnología Sagrada (RP)</h4>
-            <p>Invierte en el Árbol Tecnológico para desbloquear unidades de élite y hechizos que alteran el destino.</p>
+            <h4>{{ 'HOME.SECTIONS.MILITARY.RP_TITLE' | translate }}</h4>
+            <p>{{ 'HOME.SECTIONS.MILITARY.RP_DESC' | translate }}</p>
           </div>
 
           <div class="mechanic">
-            <h4>Mapa Táctico</h4>
-            <p>Visualiza el frente de batalla y las capitales enemigas. Planifica tus incursiones con precisión rúnica.</p>
+            <h4>{{ 'HOME.SECTIONS.MILITARY.MAP_TITLE' | translate }}</h4>
+            <p>{{ 'HOME.SECTIONS.MILITARY.MAP_DESC' | translate }}</p>
           </div>
         </div>
         
@@ -126,10 +126,10 @@
   <!-- Final CTA -->
   <section class="cta-section">
     <div class="final-cta-card glass-panel forged-border">
-      <h2 class="title-font">¿Estás preparado para el Valhalla?</h2>
-      <p>Únete a la asamblea de clanes y reclama tu trono en el Norte.</p>
+      <h2 class="title-font">{{ 'HOME.SECTIONS.CTA.TITLE' | translate }}</h2>
+      <p>{{ 'HOME.SECTIONS.CTA.DESC' | translate }}</p>
       <button class="btn-mithic-primary big" (click)="enterValhalla()">
-        FORJAR MI LEYENDA
+        {{ 'HOME.SECTIONS.CTA.BTN' | translate }}
       </button>
     </div>
   </section>

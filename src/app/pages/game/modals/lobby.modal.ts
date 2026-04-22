@@ -1,10 +1,12 @@
-import { Component, ChangeDetectionStrategy, input, output, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, output, computed, inject } from '@angular/core';
 import { PlayerNode } from '../game.model';
+import { I18nService } from '../../../core/i18n/i18n.service';
+import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 
 @Component({
   selector: 'app-lobby-modal',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './lobby.modal.html',
   styleUrl: './lobby.modal.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -14,6 +16,8 @@ export class LobbyModalComponent {
   readonly gameCode = input.required<string>();
   readonly players = input.required<PlayerNode[]>();
   readonly isHost = input.required<boolean>();
+
+  private readonly i18n: I18nService = inject(I18nService);
 
   // Notifica que el anfitrión ha pulsado iniciar
   readonly startGame = output<void>();
@@ -26,7 +30,7 @@ export class LobbyModalComponent {
   
   // Mensaje de error si hay pocos jugadores
   protected readonly errorMessage = computed(() => 
-    this.players().length < 2 ? 'Se necesitan al menos 2 guerreros para zarpar' : null
+    this.players().length < 2 ? this.i18n.translate('GAME.MODALS.WAITING.MIN_PLAYERS') : null
   );
 
   protected onStartClick(): void {

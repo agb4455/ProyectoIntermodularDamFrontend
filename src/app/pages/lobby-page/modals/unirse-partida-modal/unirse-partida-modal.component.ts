@@ -5,8 +5,11 @@ import {
   output,
   inject,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UpperCasePipe } from '@angular/common';
 import { GameService } from '../../../../core/game/game.service';
+import { TranslatePipe } from '../../../../core/i18n/translate.pipe';
 
 // Definición de los 6 clanes disponibles
 interface ClanOption {
@@ -29,7 +32,7 @@ const CLANES: ClanOption[] = [
 @Component({
   selector: 'app-unirse-partida-modal',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, TranslatePipe, UpperCasePipe],
   templateUrl: './unirse-partida-modal.component.html',
   styleUrl: './unirse-partida-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

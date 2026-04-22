@@ -2,12 +2,12 @@
 
 <div class="lobby-modal">
   <h2 class="modal-title">
-    {{ isHost() ? 'INCURSIÓN LISTA' : 'LOBBY DE PARTIDA' }}
+    {{ (isHost() ? 'GAME.MODALS.WAITING.HOST_TITLE' : 'GAME.MODALS.WAITING.WAIT_TITLE') | translate }}
   </h2>
 
   <!-- Caja de Código -->
   <div class="code-section">
-    <div class="code-label">Código de Guerra</div>
+    <div class="code-label">{{ 'LOBBY.MODALS.JOIN.CODE_PLACEHOLDER' | translate }}</div>
     <div class="code-value">{{ gameCode() }}</div>
   </div>
 
@@ -41,7 +41,7 @@
     @if (isHost() && errorMessage()) {
       <span class="error-msg">⚠️ {{ errorMessage() }}</span>
     } @else if (!isHost()) {
-      <span class="waiting-msg">Esperando a que el anfitrión inicie la incursión...</span>
+      <span class="waiting-msg">{{ 'GAME.MODALS.WAITING.WAIT_TITLE' | translate }}...</span>
     }
   </div>
 
@@ -51,7 +51,7 @@
       class="btn-start" 
       [disabled]="!canStart()"
       (click)="onStartClick()">
-      INICIAR PARTIDA
+      {{ 'GAME.MODALS.WAITING.BTN_START' | translate }}
     </button>
   } @else {
     <!-- Espaciador para mantener dimensiones -->

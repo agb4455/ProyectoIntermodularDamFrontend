@@ -4,12 +4,13 @@ import { AuthService } from '../../core/auth/auth.service';
 import { LogoComponent } from '../../shared/components/logo/logo.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { ClanPreview } from './home.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, LogoComponent, RouterModule],
+  imports: [CommonModule, LogoComponent, RouterModule, TranslatePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -3,6 +3,7 @@ import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { GlobalDebugComponent } from './shared/components/debug/global-debug.component';
 import { ThemeService } from './core/theme/theme.service';
+import { I18nService } from './core/i18n/i18n.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 
@@ -17,6 +18,7 @@ export class App {
   protected readonly isDevelopment = signal(isDevMode());
   
   private readonly themeService = inject(ThemeService);
+  private readonly i18nService = inject(I18nService);
   private readonly router = inject(Router);
   
   // Track the current URL from router events

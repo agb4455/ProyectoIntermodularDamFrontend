@@ -1,10 +1,11 @@
 import { Component, ChangeDetectionStrategy, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 
 @Component({
   selector: 'app-reglas-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './reglas.modal.html',
   styleUrl: './reglas.modal.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

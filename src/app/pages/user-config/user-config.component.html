@@ -1,6 +1,6 @@
 <div class="config-page-container">
     <header class="header">
-        <h1>CONFIGURACIÓN</h1>
+        <h1>{{ 'NAV.CONFIG' | translate | uppercase }}</h1>
     </header>
     
     <div class="main-layout">
@@ -10,16 +10,16 @@
                 <h2 style="margin: 0; font-family: 'Cinzel', serif; color: var(--color-gold);">{{ userName() }}</h2>
                 <p style="margin: 5px 0; color: var(--color-text-secondary); font-size: 0.9rem;">{{ userClan() }}</p>
             </div>
-            <button class="btn btn-ghost" style="border: 1px solid var(--color-gold); color: var(--color-gold); font-size: 0.7rem; padding: 0.5rem 1rem;" (click)="onEditAvatar()">CAMBIAR AVATAR</button>
+            <button class="btn btn-ghost" style="border: 1px solid var(--color-gold); color: var(--color-gold); font-size: 0.7rem; padding: 0.5rem 1rem;" (click)="onEditAvatar()">{{ 'NAV.CHARACTERS' | translate | uppercase }}</button>
         </aside>
 
         <div class="form-scroll-area">
             <section class="card">
-                <div class="card-header">IDENTIDAD</div>
+                <div class="card-header">{{ 'CONFIG.PROFILE' | translate | uppercase }}</div>
                 <div class="form-row stack-mobile">
                     <div class="info-txt">
-                        <span class="label">Correo Sagrado</span>
-                        <span class="desc">Tu vínculo con el Valhalla</span>
+                        <span class="label">Email</span>
+                        <span class="desc">{{ 'AUTH.USERNAME' | translate }}</span>
                     </div>
                     <input type="email" [ngModel]="userEmail()" (ngModelChange)="userEmail.set($event)" class="viking-input">
                 </div>
@@ -29,29 +29,30 @@
                 <div class="card-header">SEGURIDAD</div>
                 <div class="form-row">
                     <div class="info-txt">
-                        <span class="label">Contraseña</span>
+                        <span class="label">{{ 'AUTH.PASSWORD' | translate }}</span>
                         <span class="desc">Asegura tu acceso</span>
                     </div>
-                    <button class="btn btn-ghost btn-mobile-small" style="border: 1px solid var(--color-gold); color: var(--color-gold); font-family: 'Outfit';" (click)="onChangePassword()">CAMBIAR CLAVE</button>
+                    <button class="btn btn-ghost btn-mobile-small" style="border: 1px solid var(--color-gold); color: var(--color-gold); font-family: 'Outfit';" (click)="onChangePassword()">{{ 'CONFIG.CHANGE_PASSWORD' | translate | uppercase }}</button>
                 </div>
             </section>
 
             <section class="card">
-                <div class="card-header">PREFERENCIAS</div>
+                <div class="card-header">{{ 'CONFIG.TITLE' | translate | uppercase }}</div>
                 <div class="form-row">
                     <div class="info-txt">
-                        <span class="label">Lengua del Clan</span>
+                        <span class="label">{{ 'CONFIG.LANGUAGE' | translate }}</span>
                         <span class="desc">Idioma de la batalla</span>
                     </div>
-                    <div class="flag-selector">
-                        <button class="flag-btn" [class.active]="language() === 'ES'" (click)="setLanguage('ES')">🇪🇸</button>
-                        <button class="flag-btn" [class.active]="language() === 'EN'" (click)="setLanguage('EN')">🇬🇧</button>
+                    <div class="language-pill-selector">
+                        <div class="pill-bg" [class.shift-right]="i18n.currentLang() === 'en'"></div>
+                        <button class="pill-btn" [class.active]="i18n.currentLang() === 'es'" (click)="setLanguage('ES')">ES</button>
+                        <button class="pill-btn" [class.active]="i18n.currentLang() === 'en'" (click)="setLanguage('EN')">EN</button>
                     </div>
                 </div>
                 <div class="form-row" style="margin-top: 1rem;">
                     <div class="info-txt">
-                        <span class="label">Modo Oscuro</span>
-                        <span class="desc">Noche eterna</span>
+                        <span class="label">{{ 'CONFIG.THEME' | translate }}</span>
+                        <span class="desc">{{ (isDarkMode() ? 'CONFIG.DARK_MODE' : 'CONFIG.LIGHT_MODE') | translate }}</span>
                     </div>
                     <div class="toggle-switch" [class.active]="isDarkMode()" (click)="toggleTheme()"></div>
                 </div>
@@ -60,8 +61,8 @@
     </div>
 
     <footer class="footer">
-        <button class="btn btn-ghost" (click)="onCancel()">DESCARTAR</button>
-        <button class="btn btn-gold" (click)="onSave()">GUARDAR CAMBIOS</button>
+        <button class="btn btn-ghost" (click)="onCancel()">{{ 'CONFIG.BTN_CANCEL' | translate | uppercase }}</button>
+        <button class="btn btn-gold" (click)="onSave()">{{ 'CONFIG.BTN_SAVE' | translate | uppercase }}</button>
     </footer>
 </div>
 

@@ -4,16 +4,16 @@
     <header class="modal-header">
       <div class="header-title">
         <span class="header-icon">📜</span>
-        <h2>LOG DE BATALLA GLOBAL</h2>
+        <h2>{{ 'GAME.ACTIONS.LOG' | translate | uppercase }}</h2>
       </div>
-      <button class="btn-close" (click)="onClose()" title="Cerrar Log">✕</button>
+      <button class="btn-close" (click)="onClose()" [title]="'CONFIG.BTN_CANCEL' | translate">✕</button>
     </header>
 
     <!-- Lista de Logs -->
     <div class="logs-container">
       @if (logs().length === 0) {
         <div class="empty-logs">
-          <p>No hay eventos registrados en este momento.</p>
+          <p>{{ 'GAME.TRAIN.EMPTY_LOG' | translate }}</p>
         </div>
       } @else {
         <div class="logs-list">
@@ -33,7 +33,7 @@
 
     <!-- Pie del Modal -->
     <footer class="modal-footer">
-      <button class="btn-secondary" (click)="onClose()">CERRAR</button>
+      <button class="btn-secondary" (click)="onClose()">{{ 'LOBBY.MODALS.FULL.BTN' | translate }}</button>
     </footer>
   </div>
 </div>

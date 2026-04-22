@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { TroopType, TrainableTroopOption } from './attack.types';
 
 /**
@@ -9,7 +10,7 @@ import { TroopType, TrainableTroopOption } from './attack.types';
 @Component({
   selector: 'app-entrenar-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './entrenar.modal.html',
   styleUrl: './entrenar.modal.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

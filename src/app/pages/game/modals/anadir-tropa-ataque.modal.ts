@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, input, output, signal, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { Troop } from './attack.types';
 
 /**
@@ -11,7 +12,7 @@ import { Troop } from './attack.types';
 @Component({
   selector: 'app-anadir-tropa-ataque-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './anadir-tropa-ataque.modal.html',
   styleUrl: './anadir-tropa-ataque.modal.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

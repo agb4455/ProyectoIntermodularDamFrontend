@@ -1,11 +1,12 @@
 import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, UpperCasePipe } from '@angular/common';
+import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { GameLogEntry } from './attack.types';
 
 @Component({
   selector: 'app-game-log-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe, UpperCasePipe],
   templateUrl: './game-log.modal.html',
   styleUrl: './game-log.modal.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

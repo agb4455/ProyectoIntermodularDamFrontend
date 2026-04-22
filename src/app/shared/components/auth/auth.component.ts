@@ -2,11 +2,13 @@ import { Component, input, output, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/auth/auth.service';
+import { I18nService } from '../../../core/i18n/i18n.service';
+import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslatePipe],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
@@ -17,6 +19,7 @@ export class AuthComponent {
 
   private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
+  private readonly i18n = inject(I18nService);
 
   loading = signal(false);
   error = signal('');
@@ -54,7 +57,7 @@ export class AuthComponent {
 
   onLogin(): void {
     if (this.loginForm.invalid) {
-      this.error.set('Por favor completa todos los campos correctamente');
+      this.error.set(this.i18n.translate('AUTH.VALIDATION.REQUIRED_FIELDS'));
       return;
     }
 
@@ -69,14 +72,14 @@ export class AuthComponent {
       },
       error: (err) => {
         this.loading.set(false);
-        this.error.set('Error en el inicio de sesión. Inténtalo de nuevo.');
+        this.error.set(this.i18n.translate('AUTH.VALIDATION.LOGIN_ERROR'));
       }
     });
   }
 
   onRegister(): void {
     if (this.registerForm.invalid) {
-      this.error.set('Por favor completa todos los campos correctamente');
+      this.error.set(this.i18n.translate('AUTH.VALIDATION.REQUIRED_FIELDS'));
       return;
     }
 
@@ -91,7 +94,7 @@ export class AuthComponent {
       },
       error: (err) => {
         this.loading.set(false);
-        this.error.set('Error en el registro. Inténtalo de nuevo.');
+        this.error.set(this.i18n.translate('AUTH.VALIDATION.REGISTER_ERROR'));
       }
     });
   }

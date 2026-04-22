@@ -4,14 +4,14 @@
     <!-- Header -->
     <div class="modal-header">
       <div class="header-main">
-        <h2 class="modal-title">ENTRENAR</h2>
+        <h2 class="modal-title">{{ 'GAME.MODALS.TRAIN.TITLE' | translate }}</h2>
         <div class="currency-badge">
-          <span class="currency-label">Ptos.</span>
+          <span class="currency-label">{{ 'GAME.STATS.GOLD' | translate }}</span>
           <span class="currency-value gold">{{ gold() }}</span>
           <span class="currency-icon">💰</span>
         </div>
       </div>
-      <button class="btn-close" (click)="onCloseClick()" title="Cerrar">✕</button>
+      <button class="btn-close" (click)="onCloseClick()" [title]="'CONFIG.BTN_CANCEL' | translate">✕</button>
     </div>
 
     <!-- Body -->
@@ -23,9 +23,9 @@
             <div class="troop-info">
               <div class="troop-icon">{{ option.icon }}</div>
               <div class="troop-details">
-                <span class="troop-name">{{ option.name }}</span>
+                <span class="troop-name">{{ 'GAME.troop_types.' + option.type | translate }}</span>
                 @if (option.description) {
-                  <span class="troop-desc">{{ option.description }}</span>
+                  <span class="troop-desc">{{ 'GAME.troop_desc.' + option.type | translate }}</span>
                 }
               </div>
             </div>
@@ -40,14 +40,13 @@
                 class="btn-train"
                 [disabled]="!canAfford(option)"
                 (click)="onTrainClick(option)">
-                ENTRENAR
+                {{ (canAfford(option) ? 'GAME.MODALS.TRAIN.BTN_TRAIN' : 'GAME.MODALS.TRAIN.NO_GOLD') | translate }}
               </button>
             </div>
           </div>
         } @empty {
           <div class="empty-message">
-            No hay tropas disponibles para entrenar en este momento.
-            ¡Mejora tu árbol tecnológico!
+            {{ 'GAME.MODALS.TRAIN.EMPTY' | translate }}
           </div>
         }
       </div>
@@ -56,7 +55,7 @@
     <!-- Footer -->
     <div class="modal-footer">
       <button class="btn-close-modal" (click)="onCloseClick()">
-        CERRAR
+        {{ 'LOBBY.MODALS.FULL.BTN' | translate }}
       </button>
     </div>
   </div>

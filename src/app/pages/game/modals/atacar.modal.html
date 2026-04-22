@@ -3,8 +3,8 @@
   <div class="modal-content" (click)="$event.stopPropagation()">
     <!-- Header -->
     <div class="modal-header">
-      <h2 class="modal-title">ATACAR A {{ target().username }}</h2>
-      <button class="btn-close" (click)="closeAtacarModal()" title="Cerrar">✕</button>
+      <h2 class="modal-title">{{ 'GAME.MODALS.ATTACK.TITLE' | translate }} ({{ target().username }})</h2>
+      <button class="btn-close" (click)="closeAtacarModal()" [title]="'CONFIG.BTN_CANCEL' | translate">✕</button>
     </div>
     
     <!-- Banner de Ventaja Táctica -->
@@ -43,7 +43,7 @@
           </div>
         } @empty {
           <div class="empty-message">
-            Selecciona tropas para atacar
+            {{ 'GAME.MODALS.ATTACK.EMPTY_GRID' | translate }}
           </div>
         }
       </div>
@@ -62,7 +62,7 @@
         class="btn-attack"
         (click)="onAttackClick()"
         [disabled]="!canLaunchAttack()">
-        ATACAR
+        {{ 'GAME.MODALS.ATTACK.BTN_ATTACK' | translate }}
       </button>
     </div>
   </div>

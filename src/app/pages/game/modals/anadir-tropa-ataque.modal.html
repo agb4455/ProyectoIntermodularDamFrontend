@@ -3,7 +3,7 @@
   <div class="modal-content" (click)="$event.stopPropagation()">
     <!-- Header -->
     <div class="modal-header">
-      <h2 class="modal-title">Tropas Disponibles</h2>
+      <h2 class="modal-title">{{ 'GAME.ACTIONS.TROOPS' | translate }}</h2>
     </div>
 
     <!-- Body - Grid de tropas -->
@@ -16,7 +16,7 @@
             class="grid-cell troop-card"
             [class.selected]="isTroopSelected(troop.id)"
             (click)="onTroopClick(troop)"
-            [title]="troop.name + (isTroopSelected(troop.id) ? ' (seleccionada)' : '')">
+            [title]="troop.name + (isTroopSelected(troop.id) ? ' (' + ('GAME.MODALS.ATTACK.SELECTED_HINT' | translate) + ')' : '')">
             
             <!-- Checkmark si está seleccionada -->
             @if (isTroopSelected(troop.id)) {
@@ -29,7 +29,7 @@
             </div>
 
             <!-- Nombre de la tropa -->
-            <span class="troop-name">{{ troop.name }}</span>
+            <span class="troop-name">{{ 'GAME.TROOP_TYPES.' + troop.type | translate }}</span>
 
             <!-- Health bar -->
             <div class="health-bar">
@@ -54,7 +54,7 @@
 
     <!-- Footer -->
     <div class="modal-footer">
-      <button class="btn-cancel" (click)="onCancelClick()">CANCELAR</button>
+      <button class="btn-cancel" (click)="onCancelClick()">{{ 'CONFIG.BTN_CANCEL' | translate }}</button>
       <button class="btn-ok" (click)="onOkClick()">OK</button>
     </div>
   </div>

@@ -2,11 +2,11 @@
   
   <section class="hero-section">
     <div class="hero-welcome">
-      <h2>BIENVENIDO, GUERRERO</h2>
+      <h2>{{ 'AUTH.TITLE' | translate | uppercase }}</h2>
     </div>
     <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-      <button class="btn btn-gold" (click)="onNewGame()">NUEVA PARTIDA</button>
-      <button class="btn btn-outline" (click)="onJoinGame()">UNIRSE A PARTIDA</button>
+      <button class="btn btn-gold" (click)="onNewGame()">{{ 'LOBBY.CREATE_GAME' | translate | uppercase }}</button>
+      <button class="btn btn-outline" (click)="onJoinGame()">{{ 'LOBBY.JOIN_GAME' | translate | uppercase }}</button>
     </div>
   </section>
 
@@ -14,7 +14,7 @@
     <!-- Columna 1: Activas -->
     <section class="list-column">
       <div class="column-header">
-        <h2>PARTIDAS ACTIVAS</h2>
+        <h2>{{ 'LOBBY.ACTIVE_GAMES' | translate | uppercase }}</h2>
       </div>
       <div class="scroll-area">
         @for (game of activeGames(); track game.id) {
@@ -23,8 +23,8 @@
             <div class="card-meta">
               <span>COD: {{ game.id }}</span>
               <div style="display: flex; gap: 0.5rem;">
-                <button class="btn btn-gold" (click)="onEnterGame(game.id)">ENTRAR</button>
-                <button class="btn btn-danger" (click)="onLeaveGame(game.id)">ABANDONAR</button>
+                <button class="btn btn-gold" (click)="onEnterGame(game.id)">{{ 'NAV.LOGIN' | translate | uppercase }}</button>
+                <button class="btn btn-danger" (click)="onLeaveGame(game.id)">{{ 'LOBBY.ABANDON' | translate | uppercase }}</button>
               </div>
             </div>
           </div>
@@ -35,8 +35,8 @@
     <!-- Columna 2: Terminadas (Ahora debajo en el grid) -->
     <section class="list-column" [class.collapsed]="finishedGamesCollapsed()" id="finished-column">
       <div class="column-header" (click)="toggleFinishedGames()">
-        <h2>PARTIDAS FINALIZADAS</h2>
-        <span class="header-icon">{{ finishedGamesCollapsed() ? '▼ MOSTRAR' : '▲ ESCONDER' }}</span>
+        <h2>{{ 'LOBBY.FINISHED_GAMES' | translate | uppercase }}</h2>
+        <span class="header-icon">{{ (finishedGamesCollapsed() ? 'SHOW' : 'HIDE') | translate }}</span>
       </div>
 
       <div class="scroll-area">
@@ -44,12 +44,12 @@
           <div class="card">
             <span class="card-title">{{ game.name }}</span>
             <div class="card-meta">
-              <span [style.color]="game.result === 'Victoria' ? 'var(--color-success)' : 'var(--color-error)'">
-                {{ game.result.toUpperCase() }}
+              <span [style.color]="game.result === 'VICTORY' ? 'var(--color-success)' : 'var(--color-error)'">
+                {{ ('LOBBY.GAME_RESULT.' + game.result) | translate | uppercase }}
               </span>
               <div style="display: flex; gap: 0.5rem;">
-                <button class="btn btn-ghost" (click)="onViewStats(game.id)">ESTADÍSTICAS</button>
-                <button class="btn btn-danger" (click)="onDeleteFinished(game.id)">BORRAR</button>
+                <button class="btn btn-ghost" (click)="onViewStats(game.id)">{{ 'LOBBY.STATS' | translate | uppercase }}</button>
+                <button class="btn btn-danger" (click)="onDeleteFinished(game.id)">{{ 'LOBBY.DELETE' | translate | uppercase }}</button>
               </div>
             </div>
           </div>

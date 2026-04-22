@@ -1,10 +1,11 @@
 import { Component, ChangeDetectionStrategy, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '../../../../core/i18n/translate.pipe';
 
 @Component({
   selector: 'app-sala-llena-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './sala-llena-modal.component.html',
   styleUrl: './sala-llena-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
