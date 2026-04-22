@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, signal, computed, inject, isDevMode, OnInit } from '@angular/core';
-import { UpperCasePipe } from '@angular/common';
+import { UpperCasePipe, CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AtacarModalComponent } from './modals/atacar.modal';
 import { VisualizarTropasModalComponent } from './modals/visualizar-tropas.modal';
@@ -30,7 +30,8 @@ import { GamePhase, PlayerNode, ActiveAttack } from './game.model';
     AvisoModalComponent,
     ConfirmAbandonModalComponent,
     TranslatePipe,
-    UpperCasePipe
+    UpperCasePipe,
+    CommonModule
   ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
