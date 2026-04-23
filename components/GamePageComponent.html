@@ -1,0 +1,4446 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>proyecto-intermodular-dam-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">proyecto-intermodular-dam-frontend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  GamePageComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/game/game.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-game-page</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                                <code><a href="../components/AtacarModalComponent.html" target="_self" >AtacarModalComponent</a></code>
+                                <code><a href="../components/VisualizarTropasModalComponent.html" target="_self" >VisualizarTropasModalComponent</a></code>
+                                <code><a href="../components/EntrenarModalComponent.html" target="_self" >EntrenarModalComponent</a></code>
+                                <code><a href="../components/GameLogModalComponent.html" target="_self" >GameLogModalComponent</a></code>
+                                <code><a href="../components/ReglasModalComponent.html" target="_self" >ReglasModalComponent</a></code>
+                                <code><a href="../components/LobbyModalComponent.html" target="_self" >LobbyModalComponent</a></code>
+                                <code><a href="../components/AvisoModalComponent.html" target="_self" >AvisoModalComponent</a></code>
+                                <code><a href="../components/ConfirmAbandonModalComponent.html" target="_self" >ConfirmAbandonModalComponent</a></code>
+                            <code>TranslatePipe</code>
+                                <code><a href="https://angular.io/api/common/UpperCasePipe" target="_blank" >UpperCasePipe</a></code>
+                                <code><a href="https://angular.io/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./game.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./game.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#activeAttack" >activeAttack</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#activeTrainingTroop" >activeTrainingTroop</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#authService" >authService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#availableTroops" >availableTroops</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#avisoMessage" >avisoMessage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#continentCoords" >continentCoords</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#currentPhase" >currentPhase</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#defaultDeployTimeMs" >defaultDeployTimeMs</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#gameCode" >gameCode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#gameLogs" >gameLogs</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#gameService" >gameService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#gold" >gold</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#health" >health</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#i18n" >i18n</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#isDevelopment" >isDevelopment</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#isHost" >isHost</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#localClan" >localClan</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#players" >players</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#researchPts" >researchPts</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#router" >router</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#selectedTroopsForAttack" >selectedTroopsForAttack</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#showAbandonModal" >showAbandonModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#showAtacarModal" >showAtacarModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#showAvisoModal" >showAvisoModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#showDebugPanel" >showDebugPanel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#showEntrenarModal" >showEntrenarModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#showLogModal" >showLogModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#showReglasModal" >showReglasModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#showVisualizarTropasModal" >showVisualizarTropasModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#targetEnemy" >targetEnemy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#trainableTroopOptions" >trainableTroopOptions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#trainingProgress" >trainingProgress</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#trainingQueue" >trainingQueue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#troopDeployTimeMs" >troopDeployTimeMs</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#username" >username</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#addLogEntry" >addLogEntry</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#closeAtacarModal" >closeAtacarModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#closeAvisoModal" >closeAvisoModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#closeEntrenarModal" >closeEntrenarModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#closeLogModal" >closeLogModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#closeReglasModal" >closeReglasModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#closeVisualizarTropasModal" >closeVisualizarTropasModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#debugAddGold" >debugAddGold</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#debugAddPlayer" >debugAddPlayer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#debugAddProgress" >debugAddProgress</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#debugCompleteTraining" >debugCompleteTraining</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#debugRemovePlayer" >debugRemovePlayer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#debugTogglePhase" >debugTogglePhase</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#estimateDeploymentDurationMs" >estimateDeploymentDurationMs</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#generateAttackPath" >generateAttackPath</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#generatePathId" >generatePathId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getInitialPlayers" >getInitialPlayers</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#goBack" >goBack</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onCancelAbandon" >onCancelAbandon</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onConfirmAbandon" >onConfirmAbandon</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onLaunchAttack" >onLaunchAttack</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onStartGame" >onStartGame</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onTerritoryClick" >onTerritoryClick</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onTrainTroop" >onTrainTroop</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#openAbandon" >openAbandon</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#openArbolTecnologico" >openArbolTecnologico</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#openEntrenarTropas" >openEntrenarTropas</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#openLog" >openLog</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#openRules" >openRules</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#openTropas" >openTropas</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#setupGameSubscriptions" >setupGameSubscriptions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#toggleDebugPanel" >toggleDebugPanel</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addLogEntry"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>addLogEntry</b></span>
+                        <a href="#addLogEntry"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addLogEntry(action: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, type: <a href="../interfaces/GameLogEntry.html" target="_self">GameLogEntry</a>, performer: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="329"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:329</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Añade una entrada al log de la partida</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>action</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="../interfaces/GameLogEntry.html" target="_self" >GameLogEntry</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>performer</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>this.username()</code>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeAtacarModal"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>closeAtacarModal</b></span>
+                        <a href="#closeAtacarModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>closeAtacarModal()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="402"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:402</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeAvisoModal"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>closeAvisoModal</b></span>
+                        <a href="#closeAvisoModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>closeAvisoModal()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="408"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:408</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeEntrenarModal"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>closeEntrenarModal</b></span>
+                        <a href="#closeEntrenarModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>closeEntrenarModal()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="273"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:273</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeLogModal"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>closeLogModal</b></span>
+                        <a href="#closeLogModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>closeLogModal()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="322"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:322</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeReglasModal"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>closeReglasModal</b></span>
+                        <a href="#closeReglasModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>closeReglasModal()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="353"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:353</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeVisualizarTropasModal"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>closeVisualizarTropasModal</b></span>
+                        <a href="#closeVisualizarTropasModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>closeVisualizarTropasModal()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="310"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:310</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="debugAddGold"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>debugAddGold</b></span>
+                        <a href="#debugAddGold"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>debugAddGold(amount: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="505"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:505</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>amount</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="debugAddPlayer"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>debugAddPlayer</b></span>
+                        <a href="#debugAddPlayer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>debugAddPlayer()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="516"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:516</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="debugAddProgress"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>debugAddProgress</b></span>
+                        <a href="#debugAddProgress"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>debugAddProgress(step: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="542"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:542</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>step</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="debugCompleteTraining"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>debugCompleteTraining</b></span>
+                        <a href="#debugCompleteTraining"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>debugCompleteTraining()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="554"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:554</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="debugRemovePlayer"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>debugRemovePlayer</b></span>
+                        <a href="#debugRemovePlayer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>debugRemovePlayer()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="538"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:538</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="debugTogglePhase"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>debugTogglePhase</b></span>
+                        <a href="#debugTogglePhase"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>debugTogglePhase()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="509"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:509</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="estimateDeploymentDurationMs"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>estimateDeploymentDurationMs</b></span>
+                        <a href="#estimateDeploymentDurationMs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>estimateDeploymentDurationMs(troopIds: string[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="494"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:494</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>troopIds</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generateAttackPath"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>generateAttackPath</b></span>
+                        <a href="#generateAttackPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>generateAttackPath()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="460"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:460</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Genera un path SVG directo entre dos puntos</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generatePathId"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>generatePathId</b></span>
+                        <a href="#generatePathId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>generatePathId(attacker: <a href="../interfaces/PlayerNode.html" target="_self">PlayerNode</a>, defender: <a href="../interfaces/PlayerNode.html" target="_self">PlayerNode</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="487"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:487</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>attacker</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PlayerNode.html" target="_self" >PlayerNode</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>defender</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PlayerNode.html" target="_self" >PlayerNode</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getInitialPlayers"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getInitialPlayers</b></span>
+                        <a href="#getInitialPlayers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getInitialPlayers()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="101"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:101</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/PlayerNode.html" target="_self" >PlayerNode[]</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goBack"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>goBack</b></span>
+                        <a href="#goBack"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>goBack()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="345"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:345</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="85"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:85</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCancelAbandon"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onCancelAbandon</b></span>
+                        <a href="#onCancelAbandon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onCancelAbandon()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="366"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:366</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onConfirmAbandon"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onConfirmAbandon</b></span>
+                        <a href="#onConfirmAbandon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onConfirmAbandon()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="361"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:361</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onLaunchAttack"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onLaunchAttack</b></span>
+                        <a href="#onLaunchAttack"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onLaunchAttack(troopIds: string[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="413"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:413</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>troopIds</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onStartGame"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onStartGame</b></span>
+                        <a href="#onStartGame"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onStartGame()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="371"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:371</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onTerritoryClick"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onTerritoryClick</b></span>
+                        <a href="#onTerritoryClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onTerritoryClick(player: <a href="../interfaces/PlayerNode.html" target="_self">PlayerNode</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="379"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:379</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>player</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PlayerNode.html" target="_self" >PlayerNode</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onTrainTroop"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onTrainTroop</b></span>
+                        <a href="#onTrainTroop"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onTrainTroop(type: <a href="../miscellaneous/enumerations.html#TroopType" target="_self">TroopType</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="277"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:277</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#TroopType" target="_self" >TroopType</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openAbandon"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>openAbandon</b></span>
+                        <a href="#openAbandon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>openAbandon()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="357"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:357</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openArbolTecnologico"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>openArbolTecnologico</b></span>
+                        <a href="#openArbolTecnologico"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>openArbolTecnologico()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="314"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:314</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openEntrenarTropas"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>openEntrenarTropas</b></span>
+                        <a href="#openEntrenarTropas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>openEntrenarTropas()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="269"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:269</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openLog"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>openLog</b></span>
+                        <a href="#openLog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>openLog()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="318"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:318</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openRules"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>openRules</b></span>
+                        <a href="#openRules"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>openRules()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="349"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:349</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openTropas"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>openTropas</b></span>
+                        <a href="#openTropas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>openTropas()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="306"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:306</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setupGameSubscriptions"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>setupGameSubscriptions</b></span>
+                        <a href="#setupGameSubscriptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setupGameSubscriptions()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="94"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:94</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>[PREPARADO] Configura las suscripciones a eventos de Socket.IO
+Actualmente desconectado ya que el Middle Server está en desarrollo</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleDebugPanel"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>toggleDebugPanel</b></span>
+                        <a href="#toggleDebugPanel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>toggleDebugPanel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="501"
+                                    class="link-to-prism">src/app/pages/game/game.component.ts:501</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activeAttack"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>activeAttack</b></span>
+                        <a href="#activeAttack"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;ActiveAttack | null&gt;(null)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="140" class="link-to-prism">src/app/pages/game/game.component.ts:140</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activeTrainingTroop"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>activeTrainingTroop</b></span>
+                        <a href="#activeTrainingTroop"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>computed(() &#x3D;&gt;
+    this.trainingQueue().length &gt; 0 ? this.trainingQueue()[0] : null
+  )</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="234" class="link-to-prism">src/app/pages/game/game.component.ts:234</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>authService</b></span>
+                        <a href="#authService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(AuthService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/pages/game/game.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="availableTroops"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>availableTroops</b></span>
+                        <a href="#availableTroops"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;Troop[]&gt;([
+    {
+      id: &#x27;troop-1&#x27;,
+      name: &#x27;Guerrero 1&#x27;,
+      type: TroopType.INFANTERIA,
+      clan: &#x27;fury&#x27;,
+      currentHealth: 100,
+      maxHealth: 100,
+      icon: &#x27;⚔️&#x27;,
+      cost: 50,
+      isTraining: false,
+      deployed: false,
+    },
+    {
+      id: &#x27;troop-2&#x27;,
+      name: &#x27;Guerrero 2&#x27;,
+      type: TroopType.INFANTERIA,
+      clan: &#x27;fury&#x27;,
+      currentHealth: 75,
+      maxHealth: 100,
+      icon: &#x27;⚔️&#x27;,
+      cost: 50,
+      isTraining: false,
+      deployed: false,
+    },
+    {
+      id: &#x27;troop-3&#x27;,
+      name: &#x27;Arquero 1&#x27;,
+      type: TroopType.ARQUERIA,
+      clan: &#x27;fury&#x27;,
+      currentHealth: 60,
+      maxHealth: 80,
+      icon: &#x27;🏹&#x27;,
+      cost: 75,
+      isTraining: false,
+      deployed: false,
+    },
+    {
+      id: &#x27;troop-4&#x27;,
+      name: &#x27;Arquero 2&#x27;,
+      type: TroopType.ARQUERIA,
+      clan: &#x27;fury&#x27;,
+      currentHealth: 80,
+      maxHealth: 80,
+      icon: &#x27;🏹&#x27;,
+      cost: 75,
+      isTraining: false,
+      deployed: false,
+    },
+    {
+      id: &#x27;troop-5&#x27;,
+      name: &#x27;Caballería 1&#x27;,
+      type: TroopType.CABALLERIA,
+      clan: &#x27;fury&#x27;,
+      currentHealth: 120,
+      maxHealth: 150,
+      icon: &#x27;🐴&#x27;,
+      cost: 150,
+      isTraining: false,
+      deployed: false,
+    },
+    {
+      id: &#x27;troop-6&#x27;,
+      name: &#x27;Caballería 2&#x27;,
+      type: TroopType.CABALLERIA,
+      clan: &#x27;fury&#x27;,
+      currentHealth: 50,
+      maxHealth: 150,
+      icon: &#x27;🐴&#x27;,
+      cost: 150,
+      isTraining: false,
+      deployed: false,
+    },
+  ])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="154" class="link-to-prism">src/app/pages/game/game.component.ts:154</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="avisoMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>avisoMessage</b></span>
+                        <a href="#avisoMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="135" class="link-to-prism">src/app/pages/game/game.component.ts:135</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="continentCoords"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>continentCoords</b></span>
+                        <a href="#continentCoords"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    { x: 22, y: 28 }, // Niflheim (Top Left)
+    { x: 65, y: 20 }, // Jötunheim (Top Right)
+    { x: 40, y: 50 }, // Asgard (Center Left)
+    { x: 75, y: 50 }, // Midgard (Center Right)
+    { x: 22, y: 80 }, // Muspelheim (Bottom Left)
+    { x: 72, y: 82 }  // Vanaheim (Bottom Right)
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/pages/game/game.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentPhase"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>currentPhase</b></span>
+                        <a href="#currentPhase"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;GamePhase&gt;(&#x27;WAITING&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/pages/game/game.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="defaultDeployTimeMs"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>defaultDeployTimeMs</b></span>
+                        <a href="#defaultDeployTimeMs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>3200</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="152" class="link-to-prism">src/app/pages/game/game.component.ts:152</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="gameCode"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>gameCode</b></span>
+                        <a href="#gameCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(this.gameService.gameContext()?.code ?? &#x27;3F8A2C&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/pages/game/game.component.ts:65</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="gameLogs"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>gameLogs</b></span>
+                        <a href="#gameLogs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;GameLogEntry[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="143" class="link-to-prism">src/app/pages/game/game.component.ts:143</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="gameService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>gameService</b></span>
+                        <a href="#gameService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(GameService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/pages/game/game.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="gold"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>gold</b></span>
+                        <a href="#gold"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(150)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/pages/game/game.component.ts:60</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="health"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>health</b></span>
+                        <a href="#health"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal({ current: 3000, max: 3000 })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/pages/game/game.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="i18n"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>i18n</b></span>
+                        <a href="#i18n"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/I18nService.html" target="_self" >I18nService</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(I18nService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/pages/game/game.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isDevelopment"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>isDevelopment</b></span>
+                        <a href="#isDevelopment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(isDevMode())</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/pages/game/game.component.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isHost"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>isHost</b></span>
+                        <a href="#isHost"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>computed(() &#x3D;&gt; {
+    // Si venimos del lobby con contexto, lo usamos. Si no, usamos el orden de la lista.
+    const context &#x3D; this.gameService.gameContext();
+    if (context) return context.isHost;
+
+    const list &#x3D; this.players();
+    return list.length &gt; 0 &amp;&amp; list[0].username &#x3D;&#x3D;&#x3D; this.username();
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/pages/game/game.component.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="localClan"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>localClan</b></span>
+                        <a href="#localClan"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>computed(() &#x3D;&gt; {
+    const context &#x3D; this.gameService.gameContext();
+    return (context?.clan as ClanId) ?? &#x27;fury&#x27;;
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/app/pages/game/game.component.ts:77</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="players"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>players</b></span>
+                        <a href="#players"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;PlayerNode[]&gt;(this.getInitialPlayers())</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">src/app/pages/game/game.component.ts:83</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="researchPts"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>researchPts</b></span>
+                        <a href="#researchPts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(25)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/pages/game/game.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="router"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>router</b></span>
+                        <a href="#router"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(Router)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/pages/game/game.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedTroopsForAttack"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>selectedTroopsForAttack</b></span>
+                        <a href="#selectedTroopsForAttack"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;string[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="137" class="link-to-prism">src/app/pages/game/game.component.ts:137</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showAbandonModal"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>showAbandonModal</b></span>
+                        <a href="#showAbandonModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="134" class="link-to-prism">src/app/pages/game/game.component.ts:134</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showAtacarModal"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>showAtacarModal</b></span>
+                        <a href="#showAtacarModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">src/app/pages/game/game.component.ts:127</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showAvisoModal"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>showAvisoModal</b></span>
+                        <a href="#showAvisoModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">src/app/pages/game/game.component.ts:133</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showDebugPanel"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>showDebugPanel</b></span>
+                        <a href="#showDebugPanel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="132" class="link-to-prism">src/app/pages/game/game.component.ts:132</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showEntrenarModal"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>showEntrenarModal</b></span>
+                        <a href="#showEntrenarModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="129" class="link-to-prism">src/app/pages/game/game.component.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showLogModal"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>showLogModal</b></span>
+                        <a href="#showLogModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">src/app/pages/game/game.component.ts:130</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showReglasModal"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>showReglasModal</b></span>
+                        <a href="#showReglasModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="131" class="link-to-prism">src/app/pages/game/game.component.ts:131</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showVisualizarTropasModal"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>showVisualizarTropasModal</b></span>
+                        <a href="#showVisualizarTropasModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="128" class="link-to-prism">src/app/pages/game/game.component.ts:128</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="targetEnemy"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>targetEnemy</b></span>
+                        <a href="#targetEnemy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;EnemyTarget | null&gt;(null)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="136" class="link-to-prism">src/app/pages/game/game.component.ts:136</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="trainableTroopOptions"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>trainableTroopOptions</b></span>
+                        <a href="#trainableTroopOptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;TrainableTroopOption[]&gt;([
+    {
+      type: TroopType.INFANTERIA,
+      name: &#x27;Infantería&#x27;,
+      cost: 50,
+      icon: &#x27;⚔️&#x27;,
+      description: &#x27;Guerreros básicos con hachas y escudos.&#x27;
+    },
+    {
+      type: TroopType.ARQUERIA,
+      name: &#x27;Arquería&#x27;,
+      cost: 75,
+      icon: &#x27;🏹&#x27;,
+      description: &#x27;Unidades a distancia para hostigar al enemigo.&#x27;
+    },
+    {
+      type: TroopType.CABALLERIA,
+      name: &#x27;Caballería&#x27;,
+      cost: 150,
+      icon: &#x27;🐴&#x27;,
+      description: &#x27;Unidades rápidas y poderosas montadas.&#x27;
+    }
+  ])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="244" class="link-to-prism">src/app/pages/game/game.component.ts:244</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="trainingProgress"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>trainingProgress</b></span>
+                        <a href="#trainingProgress"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>computed(() &#x3D;&gt; {
+    const troop &#x3D; this.activeTrainingTroop();
+    return troop ? (troop.trainingProgress ?? 0) : 0;
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="238" class="link-to-prism">src/app/pages/game/game.component.ts:238</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="trainingQueue"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>trainingQueue</b></span>
+                        <a href="#trainingQueue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>computed(() &#x3D;&gt;
+    this.availableTroops().filter(t &#x3D;&gt; t.isTraining)
+  )</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="230" class="link-to-prism">src/app/pages/game/game.component.ts:230</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="troopDeployTimeMs"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>troopDeployTimeMs</b></span>
+                        <a href="#troopDeployTimeMs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Troop.html" target="_self" >Record&lt;TroopType | number&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    [TroopType.INFANTERIA]: 3200,
+    [TroopType.ARQUERIA]: 3600,
+    [TroopType.CABALLERIA]: 2800,
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="146" class="link-to-prism">src/app/pages/game/game.component.ts:146</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="username"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>username</b></span>
+                        <a href="#username"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.authService.username</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/pages/game/game.component.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, ChangeDetectionStrategy, signal, computed, inject, isDevMode, OnInit } from &#x27;@angular/core&#x27;;
+import { UpperCasePipe, CommonModule } from &#x27;@angular/common&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { AtacarModalComponent } from &#x27;./modals/atacar.modal&#x27;;
+import { VisualizarTropasModalComponent } from &#x27;./modals/visualizar-tropas.modal&#x27;;
+import { EntrenarModalComponent } from &#x27;./modals/entrenar.modal&#x27;;
+import { GameLogModalComponent } from &#x27;./modals/game-log.modal&#x27;;
+import { ReglasModalComponent } from &#x27;./modals/reglas.modal&#x27;;
+import { LobbyModalComponent } from &#x27;./modals/lobby.modal&#x27;;
+import { AvisoModalComponent } from &#x27;./modals/aviso.modal&#x27;;
+import { ConfirmAbandonModalComponent } from &#x27;./modals/confirm-abandon.modal&#x27;;
+import { GameService } from &#x27;../../core/game/game.service&#x27;;
+import { AuthService } from &#x27;../../core/auth/auth.service&#x27;;
+import { I18nService } from &#x27;../../core/i18n/i18n.service&#x27;;
+import { TranslatePipe } from &#x27;../../core/i18n/translate.pipe&#x27;;
+import { Troop, EnemyTarget, ClanId, TroopType, TrainableTroopOption, GameLogEntry } from &#x27;./modals/attack.types&#x27;;
+
+import { GamePhase, PlayerNode, ActiveAttack } from &#x27;./game.model&#x27;;
+
+@Component({
+  selector: &#x27;app-game-page&#x27;,
+  standalone: true,
+  imports: [
+    AtacarModalComponent,
+    VisualizarTropasModalComponent,
+    EntrenarModalComponent,
+    GameLogModalComponent,
+    ReglasModalComponent,
+    LobbyModalComponent,
+    AvisoModalComponent,
+    ConfirmAbandonModalComponent,
+    TranslatePipe,
+    UpperCasePipe,
+    CommonModule
+  ],
+  templateUrl: &#x27;./game.component.html&#x27;,
+  styleUrl: &#x27;./game.component.scss&#x27;,
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class GamePageComponent implements OnInit {
+
+  private readonly gameService &#x3D; inject(GameService);
+  private readonly authService &#x3D; inject(AuthService);
+  private readonly router &#x3D; inject(Router);
+  private readonly i18n: I18nService &#x3D; inject(I18nService);
+  protected readonly isDevelopment &#x3D; signal(isDevMode());
+
+  private readonly continentCoords &#x3D; [
+    { x: 22, y: 28 }, // Niflheim (Top Left)
+    { x: 65, y: 20 }, // Jötunheim (Top Right)
+    { x: 40, y: 50 }, // Asgard (Center Left)
+    { x: 75, y: 50 }, // Midgard (Center Right)
+    { x: 22, y: 80 }, // Muspelheim (Bottom Left)
+    { x: 72, y: 82 }  // Vanaheim (Bottom Right)
+  ];
+
+  // --- Estado de la partida (llegará vía Socket.IO) ---
+  protected readonly currentPhase &#x3D; signal&lt;GamePhase&gt;(&#x27;WAITING&#x27;);
+  protected readonly health &#x3D; signal({ current: 3000, max: 3000 });
+  protected readonly gold &#x3D; signal(150);
+  protected readonly researchPts &#x3D; signal(25);
+
+  // --- Info del jugador local ---
+  protected readonly username &#x3D; this.authService.username;
+  protected readonly gameCode &#x3D; signal(this.gameService.gameContext()?.code ?? &#x27;3F8A2C&#x27;);
+
+  // Determina si el usuario actual es el anfitrión (el primero en la lista en este mock)
+  protected readonly isHost &#x3D; computed(() &#x3D;&gt; {
+    // Si venimos del lobby con contexto, lo usamos. Si no, usamos el orden de la lista.
+    const context &#x3D; this.gameService.gameContext();
+    if (context) return context.isHost;
+
+    const list &#x3D; this.players();
+    return list.length &gt; 0 &amp;&amp; list[0].username &#x3D;&#x3D;&#x3D; this.username();
+  });
+
+  protected readonly localClan &#x3D; computed(() &#x3D;&gt; {
+    const context &#x3D; this.gameService.gameContext();
+    return (context?.clan as ClanId) ?? &#x27;fury&#x27;;
+  });
+
+  // --- Jugadores en el mapa (mock, vendrá del Socket.IO) ---
+  protected readonly players &#x3D; signal&lt;PlayerNode[]&gt;(this.getInitialPlayers());
+
+  ngOnInit(): void {
+    // Preparar suscripciones (Dejado preparado para integración real)
+    this.setupGameSubscriptions();
+  }
+
+  /**
+   * [PREPARADO] Configura las suscripciones a eventos de Socket.IO
+   * Actualmente desconectado ya que el Middle Server está en desarrollo
+   */
+  private setupGameSubscriptions(): void {
+    // TODO: Suscribirse a game:state-update para sincronizar fase, oro y puntos
+    // TODO: Suscribirse a game:attack-launched para mostrar ataques de otros jugadores
+    // TODO: Suscribirse a game:battle-resolved para actualizar salud de capitales
+    console.log(&#x27;[GAME] Suscripciones preparadas. Esperando Middle Server...&#x27;);
+  }
+
+  private getInitialPlayers(): PlayerNode[] {
+    const context &#x3D; this.gameService.gameContext();
+    const localUser: PlayerNode &#x3D; {
+      clan: (context?.clan as ClanId) ?? &#x27;fury&#x27;,
+      username: this.authService.username(),
+      health: { current: 3000, max: 3000 }
+    };
+
+    const others: PlayerNode[] &#x3D; [
+      { clan: &#x27;divine&#x27;, username: &#x27;Divine&#x27;, health: { current: 2200, max: 3000 } },
+      { clan: &#x27;iron&#x27;,   username: &#x27;Iron&#x27;,   health: { current: 2700, max: 3000 } },
+      { clan: &#x27;song&#x27;,   username: &#x27;Song&#x27;,   health: { current: 1900, max: 3000 } },
+      { clan: &#x27;rune&#x27;,   username: &#x27;Rune&#x27;,   health: { current: 2400, max: 3000 } },
+      { clan: &#x27;death&#x27;,  username: &#x27;Death&#x27;,  health: { current: 2600, max: 3000 } },
+    ];
+
+    let list &#x3D; context?.isHost ? [localUser, ...others] : [...others, localUser];
+    
+    // Asignar coordenadas fijas por orden
+    return list.map((p, i) &#x3D;&gt; ({
+      ...p,
+      position: this.continentCoords[i] || this.continentCoords[5]
+    }));
+  }
+
+  // --- Estado de los modales ---
+  protected readonly showAtacarModal &#x3D; signal(false);
+  protected readonly showVisualizarTropasModal &#x3D; signal(false);
+  protected readonly showEntrenarModal &#x3D; signal(false);
+  protected readonly showLogModal &#x3D; signal(false);
+  protected readonly showReglasModal &#x3D; signal(false);
+  protected readonly showDebugPanel &#x3D; signal(false);
+  protected readonly showAvisoModal &#x3D; signal(false);
+  protected readonly showAbandonModal &#x3D; signal(false);
+  protected readonly avisoMessage &#x3D; signal(&#x27;&#x27;);
+  protected readonly targetEnemy &#x3D; signal&lt;EnemyTarget | null&gt;(null);
+  protected readonly selectedTroopsForAttack &#x3D; signal&lt;string[]&gt;([]);
+
+  // --- Ataque activo (camino visual) ---
+  protected readonly activeAttack &#x3D; signal&lt;ActiveAttack | null&gt;(null);
+
+  // --- Log de la partida ---
+  protected readonly gameLogs &#x3D; signal&lt;GameLogEntry[]&gt;([]);
+
+  // --- Tropas disponibles (mock, vendrá del servidor) ---
+  private readonly troopDeployTimeMs: Record&lt;TroopType, number&gt; &#x3D; {
+    [TroopType.INFANTERIA]: 3200,
+    [TroopType.ARQUERIA]: 3600,
+    [TroopType.CABALLERIA]: 2800,
+  };
+
+  private readonly defaultDeployTimeMs &#x3D; 3200;
+
+  protected readonly availableTroops &#x3D; signal&lt;Troop[]&gt;([
+    {
+      id: &#x27;troop-1&#x27;,
+      name: &#x27;Guerrero 1&#x27;,
+      type: TroopType.INFANTERIA,
+      clan: &#x27;fury&#x27;,
+      currentHealth: 100,
+      maxHealth: 100,
+      icon: &#x27;⚔️&#x27;,
+      cost: 50,
+      isTraining: false,
+      deployed: false,
+    },
+    {
+      id: &#x27;troop-2&#x27;,
+      name: &#x27;Guerrero 2&#x27;,
+      type: TroopType.INFANTERIA,
+      clan: &#x27;fury&#x27;,
+      currentHealth: 75,
+      maxHealth: 100,
+      icon: &#x27;⚔️&#x27;,
+      cost: 50,
+      isTraining: false,
+      deployed: false,
+    },
+    {
+      id: &#x27;troop-3&#x27;,
+      name: &#x27;Arquero 1&#x27;,
+      type: TroopType.ARQUERIA,
+      clan: &#x27;fury&#x27;,
+      currentHealth: 60,
+      maxHealth: 80,
+      icon: &#x27;🏹&#x27;,
+      cost: 75,
+      isTraining: false,
+      deployed: false,
+    },
+    {
+      id: &#x27;troop-4&#x27;,
+      name: &#x27;Arquero 2&#x27;,
+      type: TroopType.ARQUERIA,
+      clan: &#x27;fury&#x27;,
+      currentHealth: 80,
+      maxHealth: 80,
+      icon: &#x27;🏹&#x27;,
+      cost: 75,
+      isTraining: false,
+      deployed: false,
+    },
+    {
+      id: &#x27;troop-5&#x27;,
+      name: &#x27;Caballería 1&#x27;,
+      type: TroopType.CABALLERIA,
+      clan: &#x27;fury&#x27;,
+      currentHealth: 120,
+      maxHealth: 150,
+      icon: &#x27;🐴&#x27;,
+      cost: 150,
+      isTraining: false,
+      deployed: false,
+    },
+    {
+      id: &#x27;troop-6&#x27;,
+      name: &#x27;Caballería 2&#x27;,
+      type: TroopType.CABALLERIA,
+      clan: &#x27;fury&#x27;,
+      currentHealth: 50,
+      maxHealth: 150,
+      icon: &#x27;🐴&#x27;,
+      cost: 150,
+      isTraining: false,
+      deployed: false,
+    },
+  ]);
+
+  // --- Estado de entrenamiento secuencial ---
+  protected readonly trainingQueue &#x3D; computed(() &#x3D;&gt;
+    this.availableTroops().filter(t &#x3D;&gt; t.isTraining)
+  );
+
+  protected readonly activeTrainingTroop &#x3D; computed(() &#x3D;&gt;
+    this.trainingQueue().length &gt; 0 ? this.trainingQueue()[0] : null
+  );
+
+  protected readonly trainingProgress &#x3D; computed(() &#x3D;&gt; {
+    const troop &#x3D; this.activeTrainingTroop();
+    return troop ? (troop.trainingProgress ?? 0) : 0;
+  });
+
+  // --- Opciones de entrenamiento (Mock, vendrá del middle server según tech tree) ---
+  protected readonly trainableTroopOptions &#x3D; signal&lt;TrainableTroopOption[]&gt;([
+    {
+      type: TroopType.INFANTERIA,
+      name: &#x27;Infantería&#x27;,
+      cost: 50,
+      icon: &#x27;⚔️&#x27;,
+      description: &#x27;Guerreros básicos con hachas y escudos.&#x27;
+    },
+    {
+      type: TroopType.ARQUERIA,
+      name: &#x27;Arquería&#x27;,
+      cost: 75,
+      icon: &#x27;🏹&#x27;,
+      description: &#x27;Unidades a distancia para hostigar al enemigo.&#x27;
+    },
+    {
+      type: TroopType.CABALLERIA,
+      name: &#x27;Caballería&#x27;,
+      cost: 150,
+      icon: &#x27;🐴&#x27;,
+      description: &#x27;Unidades rápidas y poderosas montadas.&#x27;
+    }
+  ]);
+
+  // --- Acciones de los botones laterales ---
+  protected openEntrenarTropas(): void {
+    this.showEntrenarModal.set(true);
+  }
+
+  protected closeEntrenarModal(): void {
+    this.showEntrenarModal.set(false);
+  }
+
+  protected onTrainTroop(type: TroopType): void {
+    const option &#x3D; this.trainableTroopOptions().find(o &#x3D;&gt; o.type &#x3D;&#x3D;&#x3D; type);
+    if (!option || this.gold() &lt; option.cost) return;
+
+    // Descontar oro (Mock)
+    this.gold.update(g &#x3D;&gt; g - option.cost);
+
+    // Añadir tropa a la lista (Mock)
+    const newTroop: Troop &#x3D; {
+      id: &#x60;troop-${Date.now()}&#x60;,
+      name: &#x60;${option.name} ${this.availableTroops().length + 1}&#x60;,
+      type: option.type,
+      clan: &#x27;fury&#x27;,
+      currentHealth: 100,
+      maxHealth: 100,
+      icon: option.icon,
+      cost: option.cost,
+      isTraining: true,
+      trainingProgress: 0, // Inicia en 0 (En cola si no es el primero)
+      deployed: false
+    };
+
+    this.availableTroops.update(ts &#x3D;&gt; [...ts, newTroop]);
+
+    // Registrar en el log
+    const troopName &#x3D; this.i18n.translate(&#x60;GAME.troop_types.${option.type}&#x60;);
+    this.addLogEntry(this.i18n.translate(&#x27;GAME.LOG_TRAIN&#x27;, { troop: troopName }), &#x27;train&#x27;);
+  }
+
+  protected openTropas(): void {
+    this.showVisualizarTropasModal.set(true);
+  }
+
+  protected closeVisualizarTropasModal(): void {
+    this.showVisualizarTropasModal.set(false);
+  }
+
+  protected openArbolTecnologico(): void {
+    // TODO: abrir modal ArbolTecnologicoModalComponent
+  }
+
+  protected openLog(): void {
+    this.showLogModal.set(true);
+  }
+
+  protected closeLogModal(): void {
+    this.showLogModal.set(false);
+  }
+
+  /**
+   * Añade una entrada al log de la partida
+   */
+  private addLogEntry(action: string, type: GameLogEntry[&#x27;type&#x27;], performer: string &#x3D; this.username()): void {
+    const now &#x3D; new Date();
+    const timestamp &#x3D; &#x60;${now.getHours().toString().padStart(2, &#x27;0&#x27;)}:${now.getMinutes().toString().padStart(2, &#x27;0&#x27;)}&#x60;;
+    
+    const newEntry: GameLogEntry &#x3D; {
+      id: &#x60;log-${Date.now()}-${Math.random().toString(36).substr(2, 5)}&#x60;,
+      performer,
+      action,
+      timestamp,
+      type
+    };
+
+    this.gameLogs.update(logs &#x3D;&gt; [newEntry, ...logs]); // Nuevo arriba
+  }
+
+  // --- Acciones de la barra superior ---
+  protected goBack(): void {
+    this.router.navigate([&#x27;/lobby&#x27;]);
+  }
+
+  protected openRules(): void {
+    this.showReglasModal.set(true);
+  }
+
+  protected closeReglasModal(): void {
+    this.showReglasModal.set(false);
+  }
+
+  protected openAbandon(): void {
+    this.showAbandonModal.set(true);
+  }
+
+  protected onConfirmAbandon(): void {
+    this.showAbandonModal.set(false);
+    this.router.navigate([&#x27;/lobby&#x27;]);
+  }
+
+  protected onCancelAbandon(): void {
+    this.showAbandonModal.set(false);
+  }
+
+  // --- Acciones del Lobby ---
+  protected onStartGame(): void {
+    // En un caso real, esto enviaría un evento al servidor
+    // Para el prototipo, simplemente cambiamos de fase
+    this.currentPhase.set(&#x27;PREPARATION&#x27;);
+    this.addLogEntry(this.i18n.translate(&#x27;GAME.LOG_START&#x27;), &#x27;system&#x27;);
+  }
+
+  // --- Clic en territorio enemigo ---
+  protected onTerritoryClick(player: PlayerNode): void {
+    // No abrir si es el jugador local
+    if (player.username &#x3D;&#x3D;&#x3D; this.username()) {
+      return;
+    }
+
+    // Si estamos en PREPARACIÓN, no se puede atacar. Mostrar aviso.
+    if (this.currentPhase() &#x3D;&#x3D;&#x3D; &#x27;PREPARATION&#x27;) {
+      this.avisoMessage.set(this.i18n.translate(&#x27;GAME.MODALS.PREPARATION_AVISO&#x27;));
+      this.showAvisoModal.set(true);
+      return;
+    }
+
+    // Abrir modal de ataque (permitido en otras fases)
+    this.targetEnemy.set({
+      clan: player.clan,
+      username: player.username,
+      health: { current: 2500, max: 3000 }, // Mock
+    });
+    this.selectedTroopsForAttack.set([]);
+    this.showAtacarModal.set(true);
+  }
+
+  protected closeAtacarModal(): void {
+    this.showAtacarModal.set(false);
+    this.targetEnemy.set(null);
+    this.selectedTroopsForAttack.set([]);
+  }
+
+  protected closeAvisoModal(): void {
+    this.showAvisoModal.set(false);
+    this.avisoMessage.set(&#x27;&#x27;);
+  }
+
+  protected onLaunchAttack(troopIds: string[]): void {
+    // TODO: enviar ataque al servidor
+    console.log(&#x27;Attack launched with troops:&#x27;, troopIds);
+    
+    // Registrar el ataque activo con camino visual
+    const attacker &#x3D; this.players().find((p) &#x3D;&gt; p.username &#x3D;&#x3D;&#x3D; this.username())
+      ?? this.players().find((p) &#x3D;&gt; p.clan &#x3D;&#x3D;&#x3D; &#x27;fury&#x27;);
+    const defender &#x3D; this.players().find((p) &#x3D;&gt; p.username &#x3D;&#x3D;&#x3D; this.targetEnemy()?.username);
+
+    if (!attacker) {
+      console.warn(&#x27;No se encontró al atacante local en players()&#x27;, this.username());
+    }
+    if (!defender) {
+      console.warn(&#x27;No se encontró al defensor target en players()&#x27;, this.targetEnemy()?.username);
+    }
+
+    if (attacker &amp;&amp; defender &amp;&amp; attacker.position &amp;&amp; defender.position) {
+      const pathId &#x3D; this.generatePathId(attacker, defender);
+      const durationMs &#x3D; this.estimateDeploymentDurationMs(troopIds);
+
+      this.activeAttack.set({
+        attacker,
+        defender,
+        troopIds,
+        pathId,
+        durationMs,
+      });
+      
+      // Limpiar el ataque cuando termine el despliegue visual
+      setTimeout(() &#x3D;&gt; {
+        this.activeAttack.set(null);
+      }, durationMs);
+    }
+    
+    // Registrar en el log
+    if (this.targetEnemy()) {
+      const msg &#x3D; this.i18n.translate(&#x27;GAME.LOG_ATTACK&#x27;, { target: this.targetEnemy()?.username ?? &#x27;&#x27; });
+      this.addLogEntry(msg, &#x27;attack&#x27;);
+    }
+
+    this.closeAtacarModal();
+  }
+
+
+  /**
+   * Genera un path SVG directo entre dos puntos
+   */
+  protected generateAttackPath(): string {
+    const attack &#x3D; this.activeAttack();
+    if (!attack || !attack.attacker.position || !attack.defender.position) {
+      return &#x27;&#x27;;
+    }
+
+    const p0 &#x3D; attack.attacker.position;
+    const p2 &#x3D; attack.defender.position;
+
+    // Calcular punto de control desplazado perpendicularmente (inspirado en prueba_ia)
+    const midX &#x3D; (p0.x + p2.x) / 2;
+    const midY &#x3D; (p0.y + p2.y) / 2;
+
+    const dx &#x3D; p2.x - p0.x;
+    const dy &#x3D; p2.y - p0.y;
+    const len &#x3D; Math.sqrt(dx * dx + dy * dy) || 1;
+
+    // El desplazamiento es proporcional a la distancia, limitado a un máximo
+    const offset &#x3D; Math.min(15, len * 0.25);
+
+    // Vector normal (-dy, dx) para desplazar hacia un lado
+    const midX_offset &#x3D; midX + (-dy / len) * offset;
+    const midY_offset &#x3D; midY + (dx / len) * offset;
+
+    return &#x60;M ${p0.x} ${p0.y} Q ${midX_offset} ${midY_offset} ${p2.x} ${p2.y}&#x60;;
+  }
+
+  private generatePathId(attacker: PlayerNode, defender: PlayerNode): string {
+    // Sanitizar IDs (quitar espacios)
+    const a &#x3D; attacker.username.replace(/\s+/g, &#x27;-&#x27;);
+    const d &#x3D; defender.username.replace(/\s+/g, &#x27;-&#x27;);
+    return &#x60;attack-path-${a}-${d}-${Date.now()}&#x60;;
+  }
+
+  private estimateDeploymentDurationMs(troopIds: string[]): number {
+    const selectedTroops &#x3D; this.availableTroops().filter((troop) &#x3D;&gt; troopIds.includes(troop.id));
+    const durations &#x3D; selectedTroops.map((troop) &#x3D;&gt; this.troopDeployTimeMs[troop.type as TroopType] ?? this.defaultDeployTimeMs);
+    return durations.length &gt; 0 ? Math.max(...durations) : this.defaultDeployTimeMs;
+  }
+
+  // --- MÉTODOS DE DEBUG (Solo para desarrollo) ---
+  protected toggleDebugPanel(): void {
+    this.showDebugPanel.update(v &#x3D;&gt; !v);
+  }
+
+  protected debugAddGold(amount: number): void {
+    this.gold.update(g &#x3D;&gt; g + amount);
+  }
+
+  protected debugTogglePhase(): void {
+    const phases: GamePhase[] &#x3D; [&#x27;WAITING&#x27;, &#x27;PREPARATION&#x27;, &#x27;WAR&#x27;, &#x27;END&#x27;];
+    const current &#x3D; this.currentPhase();
+    const nextIndex &#x3D; (phases.indexOf(current) + 1) % phases.length;
+    this.currentPhase.set(phases[nextIndex]);
+  }
+
+  protected debugAddPlayer(): void {
+    if (this.players().length &gt;&#x3D; 6) {
+      this.avisoMessage.set(&#x27;SALA LLENA. No se permiten más de 6 jugadores.&#x27;);
+      this.showAvisoModal.set(true);
+      return;
+    }
+
+    const clans: ClanId[] &#x3D; [&#x27;divine&#x27;, &#x27;iron&#x27;, &#x27;song&#x27;, &#x27;rune&#x27;, &#x27;death&#x27;, &#x27;fury&#x27;];
+    const clan &#x3D; clans[Math.floor(Math.random() * clans.length)];
+    const id &#x3D; Math.floor(Math.random() * 1000); // ID más aleatorio para evitar colisiones
+    
+    this.players.update(ps &#x3D;&gt; {
+      const nextIndex &#x3D; ps.length;
+      return [...ps, {
+        clan,
+        username: &#x60;Guerrero_${id}&#x60;,
+        position: this.continentCoords[nextIndex] || this.continentCoords[5],
+        health: { current: 3000, max: 3000 }
+      }];
+    });
+  }
+
+  protected debugRemovePlayer(): void {
+    this.players.update(ps &#x3D;&gt; ps.length &gt; 1 ? ps.slice(0, -1) : ps);
+  }
+
+  protected debugAddProgress(step: number): void {
+    const troop &#x3D; this.activeTrainingTroop();
+    if (!troop) return;
+
+    const current &#x3D; troop.trainingProgress ?? 0;
+    const next &#x3D; Math.min(100, Math.max(0, current + step));
+
+    this.availableTroops.update(ts &#x3D;&gt; ts.map(t &#x3D;&gt;
+      t.id &#x3D;&#x3D;&#x3D; troop.id ? { ...t, trainingProgress: next } : t
+    ));
+  }
+
+  protected debugCompleteTraining(): void {
+    const troop &#x3D; this.activeTrainingTroop();
+    if (troop) {
+      this.availableTroops.update(ts &#x3D;&gt; ts.map(t &#x3D;&gt;
+        t.id &#x3D;&#x3D;&#x3D; troop.id ? { ...t, isTraining: false, trainingProgress: 100 } : t
+      ));
+    }
+  }
+}
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!-- TOP BAR --&gt;
+&lt;header class&#x3D;&quot;topbar&quot;&gt;
+  &lt;!-- Izquierda: volver + logo + usuario --&gt;
+  &lt;div class&#x3D;&quot;topbar-left&quot;&gt;
+    &lt;button class&#x3D;&quot;btn-back&quot; [title]&#x3D;&quot;&#x27;LOBBY.ABANDON&#x27; | translate&quot; (click)&#x3D;&quot;goBack()&quot;&gt;←&lt;/button&gt;
+    &lt;div class&#x3D;&quot;game-logo&quot; title&#x3D;&quot;Viking Clan Wars&quot;&gt;⚔️&lt;/div&gt;
+    &lt;div class&#x3D;&quot;player-info&quot;&gt;
+      &lt;span class&#x3D;&quot;player-name&quot;&gt;{{ username() }}&lt;/span&gt;
+      &lt;span class&#x3D;&quot;game-number&quot;&gt;#{{ gameCode() }}&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Centro: fase actual --&gt;
+  &lt;div class&#x3D;&quot;topbar-center&quot;&gt;
+    &lt;div class&#x3D;&quot;phase-indicator&quot; [attr.data-phase]&#x3D;&quot;currentPhase()&quot;&gt;
+      {{ &#x27;NAV.LOBBY&#x27; | translate | uppercase }}: {{ &#x27;GAME.PHASES.&#x27; + currentPhase() | translate }}
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Derecha: reglas + abandonar --&gt;
+  &lt;div class&#x3D;&quot;topbar-right&quot;&gt;
+    &lt;button class&#x3D;&quot;btn-rules&quot; title&#x3D;&quot;Ver Reglas del Juego&quot; (click)&#x3D;&quot;openRules()&quot;&gt;
+      &lt;!-- Icono info --&gt;
+      &lt;svg width&#x3D;&quot;16&quot; height&#x3D;&quot;16&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; stroke-width&#x3D;&quot;2&quot;
+           stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+        &lt;circle cx&#x3D;&quot;12&quot; cy&#x3D;&quot;12&quot; r&#x3D;&quot;10&quot;&gt;&lt;/circle&gt;
+        &lt;line x1&#x3D;&quot;12&quot; y1&#x3D;&quot;8&quot; x2&#x3D;&quot;12&quot; y2&#x3D;&quot;12&quot;&gt;&lt;/line&gt;
+        &lt;line x1&#x3D;&quot;12&quot; y1&#x3D;&quot;16&quot; x2&#x3D;&quot;12.01&quot; y2&#x3D;&quot;16&quot;&gt;&lt;/line&gt;
+      &lt;/svg&gt;
+      {{ &#x27;NAV.RULES&#x27; | translate }}
+    &lt;/button&gt;
+    &lt;button class&#x3D;&quot;btn-abandon&quot; (click)&#x3D;&quot;openAbandon()&quot;&gt;{{ &#x27;LOBBY.ABANDON&#x27; | translate }}&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+
+&lt;!-- MAIN AREA --&gt;
+&lt;main class&#x3D;&quot;main-content&quot;&gt;
+
+  &lt;!-- Tarjeta de stats flotante centrada --&gt;
+  &lt;div class&#x3D;&quot;stats-card&quot;&gt;
+    &lt;!-- Izquierda: Vida --&gt;
+    &lt;div class&#x3D;&quot;stat-health-block&quot;&gt;
+      &lt;span class&#x3D;&quot;stat-health-label&quot;&gt;{{ &#x27;GAME.STATS.HEALTH&#x27; | translate }}&lt;/span&gt;
+      &lt;span class&#x3D;&quot;stat-health-value&quot;&gt;{{ health().current }} / {{ health().max }}&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;!-- Divisor --&gt;
+    &lt;div class&#x3D;&quot;stats-divider&quot;&gt;&lt;/div&gt;
+    &lt;!-- Derecha: Dinero + Ptos. Investigación --&gt;
+    &lt;div class&#x3D;&quot;stat-right-block&quot;&gt;
+      &lt;div class&#x3D;&quot;stat-item&quot;&gt;
+        &lt;span&gt;{{ &#x27;GAME.STATS.GOLD&#x27; | translate }}:&lt;/span&gt;
+        &lt;span class&#x3D;&quot;stat-value gold&quot;&gt;{{ gold() }} 💰&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;stat-item&quot;&gt;
+        &lt;span&gt;{{ &#x27;GAME.STATS.RESEARCH&#x27; | translate }}:&lt;/span&gt;
+        &lt;span class&#x3D;&quot;stat-value&quot;&gt;{{ researchPts() }} 🧪&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Mapa principal --&gt;
+  &lt;div class&#x3D;&quot;map-container&quot;&gt;
+    &lt;div class&#x3D;&quot;map-bg&quot;&gt;&lt;/div&gt;
+
+
+    &lt;!-- Nodos de jugadores sobre los continentes --&gt;
+    &lt;div class&#x3D;&quot;territory-overlay&quot;&gt;
+      @for (player of players(); track player.username) {
+        &lt;div
+          class&#x3D;&quot;player-node&quot;
+          [class]&#x3D;&quot;&#x27;player-node node-&#x27; + player.clan&quot;
+          [style.left.%]&#x3D;&quot;player.position?.x ?? 0&quot;
+          [style.top.%]&#x3D;&quot;player.position?.y ?? 0&quot;
+          [title]&#x3D;&quot;player.username&quot;
+          (click)&#x3D;&quot;onTerritoryClick(player)&quot;&gt;
+
+          @if (player.username !&#x3D;&#x3D; username() &amp;&amp; player.health) {
+            &lt;div class&#x3D;&quot;player-health-bar&quot;&gt;
+              &lt;div
+                class&#x3D;&quot;player-health-fill&quot;
+                [style.width.%]&#x3D;&quot;(player.health.current / player.health.max) * 100&quot;&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          }
+
+          &lt;div class&#x3D;&quot;player-clan-icon&quot; [class]&#x3D;&quot;&#x27;clan-&#x27; + player.clan&quot;&gt;
+            @switch (player.clan) {
+              @case (&#x27;fury&#x27;) { 🪓 }
+              @case (&#x27;iron&#x27;) { 🛡️ }
+              @case (&#x27;song&#x27;) { 🎼 }
+              @case (&#x27;rune&#x27;) { ᛒ }
+              @case (&#x27;death&#x27;) { 💀 }
+              @case (&#x27;divine&#x27;) { ✨ }
+            }
+          &lt;/div&gt;
+          &lt;span class&#x3D;&quot;player-name&quot;&gt;{{ player.username }}&lt;/span&gt;
+        &lt;/div&gt;
+      }
+    &lt;/div&gt;
+
+    &lt;!-- SVG Overlay para camino de ataque (al final para estar encima) --&gt;
+    @if (activeAttack()) {
+      &lt;svg class&#x3D;&quot;attack-path-svg&quot; xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot; viewBox&#x3D;&quot;0 0 100 100&quot; preserveAspectRatio&#x3D;&quot;none&quot;&gt;
+        &lt;defs&gt;
+          &lt;linearGradient id&#x3D;&quot;attack-gradient&quot; x1&#x3D;&quot;0%&quot; y1&#x3D;&quot;0%&quot; x2&#x3D;&quot;100%&quot; y2&#x3D;&quot;100%&quot;&gt;
+            &lt;stop offset&#x3D;&quot;0%&quot; style&#x3D;&quot;stop-color: var(--color-phase-war); stop-opacity: 0.95&quot; /&gt;
+            &lt;stop offset&#x3D;&quot;100%&quot; style&#x3D;&quot;stop-color: var(--color-phase-war); stop-opacity: 0.3&quot; /&gt;
+          &lt;/linearGradient&gt;
+        &lt;/defs&gt;
+
+        &lt;!-- Path base para el hilo de ataque --&gt;
+        &lt;path
+          class&#x3D;&quot;attack-path&quot;
+          [attr.d]&#x3D;&quot;generateAttackPath()&quot;
+          [attr.id]&#x3D;&quot;activeAttack()!.pathId&quot;&gt;
+        &lt;/path&gt;
+
+        &lt;!-- Texto con chevrons &#x27;&gt;&#x27; siguiendo el camino --&gt;
+        &lt;text class&#x3D;&quot;attack-text&quot;&gt;
+          &lt;textPath [attr.href]&#x3D;&quot;&#x27;#&#x27; + activeAttack()!.pathId&quot; startOffset&#x3D;&quot;0%&quot;&gt;
+            &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;
+            &lt;animate attributeName&#x3D;&quot;startOffset&quot; from&#x3D;&quot;0%&quot; to&#x3D;&quot;100%&quot; [attr.dur]&#x3D;&quot;(activeAttack()!.durationMs / 1000) + &#x27;s&#x27;&quot; repeatCount&#x3D;&quot;indefinite&quot; /&gt;
+          &lt;/textPath&gt;
+        &lt;/text&gt;
+
+        &lt;!-- Marcador móvil con avatar del atacante --&gt;
+        &lt;g class&#x3D;&quot;attack-avatar-group&quot;&gt;
+          &lt;circle class&#x3D;&quot;attack-avatar-ring&quot; cx&#x3D;&quot;0&quot; cy&#x3D;&quot;0&quot; r&#x3D;&quot;3&quot; /&gt;
+          &lt;text class&#x3D;&quot;attack-avatar-icon&quot; x&#x3D;&quot;0&quot; y&#x3D;&quot;0&quot; text-anchor&#x3D;&quot;middle&quot; dominant-baseline&#x3D;&quot;central&quot;&gt;
+            {{ activeAttack()!.attacker.username.charAt(0) }}
+          &lt;/text&gt;
+          &lt;animateMotion [attr.dur]&#x3D;&quot;(activeAttack()!.durationMs / 1000) + &#x27;s&#x27;&quot; fill&#x3D;&quot;freeze&quot;&gt;
+            &lt;mpath [attr.href]&#x3D;&quot;&#x27;#&#x27; + activeAttack()!.pathId&quot;&gt;&lt;/mpath&gt;
+          &lt;/animateMotion&gt;
+        &lt;/g&gt;
+      &lt;/svg&gt;
+    }
+  &lt;/div&gt;
+
+  &lt;!-- Botones flotantes de acciones (derecha) --&gt;
+  &lt;div class&#x3D;&quot;actions-overlay&quot;&gt;
+    &lt;!-- Entrenar Tropas --&gt;
+    &lt;button class&#x3D;&quot;action-btn&quot; [title]&#x3D;&quot;&#x27;GAME.ACTIONS.TRAIN&#x27; | translate&quot; (click)&#x3D;&quot;openEntrenarTropas()&quot;&gt;
+      &lt;svg width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; stroke-width&#x3D;&quot;2&quot;
+           stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+        &lt;path d&#x3D;&quot;M14.5 17.5L3 6V3h3l11.5 11.5&quot;&gt;&lt;/path&gt;
+        &lt;path d&#x3D;&quot;M13 19l6-6&quot;&gt;&lt;/path&gt;
+        &lt;path d&#x3D;&quot;M16 16l4 4&quot;&gt;&lt;/path&gt;
+        &lt;path d&#x3D;&quot;M19 21l2-2&quot;&gt;&lt;/path&gt;
+      &lt;/svg&gt;
+    &lt;/button&gt;
+
+    &lt;!-- Ver Tropas --&gt;
+    &lt;button
+      class&#x3D;&quot;action-btn&quot;
+      [title]&#x3D;&quot;&#x27;GAME.ACTIONS.TROOPS&#x27; | translate&quot;
+      (click)&#x3D;&quot;openTropas()&quot;
+      [style.--progress]&#x3D;&quot;trainingProgress() + &#x27;%&#x27;&quot;&gt;
+      &lt;svg width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; stroke-width&#x3D;&quot;2&quot;
+           stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+        &lt;path d&#x3D;&quot;M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2&quot;&gt;&lt;/path&gt;
+        &lt;circle cx&#x3D;&quot;9&quot; cy&#x3D;&quot;7&quot; r&#x3D;&quot;4&quot;&gt;&lt;/circle&gt;
+        &lt;path d&#x3D;&quot;M23 21v-2a4 4 0 0 0-3-3.87&quot;&gt;&lt;/path&gt;
+        &lt;path d&#x3D;&quot;M16 3.13a4 4 0 0 1 0 7.75&quot;&gt;&lt;/path&gt;
+      &lt;/svg&gt;
+    &lt;/button&gt;
+
+    &lt;!-- Árbol Tecnológico --&gt;
+    &lt;button class&#x3D;&quot;action-btn&quot; [title]&#x3D;&quot;&#x27;GAME.ACTIONS.TECH&#x27; | translate&quot; (click)&#x3D;&quot;openArbolTecnologico()&quot;&gt;
+      &lt;svg width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; stroke-width&#x3D;&quot;2&quot;
+           stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+        &lt;polygon points&#x3D;&quot;13 2 3 14 12 14 11 22 21 10 12 10 13 2&quot;&gt;&lt;/polygon&gt;
+      &lt;/svg&gt;
+    &lt;/button&gt;
+
+    &lt;!-- Log de Batalla --&gt;
+    &lt;button class&#x3D;&quot;action-btn&quot; [title]&#x3D;&quot;&#x27;GAME.ACTIONS.LOG&#x27; | translate&quot; (click)&#x3D;&quot;openLog()&quot;&gt;
+      &lt;svg width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; stroke-width&#x3D;&quot;2&quot;
+           stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+        &lt;path d&#x3D;&quot;M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z&quot;&gt;&lt;/path&gt;
+        &lt;polyline points&#x3D;&quot;14 2 14 8 20 8&quot;&gt;&lt;/polyline&gt;
+        &lt;line x1&#x3D;&quot;16&quot; y1&#x3D;&quot;13&quot; x2&#x3D;&quot;8&quot; y2&#x3D;&quot;13&quot;&gt;&lt;/line&gt;
+        &lt;line x1&#x3D;&quot;16&quot; y1&#x3D;&quot;17&quot; x2&#x3D;&quot;8&quot; y2&#x3D;&quot;17&quot;&gt;&lt;/line&gt;
+        &lt;polyline points&#x3D;&quot;10 9 9 9 8 9&quot;&gt;&lt;/polyline&gt;
+      &lt;/svg&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+&lt;/main&gt;
+
+&lt;!-- MODALES --&gt;
+
+&lt;!-- Modal de Ataque --&gt;
+@if (showAtacarModal() &amp;&amp; targetEnemy()) {
+  &lt;app-atacar-modal
+    [target]&#x3D;&quot;targetEnemy()!&quot;
+    [availableTroops]&#x3D;&quot;availableTroops()&quot;
+    [localClan]&#x3D;&quot;localClan()&quot;
+    (closeModal)&#x3D;&quot;closeAtacarModal()&quot;
+    (launchAttack)&#x3D;&quot;onLaunchAttack($event)&quot;&gt;
+  &lt;/app-atacar-modal&gt;
+}
+
+@if (showAbandonModal()) {
+  &lt;app-confirm-abandon-modal
+    (confirm)&#x3D;&quot;onConfirmAbandon()&quot;
+    (cancel)&#x3D;&quot;onCancelAbandon()&quot;&gt;
+  &lt;/app-confirm-abandon-modal&gt;
+}
+
+&lt;!-- Modal de Visualización de Tropas --&gt;
+@if (showVisualizarTropasModal()) {
+  &lt;app-visualizar-tropas-modal
+    [title]&#x3D;&quot;&#x27;GAME.ACTIONS.TROOPS&#x27; | translate | uppercase&quot;
+    [troops]&#x3D;&quot;availableTroops()&quot;
+    (closeModal)&#x3D;&quot;closeVisualizarTropasModal()&quot;&gt;
+  &lt;/app-visualizar-tropas-modal&gt;
+}
+
+&lt;!-- Modal de Entrenamiento --&gt;
+@if (showEntrenarModal()) {
+  &lt;app-entrenar-modal
+    [gold]&#x3D;&quot;gold()&quot;
+    [options]&#x3D;&quot;trainableTroopOptions()&quot;
+    (closeModal)&#x3D;&quot;closeEntrenarModal()&quot;
+    (train)&#x3D;&quot;onTrainTroop($event)&quot;&gt;
+  &lt;/app-entrenar-modal&gt;
+}
+
+&lt;!-- Modal de Log Global --&gt;
+@if (showLogModal()) {
+  &lt;app-game-log-modal
+    [logs]&#x3D;&quot;gameLogs()&quot;
+    (closeModal)&#x3D;&quot;closeLogModal()&quot;&gt;
+  &lt;/app-game-log-modal&gt;
+}
+
+&lt;!-- Modal de Reglas --&gt;
+@if (showReglasModal()) {
+  &lt;app-reglas-modal
+    (closeModal)&#x3D;&quot;closeReglasModal()&quot;&gt;
+  &lt;/app-reglas-modal&gt;
+}
+
+&lt;!-- Modal de Aviso (Preparación / Errores) --&gt;
+@if (showAvisoModal()) {
+  &lt;app-aviso-modal
+    [message]&#x3D;&quot;avisoMessage()&quot;
+    (closeModal)&#x3D;&quot;closeAvisoModal()&quot;&gt;
+  &lt;/app-aviso-modal&gt;
+}
+
+&lt;!-- Modal de Lobby (Espera) --&gt;
+@if (currentPhase() &#x3D;&#x3D;&#x3D; &#x27;WAITING&#x27;) {
+  &lt;app-lobby-modal
+    [gameCode]&#x3D;&quot;gameCode()&quot;
+    [players]&#x3D;&quot;players()&quot;
+    [isHost]&#x3D;&quot;isHost()&quot;
+    (startGame)&#x3D;&quot;onStartGame()&quot;
+    (playerClick)&#x3D;&quot;onTerritoryClick($event)&quot;&gt;
+  &lt;/app-lobby-modal&gt;
+}
+
+@if (isDevelopment()) {
+  &lt;!-- PANEL DE DEBUG (Solo Desarrollo) --&gt;
+  &lt;div class&#x3D;&quot;debug-container&quot;&gt;
+    &lt;button class&#x3D;&quot;debug-trigger&quot; (click)&#x3D;&quot;toggleDebugPanel()&quot; title&#x3D;&quot;Abrir Panel Debug&quot;&gt;
+      ⚙️
+    &lt;/button&gt;
+
+    @if (showDebugPanel()) {
+      &lt;div class&#x3D;&quot;debug-panel&quot;&gt;
+        &lt;div class&#x3D;&quot;debug-header&quot;&gt;
+          &lt;span&gt;DEBUG TOOLS&lt;/span&gt;
+          &lt;button (click)&#x3D;&quot;toggleDebugPanel()&quot; class&#x3D;&quot;btn-close-debug&quot;&gt;✕&lt;/button&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;debug-section&quot;&gt;
+          &lt;label&gt;Economía (Oro)&lt;/label&gt;
+          &lt;div class&#x3D;&quot;debug-row&quot;&gt;
+            &lt;button (click)&#x3D;&quot;debugAddGold(50)&quot;&gt;+50&lt;/button&gt;
+            &lt;button (click)&#x3D;&quot;debugAddGold(500)&quot;&gt;+500&lt;/button&gt;
+            &lt;button (click)&#x3D;&quot;debugAddGold(-100)&quot;&gt;-100&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;debug-section&quot;&gt;
+          &lt;label&gt;Fase de Juego&lt;/label&gt;
+          &lt;button class&#x3D;&quot;btn-full&quot; (click)&#x3D;&quot;debugTogglePhase()&quot;&gt;Siguiente Fase&lt;/button&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;debug-section&quot;&gt;
+          &lt;label&gt;Jugadores ({{ players().length }})&lt;/label&gt;
+          &lt;div class&#x3D;&quot;debug-row&quot;&gt;
+            &lt;button (click)&#x3D;&quot;debugAddPlayer()&quot;&gt;Añadir&lt;/button&gt;
+            &lt;button (click)&#x3D;&quot;debugRemovePlayer()&quot;&gt;Quitar&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;debug-section&quot;&gt;
+          &lt;label&gt;Entrenamiento (Tropa Activa)&lt;/label&gt;
+          &lt;div class&#x3D;&quot;debug-row&quot;&gt;
+            &lt;button (click)&#x3D;&quot;debugAddProgress(-10)&quot;&gt;-10%&lt;/button&gt;
+            &lt;button (click)&#x3D;&quot;debugAddProgress(10)&quot;&gt;+10%&lt;/button&gt;
+            &lt;button (click)&#x3D;&quot;debugAddProgress(25)&quot;&gt;+25%&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;button
+            class&#x3D;&quot;btn-full btn-success&quot;
+            [disabled]&#x3D;&quot;!activeTrainingTroop()&quot;
+            (click)&#x3D;&quot;debugCompleteTraining()&quot;&gt;
+            Completar Entrenamiento
+          &lt;/button&gt;
+        &lt;/div&gt;
+
+      &lt;/div&gt;
+    }
+  &lt;/div&gt;
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!-- TOP BAR --><header class="topbar">  <!-- Izquierda: volver + logo + usuario -->  <div class="topbar-left">    <button class="btn-back" [title]="\'LOBBY.ABANDON\' | translate" (click)="goBack()">←</button>    <div class="game-logo" title="Viking Clan Wars">⚔️</div>    <div class="player-info">      <span class="player-name">{{ username() }}</span>      <span class="game-number">#{{ gameCode() }}</span>    </div>  </div>  <!-- Centro: fase actual -->  <div class="topbar-center">    <div class="phase-indicator" [attr.data-phase]="currentPhase()">      {{ \'NAV.LOBBY\' | translate | uppercase }}: {{ \'GAME.PHASES.\' + currentPhase() | translate }}    </div>  </div>  <!-- Derecha: reglas + abandonar -->  <div class="topbar-right">    <button class="btn-rules" title="Ver Reglas del Juego" (click)="openRules()">      <!-- Icono info -->      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"           stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">        <circle cx="12" cy="12" r="10"></circle>        <line x1="12" y1="8" x2="12" y2="12"></line>        <line x1="12" y1="16" x2="12.01" y2="16"></line>      </svg>      {{ \'NAV.RULES\' | translate }}    </button>    <button class="btn-abandon" (click)="openAbandon()">{{ \'LOBBY.ABANDON\' | translate }}</button>  </div></header><!-- MAIN AREA --><main class="main-content">  <!-- Tarjeta de stats flotante centrada -->  <div class="stats-card">    <!-- Izquierda: Vida -->    <div class="stat-health-block">      <span class="stat-health-label">{{ \'GAME.STATS.HEALTH\' | translate }}</span>      <span class="stat-health-value">{{ health().current }} / {{ health().max }}</span>    </div>    <!-- Divisor -->    <div class="stats-divider"></div>    <!-- Derecha: Dinero + Ptos. Investigación -->    <div class="stat-right-block">      <div class="stat-item">        <span>{{ \'GAME.STATS.GOLD\' | translate }}:</span>        <span class="stat-value gold">{{ gold() }} 💰</span>      </div>      <div class="stat-item">        <span>{{ \'GAME.STATS.RESEARCH\' | translate }}:</span>        <span class="stat-value">{{ researchPts() }} 🧪</span>      </div>    </div>  </div>  <!-- Mapa principal -->  <div class="map-container">    <div class="map-bg"></div>    <!-- Nodos de jugadores sobre los continentes -->    <div class="territory-overlay">      @for (player of players(); track player.username) {        <div          class="player-node"          [class]="\'player-node node-\' + player.clan"          [style.left.%]="player.position?.x ?? 0"          [style.top.%]="player.position?.y ?? 0"          [title]="player.username"          (click)="onTerritoryClick(player)">          @if (player.username !== username() && player.health) {            <div class="player-health-bar">              <div                class="player-health-fill"                [style.width.%]="(player.health.current / player.health.max) * 100">              </div>            </div>          }          <div class="player-clan-icon" [class]="\'clan-\' + player.clan">            @switch (player.clan) {              @case (\'fury\') { 🪓 }              @case (\'iron\') { 🛡️ }              @case (\'song\') { 🎼 }              @case (\'rune\') { ᛒ }              @case (\'death\') { 💀 }              @case (\'divine\') { ✨ }            }          </div>          <span class="player-name">{{ player.username }}</span>        </div>      }    </div>    <!-- SVG Overlay para camino de ataque (al final para estar encima) -->    @if (activeAttack()) {      <svg class="attack-path-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">        <defs>          <linearGradient id="attack-gradient" x1="0%" y1="0%" x2="100%" y2="100%">            <stop offset="0%" style="stop-color: var(--color-phase-war); stop-opacity: 0.95" />            <stop offset="100%" style="stop-color: var(--color-phase-war); stop-opacity: 0.3" />          </linearGradient>        </defs>        <!-- Path base para el hilo de ataque -->        <path          class="attack-path"          [attr.d]="generateAttackPath()"          [attr.id]="activeAttack()!.pathId">        </path>        <!-- Texto con chevrons \'>\' siguiendo el camino -->        <text class="attack-text">          <textPath [attr.href]="\'#\' + activeAttack()!.pathId" startOffset="0%">            >>>>>>>>>>>>>            <animate attributeName="startOffset" from="0%" to="100%" [attr.dur]="(activeAttack()!.durationMs / 1000) + \'s\'" repeatCount="indefinite" />          </textPath>        </text>        <!-- Marcador móvil con avatar del atacante -->        <g class="attack-avatar-group">          <circle class="attack-avatar-ring" cx="0" cy="0" r="3" />          <text class="attack-avatar-icon" x="0" y="0" text-anchor="middle" dominant-baseline="central">            {{ activeAttack()!.attacker.username.charAt(0) }}          </text>          <animateMotion [attr.dur]="(activeAttack()!.durationMs / 1000) + \'s\'" fill="freeze">            <mpath [attr.href]="\'#\' + activeAttack()!.pathId"></mpath>          </animateMotion>        </g>      </svg>    }  </div>  <!-- Botones flotantes de acciones (derecha) -->  <div class="actions-overlay">    <!-- Entrenar Tropas -->    <button class="action-btn" [title]="\'GAME.ACTIONS.TRAIN\' | translate" (click)="openEntrenarTropas()">      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"           stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">        <path d="M14.5 17.5L3 6V3h3l11.5 11.5"></path>        <path d="M13 19l6-6"></path>        <path d="M16 16l4 4"></path>        <path d="M19 21l2-2"></path>      </svg>    </button>    <!-- Ver Tropas -->    <button      class="action-btn"      [title]="\'GAME.ACTIONS.TROOPS\' | translate"      (click)="openTropas()"      [style.--progress]="trainingProgress() + \'%\'">      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"           stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>        <circle cx="9" cy="7" r="4"></circle>        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>      </svg>    </button>    <!-- Árbol Tecnológico -->    <button class="action-btn" [title]="\'GAME.ACTIONS.TECH\' | translate" (click)="openArbolTecnologico()">      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"           stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>      </svg>    </button>    <!-- Log de Batalla -->    <button class="action-btn" [title]="\'GAME.ACTIONS.LOG\' | translate" (click)="openLog()">      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"           stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>        <polyline points="14 2 14 8 20 8"></polyline>        <line x1="16" y1="13" x2="8" y2="13"></line>        <line x1="16" y1="17" x2="8" y2="17"></line>        <polyline points="10 9 9 9 8 9"></polyline>      </svg>    </button>  </div></main><!-- MODALES --><!-- Modal de Ataque -->@if (showAtacarModal() && targetEnemy()) {  <app-atacar-modal    [target]="targetEnemy()!"    [availableTroops]="availableTroops()"    [localClan]="localClan()"    (closeModal)="closeAtacarModal()"    (launchAttack)="onLaunchAttack($event)">  </app-atacar-modal>}@if (showAbandonModal()) {  <app-confirm-abandon-modal    (confirm)="onConfirmAbandon()"    (cancel)="onCancelAbandon()">  </app-confirm-abandon-modal>}<!-- Modal de Visualización de Tropas -->@if (showVisualizarTropasModal()) {  <app-visualizar-tropas-modal    [title]="\'GAME.ACTIONS.TROOPS\' | translate | uppercase"    [troops]="availableTroops()"    (closeModal)="closeVisualizarTropasModal()">  </app-visualizar-tropas-modal>}<!-- Modal de Entrenamiento -->@if (showEntrenarModal()) {  <app-entrenar-modal    [gold]="gold()"    [options]="trainableTroopOptions()"    (closeModal)="closeEntrenarModal()"    (train)="onTrainTroop($event)">  </app-entrenar-modal>}<!-- Modal de Log Global -->@if (showLogModal()) {  <app-game-log-modal    [logs]="gameLogs()"    (closeModal)="closeLogModal()">  </app-game-log-modal>}<!-- Modal de Reglas -->@if (showReglasModal()) {  <app-reglas-modal    (closeModal)="closeReglasModal()">  </app-reglas-modal>}<!-- Modal de Aviso (Preparación / Errores) -->@if (showAvisoModal()) {  <app-aviso-modal    [message]="avisoMessage()"    (closeModal)="closeAvisoModal()">  </app-aviso-modal>}<!-- Modal de Lobby (Espera) -->@if (currentPhase() === \'WAITING\') {  <app-lobby-modal    [gameCode]="gameCode()"    [players]="players()"    [isHost]="isHost()"    (startGame)="onStartGame()"    (playerClick)="onTerritoryClick($event)">  </app-lobby-modal>}@if (isDevelopment()) {  <!-- PANEL DE DEBUG (Solo Desarrollo) -->  <div class="debug-container">    <button class="debug-trigger" (click)="toggleDebugPanel()" title="Abrir Panel Debug">      ⚙️    </button>    @if (showDebugPanel()) {      <div class="debug-panel">        <div class="debug-header">          <span>DEBUG TOOLS</span>          <button (click)="toggleDebugPanel()" class="btn-close-debug">✕</button>        </div>        <div class="debug-section">          <label>Economía (Oro)</label>          <div class="debug-row">            <button (click)="debugAddGold(50)">+50</button>            <button (click)="debugAddGold(500)">+500</button>            <button (click)="debugAddGold(-100)">-100</button>          </div>        </div>        <div class="debug-section">          <label>Fase de Juego</label>          <button class="btn-full" (click)="debugTogglePhase()">Siguiente Fase</button>        </div>        <div class="debug-section">          <label>Jugadores ({{ players().length }})</label>          <div class="debug-row">            <button (click)="debugAddPlayer()">Añadir</button>            <button (click)="debugRemovePlayer()">Quitar</button>          </div>        </div>        <div class="debug-section">          <label>Entrenamiento (Tropa Activa)</label>          <div class="debug-row">            <button (click)="debugAddProgress(-10)">-10%</button>            <button (click)="debugAddProgress(10)">+10%</button>            <button (click)="debugAddProgress(25)">+25%</button>          </div>          <button            class="btn-full btn-success"            [disabled]="!activeTrainingTroop()"            (click)="debugCompleteTraining()">            Completar Entrenamiento          </button>        </div>      </div>    }  </div>}</div>'
+    var COMPONENTS = [{'name': 'AdminPageComponent', 'selector': 'app-admin-page'},{'name': 'AnadirTropaAtaqueModalComponent', 'selector': 'app-anadir-tropa-ataque-modal'},{'name': 'App', 'selector': 'app-root'},{'name': 'AtacarModalComponent', 'selector': 'app-atacar-modal'},{'name': 'AuthComponent', 'selector': 'app-auth'},{'name': 'AvisoModalComponent', 'selector': 'app-aviso-modal'},{'name': 'CambiarContrasenaModalComponent', 'selector': 'app-cambiar-contrasena-modal'},{'name': 'CharactersPageComponent', 'selector': 'app-characters-page'},{'name': 'ConfirmAbandonModalComponent', 'selector': 'app-confirm-abandon-modal'},{'name': 'CrearPartidaModalComponent', 'selector': 'app-crear-partida-modal'},{'name': 'EntrenarModalComponent', 'selector': 'app-entrenar-modal'},{'name': 'GameLogModalComponent', 'selector': 'app-game-log-modal'},{'name': 'GamePageComponent', 'selector': 'app-game-page'},{'name': 'GlobalDebugComponent', 'selector': 'app-global-debug'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LobbyModalComponent', 'selector': 'app-lobby-modal'},{'name': 'LobbyPageComponent', 'selector': 'app-lobby-page'},{'name': 'LogoComponent', 'selector': 'app-logo'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'ReglasModalComponent', 'selector': 'app-reglas-modal'},{'name': 'RulesPageComponent', 'selector': 'app-rules-page'},{'name': 'SalaLlenaModalComponent', 'selector': 'app-sala-llena-modal'},{'name': 'StatisticsComponent', 'selector': 'app-stats'},{'name': 'UnirsePartidaModalComponent', 'selector': 'app-unirse-partida-modal'},{'name': 'UserConfigComponent', 'selector': 'app-user-config'},{'name': 'VisualizarTropasModalComponent', 'selector': 'app-visualizar-tropas-modal'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'GamePageComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'GamePageComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

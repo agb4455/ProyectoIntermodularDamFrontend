@@ -1,0 +1,465 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>proyecto-intermodular-dam-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">proyecto-intermodular-dam-frontend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  RulesPageComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/rules-page/rules-page.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-rules-page</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                                <code><a href="https://angular.io/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                                <code><a href="https://angular.io/api/router/RouterModule" target="_blank" >RouterModule</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./rules-page.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./rules-page.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+
+
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, ChangeDetectionStrategy } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { RouterModule } from &#x27;@angular/router&#x27;;
+
+@Component({
+  selector: &#x27;app-rules-page&#x27;,
+  standalone: true,
+  imports: [CommonModule, RouterModule],
+  templateUrl: &#x27;./rules-page.component.html&#x27;,
+  styleUrl: &#x27;./rules-page.component.scss&#x27;,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class RulesPageComponent {}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;reglas-container&quot;&gt;
+  &lt;!-- Efectos de Ambiente --&gt;
+  &lt;div class&#x3D;&quot;sky-fx&quot;&gt;&lt;/div&gt;
+
+  &lt;header class&#x3D;&quot;page-header&quot;&gt;
+    &lt;h1 class&#x3D;&quot;animate-glow&quot;&gt;LEYES DE LA GUERRA&lt;/h1&gt;
+    &lt;div class&#x3D;&quot;title-divider&quot;&gt;&lt;/div&gt;
+  &lt;/header&gt;
+
+  &lt;main class&#x3D;&quot;rules-content&quot;&gt;
+    
+    &lt;!-- 1. EL CÍRCULO VIKINGO --&gt;
+    &lt;section class&#x3D;&quot;rules-section&quot;&gt;
+      &lt;h2 class&#x3D;&quot;section-title&quot;&gt;El Círculo de Ventajas&lt;/h2&gt;
+      &lt;div class&#x3D;&quot;matrix-card glass-panel forged-border&quot;&gt;
+        &lt;div class&#x3D;&quot;matrix-intro&quot;&gt;
+          La fuerza de tu linaje depende de tu oponente. &lt;br&gt;
+          Atacar a un clan vulnerable otorga &lt;strong&gt;1.5x de daño&lt;/strong&gt;.
+        &lt;/div&gt;
+        
+        &lt;div class&#x3D;&quot;matrix-grid&quot;&gt;
+          &lt;div class&#x3D;&quot;matrix-row&quot;&gt;
+            &lt;span class&#x3D;&quot;attacker&quot;&gt;FURIA&lt;/span&gt; &lt;span class&#x3D;&quot;arrow&quot;&gt;➔&lt;/span&gt; &lt;span class&#x3D;&quot;defender&quot;&gt;CANCIÓN&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;matrix-row&quot;&gt;
+            &lt;span class&#x3D;&quot;attacker&quot;&gt;CANCIÓN&lt;/span&gt; &lt;span class&#x3D;&quot;arrow&quot;&gt;➔&lt;/span&gt; &lt;span class&#x3D;&quot;defender&quot;&gt;MUERTE&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;matrix-row&quot;&gt;
+            &lt;span class&#x3D;&quot;attacker&quot;&gt;MUERTE&lt;/span&gt; &lt;span class&#x3D;&quot;arrow&quot;&gt;➔&lt;/span&gt; &lt;span class&#x3D;&quot;defender&quot;&gt;DIVINO&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;matrix-row&quot;&gt;
+            &lt;span class&#x3D;&quot;attacker&quot;&gt;DIVINO&lt;/span&gt; &lt;span class&#x3D;&quot;arrow&quot;&gt;➔&lt;/span&gt; &lt;span class&#x3D;&quot;defender&quot;&gt;RUNA&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;matrix-row&quot;&gt;
+            &lt;span class&#x3D;&quot;attacker&quot;&gt;RUNA&lt;/span&gt; &lt;span class&#x3D;&quot;arrow&quot;&gt;➔&lt;/span&gt; &lt;span class&#x3D;&quot;defender&quot;&gt;HIERRO&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;matrix-row&quot;&gt;
+            &lt;span class&#x3D;&quot;attacker&quot;&gt;HIERRO&lt;/span&gt; &lt;span class&#x3D;&quot;arrow&quot;&gt;➔&lt;/span&gt; &lt;span class&#x3D;&quot;defender&quot;&gt;FURIA&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;!-- 2. RESOLUCIÓN DE COMBATE --&gt;
+    &lt;section class&#x3D;&quot;rules-section&quot;&gt;
+      &lt;h2 class&#x3D;&quot;section-title&quot;&gt;Resolución de Batalla&lt;/h2&gt;
+      &lt;div class&#x3D;&quot;rules-grid&quot;&gt;
+        &lt;div class&#x3D;&quot;rule-box glass-panel forged-border&quot;&gt;
+          &lt;h3&gt;Ragnarök Simultáneo&lt;/h3&gt;
+          &lt;p&gt;En el Norte, nadie espera su turno para morir. Ambos bandos infligen su daño al mismo tiempo. No hay ganadores ilesos.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;rule-box glass-panel forged-border&quot;&gt;
+          &lt;h3&gt;Bonos Militares&lt;/h3&gt;
+          &lt;ul&gt;
+            &lt;li&gt;&lt;strong&gt;Ataque:&lt;/strong&gt; 1.5x si posees ventaja de linaje.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Defensa:&lt;/strong&gt; 1.1x de protección fija en la capital.&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;rule-box full-width glass-panel forged-border&quot;&gt;
+          &lt;h3&gt;El Escudo de Sangre&lt;/h3&gt;
+          &lt;p&gt;Tus tropas son tu primera línea. El daño enemigo consume primero los puntos de vida de las tropas estacionadas. El &lt;strong&gt;daño sobrante&lt;/strong&gt; impacta directamente en el corazón de tu Capital.&lt;/p&gt;
+          &lt;div class&#x3D;&quot;warning-box&quot;&gt;
+            SI TU CAPITAL CAE A 0, TU SAGA HA TERMINADO.
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;!-- 3. LAS ERAS --&gt;
+    &lt;section class&#x3D;&quot;rules-section&quot;&gt;
+      &lt;h2 class&#x3D;&quot;section-title&quot;&gt;El Flujo del Tiempo&lt;/h2&gt;
+      &lt;div class&#x3D;&quot;era-timeline&quot;&gt;
+        &lt;div class&#x3D;&quot;era-point&quot;&gt;
+          &lt;div class&#x3D;&quot;era-indicator prep&quot;&gt;I&lt;/div&gt;
+          &lt;div class&#x3D;&quot;era-info&quot;&gt;
+            &lt;h3&gt;Era de Preparación (5 min)&lt;/h3&gt;
+            &lt;p&gt;La tregua sagrada impera. Los ataques están prohibidos. Acumula recursos, entrena a tus guerreros y bendice tu árbol tecnológico.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;era-point&quot;&gt;
+          &lt;div class&#x3D;&quot;era-indicator war&quot;&gt;II&lt;/div&gt;
+          &lt;div class&#x3D;&quot;era-info&quot;&gt;
+            &lt;h3&gt;Era de Guerra Total&lt;/h3&gt;
+            &lt;p&gt;Se rompe la paz. El coste de entrenamiento se reduce. Comienzan las incursiones y la verdadera lucha por la supervivencia.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;!-- 4. ECONOMÍA --&gt;
+    &lt;section class&#x3D;&quot;rules-section&quot;&gt;
+      &lt;h2 class&#x3D;&quot;section-title&quot;&gt;Recursos de Batalla&lt;/h2&gt;
+      &lt;div class&#x3D;&quot;economy-grid&quot;&gt;
+        &lt;div class&#x3D;&quot;econ-card glass-panel forged-border&quot;&gt;
+          &lt;div class&#x3D;&quot;econ-icon&quot;&gt;💰&lt;/div&gt;
+          &lt;h3&gt;Economía&lt;/h3&gt;
+          &lt;p&gt;Créditos generados por tus tierras cada 30-60 segundos. Úsalos para reclutar tropas y expandir tu ejército.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;econ-card glass-panel forged-border&quot;&gt;
+          &lt;div class&#x3D;&quot;econ-icon&quot;&gt;💜&lt;/div&gt;
+          &lt;h3&gt;Sabiduría (RP)&lt;/h3&gt;
+          &lt;p&gt;Puntos obtenidos por la sangre derramada. Cuanto más daño infligido, más rápido avanzarás en tu Árbol Tecnológico.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+  &lt;/main&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="reglas-container">  <!-- Efectos de Ambiente -->  <div class="sky-fx"></div>  <header class="page-header">    <h1 class="animate-glow">LEYES DE LA GUERRA</h1>    <div class="title-divider"></div>  </header>  <main class="rules-content">        <!-- 1. EL CÍRCULO VIKINGO -->    <section class="rules-section">      <h2 class="section-title">El Círculo de Ventajas</h2>      <div class="matrix-card glass-panel forged-border">        <div class="matrix-intro">          La fuerza de tu linaje depende de tu oponente. <br>          Atacar a un clan vulnerable otorga <strong>1.5x de daño</strong>.        </div>                <div class="matrix-grid">          <div class="matrix-row">            <span class="attacker">FURIA</span> <span class="arrow">➔</span> <span class="defender">CANCIÓN</span>          </div>          <div class="matrix-row">            <span class="attacker">CANCIÓN</span> <span class="arrow">➔</span> <span class="defender">MUERTE</span>          </div>          <div class="matrix-row">            <span class="attacker">MUERTE</span> <span class="arrow">➔</span> <span class="defender">DIVINO</span>          </div>          <div class="matrix-row">            <span class="attacker">DIVINO</span> <span class="arrow">➔</span> <span class="defender">RUNA</span>          </div>          <div class="matrix-row">            <span class="attacker">RUNA</span> <span class="arrow">➔</span> <span class="defender">HIERRO</span>          </div>          <div class="matrix-row">            <span class="attacker">HIERRO</span> <span class="arrow">➔</span> <span class="defender">FURIA</span>          </div>        </div>      </div>    </section>    <!-- 2. RESOLUCIÓN DE COMBATE -->    <section class="rules-section">      <h2 class="section-title">Resolución de Batalla</h2>      <div class="rules-grid">        <div class="rule-box glass-panel forged-border">          <h3>Ragnarök Simultáneo</h3>          <p>En el Norte, nadie espera su turno para morir. Ambos bandos infligen su daño al mismo tiempo. No hay ganadores ilesos.</p>        </div>        <div class="rule-box glass-panel forged-border">          <h3>Bonos Militares</h3>          <ul>            <li><strong>Ataque:</strong> 1.5x si posees ventaja de linaje.</li>            <li><strong>Defensa:</strong> 1.1x de protección fija en la capital.</li>          </ul>        </div>        <div class="rule-box full-width glass-panel forged-border">          <h3>El Escudo de Sangre</h3>          <p>Tus tropas son tu primera línea. El daño enemigo consume primero los puntos de vida de las tropas estacionadas. El <strong>daño sobrante</strong> impacta directamente en el corazón de tu Capital.</p>          <div class="warning-box">            SI TU CAPITAL CAE A 0, TU SAGA HA TERMINADO.          </div>        </div>      </div>    </section>    <!-- 3. LAS ERAS -->    <section class="rules-section">      <h2 class="section-title">El Flujo del Tiempo</h2>      <div class="era-timeline">        <div class="era-point">          <div class="era-indicator prep">I</div>          <div class="era-info">            <h3>Era de Preparación (5 min)</h3>            <p>La tregua sagrada impera. Los ataques están prohibidos. Acumula recursos, entrena a tus guerreros y bendice tu árbol tecnológico.</p>          </div>        </div>        <div class="era-point">          <div class="era-indicator war">II</div>          <div class="era-info">            <h3>Era de Guerra Total</h3>            <p>Se rompe la paz. El coste de entrenamiento se reduce. Comienzan las incursiones y la verdadera lucha por la supervivencia.</p>          </div>        </div>      </div>    </section>    <!-- 4. ECONOMÍA -->    <section class="rules-section">      <h2 class="section-title">Recursos de Batalla</h2>      <div class="economy-grid">        <div class="econ-card glass-panel forged-border">          <div class="econ-icon">💰</div>          <h3>Economía</h3>          <p>Créditos generados por tus tierras cada 30-60 segundos. Úsalos para reclutar tropas y expandir tu ejército.</p>        </div>        <div class="econ-card glass-panel forged-border">          <div class="econ-icon">💜</div>          <h3>Sabiduría (RP)</h3>          <p>Puntos obtenidos por la sangre derramada. Cuanto más daño infligido, más rápido avanzarás en tu Árbol Tecnológico.</p>        </div>      </div>    </section>  </main></div></div>'
+    var COMPONENTS = [{'name': 'AdminPageComponent', 'selector': 'app-admin-page'},{'name': 'AnadirTropaAtaqueModalComponent', 'selector': 'app-anadir-tropa-ataque-modal'},{'name': 'App', 'selector': 'app-root'},{'name': 'AtacarModalComponent', 'selector': 'app-atacar-modal'},{'name': 'AuthComponent', 'selector': 'app-auth'},{'name': 'AvisoModalComponent', 'selector': 'app-aviso-modal'},{'name': 'CambiarContrasenaModalComponent', 'selector': 'app-cambiar-contrasena-modal'},{'name': 'CharactersPageComponent', 'selector': 'app-characters-page'},{'name': 'ConfirmAbandonModalComponent', 'selector': 'app-confirm-abandon-modal'},{'name': 'CrearPartidaModalComponent', 'selector': 'app-crear-partida-modal'},{'name': 'EntrenarModalComponent', 'selector': 'app-entrenar-modal'},{'name': 'GameLogModalComponent', 'selector': 'app-game-log-modal'},{'name': 'GamePageComponent', 'selector': 'app-game-page'},{'name': 'GlobalDebugComponent', 'selector': 'app-global-debug'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LobbyModalComponent', 'selector': 'app-lobby-modal'},{'name': 'LobbyPageComponent', 'selector': 'app-lobby-page'},{'name': 'LogoComponent', 'selector': 'app-logo'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'ReglasModalComponent', 'selector': 'app-reglas-modal'},{'name': 'RulesPageComponent', 'selector': 'app-rules-page'},{'name': 'SalaLlenaModalComponent', 'selector': 'app-sala-llena-modal'},{'name': 'StatisticsComponent', 'selector': 'app-stats'},{'name': 'UnirsePartidaModalComponent', 'selector': 'app-unirse-partida-modal'},{'name': 'UserConfigComponent', 'selector': 'app-user-config'},{'name': 'VisualizarTropasModalComponent', 'selector': 'app-visualizar-tropas-modal'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'RulesPageComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'RulesPageComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
