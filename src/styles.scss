@@ -1,7 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+/* 
+  ESTILOS GLOBALES DE LA APLICACIÓN
+  Configuración base del DOM, reset de márgenes y layout principal.
+*/
+
 @use 'styles/tokens';
 
-// Reset global — elimina márgenes del navegador y evita scroll externo
+/* ==========================================================================
+   Reset y Configuración Base
+   ========================================================================== */
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -18,7 +25,11 @@ html, body {
   font-family: 'Lato', 'Inter', sans-serif;
 }
 
-// El elemento raíz de Angular debe ser un contenedor flexible que ocupe todo el alto
+/* ==========================================================================
+   Layout Principal de Angular
+   ========================================================================== */
+
+/* El elemento raíz de Angular debe ser un contenedor flexible que ocupe todo el alto */
 app-root {
   display: flex;
   flex-direction: column;

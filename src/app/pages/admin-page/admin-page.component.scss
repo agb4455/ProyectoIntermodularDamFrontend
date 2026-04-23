@@ -1,12 +1,17 @@
+/* 
+  ESTILOS DEL PANEL DE ADMINISTRACIÓN (DASHBOARD)
+  Interfaz exclusiva para administradores: métricas de sistema, gestión de usuarios y baneos.
+*/
+
 @use '../../../styles/variables' as *;
 
-// Uses CSS custom properties defined globally. No hardcoded hex values.
-
+/* ==========================================================================
+   Configuración del Host y Contenedor Principal
+   ========================================================================== */
 :host {
   display: block;
   height: 100%;
 }
-
 
 .admin-dashboard {
   background-color: var(--color-bg-primary);
@@ -23,9 +28,9 @@
   }
 }
 
-/* ========================
-   LEFT PANEL (Sidebar)
-   ======================== */
+/* ==========================================================================
+   Panel Lateral (Sidebar) - Estadísticas Globales
+   ========================================================================== */
 .sidebar {
   width: 280px;
   background-color: var(--color-bg-secondary);
@@ -47,7 +52,6 @@
   }
 }
 
-/* Totals */
 .global-stats {
   display: flex;
   flex-direction: column;
@@ -64,7 +68,7 @@
 
   .stat-value {
     font-family: 'Cinzel', serif;
-    font-size: 2rem; /* Reduced from 2.5rem */
+    font-size: 2rem;
     color: var(--color-gold);
     margin: 10px 0;
     text-shadow: 0 0 10px var(--color-gold-muted);
@@ -86,9 +90,9 @@
   }
 }
 
-/* ========================
-   MAIN CONTENT
-   ======================== */
+/* ==========================================================================
+   Contenido Principal
+   ========================================================================== */
 .main-content {
   flex: 1;
   padding: 40px;
@@ -98,7 +102,7 @@
   gap: 40px;
 }
 
-/* TOP METRICS */
+/* Sección de Métricas de Sistema */
 .metrics-container {
   h3 {
     margin-bottom: 20px;
@@ -138,7 +142,7 @@
 
 .metric-value {
   font-family: 'Cinzel', serif;
-  font-size: 2.2rem; /* Reduced from 3rem */
+  font-size: 2.2rem;
   color: var(--color-text-primary);
   margin-bottom: 5px;
 
@@ -155,7 +159,9 @@
   text-align: center;
 }
 
-/* BANS SECTION */
+/* ==========================================================================
+   Gestión de Baneos y Usuarios
+   ========================================================================== */
 .bans-container {
   background-color: var(--color-bg-secondary);
   border: 1px solid var(--color-border-default);
@@ -181,6 +187,7 @@
   }
 }
 
+/* Buscador de usuarios */
 .search-input {
   width: 100%;
   padding: 12px 15px;
@@ -199,7 +206,7 @@
   }
 }
 
-/* Dropdown de resultados (abre hacia arriba cuando está al fondo) */
+/* Resultados del buscador */
 .search-dropdown {
   position: absolute;
   bottom: 100%;
@@ -244,7 +251,58 @@
   }
 }
 
-/* Buttons */
+/* ==========================================================================
+   Tabla de Baneos y Botones
+   ========================================================================== */
+
+/* Wrapper con scroll interno para la tabla */
+.table-scroll-wrapper {
+  max-height: 300px;
+  overflow-y: auto;
+  
+  /* Scrollbar estilizada */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
+  &::-webkit-scrollbar { width: 6px; }
+  &::-webkit-scrollbar-track { background: var(--color-scrollbar-track); }
+  &::-webkit-scrollbar-thumb { background: var(--color-scrollbar-thumb); border-radius: 3px; }
+}
+
+.bans-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    text-align: left;
+    padding: 15px;
+    color: var(--color-text-secondary);
+    border-bottom: 2px solid var(--color-border-default);
+    font-family: 'Cinzel', serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    position: sticky;
+    top: 0;
+    background-color: var(--color-bg-secondary);
+    z-index: 1;
+  }
+
+  td {
+    padding: 15px;
+    border-bottom: 1px solid var(--color-border-default);
+    color: var(--color-text-primary);
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background-color: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
+  }
+}
+
+/* Botones genéricos y de peligro */
 .btn {
   background-color: transparent;
   color: var(--color-gold);
@@ -281,56 +339,7 @@
   }
 }
 
-/* Wrapper con scroll interno para la tabla de baneos */
-.table-scroll-wrapper {
-  max-height: 300px;
-  overflow-y: auto;
-  
-  // Scrollbar estilizada
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
-  &::-webkit-scrollbar { width: 6px; }
-  &::-webkit-scrollbar-track { background: var(--color-scrollbar-track); }
-  &::-webkit-scrollbar-thumb { background: var(--color-scrollbar-thumb); border-radius: 3px; }
-}
-
-/* Table */
-.bans-table {
-  width: 100%;
-  border-collapse: collapse;
-
-  th {
-    text-align: left;
-    padding: 15px;
-    color: var(--color-text-secondary);
-    border-bottom: 2px solid var(--color-border-default);
-    font-family: 'Cinzel', serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.9rem;
-    // thead fijo al hacer scroll
-    position: sticky;
-    top: 0;
-    background-color: var(--color-bg-secondary);
-    z-index: 1;
-  }
-
-  td {
-    padding: 15px;
-    border-bottom: 1px solid var(--color-border-default);
-    color: var(--color-text-primary);
-  }
-
-  // Elimina la línea inferior del último registro
-  tbody tr:last-child td {
-    border-bottom: none;
-  }
-
-  tbody tr:hover {
-    background-color: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
-  }
-}
-
+/* Badges de estado */
 .badge {
   display: inline-block;
   padding: 4px 8px;
@@ -344,6 +353,10 @@
   background-color: var(--color-error-bg);
   border: 1px solid var(--color-error);
 }
+
+/* ==========================================================================
+   Media Queries (Responsividad)
+   ========================================================================== */
 
 @include tablet {
   .admin-dashboard {
@@ -374,7 +387,6 @@
     gap: 15px;
   }
   
-  // Para que la tabla no se rompa
   .bans-container {
     padding: 15px;
   }

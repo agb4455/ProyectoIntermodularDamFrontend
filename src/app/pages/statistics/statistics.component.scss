@@ -1,10 +1,22 @@
+/* 
+  ESTILOS DE LA PÁGINA DE ESTADÍSTICAS
+  Muestra los logros y métricas del guerrero con diseño de panel legendario.
+*/
+
 @use "../../../styles/variables" as *;
 
+/* ==========================================================================
+   Configuración del Host
+   ========================================================================== */
 :host {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
+
+/* ==========================================================================
+   Layout de la Página
+   ========================================================================== */
 
 .stats-page {
   background-color: var(--color-bg-primary);
@@ -31,6 +43,10 @@
   text-shadow: 0 0 20px var(--color-gold-muted);
 }
 
+/* ==========================================================================
+   Tarjeta de Estadísticas
+   ========================================================================== */
+
 .stats-card {
   width: 100%;
   max-width: 800px;
@@ -43,7 +59,7 @@
   flex-direction: column;
 }
 
-/* Header bar inside the card - matching "Barra" in mockup */
+/* Barra superior de la tarjeta (Cabecera del panel) */
 .stats-panel-bar {
   background-color: var(--color-bg-card);
   padding: 15px 25px;
@@ -71,6 +87,10 @@
   }
 }
 
+/* ==========================================================================
+   Lista de Ítems de Estadística
+   ========================================================================== */
+
 .stats-list {
   padding: 20px 0;
   display: flex;
@@ -93,6 +113,7 @@
   }
 }
 
+/* Icono descriptivo */
 .stat-icon-wrapper {
   width: 40px;
   height: 40px;
@@ -112,6 +133,7 @@
   }
 }
 
+/* Etiqueta del dato */
 .stat-label {
   font-family: 'Lato', sans-serif;
   color: var(--color-text-secondary);
@@ -119,6 +141,7 @@
   letter-spacing: 0.5px;
 }
 
+/* Línea punteada de relleno */
 .stat-spacer {
   flex: 1;
   height: 1px;
@@ -127,6 +150,7 @@
   opacity: 0.3;
 }
 
+/* Valor numérico o texto del dato */
 .stat-value {
   font-family: 'Cinzel', serif;
   color: var(--color-gold);
@@ -134,12 +158,16 @@
   font-weight: bold;
 }
 
-/* Animations */
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
+
 .stat-item {
   animation: fadeInUp 0.6s ease forwards;
   opacity: 0;
 }
 
+/* Retraso escalonado para la entrada de los ítems */
 @for $i from 1 through 6 {
   .stat-item:nth-child(#{$i}) {
     animation-delay: #{$i * 0.1}s;

@@ -1,5 +1,15 @@
+/* 
+  ESTILOS DEL COMPONENTE DE AUTENTICACIÓN
+  Pantalla de acceso y registro con diseño de cristal y temática nórdica.
+*/
+
 @use '../../../../styles/variables' as *;
 
+/* ==========================================================================
+   Contenedores y Layout
+   ========================================================================== */
+
+/* Fondo oscuro con desenfoque para el modal de autenticación */
 .auth-wrapper {
   position: fixed;
   top: 0;
@@ -19,6 +29,7 @@
   }
 }
 
+/* Tarjeta principal del formulario */
 .auth-card {
   width: 100%;
   max-width: 400px;
@@ -32,15 +43,16 @@
   flex-direction: column;
   justify-content: center;
   max-height: 95vh;
-  overflow-y: auto; // Fallback if clamp is not enough, but goal is no scroll
+  overflow-y: auto; 
   animation: monolithIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 
-  // Hide scrollbar but keep functionality
+  /* Scrollbar personalizado para la tarjeta */
   &::-webkit-scrollbar { width: 4px; }
   &::-webkit-scrollbar-track { background: transparent; }
   &::-webkit-scrollbar-thumb { background: $color-gold-muted; border-radius: 10px; }
 }
 
+/* Botón de cerrar para el modo modal */
 .modal-close-btn {
   position: absolute;
   top: 15px;
@@ -58,6 +70,10 @@
     transform: rotate(90deg);
   }
 }
+
+/* ==========================================================================
+   Encabezado y Títulos
+   ========================================================================== */
 
 .auth-header {
   text-align: center;
@@ -91,19 +107,23 @@
   letter-spacing: 1px;
 }
 
+/* ==========================================================================
+   Formularios e Inputs
+   ========================================================================== */
+
 .form-group {
   margin-bottom: clamp(12px, 2.2vh, 20px);
   position: relative;
-}
-
-.form-group label {
-  display: block;
-  font-size: clamp(9px, 1.8vh, 11px);
-  font-weight: 700;
-  color: $color-text-secondary;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-  letter-spacing: 0.5px;
+  
+  label {
+    display: block;
+    font-size: clamp(9px, 1.8vh, 11px);
+    font-weight: 700;
+    color: $color-text-secondary;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
 }
 
 .input-container input {
@@ -124,6 +144,7 @@
   }
 }
 
+/* Enlace de recuperación de contraseña */
 .forgot-link-container {
   text-align: right;
   margin-top: clamp(-10px, -1.8vh, -15px);
@@ -143,6 +164,11 @@
   }
 }
 
+/* ==========================================================================
+   Botones y Acciones
+   ========================================================================== */
+
+/* Botón principal estilo vikingo */
 .btn-viking-primary {
   width: 100%;
   margin-top: 5px;
@@ -171,6 +197,7 @@
   }
 }
 
+/* Efecto de brillo al pasar el ratón por el botón */
 .btn-shine {
   position: absolute;
   top: 0;
@@ -185,17 +212,18 @@
   left: 100%;
 }
 
+/* Pie del formulario (Cambio entre Login/Registro) */
 .auth-footer {
   margin-top: clamp(15px, 3.5vh, 30px);
   text-align: center;
   border-top: 1px solid $color-border-faint;
   padding-top: clamp(10px, 2.5vh, 20px);
-}
 
-.auth-footer p {
-  font-size: clamp(11px, 1.8vh, 13px);
-  color: $color-text-secondary;
-  margin-bottom: 8px;
+  p {
+    font-size: clamp(11px, 1.8vh, 13px);
+    color: $color-text-secondary;
+    margin-bottom: 8px;
+  }
 }
 
 .link-viking {
@@ -212,6 +240,10 @@
     color: $color-gold-light;
   }
 }
+
+/* ==========================================================================
+   Estados de Error y Validación
+   ========================================================================== */
 
 .error-message {
   background: $color-error-bg;
@@ -234,6 +266,7 @@
   font-weight: 500;
 }
 
+/* Cargador para el estado de envío */
 .loader {
   width: 20px;
   height: 20px;
@@ -244,6 +277,10 @@
   animation: spin 1s linear infinite;
 }
 
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
+
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
@@ -253,7 +290,11 @@
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-// Ultra-mobile height optimization
+/* ==========================================================================
+   Media Queries (Responsividad)
+   ========================================================================== */
+
+/* Optimización para dispositivos con muy poca altura (ej: móvil en horizontal) */
 @media (max-height: 500px) {
   .auth-card {
     padding: 15px 30px;

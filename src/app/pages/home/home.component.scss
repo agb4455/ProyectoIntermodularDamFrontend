@@ -1,5 +1,13 @@
+/* 
+  ESTILOS DE LA PÁGINA DE INICIO (HOME)
+  Landing page principal con diseño inmersivo, animaciones y secciones de lore.
+*/
+
 @use "../../../styles/variables" as *;
 
+/* ==========================================================================
+   Contenedor Principal
+   ========================================================================== */
 .home-container {
   overflow-x: hidden;
   background: var(--color-bg-primary);
@@ -7,7 +15,9 @@
   color: var(--color-text-primary);
 }
 
-// 1. HERO SECTION
+/* ==========================================================================
+   1. Sección Hero (Portada)
+   ========================================================================== */
 .hero-section {
   position: relative;
   height: 100vh;
@@ -24,6 +34,7 @@
   z-index: 2;
 }
 
+/* Efectos visuales de fondo (Niebla) */
 .hero-bg-fx {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
@@ -39,11 +50,7 @@
   animation: fogMove 60s linear infinite;
 }
 
-@keyframes fogMove {
-  from { background-position: 0 0; }
-  to { background-position: 10000px 0; }
-}
-
+/* Contenido de la sección Hero */
 .hero-content {
   position: relative;
   z-index: 10;
@@ -72,7 +79,40 @@
   margin-inline: auto;
 }
 
-// 2. MITHIC BUTTONS
+/* Indicador de scroll (Scroll Hint) */
+.scroll-hint {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-text-disabled);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.6;
+
+  .arrow-down {
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--color-gold), transparent);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 6px; height: 6px;
+      border-right: 2px solid var(--color-gold);
+      border-bottom: 2px solid var(--color-gold);
+    }
+  }
+}
+
+/* ==========================================================================
+   2. Botones Estilo Mítico
+   ========================================================================== */
 .btn-mithic-primary {
   position: relative;
   padding: 18px 48px;
@@ -106,62 +146,18 @@
   margin: 0 8px;
 }
 
-// SCROLL HINT
-.scroll-hint {
-  margin-top: 60px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  color: var(--color-text-disabled);
-  font-size: 0.75rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  opacity: 0.6;
-
-  .arrow-down {
-    width: 2px;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--color-gold), transparent);
-    position: relative;
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 50%;
-      transform: translateX(-50%) rotate(45deg);
-      width: 6px; height: 6px;
-      border-right: 2px solid var(--color-gold);
-      border-bottom: 2px solid var(--color-gold);
-    }
-  }
-
-  @include mobile {
-    margin-top: 30px;
-    .arrow-down {
-      height: 20px;
-    }
-  }
-}
-
-// 3. MAIN CONTENT
+/* ==========================================================================
+   3. Contenido del Códice (Secciones Informativas)
+   ========================================================================== */
 .codex-content {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 24px 100px;
-
-  @include mobile {
-    padding: 0 16px 60px;
-  }
 }
 
 .section-header {
   text-align: center;
   margin-bottom: 80px;
-
-  @include mobile {
-    margin-bottom: 40px;
-  }
 }
 
 .section-title {
@@ -189,7 +185,7 @@
   letter-spacing: 1px;
 }
 
-// FORGED BORDER EFFECT
+/* Efectos de borde y panel de cristal */
 .forged-border {
   border: 1px solid var(--color-border-default);
   position: relative;
@@ -213,27 +209,17 @@
   }
 }
 
-// PANEL GLASS
 .glass-panel {
   background: var(--color-bg-glass);
   backdrop-filter: blur(12px);
   padding: 60px 40px;
-
-  @include mobile {
-    padding: 40px 20px;
-  }
 }
 
-// ERAS GRID
+/* Grilla de Eras del Juego */
 .era-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
-
-  @include mobile {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
 }
 
 .era-card {
@@ -264,20 +250,12 @@
     line-height: 1.7;
     color: var(--color-text-primary);
     opacity: 0.8;
-
-    @include mobile {
-      font-size: 0.95rem;
-    }
   }
 }
 
-// CLANS SECTION
+/* Sección de Clanes */
 .section-clans {
   padding: 100px 0;
-
-  @include mobile {
-    padding: 60px 0;
-  }
 }
 
 .clans-grid {
@@ -331,15 +309,10 @@
   line-height: 1.6;
 }
 
-// SYSTEM SECTION
+/* Sección de Sistema de Juego */
 .section-system {
   padding: 80px;
   margin-top: 50px;
-
-  @include mobile {
-    padding: 40px 20px;
-    margin-top: 30px;
-  }
 }
 
 .system-container {
@@ -364,6 +337,7 @@
   }
 }
 
+/* Visualización de runas y efectos */
 .system-visual {
   height: 400px;
   background: var(--color-bg-tertiary);
@@ -381,11 +355,6 @@
   animation: runeGlow 4s infinite alternate ease-in-out;
 }
 
-@keyframes runeGlow {
-  from { opacity: 0.2; transform: scale(1); filter: blur(2px); }
-  to { opacity: 0.5; transform: scale(1.1); filter: blur(0); }
-}
-
 .pulse-ring {
   position: absolute;
   width: 100px; height: 100px;
@@ -394,12 +363,9 @@
   animation: radarPulse 3s infinite linear;
 }
 
-@keyframes radarPulse {
-  from { transform: scale(1); opacity: 0.8; }
-  to { transform: scale(4); opacity: 0; }
-}
-
-// 4. FINAL CTA
+/* ==========================================================================
+   4. Llamada a la Acción Final (CTA)
+   ========================================================================== */
 .cta-section {
   padding: 100px 24px;
   text-align: center;
@@ -423,7 +389,9 @@
   }
 }
 
-// 5. FOOTER
+/* ==========================================================================
+   5. Pie de Página (Footer)
+   ========================================================================== */
 .home-footer {
   background: var(--color-bg-primary);
   padding: 80px 24px;
@@ -470,9 +438,30 @@
   }
 }
 
-// ANIMATIONS
+/* ==========================================================================
+   Animaciones Globales
+   ========================================================================== */
 .animate-glow {
   animation: titleGlow 5s infinite alternate;
+}
+
+.animate-drop-in {
+  animation: dropIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes fogMove {
+  from { background-position: 0 0; }
+  to { background-position: 10000px 0; }
+}
+
+@keyframes runeGlow {
+  from { opacity: 0.2; transform: scale(1); filter: blur(2px); }
+  to { opacity: 0.5; transform: scale(1.1); filter: blur(0); }
+}
+
+@keyframes radarPulse {
+  from { transform: scale(1); opacity: 0.8; }
+  to { transform: scale(4); opacity: 0; }
 }
 
 @keyframes titleGlow {
@@ -480,16 +469,16 @@
   to { text-shadow: 0 0 50px var(--color-gold); }
 }
 
-.animate-drop-in {
-  animation: dropIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
 @keyframes dropIn {
   from { opacity: 0; transform: translateY(-50px) scale(0.8); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-// RESPONSIVE
+/* ==========================================================================
+   Media Queries (Responsividad)
+   ========================================================================== */
+
+/* Tablet (Mediana resolución) */
 @include tablet {
   .system-container { 
     grid-template-columns: 1fr; 
@@ -509,7 +498,9 @@
   }
 }
 
+/* Móvil (Baja resolución) */
 @include mobile {
+  /* Ocultación de secciones pesadas en móvil para experiencia directa */
   .codex-content, 
   .cta-section, 
   .home-footer,
@@ -517,6 +508,7 @@
     display: none !important;
   }
 
+  /* Ajuste de Hero para que ocupe la pantalla completa menos la navbar */
   .hero-section {
     height: calc(100dvh - 72px);
     min-height: calc(100dvh - 72px);
@@ -526,12 +518,6 @@
     justify-content: center;
   }
 
-  .footer-content { 
-    flex-direction: column; 
-    text-align: center; 
-    gap: 40px;
-  }
-  
   .hero-title {
     font-size: clamp(2rem, 12vw, 3.5rem);
     letter-spacing: 0.05em;
@@ -559,6 +545,13 @@
       padding: 18px 36px;
       font-size: 1rem;
     }
+  }
+
+  /* Ajustes de layout simplificado */
+  .footer-content { 
+    flex-direction: column; 
+    text-align: center; 
+    gap: 40px;
   }
 
   .system-text {

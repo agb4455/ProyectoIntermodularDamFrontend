@@ -1,9 +1,13 @@
-/**
- * Estilos del Modal de Ataque (AtacarModal)
- * Diseño tipo Forge of Empires con grid de tropas
- */
+/* 
+  ESTILOS DEL MODAL DE ATAQUE (BATTLE PLANNING)
+  Interfaz para configurar el ejército de asedio y visualizar ventajas tácticas contra el defensor.
+*/
 
 @use "../../../../styles/variables" as *;
+
+/* ==========================================================================
+   Estructura del Modal (Overlay y Card)
+   ========================================================================== */
 
 .modal-overlay {
   position: fixed;
@@ -20,15 +24,6 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 .modal-content {
   background: linear-gradient(135deg, $color-bg-modal 0%, $color-bg-primary 100%);
   border: 2px solid $color-gold;
@@ -42,16 +37,9 @@
   animation: slideIn 0.3s ease-in-out;
 }
 
-@keyframes slideIn {
-  from {
-    transform: scale(0.9) translateY(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
-}
+/* ==========================================================================
+   Encabezado (Header) e Indicador de Ventaja
+   ========================================================================== */
 
 .modal-header {
   padding: 16px 20px;
@@ -62,6 +50,7 @@
   background: $color-gold-muted;
 }
 
+/* Banner dinámico que indica ventaja/desventaja táctica según clanes */
 .advantage-banner {
   margin-top: 1rem;
   padding: 0.75rem 1rem;
@@ -97,11 +86,6 @@
   }
 }
 
-@keyframes slideInBanner {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 .modal-title {
   margin: 0;
   font-size: 18px;
@@ -132,6 +116,10 @@
   }
 }
 
+/* ==========================================================================
+   Cuerpo (Body) y Selección de Ejército
+   ========================================================================== */
+
 .modal-body {
   padding: 20px;
   flex: 1;
@@ -157,6 +145,7 @@
   }
 }
 
+/* Celda individual de tropa seleccionada para el ataque */
 .grid-cell {
   background: linear-gradient(135deg, $color-bg-card 0%, $color-bg-secondary 100%);
   border: 1px solid $color-border-default;
@@ -185,6 +174,7 @@
   padding: 4px;
 }
 
+/* Barra de salud de la tropa en el ejército de ataque */
 .health-bar {
   width: 100%;
   height: 4px;
@@ -216,6 +206,7 @@
   padding: 20px;
 }
 
+/* Sección de botón para añadir más tropas al ejército */
 .add-troop-section {
   display: flex;
   justify-content: center;
@@ -242,12 +233,11 @@
   &:active {
     transform: scale(0.95);
   }
-
-  .plus-icon {
-    display: block;
-    line-height: 1;
-  }
 }
+
+/* ==========================================================================
+   Pie del Modal (Footer) - Botón de Lanzar Ataque
+   ========================================================================== */
 
 .modal-footer {
   padding: 16px 20px;
@@ -286,4 +276,23 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+}
+
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: scale(0.9) translateY(-20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes slideInBanner {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

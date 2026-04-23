@@ -1,5 +1,15 @@
+/* 
+  ESTILOS DEL MODAL DE AVISO (WARNING MODAL)
+  Ventana de confirmación o alerta para acciones importantes o irreversibles.
+*/
+
 @use "../../../../styles/variables" as *;
 
+/* ==========================================================================
+   Estructura del Modal (Scrim y Card)
+   ========================================================================== */
+
+/* Fondo oscuro semitransparente con desenfoque */
 .scrim {
   position: fixed;
   inset: 0;
@@ -30,10 +40,9 @@
   animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes modalIn {
-  from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); }
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
+/* ==========================================================================
+   Icono y Mensaje
+   ========================================================================== */
 
 .warning-icon {
   width: 80px;
@@ -65,6 +74,10 @@
   margin-bottom: 30px;
 }
 
+/* ==========================================================================
+   Acción de Confirmación
+   ========================================================================== */
+
 .btn-confirm {
   width: 100%;
   padding: 14px;
@@ -89,4 +102,13 @@
   &:active {
     transform: translateY(0);
   }
+}
+
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }

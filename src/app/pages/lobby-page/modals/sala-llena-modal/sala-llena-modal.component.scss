@@ -1,4 +1,13 @@
+/* 
+  ESTILOS DEL MODAL DE SALA LLENA (ROOM FULL MODAL)
+  Aviso al jugador cuando intenta entrar en una partida que ya tiene el máximo de participantes (6).
+*/
+
 @use "../../../../../styles/variables" as *;
+
+/* ==========================================================================
+   Estructura del Modal (Overlay y Contenedor)
+   ========================================================================== */
 
 .modal-overlay {
   position: fixed;
@@ -17,7 +26,7 @@
 
 .modal-content {
   background: $color-bg-modal;
-  border: 2px solid $color-gold; // Oro Vikingo
+  border: 2px solid $color-gold; /* Oro Vikingo */
   border-radius: 4px;
   width: 90%;
   max-width: 500px;
@@ -29,16 +38,21 @@
   animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+/* Textura de fondo rúnica/forjada */
 .runic-bg {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('https://www.transparenttextures.com/patterns/padded-cells.png'); // Sutil textura de cuero/forjado
+  background-image: url('https://www.transparenttextures.com/patterns/padded-cells.png');
   opacity: 0.1;
   pointer-events: none;
 }
+
+/* ==========================================================================
+   Encabezado (Header) con Icono de Alerta
+   ========================================================================== */
 
 .modal-header {
   margin-bottom: 2rem;
@@ -52,13 +66,14 @@
 
   h2 {
     color: $color-gold;
-    font-family: 'Cinzel', serif; // O la tipografía del proyecto
+    font-family: 'Cinzel', serif;
     font-size: 1.8rem;
     letter-spacing: 2px;
     margin: 0;
     text-transform: uppercase;
   }
 
+  /* Línea decorativa con degradado */
   .header-line {
     height: 2px;
     background: linear-gradient(90deg, transparent, $color-gold, transparent);
@@ -66,6 +81,10 @@
     width: 100%;
   }
 }
+
+/* ==========================================================================
+   Cuerpo (Body) e Información de la Sala
+   ========================================================================== */
 
 .modal-body {
   margin-bottom: 2.5rem;
@@ -77,6 +96,7 @@
     margin-bottom: 2rem;
   }
 
+  /* Caja con detalles específicos de la partida */
   .info-box {
     background: $color-gold-muted;
     border: 1px solid $color-border-strong;
@@ -103,6 +123,10 @@
   }
 }
 
+/* ==========================================================================
+   Botón de Acción Final (Cerrar/Aceptar)
+   ========================================================================== */
+
 .btn-primary {
   background: $color-gold;
   color: $color-text-inverse;
@@ -123,6 +147,7 @@
     transform: translateY(-2px);
     box-shadow: 0 5px 15px $color-gold-muted;
 
+    /* Efecto de brillo al pasar el ratón */
     .btn-glint {
       left: 100%;
     }
@@ -143,6 +168,10 @@
   }
 }
 
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -158,4 +187,3 @@
   50% { transform: scale(1.1); filter: drop-shadow(0 0 20px $color-gold-muted); }
   100% { transform: scale(1); filter: drop-shadow(0 0 10px $color-gold-muted); }
 }
-

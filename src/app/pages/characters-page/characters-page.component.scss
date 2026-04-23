@@ -1,7 +1,16 @@
+/* 
+  ESTILOS DE LA PÁGINA DE PERSONAJES (CLANES)
+  Catálogo detallado de los 6 clanes vikingos con sus descripciones y ventajas tácticas.
+*/
+
 @use 'sass:math';
 @use '../../../styles/variables' as *;
 
-// --- Keyframes for Viking Atmosphere ---
+/* ==========================================================================
+   Animaciones de Ambiente Vikingo
+   ========================================================================== */
+
+/* Flotación de chispas/brasas en el fondo */
 @keyframes embers-float {
   0% { transform: translateY(0) rotate(0deg); opacity: 0; }
   10% { opacity: 0.8; }
@@ -9,28 +18,40 @@
   100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
 }
 
+/* Resplandor de runas mágicas */
 @keyframes rune-glow {
   0%, 100% { opacity: 0.3; filter: blur(2px); }
   50% { opacity: 0.7; filter: blur(0px); }
 }
 
+/* Entrada dramática de las tarjetas */
 @keyframes card-entry {
   from { opacity: 0; transform: translateY(40px) rotateX(-10deg); }
   to { opacity: 1; transform: translateY(0) rotateX(0deg); }
 }
+
+/* Movimiento sutil de la aurora boreal */
+@keyframes aurora-move {
+  from { transform: translateX(-5%) skewX(10deg); }
+  to { transform: translateX(5%) skewX(-10deg); }
+}
+
+/* ==========================================================================
+   Estructura Principal (Container)
+   ========================================================================== */
 
 .personajes-container {
   min-height: 100vh;
   background: radial-gradient(circle at center, $color-bg-secondary 0%, $color-bg-primary 100%);
   color: $color-text-primary;
   font-family: 'Inter', sans-serif;
-  padding: 8rem 2rem 4rem; // Account for Navbar
+  padding: 8rem 2rem 4rem; /* Espaciado para el Navbar fijo */
   position: relative;
   overflow-x: hidden;
   perspective: 1000px;
 }
 
-// Background FX
+/* Efectos Visuales de Fondo (Auroras y Chispas) */
 .sky-fx {
   position: fixed;
   inset: 0;
@@ -49,10 +70,34 @@
   }
 }
 
-@keyframes aurora-move {
-  from { transform: translateX(-5%) skewX(10deg); }
-  to { transform: translateX(5%) skewX(-10deg); }
+.embers {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+
+  .ember {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: $color-gold;
+    border-radius: 50%;
+    opacity: 0;
+    animation: embers-float linear infinite;
+
+    @for $i from 1 through 20 {
+      &:nth-child(#{$i}) {
+        left: math.percentage(math.div(math.random(100), 100));
+        animation-duration: (math.random(10) + 12) * 1s;
+        animation-delay: math.random(10) * -1s;
+      }
+    }
+  }
 }
+
+/* ==========================================================================
+   Encabezado de Página (Header)
+   ========================================================================== */
 
 .page-header {
   position: relative;
@@ -85,6 +130,10 @@
   }
 }
 
+/* ==========================================================================
+   Listado de Clanes (Grid)
+   ========================================================================== */
+
 .clans-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
@@ -95,7 +144,7 @@
   z-index: 10;
 }
 
-// Patterns used in HomeComponent
+/* Mixins de utilidad para paneles y bordes forjados */
 .glass-panel {
   background: $color-bg-glass;
   backdrop-filter: blur(12px);
@@ -125,6 +174,7 @@
   }
 }
 
+/* Tarjeta Detallada de Clan */
 .clan-detail-card {
   padding: 3rem 2.5rem;
   overflow: hidden;
@@ -133,6 +183,7 @@
   flex-direction: column;
   gap: 1.5rem;
 
+  /* Retardo secuencial para la animación de entrada */
   @for $i from 1 through 6 {
     &:nth-child(#{$i}) { animation-delay: #{$i * 0.1}s; }
   }
@@ -144,6 +195,7 @@
     .clan-visual .clan-icon { transform: scale(1.1); opacity: 0.25; }
   }
 
+  /* Marca de agua con el icono del clan */
   .clan-visual {
     position: absolute;
     top: 10px;
@@ -197,6 +249,7 @@
     font-weight: 300;
   }
 
+  /* Sección de Ventajas y Debilidades Tácticas */
   .advantage-section {
     position: relative;
     z-index: 2;
@@ -251,6 +304,10 @@
   }
 }
 
+/* ==========================================================================
+   Pie de Página (Footer)
+   ========================================================================== */
+
 .page-footer {
   position: relative;
   z-index: 10;
@@ -268,30 +325,9 @@
   }
 }
 
-.embers {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-
-  .ember {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: $color-gold;
-    border-radius: 50%;
-    opacity: 0;
-    animation: embers-float linear infinite;
-
-    @for $i from 1 through 20 {
-      &:nth-child(#{$i}) {
-        left: math.percentage(math.div(math.random(100), 100));
-        animation-duration: (math.random(10) + 12) * 1s;
-        animation-delay: math.random(10) * -1s;
-      }
-    }
-  }
-}
+/* ==========================================================================
+   Media Queries (Responsividad)
+   ========================================================================== */
 
 @include tablet {
   .page-header h1 { font-size: 2.2rem; }

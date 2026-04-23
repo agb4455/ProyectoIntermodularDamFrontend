@@ -1,10 +1,19 @@
+/* 
+  ESTILOS DE LA PÁGINA DE LOBBY (LISTADO DE PARTIDAS)
+  Pantalla principal tras el login donde se listan partidas disponibles y el historial del jugador.
+*/
+
 @use "../../../styles/variables" as *;
 @use 'sass:color';
+
+/* ==========================================================================
+   Estructura Principal (Lobby Container)
+   ========================================================================== */
 
 .lobby-container {
   display: flex;
   flex-direction: column;
-  height: calc(100dvh - 74px); // Usar dvh para mejor soporte móvil y restar altura real del navbar (72px + 2px borde)
+  height: calc(100dvh - 74px); /* dvh para soporte móvil, restando altura del navbar */
   padding: 2rem;
   gap: 2rem;
   max-width: 1400px;
@@ -12,18 +21,11 @@
   margin: 0 auto;
   box-sizing: border-box;
   overflow-x: hidden;
-
-  @include tablet {
-    padding: 1rem;
-    gap: 1.5rem;
-    height: calc(100dvh - 74px); // Mantener la resta correcta
-  }
-
-  @include mobile {
-    padding: 0.75rem;
-    gap: 1rem;
-  }
 }
+
+/* ==========================================================================
+   Sección Hero (Bienvenida y Acciones Globales)
+   ========================================================================== */
 
 .hero-section {
   background: $color-bg-glass;
@@ -34,18 +36,6 @@
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
-
-  @include tablet {
-    flex-direction: column;
-    gap: 1.5rem;
-    text-align: center;
-    padding: 1.5rem 1rem;
-  }
-
-  @include mobile {
-    padding: 1.25rem 0.75rem;
-    gap: 1.25rem;
-  }
 }
 
 .hero-welcome h2 {
@@ -53,11 +43,11 @@
   font-family: 'Cinzel', serif;
   color: $color-gold;
   font-size: 1.8rem;
-
-  @include mobile {
-    font-size: 1.4rem;
-  }
 }
+
+/* ==========================================================================
+   Grid de Listados (Partidas Activas / Historial)
+   ========================================================================== */
 
 .lists-grid {
   display: flex;
@@ -81,10 +71,7 @@
   position: relative;
   overflow: hidden;
 
-  @include mobile {
-    padding: 1rem;
-  }
-
+  /* Estado colapsado para visualización compacta */
   &.collapsed {
     flex: 0;
     min-height: 70px;
@@ -124,11 +111,6 @@
     margin: 0;
     white-space: nowrap;
     color: $color-text-primary;
-
-    @include mobile {
-      font-size: 1rem;
-      white-space: normal;
-    }
   }
 }
 
@@ -141,8 +123,7 @@
   transition: opacity 0.2s;
 }
 
-
-
+/* Área con scroll para el listado de tarjetas */
 .scroll-area {
   flex-grow: 1;
   overflow-y: auto;
@@ -151,6 +132,10 @@
   &::-webkit-scrollbar { width: 4px; }
   &::-webkit-scrollbar-thumb { background: $color-border-default; border-radius: 10px; }
 }
+
+/* ==========================================================================
+   Tarjetas de Partida (Game Cards)
+   ========================================================================== */
 
 .card {
   background: $color-bg-card;
@@ -182,7 +167,10 @@
   flex-wrap: wrap;
 }
 
-/* Buttons from Preview */
+/* ==========================================================================
+   Botones de Acción (Buttons)
+   ========================================================================== */
+
 .btn {
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
@@ -221,4 +209,48 @@
   border: 1px solid $color-error;
   color: $color-error;
   &:hover { background: $color-error-bg; }
+}
+
+/* ==========================================================================
+   Media Queries (Responsividad)
+   ========================================================================== */
+
+@include tablet {
+  .lobby-container {
+    padding: 1rem;
+    gap: 1.5rem;
+    height: calc(100dvh - 74px);
+  }
+
+  .hero-section {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+}
+
+@include mobile {
+  .lobby-container {
+    padding: 0.75rem;
+    gap: 1rem;
+  }
+
+  .hero-section {
+    padding: 1.25rem 0.75rem;
+    gap: 1.25rem;
+  }
+
+  .hero-welcome h2 {
+    font-size: 1.4rem;
+  }
+
+  .list-column {
+    padding: 1rem;
+  }
+
+  .column-header h2 {
+    font-size: 1rem;
+    white-space: normal;
+  }
 }

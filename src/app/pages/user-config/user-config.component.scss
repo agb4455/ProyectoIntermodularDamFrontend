@@ -1,10 +1,19 @@
+/* 
+  ESTILOS DE LA PÁGINA DE CONFIGURACIÓN DE USUARIO
+  Permite gestionar el perfil, idioma, tema y seguridad de la cuenta.
+*/
+
 @use "../../../styles/variables" as *;
 @use 'sass:color';
+
+/* ==========================================================================
+   Contenedor Principal y Layout
+   ========================================================================== */
 
 .config-page-container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 74px); // Absorber bordes del navbar
+  height: calc(100vh - 74px); /* Absorber bordes del navbar */
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
@@ -12,12 +21,6 @@
   gap: 1.5rem;
   font-family: 'Outfit', sans-serif;
   box-sizing: border-box;
-
-  @include tablet {
-    height: auto;
-    padding: 1rem;
-    gap: 1.5rem;
-  }
 }
 
 .header h1 {
@@ -33,12 +36,11 @@
   flex-grow: 1;
   min-height: 0;
   gap: 2rem;
-
-  @include tablet {
-    flex-direction: column;
-    overflow: visible;
-  }
 }
+
+/* ==========================================================================
+   Barra Lateral (Perfil)
+   ========================================================================== */
 
 .sidebar {
   width: 300px;
@@ -51,10 +53,6 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-
-  @include tablet {
-    width: 100%;
-  }
 }
 
 .avatar-preview {
@@ -66,6 +64,10 @@
   object-fit: cover;
 }
 
+/* ==========================================================================
+   Área de Formulario y Tarjetas
+   ========================================================================== */
+
 .form-scroll-area {
   flex-grow: 1;
   overflow-y: auto;
@@ -73,11 +75,6 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-
-  @include tablet {
-    overflow: visible;
-    padding-right: 0;
-  }
 
   &::-webkit-scrollbar { width: 4px; }
   &::-webkit-scrollbar-thumb { background: $color-border-default; border-radius: 10px; }
@@ -88,10 +85,6 @@
   border-radius: 12px;
   padding: 1.5rem;
   border: 1px solid $color-border-default;
-
-  @include mobile {
-    padding: 1rem;
-  }
 }
 
 .card-header {
@@ -109,18 +102,6 @@
   align-items: center;
   gap: 1rem;
   margin-bottom: 1.5rem;
-
-  &.stack-mobile {
-    @include mobile {
-      flex-direction: column;
-      align-items: stretch;
-    }
-  }
-
-  @include mobile {
-    flex-direction: row; // Mantener lado a lado como pediste
-    align-items: center;
-  }
 }
 
 .info-txt {
@@ -143,7 +124,11 @@
   text-overflow: ellipsis;
 }
 
-/* Language Pill Selector */
+/* ==========================================================================
+   Componentes de Entrada (Inputs, Selectors, Toggles)
+   ========================================================================== */
+
+/* Selector de Idioma tipo Pill */
 .language-pill-selector {
   position: relative;
   display: flex;
@@ -189,7 +174,7 @@
   }
 }
 
-/* Inputs */
+/* Input estándar estilo vikingo */
 .viking-input {
   background: $color-bg-tertiary;
   border: 1px solid $color-border-default;
@@ -197,13 +182,9 @@
   padding: 0.7rem;
   border-radius: 6px;
   width: 250px;
-
-  @include mobile {
-    width: 100%;
-  }
 }
 
-/* Toggle Switch */
+/* Interruptor de palanca (Toggle Switch) */
 .toggle-switch {
   width: 46px;
   height: 24px;
@@ -234,7 +215,10 @@
   }
 }
 
-/* Footer & Buttons */
+/* ==========================================================================
+   Pie de Página y Botones
+   ========================================================================== */
+
 .footer {
   display: flex;
   justify-content: flex-end;
@@ -242,15 +226,6 @@
   padding-top: 1rem;
   border-top: 1px solid $color-border-default;
   flex-shrink: 0;
-
-  @include mobile {
-    position: sticky;
-    bottom: 0;
-    background: $color-bg-primary;
-    padding: 1rem 0;
-    margin-top: 2rem;
-    z-index: 10;
-  }
 }
 
 .btn {
@@ -264,11 +239,6 @@
   transition: all 0.2s;
 
   &:active { transform: scale(0.95); }
-
-  @include mobile {
-    padding: 0.7rem 1.2rem;
-    font-size: 0.8rem;
-  }
 }
 
 .btn-gold {
@@ -281,8 +251,66 @@
   color: $color-text-secondary;
 }
 
-.btn-mobile-small {
-  @include mobile {
+/* ==========================================================================
+   Media Queries (Responsividad)
+   ========================================================================== */
+
+@include tablet {
+  .config-page-container {
+    height: auto;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .main-layout {
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .form-scroll-area {
+    overflow: visible;
+    padding-right: 0;
+  }
+}
+
+@include mobile {
+  .card {
+    padding: 1rem;
+  }
+
+  .form-row {
+    flex-direction: row; /* Mantener lado a lado como pediste */
+    align-items: center;
+
+    &.stack-mobile {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  .viking-input {
+    width: 100%;
+  }
+
+  .footer {
+    position: sticky;
+    bottom: 0;
+    background: $color-bg-primary;
+    padding: 1rem 0;
+    margin-top: 2rem;
+    z-index: 10;
+  }
+
+  .btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.8rem;
+  }
+
+  .btn-mobile-small {
     padding: 0.5rem 0.8rem !important;
     font-size: 0.7rem !important;
   }

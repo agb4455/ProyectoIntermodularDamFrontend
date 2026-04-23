@@ -1,16 +1,24 @@
+/* 
+  ESTILOS DE LA PÁGINA DE REGLAS (CÓDICE)
+  Diseño editorial inmersivo para explicar las mecánicas, clanes y fases del juego.
+*/
+
 @use '../../../styles/variables' as *;
 
+/* ==========================================================================
+   Contenedor Principal
+   ========================================================================== */
 .reglas-container {
   min-height: 100vh;
   background: radial-gradient(circle at center, $color-bg-secondary 0%, $color-bg-primary 100%);
   color: $color-text-primary;
   font-family: 'Inter', sans-serif;
-  padding: 8rem 2rem 4rem; // Account for Navbar
+  padding: 8rem 2rem 4rem; /* Espacio para la Navbar fija */
   position: relative;
   overflow-x: hidden;
 }
 
-// Background FX (reused for consistency)
+/* Efectos de fondo */
 .sky-fx {
   position: fixed;
   inset: 0;
@@ -18,6 +26,9 @@
   z-index: 1;
 }
 
+/* ==========================================================================
+   Encabezado de la Página
+   ========================================================================== */
 .page-header {
   position: relative;
   z-index: 10;
@@ -46,6 +57,9 @@
   }
 }
 
+/* ==========================================================================
+   Contenido y Secciones
+   ========================================================================== */
 .rules-content {
   max-width: 1100px;
   margin: 0 auto;
@@ -71,7 +85,7 @@
   }
 }
 
-// Global patterns
+/* Estilos comunes: Paneles de cristal y bordes forjados */
 .glass-panel {
   background: $color-bg-glass;
   backdrop-filter: blur(12px);
@@ -101,7 +115,11 @@
   }
 }
 
-// 1. Advantage Matrix Style
+/* ==========================================================================
+   Mecánicas Específicas
+   ========================================================================== */
+
+/* 1. Matriz de Ventajas Tácticas */
 .matrix-card {
   padding: 3rem;
   border-radius: 4px;
@@ -147,7 +165,7 @@
   }
 }
 
-// 2. Combat Resolution Style
+/* 2. Resolución de Combate */
 .rules-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -197,6 +215,7 @@
     grid-column: 1 / -1;
   }
 
+  /* Cuadro de advertencia (importante) */
   .warning-box {
     margin-top: 2rem;
     background: $color-error-bg;
@@ -212,12 +231,7 @@
   }
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(0.99); }
-}
-
-// 3. Era Timeline Style
+/* 3. Línea de Tiempo de las Eras */
 .era-timeline {
   display: flex;
   flex-direction: column;
@@ -280,7 +294,7 @@
   }
 }
 
-// 4. Economy Cards
+/* 4. Economía y Recursos */
 .economy-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -314,6 +328,18 @@
     }
   }
 }
+
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(0.99); }
+}
+
+/* ==========================================================================
+   Media Queries (Responsividad)
+   ========================================================================== */
 
 @include tablet {
   .page-header h1 { font-size: 2.2rem; }

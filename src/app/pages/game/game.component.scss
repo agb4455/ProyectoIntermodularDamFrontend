@@ -1,6 +1,15 @@
+/* 
+  ESTILOS DEL COMPONENTE DE JUEGO (GAME ENGINE UI)
+  Interfaz principal del campo de batalla: mapa táctico, estados de clanes y acciones de guerra.
+*/
+
 @use "../../../styles/variables" as *;
 
-// Componente raíz: ocupa toda la pantalla sin navbar
+/* ==========================================================================
+   Configuración del Host y Layout Base
+   ========================================================================== */
+
+/* Componente raíz: ocupa toda la pantalla sin navbar */
 :host {
   display: flex;
   flex-direction: column;
@@ -12,7 +21,10 @@
   font-family: 'Inter', system-ui, sans-serif;
 }
 
-// ─── TOP BAR ─────────────────────────────────────────────────
+/* ==========================================================================
+   Barra Superior (Topbar)
+   ========================================================================== */
+
 .topbar {
   height: 64px;
   background-color: var(--color-bg-card);
@@ -25,7 +37,7 @@
   flex-shrink: 0;
 }
 
-// Izquierda
+/* Sección Izquierda: Identidad y Retroceso */
 .topbar-left {
   display: flex;
   align-items: center;
@@ -77,7 +89,7 @@
   letter-spacing: 0.5px;
 }
 
-// Centro: indicador de fase
+/* Sección Central: Indicador de Fase de Juego */
 .topbar-center {
   display: flex;
   align-items: center;
@@ -94,7 +106,7 @@
   padding: 8px 24px;
   border-radius: 12px;
 
-  // Color dinámico según fase
+  /* Color dinámico según fase (Preparación por defecto) */
   color: var(--color-phase-preparation);
   border: 2px solid var(--color-phase-preparation);
   box-shadow: 0 0 12px var(--color-info-bg);
@@ -112,7 +124,7 @@
   }
 }
 
-// Derecha: reglas + abandonar
+/* Sección Derecha: Ayuda y Abandono */
 .topbar-right {
   width: 25%;
   display: flex;
@@ -157,7 +169,10 @@
   }
 }
 
-// ─── MAIN AREA ───────────────────────────────────────────────
+/* ==========================================================================
+   Área de Contenido Principal
+   ========================================================================== */
+
 .main-content {
   display: flex;
   flex: 1;
@@ -165,7 +180,7 @@
   position: relative;
 }
 
-// ─── FLOATING STATS CARD ─────────────────────────────────────
+/* Tarjeta Flotante de Estadísticas (Vida y Recursos) */
 .stats-card {
   position: absolute;
   top: 20px;
@@ -231,7 +246,10 @@
   &.gold { color: var(--color-gold); }
 }
 
-// ─── MAP ─────────────────────────────────────────────────────
+/* ==========================================================================
+   Mapa Táctico y Territorios
+   ========================================================================== */
+
 .map-container {
   flex: 1;
   position: relative;
@@ -243,12 +261,12 @@
   position: absolute;
   inset: 0;
   background-image: url('/viking-map-continents.png');
-  background-size: 100% 100%; // Estira para cubrir el contenedor sin mantener relación de aspecto
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   opacity: 0.8;
 }
 
-// ─── TERRITORY OVERLAY ───────────────────────────────────────
+/* Superposición de territorios y nodos de jugadores */
 .territory-overlay {
   position: absolute;
   inset: 0;
@@ -272,7 +290,7 @@
   text-shadow: 1px 1px 3px var(--color-bg-overlay);
   font-size: 0.85rem;
   text-transform: uppercase;
-  transform: translate(-50%, -50%); // Centra el nodo exactamente en su coordenada %
+  transform: translate(-50%, -50%); /* Centra el nodo en sus coordenadas porcentuales */
 
   &:hover {
     transform: translate(-50%, -50%) scale(1.15);
@@ -280,6 +298,7 @@
     z-index: 5;
   }
 
+  /* Barra de vida sobre el nodo del jugador */
   .player-health-bar {
     position: absolute;
     top: -10px;
@@ -301,15 +320,18 @@
   }
 }
 
-// Posiciones por continente
-.node-divine { top: 26%; left: 23%; background-color: color-mix(in srgb, var(--color-clan-divine), transparent 50%);  border: 2px solid var(--color-clan-divine); } // Niflheim
-.node-iron   { top: 17%; left: 66%; background-color: color-mix(in srgb, var(--color-clan-iron), transparent 50%); border: 2px solid var(--color-clan-iron);   } // Jötunheim
-.node-song   { top: 78%; left: 22%; background-color: color-mix(in srgb, var(--color-clan-song), transparent 50%);  border: 2px solid var(--color-clan-song);   } // Muspelheim
-.node-fury   { top: 51%; left: 71%; background-color: color-mix(in srgb, var(--color-clan-fury), transparent 50%);   border: 2px solid var(--color-clan-fury);   } // Midgard
-.node-rune   { top: 81%; left: 77%; background-color: color-mix(in srgb, var(--color-clan-rune), transparent 50%);  border: 2px solid var(--color-clan-rune);   } // Vanaheim
-.node-death  { top: 56%; left: 38%; background-color: color-mix(in srgb, var(--color-clan-death), transparent 50%); border: 2px solid var(--color-clan-death);  } // Åsgard (centro)
+/* Posiciones estáticas de los clanes por continente */
+.node-divine { top: 26%; left: 23%; background-color: color-mix(in srgb, var(--color-clan-divine), transparent 50%);  border: 2px solid var(--color-clan-divine); } /* Niflheim */
+.node-iron   { top: 17%; left: 66%; background-color: color-mix(in srgb, var(--color-clan-iron), transparent 50%); border: 2px solid var(--color-clan-iron);   } /* Jötunheim */
+.node-song   { top: 78%; left: 22%; background-color: color-mix(in srgb, var(--color-clan-song), transparent 50%);  border: 2px solid var(--color-clan-song);   } /* Muspelheim */
+.node-fury   { top: 51%; left: 71%; background-color: color-mix(in srgb, var(--color-clan-fury), transparent 50%);   border: 2px solid var(--color-clan-fury);   } /* Midgard */
+.node-rune   { top: 81%; left: 77%; background-color: color-mix(in srgb, var(--color-clan-rune), transparent 50%);  border: 2px solid var(--color-clan-rune);   } /* Vanaheim */
+.node-death  { top: 56%; left: 38%; background-color: color-mix(in srgb, var(--color-clan-death), transparent 50%); border: 2px solid var(--color-clan-death);  } /* Åsgard */
 
-// ─── FLOATING ACTION BUTTONS (Right) ─────────────────────────
+/* ==========================================================================
+   Botones de Acción Flotantes (Lateral Derecho)
+   ========================================================================== */
+
 .actions-overlay {
   position: absolute;
   right: 20px;
@@ -339,7 +361,7 @@
   position: relative;
   overflow: hidden;
 
-  // Llenado de progreso de entrenamiento
+  /* Efecto de llenado para el progreso de entrenamiento */
   &::before {
     content: '';
     position: absolute;
@@ -353,7 +375,6 @@
     transition: height 0.3s ease-in-out;
   }
 
-  // Asegurar que el icono esté por encima
   svg {
     position: relative;
     z-index: 1;
@@ -367,7 +388,10 @@
   }
 }
 
-// ─── ATTACK PATH (SVG) ───────────────────────────────────────
+/* ==========================================================================
+   Efectos de Ataque (SVG y Trayectorias)
+   ========================================================================== */
+
 .attack-path-svg {
   position: absolute;
   inset: 0;
@@ -377,6 +401,7 @@
   z-index: 15;
 }
 
+/* Línea de ataque con efecto de dashes animados */
 .attack-path {
   stroke: var(--color-phase-war); 
   stroke-width: 1.2; 
@@ -386,11 +411,6 @@
   stroke-dasharray: 2 2;
   animation: dashMove 1s linear infinite;
   filter: drop-shadow(0 0 6px var(--color-error-bg));
-}
-
-@keyframes dashMove {
-  from { stroke-dashoffset: 4; }
-  to { stroke-dashoffset: 0; }
 }
 
 .attack-text {
@@ -406,6 +426,7 @@
   dominant-baseline: central;
 }
 
+/* Representación visual de tropas atacando */
 .attack-avatar-group {
   pointer-events: none;
 }
@@ -425,7 +446,10 @@
   text-shadow: 0 0 1px var(--color-bg-overlay);
 }
 
-// ─── DEBUG PANEL ─────────────────────────────────────────────
+/* ==========================================================================
+   Panel de Debug Local
+   ========================================================================== */
+
 .debug-container {
   position: fixed;
   bottom: 20px;
@@ -468,11 +492,6 @@
   flex-direction: column;
   gap: 15px;
   animation: slideUp 0.2s ease-out;
-}
-
-@keyframes slideUp {
-  from { transform: translateY(10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
 }
 
 .debug-header {
@@ -524,24 +543,16 @@
   }
 }
 
-.btn-full {
-  width: 100%;
-  padding: 8px;
-  font-weight: bold;
-  font-size: 0.8rem;
-  background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-gold);
-  color: var(--color-gold);
-  cursor: pointer;
-  border-radius: 4px;
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
 
-  &:hover { background: var(--color-gold); color: var(--color-text-inverse); }
-
-  &:disabled { opacity: 0.5; cursor: not-allowed; }
+@keyframes dashMove {
+  from { stroke-dashoffset: 4; }
+  to { stroke-dashoffset: 0; }
 }
 
-.btn-success {
-  border-color: var(--color-success);
-  color: var(--color-success);
-  &:hover { background: var(--color-success); color: var(--color-text-inverse); }
+@keyframes slideUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }

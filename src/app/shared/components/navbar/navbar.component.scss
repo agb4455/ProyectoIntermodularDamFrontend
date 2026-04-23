@@ -1,5 +1,13 @@
+/* 
+  ESTILOS DEL COMPONENTE NAVBAR
+  Navegación principal de la aplicación con soporte para escritorio y móvil.
+*/
+
 @use '../../../../styles/variables' as *;
 
+/* ==========================================================================
+   Contenedor Principal
+   ========================================================================== */
 .navbar {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -16,8 +24,8 @@
   right: 0;
   width: 100%;
   z-index: 1000;
-  /* overflow: hidden; -- ELIMINADO: permitía ver el logo pero cortaba el dropdown de usuario */
 
+  /* Icono de hamburguesa (oculto por defecto en escritorio) */
   .hamburger-icon {
     display: none;
     flex-direction: column;
@@ -51,7 +59,7 @@
     display: none;
   }
 
-
+  /* Sección del Logo */
   .logo-section {
     display: flex;
     align-items: center;
@@ -59,7 +67,7 @@
     cursor: pointer;
     transition: transform 0.2s ease;
     width: fit-content;
-    height: 72px; /* Limitar altura del contenedor del logo */
+    height: 72px; 
     overflow: hidden;
 
     &:hover {
@@ -67,6 +75,7 @@
     }
   }
 
+  /* Grupo de navegación central */
   .nav-group {
     display: flex;
     justify-content: center;
@@ -75,6 +84,7 @@
     gap: 0.5rem;
   }
 
+  /* Enlaces individuales */
   .nav-link {
     display: flex;
     align-items: center;
@@ -120,6 +130,7 @@
     }
   }
 
+  /* Acciones a la derecha (Usuario) */
   .navbar-actions {
     display: flex;
     align-items: center;
@@ -156,6 +167,7 @@
         }
       }
 
+      /* Dropdown de usuario */
       .dropdown-content {
         position: absolute;
         right: 0;
@@ -220,6 +232,58 @@
   }
 }
 
+/* ==========================================================================
+   Acciones y Utilidades
+   ========================================================================== */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Selector de Idioma */
+.lang-switcher {
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  background: rgba(var(--color-gold-rgb, 212, 175, 55), 0.1);
+  border: 1px solid var(--color-gold-muted);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  height: 32px;
+
+  &:hover {
+    background: var(--color-gold-muted);
+    border-color: var(--color-gold);
+    box-shadow: 0 0 10px var(--color-gold-muted);
+    transform: translateY(-1px);
+
+    .lang-code {
+      color: var(--color-gold-light);
+    }
+  }
+
+  .lang-code {
+    font-family: var(--font-outfit);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+  }
+}
+
+/* Sección de Usuario Móvil (oculta en escritorio) */
+.mobile-user-section {
+  display: none;
+}
+
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
 @keyframes dropdown-in {
   from {
     opacity: 0;
@@ -231,7 +295,11 @@
   }
 }
 
-// Media query para responsividad de la navbar
+/* ==========================================================================
+   Media Queries (Responsividad)
+   ========================================================================== */
+
+/* Breakpoint para tablets y móviles (Modo Menú Hamburguesa) */
 @media (max-width: 950px) {
   .navbar {
     display: flex;
@@ -252,7 +320,7 @@
       margin: 0 auto;
       
       ::ng-deep .logo-text {
-        display: none; // Ocultar texto en móviles para que quepa mejor el símbolo centrado
+        display: none; /* Ocultar texto en móviles para que quepa mejor el símbolo centrado */
       }
     }
 
@@ -265,6 +333,7 @@
       backdrop-filter: blur(4px);
     }
 
+    /* Menú lateral desplegable */
     .nav-group {
       position: fixed;
       top: 0;
@@ -318,7 +387,7 @@
         font-size: 1.1rem;
 
         &::after {
-          display: none; // Disable underline animation on mobile
+          display: none; /* Deshabilitar animación de subrayado en móvil */
         }
 
         &:hover, &.active {
@@ -330,10 +399,11 @@
         }
       }
 
+      /* Sección de perfil dentro del menú lateral */
       .mobile-user-section {
         margin-top: auto;
         padding-bottom: 2rem;
-        display: block; // Show on mobile
+        display: block; 
       }
 
       .mobile-user-divider {
@@ -441,57 +511,11 @@
     }
 
     .navbar-actions {
-      display: none; // Hide top bar avatar on mobile
-    }
-  }
-}
-
-// Global Hide for Mobile User Section (Desktop)
-.mobile-user-section {
-  display: none;
-}
-
-.navbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.lang-switcher {
-  cursor: pointer;
-  padding: 0.4rem 0.6rem;
-  border-radius: 6px;
-  background: rgba(var(--color-gold-rgb, 212, 175, 55), 0.1);
-  border: 1px solid var(--color-gold-muted);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 48px;
-  height: 32px;
-
-  &:hover {
-    background: var(--color-gold-muted);
-    border-color: var(--color-gold);
-    box-shadow: 0 0 10px var(--color-gold-muted);
-    transform: translateY(-1px);
-
-    .lang-code {
-      color: var(--color-gold-light);
+      display: none; /* Ocultar avatar de la barra superior en móvil (se mueve al lateral) */
     }
   }
 
-  .lang-code {
-    font-family: var(--font-outfit);
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--color-gold);
-    letter-spacing: 0.5px;
-    transition: color 0.2s ease;
-  }
-}
-
-@media (max-width: 950px) {
+  /* Ocultar selector de idioma en móvil (simplificación) */
   .lang-switcher {
     display: none;
   }

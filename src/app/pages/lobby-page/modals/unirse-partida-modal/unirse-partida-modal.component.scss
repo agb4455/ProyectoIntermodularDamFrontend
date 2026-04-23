@@ -1,6 +1,15 @@
+/* 
+  ESTILOS DEL MODAL PARA UNIRSE A UNA PARTIDA
+  Interfaz para introducir el código de sala y seleccionar un clan antes de entrar.
+*/
+
 @use "../../../../../styles/variables" as *;
 
-// ─── Overlay ────────────────────────────────────────────────────────────────
+/* ==========================================================================
+   Estructura del Modal (Overlay y Contenedor)
+   ========================================================================== */
+
+/* Capa de fondo oscura */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -10,7 +19,7 @@
   animation: fade-in 0.2s ease;
 }
 
-// ─── Contenedor principal ────────────────────────────────────────────────────
+/* Caja del modal centrada */
 .modal-container {
   position: fixed;
   top: 50%;
@@ -32,7 +41,7 @@
   animation: slide-up 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-// ─── Botón cerrar ────────────────────────────────────────────────────────────
+/* Botón de cierre (X) */
 .btn-close {
   position: absolute;
   top: 1rem;
@@ -58,7 +67,10 @@
   }
 }
 
-// ─── Cabecera ────────────────────────────────────────────────────────────────
+/* ==========================================================================
+   Encabezado (Header)
+   ========================================================================== */
+
 .modal-header {
   text-align: center;
   display: flex;
@@ -82,7 +94,10 @@
   margin: 0;
 }
 
-// ─── Input Code Section ──────────────────────────────────────────────────────
+/* ==========================================================================
+   Sección de Código de Sala
+   ========================================================================== */
+
 .code-section {
   display: flex;
   flex-direction: column;
@@ -128,6 +143,7 @@
   }
 }
 
+/* Botón para verificar si el código de sala existe */
 .btn-verify {
   padding: 0 1.5rem;
   background-color: $color-bg-card;
@@ -155,7 +171,10 @@
   }
 }
 
-// ─── Círculos de Clanes ──────────────────────────────────────────────────────
+/* ==========================================================================
+   Selección de Clan (Círculos Interactivos)
+   ========================================================================== */
+
 .clanes-section {
   display: flex;
   flex-direction: column;
@@ -217,7 +236,7 @@
     transform: translateY(0);
   }
 
-  // Estado seleccionado
+  /* Estado seleccionado con resplandor del color del clan */
   &.selected:not(:disabled) {
     opacity: 1;
     border-width: 2px;
@@ -227,7 +246,7 @@
     background-color: var(--clan-color-bg, #{$color-gold-muted});
   }
 
-  // Estado deshabilitado
+  /* Clanes ya ocupados o no disponibles */
   &.disabled, &:disabled {
     opacity: 0.2;
     cursor: not-allowed;
@@ -241,7 +260,7 @@
     }
   }
 
-  // Colores por clan
+  /* Variables CSS dinámicas según el clan seleccionado */
   &[data-clan="fury"] { --clan-color: #{$color-clan-fury}; --clan-color-bg: #{$color-clan-fury-bg}; }
   &[data-clan="divine"] { --clan-color: #{$color-clan-divine}; --clan-color-bg: #{$color-clan-divine-bg}; }
   &[data-clan="iron"] { --clan-color: #{$color-clan-iron}; --clan-color-bg: #{$color-clan-iron-bg}; }
@@ -255,7 +274,10 @@
   line-height: 1;
 }
 
-// ─── Footer / CTA ────────────────────────────────────────────────────────────
+/* ==========================================================================
+   Pie del Modal (Footer) - Acción Final
+   ========================================================================== */
+
 .modal-footer {
   display: flex;
   justify-content: center;
@@ -298,7 +320,7 @@
   }
 }
 
-// Spinner de carga
+/* Indicadores de carga */
 .joining-spinner {
   width: 1.2rem;
   height: 1.2rem;
@@ -314,7 +336,10 @@
   border-width: 2px;
 }
 
-// ─── Animaciones ─────────────────────────────────────────────────────────────
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
+
 @keyframes fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }

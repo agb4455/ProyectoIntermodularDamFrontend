@@ -1,9 +1,13 @@
-/**
- * Estilos del Modal de Añadir Tropa Ataque (AnadirTropaAtaqueModal)
- * Grid de tropas disponibles con selección visual
- */
+/* 
+  ESTILOS DEL MODAL PARA AÑADIR TROPA AL ATAQUE
+  Selector de tropas disponibles para configurar el ejército de asedio.
+*/
 
 @use "../../../../styles/variables" as *;
+
+/* ==========================================================================
+   Estructura del Modal (Overlay y Card)
+   ========================================================================== */
 
 .modal-overlay {
   position: fixed;
@@ -15,18 +19,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1001; // Por encima del primer modal
+  z-index: 1001; /* Por encima de otros modales si es necesario */
   backdrop-filter: blur(3px);
   animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 .modal-content {
@@ -42,16 +37,9 @@
   animation: slideIn 0.3s ease-in-out;
 }
 
-@keyframes slideIn {
-  from {
-    transform: scale(0.85) translateY(-30px);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
-}
+/* ==========================================================================
+   Encabezado (Header)
+   ========================================================================== */
 
 .modal-header {
   padding: 16px 20px;
@@ -68,6 +56,10 @@
   letter-spacing: 1px;
 }
 
+/* ==========================================================================
+   Cuerpo (Body) y Grilla de Tropas
+   ========================================================================== */
+
 .modal-body {
   padding: 20px;
   flex: 1;
@@ -80,6 +72,7 @@
   grid-auto-flow: row;
 }
 
+/* Tarjeta individual de tropa seleccionable */
 .troop-card {
   position: relative;
   background: linear-gradient(135deg, $color-bg-card 0%, $color-bg-secondary 100%);
@@ -100,6 +93,7 @@
     transform: translateY(-2px);
   }
 
+  /* Estado seleccionado */
   &.selected {
     background: linear-gradient(135deg, $color-gold-muted 0%, color-mix(in srgb, $color-gold-muted, transparent 50%) 100%);
     border-color: $color-gold;
@@ -111,6 +105,7 @@
   }
 }
 
+/* Indicador de número de unidades seleccionadas */
 .selection-badge {
   position: absolute;
   top: -8px;
@@ -141,6 +136,7 @@
   text-transform: uppercase;
 }
 
+/* Barra de vida de la tropa */
 .health-bar {
   width: 100%;
   height: 6px;
@@ -174,6 +170,10 @@
   font-weight: bold;
   text-align: center;
 }
+
+/* ==========================================================================
+   Pie del Modal (Footer)
+   ========================================================================== */
 
 .modal-footer {
   padding: 16px 20px;
@@ -234,7 +234,25 @@
   }
 }
 
-// Responsive - para pantallas pequeñas
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: scale(0.85) translateY(-30px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* ==========================================================================
+   Media Queries (Responsividad)
+   ========================================================================== */
+
+/* Optimización para pantallas móviles pequeñas */
 @media (max-width: 480px) {
   .modal-content {
     max-width: 95%;

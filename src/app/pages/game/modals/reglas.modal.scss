@@ -1,4 +1,13 @@
+/* 
+  ESTILOS DEL MODAL DE REGLAS RÁPIDAS (QUICK RULES)
+  Resumen de mecánicas, fases de juego y ventajas de clanes accesible durante la partida.
+*/
+
 @use "../../../../styles/variables" as *;
+
+/* ==========================================================================
+   Estructura del Modal (Backdrop y Contenedor)
+   ========================================================================== */
 
 .modal-backdrop {
   position: fixed;
@@ -29,6 +38,7 @@
   overflow: hidden;
   animation: scale-up 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
+  /* Línea decorativa superior */
   &::after {
     content: '';
     position: absolute;
@@ -39,6 +49,10 @@
     background: linear-gradient(90deg, transparent, $color-gold, transparent);
   }
 }
+
+/* ==========================================================================
+   Encabezado (Header)
+   ========================================================================== */
 
 .modal-header {
   padding: 1.5rem 2rem;
@@ -83,6 +97,10 @@
   }
 }
 
+/* ==========================================================================
+   Contenedor de Reglas (Rules Content)
+   ========================================================================== */
+
 .rules-container {
   flex: 1;
   overflow-y: auto;
@@ -91,7 +109,7 @@
   flex-direction: column;
   gap: 2.5rem;
 
-  /* Custom scrollbar */
+  /* Scrollbar personalizado */
   &::-webkit-scrollbar {
     width: 6px;
   }
@@ -140,6 +158,10 @@
     }
   }
 }
+
+/* ==========================================================================
+   Fases de Juego y Recursos
+   ========================================================================== */
 
 .phase-list {
   display: grid;
@@ -206,6 +228,10 @@
     font-size: 1rem;
   }
 }
+
+/* ==========================================================================
+   Mecánicas de Clan y Gráfico de Ventajas
+   ========================================================================== */
 
 .clans-list {
   list-style: none;
@@ -341,12 +367,6 @@
   }
 }
 
-@media (max-width: 600px) {
-  .combat-mechanics-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .clans-advantages-text {
   list-style: none;
   padding: 0;
@@ -366,10 +386,9 @@
   }
 }
 
-@keyframes dash-flow {
-  from { stroke-dashoffset: 10; }
-  to { stroke-dashoffset: 0; }
-}
+/* ==========================================================================
+   Pie del Modal (Footer)
+   ========================================================================== */
 
 .modal-footer {
   padding: 1.5rem 2rem;
@@ -403,13 +422,30 @@
   }
 }
 
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
+
+@keyframes dash-flow {
+  from { stroke-dashoffset: 10; }
+  to { stroke-dashoffset: 0; }
+}
+
 @keyframes scale-up {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 }
 
+/* ==========================================================================
+   Media Queries (Responsividad)
+   ========================================================================== */
+
 @media (max-width: 600px) {
-    .resources-grid, .clans-list {
-        grid-template-columns: 1fr;
-    }
+  .combat-mechanics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .resources-grid, .clans-list {
+    grid-template-columns: 1fr;
+  }
 }

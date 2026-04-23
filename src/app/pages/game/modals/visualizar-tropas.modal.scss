@@ -1,9 +1,13 @@
-/**
- * Estilos del Modal de Visualización de Tropas
- * Basado en el diseño de AtacarModal (tipo Forge of Empires)
- */
+/* 
+  ESTILOS DEL MODAL DE VISUALIZACIÓN DE TROPAS
+  Muestra el estado actual del ejército del jugador (listos, entrenando o en cola).
+*/
 
 @use "../../../../styles/variables" as *;
+
+/* ==========================================================================
+   Estructura del Modal (Overlay y Card)
+   ========================================================================== */
 
 .modal-overlay {
   position: fixed;
@@ -20,11 +24,6 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 .modal-content {
   background: linear-gradient(135deg, $color-bg-modal 0%, $color-bg-primary 100%);
   border: 2px solid $color-gold;
@@ -38,10 +37,9 @@
   animation: slideIn 0.3s ease-in-out;
 }
 
-@keyframes slideIn {
-  from { transform: scale(0.9) translateY(-20px); opacity: 0; }
-  to { transform: scale(1) translateY(0); opacity: 1; }
-}
+/* ==========================================================================
+   Encabezado (Header)
+   ========================================================================== */
 
 .modal-header {
   padding: 16px 20px;
@@ -82,6 +80,10 @@
   }
 }
 
+/* ==========================================================================
+   Cuerpo del Modal (Body) y Grilla de Tropas
+   ========================================================================== */
+
 .modal-body {
   padding: 20px;
   flex: 1;
@@ -108,6 +110,7 @@
   }
 }
 
+/* Celda individual de tropa */
 .grid-cell {
   background: linear-gradient(135deg, $color-bg-card 0%, $color-bg-secondary 100%);
   border: 1px solid $color-border-default;
@@ -126,14 +129,14 @@
     cursor: default;
   }
 
-  // --- ESTADOS DE ENTRENAMIENTO ---
+  /* --- ESTADOS DE ENTRENAMIENTO --- */
 
-  // 1. LISTO (Normal)
+  /* 1. LISTO: Borde dorado */
   &.ready {
     border-color: $color-gold;
   }
 
-  // 2. EN PROGRESO (Fondo como Progress Bar)
+  /* 2. EN PROGRESO: Fondo animado como barra de progreso */
   &.training {
     border-color: var(--color-progress-training);
 
@@ -151,7 +154,7 @@
     }
   }
 
-  // 3. EN COLA (Deshabilitado)
+  /* 3. EN COLA: Apariencia deshabilitada */
   &.queued {
     opacity: 0.5;
     filter: grayscale(0.8);
@@ -176,6 +179,7 @@
   padding: 4px;
 }
 
+/* Barra de vida de la tropa */
 .health-bar {
   width: 100%;
   height: 4px;
@@ -191,7 +195,7 @@
   transition: width 0.2s;
 }
 
-// Badges de estado
+/* Badges de estado textual */
 .status-badge {
   font-size: 0.65rem;
   padding: 2px 8px;
@@ -236,6 +240,10 @@
   padding: 20px;
 }
 
+/* ==========================================================================
+   Pie del Modal (Footer)
+   ========================================================================== */
+
 .modal-footer {
   padding: 16px 20px;
   border-top: 1px solid $color-gold;
@@ -266,4 +274,18 @@
   &:active {
     transform: translateY(0);
   }
+}
+
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: scale(0.9) translateY(-20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
 }

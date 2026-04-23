@@ -1,9 +1,13 @@
+/* 
+  ESTILOS DEL MODAL DE ENTRENAMIENTO DE TROPAS
+  Interfaz para reclutar nuevas unidades utilizando créditos económicos.
+*/
+
 @use "../../../../styles/variables" as *;
 
-/**
- * Estilos del Modal de Entrenamiento
- * Diseño Mythic Viking con glassmorphism y acentos dorados
- */
+/* ==========================================================================
+   Estructura del Modal (Overlay y Card)
+   ========================================================================== */
 
 .modal-overlay {
   position: fixed;
@@ -20,11 +24,6 @@
   animation: fadeIn 0.3s ease-out;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 .modal-content {
   background: linear-gradient(135deg, $color-bg-modal 0%, $color-bg-primary 100%);
   border: 2px solid $color-gold;
@@ -39,10 +38,9 @@
   overflow: hidden;
 }
 
-@keyframes slideIn {
-  from { transform: scale(0.95) translateY(20px); opacity: 0; }
-  to { transform: scale(1) translateY(0); opacity: 1; }
-}
+/* ==========================================================================
+   Encabezado (Header) - Título y Créditos Disponibles
+   ========================================================================== */
 
 .modal-header {
   padding: 1.25rem 1.5rem;
@@ -69,6 +67,7 @@
   line-height: 1;
 }
 
+/* Badge que muestra el dinero actual del jugador */
 .currency-badge {
   display: flex;
   align-items: center;
@@ -112,13 +111,17 @@
   }
 }
 
+/* ==========================================================================
+   Cuerpo del Modal (Lista de Tropas Disponibles)
+   ========================================================================== */
+
 .modal-body {
   padding: 1.5rem;
   flex: 1;
   overflow-y: auto;
   background: radial-gradient(circle at center, $color-gold-muted 0%, transparent 100%);
 
-  /* Personalización del scrollbar */
+  /* Personalización de la barra de desplazamiento */
   &::-webkit-scrollbar {
     width: 6px;
   }
@@ -138,6 +141,7 @@
   gap: 1rem;
 }
 
+/* Fila individual de tropa a reclutar */
 .training-row {
   display: flex;
   justify-content: space-between;
@@ -154,6 +158,7 @@
     transform: translateX(4px);
   }
 
+  /* Indicadores laterales de asequibilidad */
   &.affordable {
     border-left: 4px solid $color-success;
   }
@@ -214,6 +219,7 @@
   }
 }
 
+/* Botón para iniciar el entrenamiento */
 .btn-train {
   background: linear-gradient(135deg, $color-gold 0%, $color-gold-dark 100%);
   color: $color-text-inverse;
@@ -255,6 +261,10 @@
   border: 1px dashed $color-border-faint;
 }
 
+/* ==========================================================================
+   Pie del Modal (Footer)
+   ========================================================================== */
+
 .modal-footer {
   padding: 1.25rem 1.5rem;
   border-top: 1px solid $color-border-default;
@@ -277,4 +287,18 @@
     background: $color-gold-muted;
     border-color: $color-text-primary;
   }
+}
+
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: scale(0.95) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
 }

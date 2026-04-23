@@ -1,5 +1,15 @@
+/* 
+  ESTILOS DEL MODAL DE LOBBY (SALA DE ESPERA)
+  Muestra el código de la partida, lista de jugadores conectados y botón de inicio.
+*/
+
 @use "../../../../styles/variables" as *;
 
+/* ==========================================================================
+   Estructura del Modal (Scrim y Card)
+   ========================================================================== */
+
+/* Fondo oscuro semitransparente con desenfoque */
 .scrim {
   position: fixed;
   inset: 0;
@@ -29,11 +39,6 @@
   animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translate(-50%, -40%); }
-  to { opacity: 1; transform: translate(-50%, -50%); }
-}
-
 .modal-title {
   font-family: 'Cinzel', serif;
   font-size: 1.5rem;
@@ -44,7 +49,10 @@
   text-align: center;
 }
 
-/* Caja de Código */
+/* ==========================================================================
+   Sección del Código de la Partida
+   ========================================================================== */
+
 .code-section {
   background: var(--color-bg-tertiary);
   border: 1px solid var(--color-border-default);
@@ -71,7 +79,10 @@
   letter-spacing: 4px;
 }
 
-/* Lista de Jugadores */
+/* ==========================================================================
+   Lista de Jugadores en el Lobby
+   ========================================================================== */
+
 .players-list {
   width: 100%;
   display: flex;
@@ -82,7 +93,7 @@
   overflow-y: auto;
   padding-right: 5px;
 
-  /* Scrollbar personalizado */
+  /* Scrollbar personalizado estilo vikingo */
   &::-webkit-scrollbar { width: 4px; }
   &::-webkit-scrollbar-track { background: transparent; }
   &::-webkit-scrollbar-thumb { background: var(--color-gold-muted); border-radius: 10px; }
@@ -105,6 +116,7 @@
   }
 }
 
+/* Iconos circulares por clan con colores temáticos */
 .clan-icon {
   width: 32px;
   height: 32px;
@@ -144,7 +156,10 @@
   text-transform: uppercase;
 }
 
-/* Línea Divisoria */
+/* ==========================================================================
+   Mensajes de Estado y Acción Final
+   ========================================================================== */
+
 .divider {
   width: 100%;
   height: 1px;
@@ -152,7 +167,7 @@
   margin: 10px 0;
 }
 
-/* Zona de Mensajes/Errores */
+/* Zona dinámica para errores o mensajes de espera */
 .status-zone {
   height: 40px;
   display: flex;
@@ -176,13 +191,7 @@
   font-style: italic;
 }
 
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
-}
-
-/* Botón Iniciar */
+/* Botón principal de Inicio de Partida (Solo Host) */
 .btn-start {
   width: 100%;
   padding: 14px;
@@ -219,4 +228,19 @@
 
 .guest-spacer {
   height: 50px;
+}
+
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -40%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
 }

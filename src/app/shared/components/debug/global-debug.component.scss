@@ -1,5 +1,15 @@
+/* 
+  ESTILOS DEL PANEL DE DEBUG GLOBAL
+  Herramientas de desarrollo visibles solo en entorno de desarrollo.
+*/
+
 @use "../../../../styles/variables" as *;
 
+/* ==========================================================================
+   Contenedor y Trigger
+   ========================================================================== */
+
+/* Contenedor flotante en la esquina inferior derecha */
 .debug-container {
   position: fixed;
   bottom: 20px;
@@ -10,6 +20,7 @@
   align-items: flex-end;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
+  /* Estado expandido del panel lateral */
   &.expanded {
     bottom: 0;
     right: 0;
@@ -23,6 +34,7 @@
   }
 }
 
+/* Botón flotante para abrir el panel */
 .debug-trigger {
   width: 50px;
   height: 50px;
@@ -43,6 +55,7 @@
     background: #333;
   }
 
+  /* Punto de estado (Conexión/Auth) */
   .status-dot {
     position: absolute;
     top: 5px;
@@ -58,6 +71,10 @@
     }
   }
 }
+
+/* ==========================================================================
+   Panel de Herramientas
+   ========================================================================== */
 
 .debug-panel {
   width: 100%;
@@ -97,6 +114,7 @@
   overflow-y: auto;
 }
 
+/* Secciones de herramientas específicas */
 .debug-section {
   margin-bottom: 25px;
 
@@ -109,6 +127,7 @@
     letter-spacing: 1px;
   }
 
+  /* Botones de acción rápida */
   .action-btn {
     width: 100%;
     padding: 10px;
@@ -157,6 +176,10 @@
   color: #666;
   text-align: center;
 }
+
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
 
 @keyframes slideInRight {
   from { transform: translateX(100%); }
