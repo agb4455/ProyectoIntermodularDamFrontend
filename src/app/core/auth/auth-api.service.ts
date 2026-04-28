@@ -14,6 +14,13 @@ interface LoginCredentials {
   password: string;
 }
 
+/** Credenciales de registro enviadas al Middle Server */
+interface RegisterCredentials {
+  username: string;
+  email: string;
+  password: string;
+}
+
 /**
  * Servicio de comunicación HTTP con el Middle Server para autenticación.
  * Responsabilidad única: llamadas REST de login/registro.
@@ -36,5 +43,16 @@ export class AuthApiService {
     return this.http.post<LoginResponse>(url, body);
   }
 
-  // TODO: implementar register() cuando el Middle Server exponga POST /api/register
+  /**
+   * Envía los datos de registro al Middle Server.
+   * @param username Nombre de usuario deseado
+   * @param email Correo electrónico
+   * @param password Contraseña del usuario
+   * @returns Observable con el token JWT de sesión
+   */
+  register(username: string, email: string, password: string): Observable<LoginResponse> {
+    const url = `${this.configService.config.middleServerUrl}/api/register`;
+    const body: RegisterCredentials = { username, email, password };
+    return this.http.post<LoginResponse>(url, body);
+  }
 }
