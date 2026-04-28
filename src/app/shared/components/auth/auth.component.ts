@@ -30,7 +30,7 @@ export class AuthComponent {
   constructor() {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required]]  // Sin minLength: la longitud mínima la valida el backend
     });
 
     this.registerForm = this.fb.group({

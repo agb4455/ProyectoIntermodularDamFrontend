@@ -1,12 +1,14 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of, delay, tap } from 'rxjs';
+import { Observable, of, delay, tap, map } from 'rxjs';
 
 import { JwtPayload, UserRole, SessionState } from './auth.model';
+import { AuthApiService } from './auth-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly router = inject(Router);
+  private readonly authApi = inject(AuthApiService);
 
   // Estado interno privado — el token se guarda solo en memoria (nunca en localStorage)
   readonly #session = signal<SessionState | null>(null);
@@ -19,7 +21,7 @@ export class AuthService {
 
   /**
    * Establece la sesión tras recibir el JWT del Middle Server.
-   * Parsea el payload para extraer username y role.
+   * Parsea el payload para extraer username (de sub) y role.
    */
   setSession(token: string): void {
     const payload = this.#parseJwt(token);
@@ -64,23 +66,20 @@ export class AuthService {
   }
 
   /**
-   * Simula una llamada de login a la API.
+   * Llama al endpoint POST /api/login del Middle Server.
+   * Recibe el JWT, lo parsea y establece la sesión de usuario.
    */
   login(username: string, password: string): Observable<void> {
-    return of(undefined).pipe(
-      delay(800),
-      tap(() => {
-        this.#session.set({
-          username,
-          role: 'USER',
-          token: 'mock-jwt-token-from-login',
-        });
+    return this.authApi.login(username, password).pipe(
+      map(({ token }) => {
+        this.setSession(token);
       })
     );
   }
 
   /**
    * Simula una llamada de registro a la API.
+   * TODO: conectar a POST /api/register cuando el Middle Server lo exponga.
    */
   register(username: string, email: string, password: string): Observable<void> {
     return of(undefined).pipe(
@@ -120,3 +119,4 @@ export class AuthService {
     }
   }
 }
+
