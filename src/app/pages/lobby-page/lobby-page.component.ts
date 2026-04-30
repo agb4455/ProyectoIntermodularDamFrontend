@@ -44,8 +44,8 @@ export class LobbyPageComponent {
     { id: 'f2', name: 'Conflicto de Sangre', code: 'B8V1-X', result: 'DEFEAT' }
   ]);
 
-  // UI state
-  readonly finishedGamesCollapsed = signal<boolean>(false);
+  // Estado de la pestaña activa
+  readonly activeTab = signal<'active' | 'finished'>('active');
 
   // Estado de visibilidad de modales
   readonly showCrearPartida = signal<boolean>(false);
@@ -59,8 +59,8 @@ export class LobbyPageComponent {
 
   constructor(private router: Router) {}
 
-  toggleFinishedGames() {
-    this.finishedGamesCollapsed.update(v => !v);
+  setTab(tab: 'active' | 'finished') {
+    this.activeTab.set(tab);
   }
 
   // Action Methods

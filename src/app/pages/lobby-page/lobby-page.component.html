@@ -10,53 +10,90 @@
     </div>
   </section>
 
-  <div class="lists-grid">
-    <!-- Columna 1: Activas -->
-    <section class="list-column">
-      <div class="column-header">
-        <h2>{{ 'LOBBY.ACTIVE_GAMES' | translate | uppercase }}</h2>
-      </div>
-      <div class="scroll-area">
+  <!-- Panel de pestañas: Partidas Activas / Partidas Terminadas -->
+  <div class="tabs-panel">
+
+    <!-- Cabecera de pestañas -->
+    <div class="tabs-header" role="tablist">
+      <button
+        id="tab-btn-active"
+        class="tab-btn"
+        role="tab"
+        [class.active]="activeTab() === 'active'"
+        [attr.aria-selected]="activeTab() === 'active'"
+        (click)="setTab('active')">
+        {{ 'LOBBY.ACTIVE_GAMES' | translate | uppercase }}
+        <span class="tab-badge tab-badge--active">{{ activeGames().length }}</span>
+      </button>
+      <button
+        id="tab-btn-finished"
+        class="tab-btn"
+        role="tab"
+        [class.active]="activeTab() === 'finished'"
+        [attr.aria-selected]="activeTab() === 'finished'"
+        (click)="setTab('finished')">
+        {{ 'LOBBY.FINISHED_GAMES' | translate | uppercase }}
+        <span class="tab-badge">{{ finishedGames().length }}</span>
+      </button>
+    </div>
+
+    <!-- Contenido de pestañas -->
+    <div class="tabs-content">
+
+      <!-- Pestaña: Partidas Activas -->
+      <div
+        class="tab-pane"
+        role="tabpanel"
+        [class.active]="activeTab() === 'active'">
         @for (game of activeGames(); track game.id) {
           <div class="card">
-            <span class="card-title">{{ game.name }}</span>
-            <div class="card-meta">
-              <span>COD: {{ game.id }}</span>
-              <div style="display: flex; gap: 0.5rem;">
-                <button class="btn btn-gold" (click)="onEnterGame(game.id)">{{ 'NAV.LOGIN' | translate | uppercase }}</button>
-                <button class="btn btn-danger" (click)="onLeaveGame(game.id)">{{ 'LOBBY.ABANDON' | translate | uppercase }}</button>
+            <div class="card-top">
+              <span class="card-title">
+                <span class="clan-dot" [style.background]="'var(--color-clan-' + game.clan + ')'" aria-hidden="true"></span>
+                {{ game.name }}
+              </span>
+              <div class="card-actions">
+                <button class="btn btn-gold btn-sm" (click)="onEnterGame(game.id)">{{ 'LOBBY.ENTER' | translate | uppercase }}</button>
+                <button class="btn btn-danger btn-sm" (click)="onLeaveGame(game.id)">{{ 'LOBBY.ABANDON' | translate | uppercase }}</button>
               </div>
+            </div>
+            <div class="card-meta">
+              <span>{{ 'LOBBY.CLAN' | translate }}: <strong>{{ game.clanName }}</strong></span>
+              <span class="card-code">{{ game.code }}</span>
             </div>
           </div>
         }
       </div>
-    </section>
 
-    <!-- Columna 2: Terminadas (Ahora debajo en el grid) -->
-    <section class="list-column" [class.collapsed]="finishedGamesCollapsed()" id="finished-column">
-      <div class="column-header" (click)="toggleFinishedGames()">
-        <h2>{{ 'LOBBY.FINISHED_GAMES' | translate | uppercase }}</h2>
-        <span class="header-icon">{{ (finishedGamesCollapsed() ? 'SHOW' : 'HIDE') | translate }}</span>
-      </div>
-
-      <div class="scroll-area">
+      <!-- Pestaña: Partidas Terminadas -->
+      <div
+        class="tab-pane"
+        role="tabpanel"
+        [class.active]="activeTab() === 'finished'">
         @for (game of finishedGames(); track game.id) {
           <div class="card">
-            <span class="card-title">{{ game.name }}</span>
+            <div class="card-top">
+              <span class="card-title">{{ game.name }}</span>
+              <div class="card-actions">
+                <button class="btn btn-ghost btn-sm" (click)="onViewStats(game.id)">{{ 'LOBBY.STATS' | translate | uppercase }}</button>
+                <button class="btn btn-danger btn-sm" (click)="onDeleteFinished(game.id)">{{ 'LOBBY.DELETE' | translate | uppercase }}</button>
+              </div>
+            </div>
             <div class="card-meta">
-              <span [style.color]="game.result === 'VICTORY' ? 'var(--color-success)' : 'var(--color-error)'">
+              <span
+                class="result-badge"
+                [class.result-victory]="game.result === 'VICTORY'"
+                [class.result-defeat]="game.result === 'DEFEAT'">
                 {{ ('LOBBY.GAME_RESULT.' + game.result) | translate | uppercase }}
               </span>
-              <div style="display: flex; gap: 0.5rem;">
-                <button class="btn btn-ghost" (click)="onViewStats(game.id)">{{ 'LOBBY.STATS' | translate | uppercase }}</button>
-                <button class="btn btn-danger" (click)="onDeleteFinished(game.id)">{{ 'LOBBY.DELETE' | translate | uppercase }}</button>
-              </div>
+              <span class="card-code">{{ game.code }}</span>
             </div>
           </div>
         }
       </div>
-    </section>
-  </div>
+
+    </div><!-- /tabs-content -->
+  </div><!-- /tabs-panel -->
 
 </div>
 
