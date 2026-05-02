@@ -8,10 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-# Build argument for the Backend URL as specified in docker-compose.yml
-ARG BACKEND_URL
-ENV BACKEND_URL=$BACKEND_URL
-
+# Build the project (no backend URL injection needed as it uses relative paths via Nginx proxy)
 # Copy the rest of the application code
 COPY . .
 

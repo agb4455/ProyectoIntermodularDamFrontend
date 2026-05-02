@@ -58,6 +58,8 @@ export const en = {
     CREATE_GAME: 'FORGE GAME',
     JOIN_GAME: 'JOIN THE QUEST',
     ABANDON: 'ABANDON',
+    ENTER: 'ENTER',
+    CLAN: 'Clan',
     DELETE: 'DELETE',
     STATS: 'Sagas',
     GAME_RESULT: {

@@ -58,6 +58,8 @@ export const es = {
     CREATE_GAME: 'EMPEZAR PARTIDA',
     JOIN_GAME: 'UNIRSE A PARTIDA',
     ABANDON: 'ABANDONAR',
+    ENTER: 'ENTRAR',
+    CLAN: 'Clan',
     DELETE: 'BORRAR',
     STATS: 'ESTADISTICAS',
     GAME_RESULT: {
