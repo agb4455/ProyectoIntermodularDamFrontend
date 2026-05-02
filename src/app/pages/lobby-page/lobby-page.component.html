@@ -62,16 +62,16 @@
 
 <!-- Modales -->
 @if (showCrearPartida()) {
-  <app-crear-partida-modal (closeModal)="showCrearPartida.set(false)"></app-crear-partida-modal>
+  <app-crear-partida-modal (closed)="showCrearPartida.set(false)"></app-crear-partida-modal>
 }
 
 @if (showUnirsePartida()) {
   <app-unirse-partida-modal 
-    (closeModal)="showUnirsePartida.set(false)"
+    (closed)="showUnirsePartida.set(false)"
     (lobbyFull)="onLobbyFull()"
   ></app-unirse-partida-modal>
 }
 
 @if (showSalaLlena()) {
-  <app-sala-llena-modal (closeModal)="showSalaLlena.set(false)"></app-sala-llena-modal>
+  <app-sala-llena-modal (closed)="showSalaLlena.set(false)"></app-sala-llena-modal>
 }
