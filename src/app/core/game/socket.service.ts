@@ -40,11 +40,11 @@ export class SocketService {
       console.log('[SocketService] Conectado al servidor WebSocket:', this.socket?.id);
     });
 
-    this.socket.on('disconnect', (reason) => {
+    this.socket.on('disconnect', (reason: string) => {
       console.log('[SocketService] Desconectado del servidor WebSocket:', reason);
     });
 
-    this.socket.on('connect_error', (error) => {
+    this.socket.on('connect_error', (error: Error) => {
       console.error('[SocketService] Error de conexión:', error.message);
     });
   }
