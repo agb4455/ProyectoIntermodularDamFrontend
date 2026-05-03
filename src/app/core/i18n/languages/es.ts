@@ -232,12 +232,12 @@ export const es = {
         ADVANTAGES: {
           TITLE: 'EL CÍRCULO DEL DESTINO (Ventajas)',
           DESC: 'Ciertos clanes tienen una ventaja natural sobre otros. Atacar a un clan vulnerable infligirá un **1.5x de daño extra**.',
-          FURY_SONG: 'Fury vence a Song (La furia acalla el canto)',
-          SONG_DEATH: 'Song vence a Death (La armonía calma a los muertos)',
-          DEATH_DIVINE: 'Death vence a Divine (La entropía consume la luz)',
-          DIVINE_RUNE: 'Divine vence a Rune (El poder celestial sobre las runas)',
-          RUNE_IRON: 'Rune vence a Iron (La magia corroe el acero)',
-          IRON_FURY: 'Iron vence a Fury (El blindaje resiste la rabia)'
+          FURY_IRON: 'Fury vence a Iron (La rabia quiebra el acero)',
+          IRON_DIVINE: 'Iron vence a Divine (El metal desafía a los dioses)',
+          DIVINE_SHADOW: 'Divine vence a Shadow (La luz disipa las sombras)',
+          SHADOW_STORM: 'Shadow vence a Storm (El sigilo esquiva el rayo)',
+          STORM_FROST: 'Storm vence a Frost (La tormenta quiebra el hielo)',
+          FROST_FURY: 'Frost vence a Fury (El frío congela la furia)'
         },
         COMBAT: {
           TITLE: 'MECÁNICAS DE COMBATE',
@@ -253,7 +253,7 @@ export const es = {
         },
         TECH: {
           TITLE: 'ARBOL TECNOLÓGICO',
-          DESC: 'Existen **8 niveles de tecnología**. Cada uno desbloquea tipos de tropas más poderosas y eficientes. Invierte tus Puntos de Investigación con cabeza.'
+          DESC: 'Cada clan dispone de un árbol tecnológico único con **8 investigaciones**. Desbloquean tropas de élite, mejoras de estadísticas y el Arma Definitiva. Invierte tus Puntos de Investigación con cabeza.'
         }
       }
     }

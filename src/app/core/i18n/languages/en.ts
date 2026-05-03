@@ -232,12 +232,12 @@ export const en = {
         ADVANTAGES: {
           TITLE: 'THE CIRCLE OF DESTINY (Advantages)',
           DESC: 'Certain clans have a natural advantage over others. Attacking a vulnerable clan will inflict **1.5x extra damage**.',
-          FURY_SONG: 'Fury defeats Song (Fury silences the song)',
-          SONG_DEATH: 'Song defeats Death (Harmony calms the dead)',
-          DEATH_DIVINE: 'Death defeats Divine (Entropy consumes the light)',
-          DIVINE_RUNE: 'Divine defeats Rune (Celestial power over runes)',
-          RUNE_IRON: 'Rune defeats Iron (Magic corrodes steel)',
-          IRON_FURY: 'Iron defeats Fury (Armor resists rage)'
+          FURY_IRON: 'Fury defeats Iron (Rage shatters the steel)',
+          IRON_DIVINE: 'Iron defeats Divine (Metal defies the gods)',
+          DIVINE_SHADOW: 'Divine defeats Shadow (Light dispels the darkness)',
+          SHADOW_STORM: 'Shadow defeats Storm (Stealth evades the lightning)',
+          STORM_FROST: 'Storm defeats Frost (Thunder breaks the ice)',
+          FROST_FURY: 'Frost defeats Fury (Cold freezes the rage)'
         },
         COMBAT: {
           TITLE: 'COMBAT MECHANICS',
@@ -253,7 +253,7 @@ export const en = {
         },
         TECH: {
           TITLE: 'TECH TREE',
-          DESC: 'There are **8 levels of technology**. Each one unlocks more powerful and efficient troop types. Invest your Research Points wisely.'
+          DESC: 'Each clan has a unique tech tree with **8 researches**. They unlock elite troops, stat improvements, and the Ultimate Weapon. Invest your Research Points wisely.'
         }
       }
     }

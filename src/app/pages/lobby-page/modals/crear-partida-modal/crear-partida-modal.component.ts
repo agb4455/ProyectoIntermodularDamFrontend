@@ -18,12 +18,12 @@ interface ClanOption {
 }
 
 const CLANES: ClanOption[] = [
-  { id: 'fury',   name: 'Berserkers', archetype: 'FURY',   icon: '🪓' },
-  { id: 'divine', name: 'Valkirias',  archetype: 'DIVINE', icon: '⚡' },
-  { id: 'iron',   name: 'Jarls',      archetype: 'IRON',   icon: '🛡️' },
-  { id: 'song',   name: 'Skalds',     archetype: 'SONG',   icon: '🎵' },
-  { id: 'rune',   name: 'Seidr',      archetype: 'RUNE',   icon: '🌿' },
-  { id: 'death',  name: 'Draugr',     archetype: 'DEATH',  icon: '💀' },
+  { id: 'berserkers',     name: 'Berserkers',     archetype: 'FURY',   icon: '🪓' },
+  { id: 'valkirias',      name: 'Valkirias',      archetype: 'DIVINE', icon: '⚡' },
+  { id: 'jarls',          name: 'Jarls',          archetype: 'IRON',   icon: '🛡️' },
+  { id: 'sombras',        name: 'Sombras',        archetype: 'SHADOW', icon: '🌑' },
+  { id: 'frost_guard',    name: 'Frost Guard',    archetype: 'FROST',  icon: '❄️' },
+  { id: 'storm_bringers', name: 'Storm Bringers', archetype: 'STORM',  icon: '🌩️' },
 ];
 
 @Component({

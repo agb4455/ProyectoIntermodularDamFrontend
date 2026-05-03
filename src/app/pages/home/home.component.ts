@@ -21,12 +21,12 @@ export class HomeComponent {
 
   // Lista de clanes para la sección de previsualización
   protected readonly clans = signal<ClanPreview[]>([
-    { id: 'berserkers', name: 'Berserkers', archetype: 'fury' },
-    { id: 'valkirias', name: 'Valkirias', archetype: 'divine' },
-    { id: 'jarls', name: 'Jarls', archetype: 'iron' },
-    { id: 'skalds', name: 'Skalds', archetype: 'song' },
-    { id: 'seidr', name: 'Seidr', archetype: 'rune' },
-    { id: 'draugr', name: 'Draugr', archetype: 'death' },
+    { id: 'berserkers',     name: 'Berserkers',     archetype: 'fury' },
+    { id: 'valkirias',      name: 'Valkirias',      archetype: 'divine' },
+    { id: 'jarls',          name: 'Jarls',          archetype: 'iron' },
+    { id: 'sombras',        name: 'Sombras',        archetype: 'shadow' },
+    { id: 'frost_guard',    name: 'Frost Guard',    archetype: 'frost' },
+    { id: 'storm_bringers', name: 'Storm Bringers', archetype: 'storm' },
   ]);
 
   protected enterValhalla(): void {
@@ -45,10 +45,10 @@ export class HomeComponent {
       case 'fury': return '⚔️';
       case 'divine': return '🛡️';
       case 'iron': return '⚒️';
-      case 'song': return '🎼';
-      case 'rune': return '🔮';
-      case 'death': return '💀';
-      default: return '❄️';
+      case 'shadow': return '🌑';
+      case 'frost': return '❄️';
+      case 'storm': return '⚡';
+      default: return '🛡️';
     }
   }
 }
