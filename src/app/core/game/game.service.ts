@@ -1,5 +1,7 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { SocketService } from './socket.service';
+import { GameApiService, ClanData } from './game-api.service';
+import { Observable } from 'rxjs';
 
 export interface GameContext {
   code: string;
@@ -12,6 +14,7 @@ export interface GameContext {
 })
 export class GameService {
   private readonly socketService = inject(SocketService);
+  private readonly gameApi = inject(GameApiService);
 
   // Estado actual de la partida en el cliente
   readonly #gameContext = signal<GameContext | null>(null);
@@ -50,5 +53,12 @@ export class GameService {
     const mockContext: GameContext = { code, clan: clanId, isHost: false };
     this.setGameContext(mockContext);
     this.socketService.emit('join_game', { gameId: mockContext.code });
+  }
+
+  /**
+   * Obtiene la lista de clanes desde el API.
+   */
+  getClans(): Observable<ClanData[]> {
+    return this.gameApi.getClans();
   }
 }

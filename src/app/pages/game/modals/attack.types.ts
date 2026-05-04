@@ -2,8 +2,8 @@
  * Tipos compartidos para los modales de ataque: atacar y añadirTropaAtaque
  */
 
-// Tipos de clan — coincide con game.component.ts
-export type ClanId = 'divine' | 'iron' | 'song' | 'fury' | 'rune' | 'death';
+// Tipos de clan — coincide con clans.yml
+export type ClanId = 'FURY' | 'DIVINE' | 'IRON' | 'SHADOW' | 'FROST' | 'STORM';
 
 // Información de una tropa individual
 export interface Troop {
@@ -77,21 +77,23 @@ export interface GameLogEntry {
   type: 'attack' | 'train' | 'research' | 'system';
 }
 
-// Ciclo de ventajas de clanes (FURY → SONG → DEATH → DIVINE → RUNE → IRON → FURY)
-export const CLAN_ADVANTAGES: Record<ClanId, ClanId> = {
-  fury: 'song',
-  song: 'death',
-  death: 'divine',
-  divine: 'rune',
-  rune: 'iron',
-  iron: 'fury'
+// Ciclo de ventajas de clanes (hexagonal, cada uno vence a 2)
+// Reflejamos solo un ciclo simple para compatibilidad con la UI actual si lo requiere,
+// aunque la lógica real vive en el servidor.
+export const CLAN_ADVANTAGES: Record<string, string> = {
+  FURY: 'IRON',
+  IRON: 'DIVINE',
+  DIVINE: 'SHADOW',
+  SHADOW: 'STORM',
+  STORM: 'FROST',
+  FROST: 'FURY'
 };
 
-export const CLAN_NAMES: Record<ClanId, string> = {
-  fury: 'Berserkers',
-  song: 'Skalds',
-  death: 'Draugr',
-  divine: 'Valkirias',
-  rune: 'Seidr',
-  iron: 'Jarls'
+export const CLAN_NAMES: Record<string, string> = {
+  FURY: 'Berserkers',
+  DIVINE: 'Valkirias',
+  IRON: 'Jarls',
+  SHADOW: 'Sombras',
+  FROST: 'Frost Guard',
+  STORM: 'Storm Bringers'
 };

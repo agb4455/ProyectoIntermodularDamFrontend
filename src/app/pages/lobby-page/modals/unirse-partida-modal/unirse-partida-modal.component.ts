@@ -4,12 +4,14 @@ import {
   signal,
   output,
   inject,
+  OnInit,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UpperCasePipe } from '@angular/common';
 import { GameService } from '../../../../core/game/game.service';
 import { TranslatePipe } from '../../../../core/i18n/translate.pipe';
+import { ClanData } from '../../../../core/game/game-api.service';
 
 // Definición de los 6 clanes disponibles
 interface ClanOption {
@@ -20,14 +22,14 @@ interface ClanOption {
   available?: boolean;
 }
 
-const CLANES: ClanOption[] = [
-  { id: 'fury',   name: 'Berserkers', archetype: 'FURY',   icon: '🪓', available: true },
-  { id: 'divine', name: 'Valkirias',  archetype: 'DIVINE', icon: '⚡', available: true },
-  { id: 'iron',   name: 'Jarls',      archetype: 'IRON',   icon: '🛡️', available: true },
-  { id: 'song',   name: 'Skalds',     archetype: 'SONG',   icon: '🎵', available: true },
-  { id: 'rune',   name: 'Seidr',      archetype: 'RUNE',   icon: '🌿', available: true },
-  { id: 'death',  name: 'Draugr',     archetype: 'DEATH',  icon: '💀', available: true },
-];
+const ARCHETYPE_ICONS: Record<string, string> = {
+  FURY: '🪓',
+  DIVINE: '⚡',
+  IRON: '🛡️',
+  SHADOW: '👤',
+  FROST: '❄️',
+  STORM: '🌩️'
+};
 
 @Component({
   selector: 'app-unirse-partida-modal',
@@ -37,7 +39,7 @@ const CLANES: ClanOption[] = [
   styleUrl: './unirse-partida-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UnirsePartidaModalComponent {
+export class UnirsePartidaModalComponent implements OnInit {
   // Output para notificar al padre que debe cerrar el modal
   readonly closed = output<void>();
   // Output para notificar que la sala está llena
@@ -46,8 +48,21 @@ export class UnirsePartidaModalComponent {
   private readonly router = inject(Router);
   private readonly gameService = inject(GameService);
 
-  // Lista de clanes disponibles (por ahora todos disponibles según revisión de feedback)
-  readonly clanes = signal<ClanOption[]>(CLANES);
+  // Lista de clanes disponibles
+  readonly clanes = signal<ClanOption[]>([]);
+
+  ngOnInit(): void {
+    this.gameService.getClans().subscribe(clansData => {
+      const options = clansData.map(clan => ({
+        id: clan.id,
+        name: clan.name,
+        archetype: clan.archetype,
+        icon: ARCHETYPE_ICONS[clan.archetype] || '⚔️',
+        available: true
+      }));
+      this.clanes.set(options);
+    });
+  }
 
   // Código introducido por el usuario
   readonly gameCode = signal<string>('');
@@ -80,14 +95,17 @@ export class UnirsePartidaModalComponent {
     // TODO: Llamar al servidor para obtener los clanes disponibles
     // Ej: const availableClans = await this.gameService.getAvailableClans(this.gameCode());
     
-    // Simulación: FURY y RUNE están cogidos
+    // Simulación: El primer clan está cogido
     setTimeout(() => {
-      const clanesActualizados = CLANES.map(clan => ({
-        ...clan,
-        available: clan.id !== 'fury' && clan.id !== 'rune'
-      }));
+      const currentClanes = this.clanes();
+      if (currentClanes.length > 0) {
+        const clanesActualizados = currentClanes.map((clan, index) => ({
+          ...clan,
+          available: index !== 0
+        }));
+        this.clanes.set(clanesActualizados);
+      }
       
-      this.clanes.set(clanesActualizados);
       this.isCodeVerified.set(true);
       this.isVerifying.set(false);
     }, 600);
