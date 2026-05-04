@@ -69,9 +69,12 @@ export class CrearPartidaModalComponent {
     // const generatedCode = await this.gameService.createGame(this.selectedClan()!);
     const generatedCode = Math.random().toString(36).substring(2, 8).toUpperCase();
     
+    const clanOption = this.clanes().find(c => c.id === this.selectedClan());
+    const archetype = clanOption?.archetype || 'FURY';
+    
     this.gameService.setGameContext({
       code: generatedCode,
-      clan: this.selectedClan()!,
+      clan: archetype,
       isHost: true
     });
 

@@ -132,10 +132,13 @@ export class UnirsePartidaModalComponent implements OnInit {
     // const result = await this.gameService.joinGame(this.gameCode(), this.selectedClan()!);
     // Si el servidor responde que la sala está llena, disparar lobbyFull.emit()
 
+    const clanOption = this.clanes().find(c => c.id === this.selectedClan());
+    const archetype = clanOption?.archetype || 'FURY';
+
     // Simulación: Establecer contexto como JUGADOR (no host)
     this.gameService.setGameContext({
       code: this.gameCode(),
-      clan: this.selectedClan()!,
+      clan: archetype,
       isHost: false
     });
 

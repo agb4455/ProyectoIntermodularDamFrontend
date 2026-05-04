@@ -154,7 +154,9 @@ export class GamePageComponent implements OnInit {
 
   private getInitialTroops(): Troop[] {
     const clanId = this.localClan().toUpperCase();
-    const clanData = CLANS_DATA.find((c: any) => c.archetype === clanId);
+    const clanData = CLANS_DATA.find((c: any) => 
+      c.archetype === clanId || c.id.toUpperCase() === clanId
+    );
     if (!clanData) return [];
 
     return (clanData.initialTroops || []).map((t: any) => ({
@@ -188,7 +190,9 @@ export class GamePageComponent implements OnInit {
   // --- Opciones de entrenamiento (Mock, vendrá del middle server según tech tree) ---
   protected readonly trainableTroopOptions = computed<TrainableTroopOption[]>(() => {
     const clanId = this.localClan().toUpperCase();
-    const clanData = CLANS_DATA.find((c: any) => c.archetype === clanId);
+    const clanData = CLANS_DATA.find((c: any) => 
+      c.archetype === clanId || c.id.toUpperCase() === clanId
+    );
     if (!clanData) return [];
 
     return (clanData.initialTroops || []).map((t: any) => ({
@@ -203,7 +207,9 @@ export class GamePageComponent implements OnInit {
   // --- Estado del Árbol Tecnológico ---
   protected readonly clanTechnologies = computed(() => {
     const clanId = this.localClan().toUpperCase(); // FURY, IRON, etc...
-    const clanData = CLANS_DATA.find((c: any) => c.archetype === clanId);
+    const clanData = CLANS_DATA.find((c: any) => 
+      c.archetype === clanId || c.id.toUpperCase() === clanId
+    );
     return (clanData?.technologies as Technology[]) || [];
   });
 
