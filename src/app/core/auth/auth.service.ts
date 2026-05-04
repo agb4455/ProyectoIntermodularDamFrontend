@@ -28,7 +28,7 @@ export class AuthService {
     if (payload === null) return;
 
     this.#session.set({
-      username: payload.sub,
+      username: payload.username,
       role: payload.role,
       token,
     });

@@ -7,7 +7,8 @@ export type UserRole = 'USER' | 'ADMIN';
  * son estado de juego y se gestionan fuera de la sesión HTTP.
  */
 export interface JwtPayload {
-  sub: string;       // Nombre de usuario (campo estándar RFC 7519)
+  sub: string;       // ID del usuario (UUID)
+  username: string;  // Nombre de usuario para visualización
   role: UserRole;    // Rol del usuario
   iat: number;       // Issued at
   exp: number;       // Expiration
