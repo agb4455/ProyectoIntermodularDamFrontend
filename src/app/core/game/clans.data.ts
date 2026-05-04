@@ -1,6 +1,6 @@
 import { ClanId } from "../../pages/game/modals/attack.types";
 
-export const CLANS_DATA: Record<string, any> = [
+export const CLANS_DATA: any[] = [
   {
     "id": "berserkers",
     "name": "Los Berserkers",

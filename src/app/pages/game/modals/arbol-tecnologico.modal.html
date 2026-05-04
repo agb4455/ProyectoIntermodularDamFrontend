@@ -2,78 +2,104 @@
   <div class="modal-content" (click)="$event.stopPropagation()">
     <!-- CABECERA -->
     <div class="modal-header">
-      <div class="header-titles">
+      <div class="header-left">
         <h2>{{ 'GAME.MODALS.TECH.TITLE' | translate | uppercase }}</h2>
-        <p class="subtitle">{{ 'GAME.MODALS.TECH.DESC' | translate }}</p>
+        <div class="rp-badge">
+          <span class="label">{{ 'GAME.STATS.RESEARCH' | translate | uppercase }}</span>
+          <span class="value">{{ researchPoints() }}</span>
+        </div>
       </div>
       <button class="close-btn" (click)="onCloseClick()">
         <span class="icon">×</span>
       </button>
     </div>
 
-    <div class="rp-container">
-      <div class="rp-badge">
-        <span class="icon">✨</span>
-        <span class="value">{{ researchPoints() }}</span>
-        <span class="label">{{ 'GAME.STATS.RESEARCH' | translate | uppercase }}</span>
-      </div>
-    </div>
-
-    <!-- CUERPO - ÁRBOL TECNOLÓGICO -->
-    <div class="modal-body tech-tree-container">
+    <!-- CUERPO - ÁRBOL ESTILO FOE -->
+    <div class="modal-body" #scrollContainer (mousedown)="startDragging($event)" (mousemove)="onDragging($event)" (mouseup)="stopDragging()" (mouseleave)="stopDragging()">
       
-      <div class="tech-tier" *ngFor="let tier of tieredTechnologies(); let i = index">
-        <!-- Optional: Render a tier divider -->
-        <div class="tier-divider">
-          <span>Tier {{ i + 1 }}</span>
-        </div>
+      <div class="tech-tree-content" #treeContent>
+        <!-- Capa de Conexiones SVG -->
+        <svg class="svg-layer" #svgLayer>
+          @for (conn of connections(); track conn.from + '-' + conn.to) {
+            <path 
+              [attr.d]="conn.path" 
+              class="connection-line"
+              [class.active]="isUnlocked(conn.from)"
+            />
+          }
+        </svg>
 
-        <div class="tech-grid">
-          <div 
-            class="tech-card" 
-            *ngFor="let tech of tier"
-            [ngClass]="{
-              'unlocked': isUnlocked(tech.id),
-              'unlockable': isUnlockable(tech),
-              'locked': !isUnlocked(tech.id) && !isUnlockable(tech)
-            }"
-          >
-            <div class="tech-icon-wrapper">
-              <span class="tech-icon">🔬</span>
-              <div class="status-indicator">
-                <span *ngIf="isUnlocked(tech.id)" class="check-icon">✓</span>
-                <span *ngIf="!isUnlocked(tech.id) && !isUnlockable(tech)" class="lock-icon">🔒</span>
-              </div>
-            </div>
+        <!-- Columnas de Tiers -->
+        @for (tier of tieredTechnologies(); track $index) {
+          <div class="tier-section">
+            <div class="tier-header">Tier {{ $index + 1 }}</div>
             
-            <div class="tech-info">
-              <h3>{{ tech.name }}</h3>
-              <p class="desc">{{ tech.description }}</p>
-              
-              <div class="tech-meta">
-                <div class="cost" [ngClass]="{'insufficient': researchPoints() < tech.researchCost}">
-                  <span class="icon">✨</span> {{ tech.researchCost }}
+            @for (tech of tier; track tech.id) {
+              <div 
+                class="tech-card"
+                [id]="'tech-' + tech.id"
+                [class.unlocked]="isUnlocked(tech.id)"
+                [class.available]="isUnlockable(tech)"
+                [class.locked]="!isUnlocked(tech.id) && !isUnlockable(tech)"
+                [class.legendary]="tech.tier === 3"
+                (click)="onResearchClick(tech)"
+              >
+                <div class="card-header">
+                  <div class="tech-icon-container">
+                    @if (isUnlocked(tech.id)) {
+                      <span class="status-icon">✓</span>
+                    } @else if (!isUnlockable(tech)) {
+                      <span class="status-icon">🔒</span>
+                    } @else {
+                      <span class="status-icon">🔬</span>
+                    }
+                  </div>
+                  <h3 class="tech-title">{{ tech.name }}</h3>
                 </div>
-                <div class="duration">
-                  <span class="icon">⏱️</span> {{ tech.durationSeconds }}s
-                </div>
-              </div>
-            </div>
 
-            <button 
-              class="btn-research" 
-              (click)="onResearchClick(tech)"
-              [disabled]="!isUnlockable(tech)"
-            >
-              {{ isUnlocked(tech.id) 
-                  ? ('GAME.MODALS.TECH.UNLOCKED' | translate) 
-                  : ('GAME.MODALS.TECH.BTN_RESEARCH' | translate) 
-              }}
-            </button>
+                <div class="card-body">
+                  <p class="tech-desc">{{ tech.description }}</p>
+                  
+                  <div class="tech-footer">
+                    <div class="tech-cost" [class.insufficient]="researchPoints() < tech.researchCost">
+                      <span class="icon">✨</span> {{ tech.researchCost }}
+                    </div>
+                    
+                    <div class="status-tag" [ngClass]="{
+                      'unlocked': isUnlocked(tech.id),
+                      'available': isUnlockable(tech),
+                      'locked': !isUnlocked(tech.id) && !isUnlockable(tech),
+                      'special': tech.tier === 3
+                    }">
+                      @if (isUnlocked(tech.id)) {
+                        {{ 'GAME.MODALS.TECH.UNLOCKED' | translate }}
+                      } @else if (tech.tier === 3) {
+                        LEGENDARIO
+                      } @else {
+                        {{ 'GAME.MODALS.TECH.BTN_RESEARCH' | translate }}
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Barra de progreso si estuviera investigándose -->
+                <!-- @if (!isUnlocked(tech.id) && isUnlockable(tech)) {
+                   <div class="card-progress" style="width: 0%"></div>
+                } -->
+              </div>
+            }
           </div>
-        </div>
+        }
       </div>
 
     </div>
+
+    <!-- LEYENDA -->
+    <div class="modal-footer">
+      <div class="legend-item"><div class="legend-color unlocked"></div> {{ 'GAME.MODALS.TECH.UNLOCKED' | translate | uppercase }}</div>
+      <div class="legend-item"><div class="legend-color available"></div> {{ 'GAME.MODALS.TECH.AVAILABLE' | translate | uppercase }}</div>
+      <div class="legend-item"><div class="legend-color locked"></div> {{ 'GAME.MODALS.TECH.LOCKED' | translate | uppercase }}</div>
+    </div>
+
   </div>
 </div>
