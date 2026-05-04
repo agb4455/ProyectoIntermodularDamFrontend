@@ -9,11 +9,13 @@ import { ReglasModalComponent } from './modals/reglas.modal';
 import { LobbyModalComponent } from './modals/lobby.modal';
 import { AvisoModalComponent } from './modals/aviso.modal';
 import { ConfirmAbandonModalComponent } from './modals/confirm-abandon.modal';
+import { ArbolTecnologicoModalComponent } from './modals/arbol-tecnologico.modal';
 import { GameService } from '../../core/game/game.service';
 import { AuthService } from '../../core/auth/auth.service';
+import { CLANS_DATA } from '../../core/game/clans.data';
 import { I18nService } from '../../core/i18n/i18n.service';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
-import { Troop, EnemyTarget, ClanId, TroopType, TrainableTroopOption, GameLogEntry } from './modals/attack.types';
+import { Troop, EnemyTarget, ClanId, TroopType, TrainableTroopOption, GameLogEntry, Technology } from './modals/attack.types';
 
 import { GamePhase, PlayerNode, ActiveAttack } from './game.model';
 
@@ -29,6 +31,7 @@ import { GamePhase, PlayerNode, ActiveAttack } from './game.model';
     LobbyModalComponent,
     AvisoModalComponent,
     ConfirmAbandonModalComponent,
+    ArbolTecnologicoModalComponent,
     TranslatePipe,
     UpperCasePipe,
     CommonModule
@@ -129,6 +132,7 @@ export class GamePageComponent implements OnInit {
   protected readonly showEntrenarModal = signal(false);
   protected readonly showLogModal = signal(false);
   protected readonly showReglasModal = signal(false);
+  protected readonly showTechTreeModal = signal(false);
   protected readonly showDebugPanel = signal(false);
   protected readonly showAvisoModal = signal(false);
   protected readonly showAbandonModal = signal(false);
@@ -265,6 +269,15 @@ export class GamePageComponent implements OnInit {
     }
   ]);
 
+  // --- Estado del Árbol Tecnológico ---
+  protected readonly clanTechnologies = computed(() => {
+    const clanId = this.localClan().toUpperCase(); // FURY, IRON, etc...
+    const clanData = CLANS_DATA.find((c: any) => c.archetype === clanId);
+    return (clanData?.technologies as Technology[]) || [];
+  });
+
+  protected readonly unlockedTechnologies = signal<string[]>([]);
+
   // --- Acciones de los botones laterales ---
   protected openEntrenarTropas(): void {
     this.showEntrenarModal.set(true);
@@ -312,7 +325,26 @@ export class GamePageComponent implements OnInit {
   }
 
   protected openArbolTecnologico(): void {
-    // TODO: abrir modal ArbolTecnologicoModalComponent
+    this.showTechTreeModal.set(true);
+  }
+
+  protected closeTechTreeModal(): void {
+    this.showTechTreeModal.set(false);
+  }
+
+  protected onResearchTechnology(techId: string): void {
+    const tech = this.clanTechnologies().find(t => t.id === techId);
+    if (!tech || this.researchPts() < tech.researchCost) return;
+
+    // Descontar puntos de investigación
+    this.researchPts.update(pts => pts - tech.researchCost);
+
+    // Marcar como desbloqueada
+    this.unlockedTechnologies.update(techs => [...techs, techId]);
+
+    // Registrar en el log
+    const msg = this.i18n.translate('GAME.LOG_RESEARCH', { tech: tech.name });
+    this.addLogEntry(msg, 'research');
   }
 
   protected openLog(): void {

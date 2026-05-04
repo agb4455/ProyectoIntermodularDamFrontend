@@ -57,6 +57,17 @@ export interface TrainableTroopOption {
   description?: string;
 }
 
+// Estructura de una tecnología en el árbol
+export interface Technology {
+  id: string;
+  name: string;
+  description: string;
+  researchCost: number;
+  durationSeconds: number;
+  requirements: string[]; // IDs de tecnologías requeridas
+  unlocks?: any; // Efectos de desbloqueo (buffs, tropas)
+}
+
 // Registro de log global
 export interface GameLogEntry {
   id: string;

@@ -166,6 +166,7 @@ export const es = {
     LOG_START: 'ha iniciado la partida',
     LOG_ATTACK: 'ha lanzado un ataque contra {{ target }}',
     LOG_TRAIN: 'ha entrenado {{ troop }}',
+    LOG_RESEARCH: 'ha investigado {{ tech }}',
     MODALS: {
       LEAVE_CONFIRM: {
         TITLE: '¿ABANDONAR BATALLA?',
@@ -200,6 +201,14 @@ export const es = {
         NO_GOLD: 'Oro insuficiente',
         EMPTY: 'No hay tropas disponibles para entrenar en este momento. ¡Mejora tu árbol tecnológico!',
         EMPTY_LOG: 'No hay eventos registrados en este momento.'
+      },
+      TECH: {
+        TITLE: 'ÁRBOL TECNOLÓGICO',
+        DESC: 'Desbloquea la sabiduría ancestral de tu clan.',
+        BTN_RESEARCH: 'INVESTIGAR',
+        UNLOCKED: 'DESBLOQUEADO',
+        COST: 'Coste',
+        REQUIREMENTS: 'Requisitos'
       },
       STATUS: {
         READY: 'LISTO',

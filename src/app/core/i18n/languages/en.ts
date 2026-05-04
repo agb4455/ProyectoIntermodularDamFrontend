@@ -166,6 +166,7 @@ export const en = {
     LOG_START: 'has started the game',
     LOG_ATTACK: 'has launched an attack against {{ target }}',
     LOG_TRAIN: 'has trained {{ troop }}',
+    LOG_RESEARCH: 'has researched {{ tech }}',
     MODALS: {
       LEAVE_CONFIRM: {
         TITLE: 'ABANDON BATTLE?',
@@ -200,6 +201,14 @@ export const en = {
         NO_GOLD: 'Not enough gold',
         EMPTY: 'No troops available for training at this time. Upgrade your tech tree!',
         EMPTY_LOG: 'No events registered at this time.'
+      },
+      TECH: {
+        TITLE: 'TECHNOLOGY TREE',
+        DESC: 'Unlock the ancient wisdom of your clan.',
+        BTN_RESEARCH: 'RESEARCH',
+        UNLOCKED: 'UNLOCKED',
+        COST: 'Cost',
+        REQUIREMENTS: 'Requirements'
       },
       STATUS: {
         READY: 'READY',

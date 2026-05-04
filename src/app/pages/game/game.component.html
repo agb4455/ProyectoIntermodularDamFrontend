@@ -227,6 +227,17 @@
   </app-entrenar-modal>
 }
 
+<!-- Modal del Árbol Tecnológico -->
+@if (showTechTreeModal()) {
+  <app-arbol-tecnologico-modal
+    [researchPoints]="researchPts()"
+    [technologies]="clanTechnologies()"
+    [unlockedTechs]="unlockedTechnologies()"
+    (closeModal)="closeTechTreeModal()"
+    (research)="onResearchTechnology($event)">
+  </app-arbol-tecnologico-modal>
+}
+
 <!-- Modal de Log Global -->
 @if (showLogModal()) {
   <app-game-log-modal

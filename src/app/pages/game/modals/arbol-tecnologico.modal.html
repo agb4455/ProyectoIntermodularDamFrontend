@@ -1,0 +1,79 @@
+<div class="modal-backdrop" (click)="onCloseClick()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <!-- CABECERA -->
+    <div class="modal-header">
+      <div class="header-titles">
+        <h2>{{ 'GAME.MODALS.TECH.TITLE' | translate | uppercase }}</h2>
+        <p class="subtitle">{{ 'GAME.MODALS.TECH.DESC' | translate }}</p>
+      </div>
+      <button class="close-btn" (click)="onCloseClick()">
+        <span class="icon">×</span>
+      </button>
+    </div>
+
+    <div class="rp-container">
+      <div class="rp-badge">
+        <span class="icon">✨</span>
+        <span class="value">{{ researchPoints() }}</span>
+        <span class="label">{{ 'GAME.STATS.RESEARCH' | translate | uppercase }}</span>
+      </div>
+    </div>
+
+    <!-- CUERPO - ÁRBOL TECNOLÓGICO -->
+    <div class="modal-body tech-tree-container">
+      
+      <div class="tech-tier" *ngFor="let tier of tieredTechnologies(); let i = index">
+        <!-- Optional: Render a tier divider -->
+        <div class="tier-divider">
+          <span>Tier {{ i + 1 }}</span>
+        </div>
+
+        <div class="tech-grid">
+          <div 
+            class="tech-card" 
+            *ngFor="let tech of tier"
+            [ngClass]="{
+              'unlocked': isUnlocked(tech.id),
+              'unlockable': isUnlockable(tech),
+              'locked': !isUnlocked(tech.id) && !isUnlockable(tech)
+            }"
+          >
+            <div class="tech-icon-wrapper">
+              <span class="tech-icon">🔬</span>
+              <div class="status-indicator">
+                <span *ngIf="isUnlocked(tech.id)" class="check-icon">✓</span>
+                <span *ngIf="!isUnlocked(tech.id) && !isUnlockable(tech)" class="lock-icon">🔒</span>
+              </div>
+            </div>
+            
+            <div class="tech-info">
+              <h3>{{ tech.name }}</h3>
+              <p class="desc">{{ tech.description }}</p>
+              
+              <div class="tech-meta">
+                <div class="cost" [ngClass]="{'insufficient': researchPoints() < tech.researchCost}">
+                  <span class="icon">✨</span> {{ tech.researchCost }}
+                </div>
+                <div class="duration">
+                  <span class="icon">⏱️</span> {{ tech.durationSeconds }}s
+                </div>
+              </div>
+            </div>
+
+            <button 
+              class="btn-research" 
+              (click)="onResearchClick(tech)"
+              [disabled]="!isUnlockable(tech)"
+            >
+              {{ isUnlocked(tech.id) 
+                  ? ('GAME.MODALS.TECH.UNLOCKED' | translate) 
+                  : ('GAME.MODALS.TECH.BTN_RESEARCH' | translate) 
+              }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
