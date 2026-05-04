@@ -1,6 +1,7 @@
 import { Injectable, signal, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { SocketService } from './socket.service';
-import { GameApiService, ClanData } from './game-api.service';
+import { AppConfigService } from '../config/app-config.service';
 import { Observable } from 'rxjs';
 
 export interface GameContext {
@@ -14,11 +15,21 @@ export interface GameContext {
 })
 export class GameService {
   private readonly socketService = inject(SocketService);
-  private readonly gameApi = inject(GameApiService);
+  private readonly http = inject(HttpClient);
+  private readonly config = inject(AppConfigService);
 
   // Estado actual de la partida en el cliente
   readonly #gameContext = signal<GameContext | null>(null);
   readonly gameContext = this.#gameContext.asReadonly();
+
+  /**
+   * Obtiene los clanes ya ocupados en una partida.
+   */
+  getGameAvailability(code: string): Observable<{ takenClans: string[] }> {
+    return this.http.get<{ takenClans: string[] }>(
+      `${this.config.config.middleServerUrl}/api/games/${code}/availability`
+    );
+  }
 
   /**
    * Establece el contexto de la partida antes de entrar
@@ -53,12 +64,5 @@ export class GameService {
     const mockContext: GameContext = { code, clan: clanId, isHost: false };
     this.setGameContext(mockContext);
     this.socketService.emit('join_game', { gameId: mockContext.code });
-  }
-
-  /**
-   * Obtiene la lista de clanes desde el API.
-   */
-  getClans(): Observable<ClanData[]> {
-    return this.gameApi.getClans();
   }
 }

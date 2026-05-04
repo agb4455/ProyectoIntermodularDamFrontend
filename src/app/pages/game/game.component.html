@@ -68,7 +68,7 @@
       @for (player of players(); track player.username) {
         <div
           class="player-node"
-          [class]="'player-node node-' + player.clan"
+          [class]="'player-node node-' + player.clan.toLowerCase()"
           [style.left.%]="player.position?.x ?? 0"
           [style.top.%]="player.position?.y ?? 0"
           [title]="player.username"
@@ -83,14 +83,14 @@
             </div>
           }
 
-          <div class="player-clan-icon" [class]="'clan-' + player.clan">
+          <div class="player-clan-icon" [class]="'clan-' + player.clan.toLowerCase()">
             @switch (player.clan) {
-              @case ('fury') { 🪓 }
-              @case ('iron') { 🛡️ }
-              @case ('song') { 🎼 }
-              @case ('rune') { ᛒ }
-              @case ('death') { 💀 }
-              @case ('divine') { ✨ }
+              @case ('FURY') { 🪓 }
+              @case ('DIVINE') { ✨ }
+              @case ('IRON') { 🛡️ }
+              @case ('SHADOW') { 🌑 }
+              @case ('FROST') { ❄️ }
+              @case ('STORM') { ⚡ }
             }
           </div>
           <span class="player-name">{{ player.username }}</span>

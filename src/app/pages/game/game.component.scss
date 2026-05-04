@@ -323,10 +323,10 @@
 /* Posiciones estáticas de los clanes por continente */
 .node-divine { top: 26%; left: 23%; background-color: color-mix(in srgb, var(--color-clan-divine), transparent 50%);  border: 2px solid var(--color-clan-divine); } /* Niflheim */
 .node-iron   { top: 17%; left: 66%; background-color: color-mix(in srgb, var(--color-clan-iron), transparent 50%); border: 2px solid var(--color-clan-iron);   } /* Jötunheim */
-.node-song   { top: 78%; left: 22%; background-color: color-mix(in srgb, var(--color-clan-song), transparent 50%);  border: 2px solid var(--color-clan-song);   } /* Muspelheim */
+.node-storm  { top: 78%; left: 22%; background-color: color-mix(in srgb, var(--color-clan-storm), transparent 50%);  border: 2px solid var(--color-clan-storm);   } /* Muspelheim */
 .node-fury   { top: 51%; left: 71%; background-color: color-mix(in srgb, var(--color-clan-fury), transparent 50%);   border: 2px solid var(--color-clan-fury);   } /* Midgard */
-.node-rune   { top: 81%; left: 77%; background-color: color-mix(in srgb, var(--color-clan-rune), transparent 50%);  border: 2px solid var(--color-clan-rune);   } /* Vanaheim */
-.node-death  { top: 56%; left: 38%; background-color: color-mix(in srgb, var(--color-clan-death), transparent 50%); border: 2px solid var(--color-clan-death);  } /* Åsgard */
+.node-frost  { top: 81%; left: 77%; background-color: color-mix(in srgb, var(--color-clan-frost), transparent 50%);  border: 2px solid var(--color-clan-frost);   } /* Vanaheim */
+.node-shadow { top: 56%; left: 38%; background-color: color-mix(in srgb, var(--color-clan-shadow), transparent 50%); border: 2px solid var(--color-clan-shadow);  } /* Åsgard */
 
 /* ==========================================================================
    Botones de Acción Flotantes (Lateral Derecho)

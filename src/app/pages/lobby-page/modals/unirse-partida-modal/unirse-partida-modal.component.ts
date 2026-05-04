@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { UpperCasePipe } from '@angular/common';
 import { GameService } from '../../../../core/game/game.service';
 import { TranslatePipe } from '../../../../core/i18n/translate.pipe';
-import { ClanData } from '../../../../core/game/game-api.service';
+import { CLANS_DATA } from '../../../../core/game/clans.data';
 
 // Definición de los 6 clanes disponibles
 interface ClanOption {
@@ -52,16 +52,14 @@ export class UnirsePartidaModalComponent implements OnInit {
   readonly clanes = signal<ClanOption[]>([]);
 
   ngOnInit(): void {
-    this.gameService.getClans().subscribe(clansData => {
-      const options = clansData.map(clan => ({
-        id: clan.id,
-        name: clan.name,
-        archetype: clan.archetype,
-        icon: ARCHETYPE_ICONS[clan.archetype] || '⚔️',
-        available: true
-      }));
-      this.clanes.set(options);
-    });
+    const options = CLANS_DATA.map(clan => ({
+      id: clan.id,
+      name: clan.name,
+      archetype: clan.archetype,
+      icon: ARCHETYPE_ICONS[clan.archetype] || '⚔️',
+      available: true
+    }));
+    this.clanes.set(options);
   }
 
   // Código introducido por el usuario
@@ -92,23 +90,25 @@ export class UnirsePartidaModalComponent implements OnInit {
     if (!this.gameCode().trim()) return;
     this.isVerifying.set(true);
 
-    // TODO: Llamar al servidor para obtener los clanes disponibles
-    // Ej: const availableClans = await this.gameService.getAvailableClans(this.gameCode());
-    
-    // Simulación: El primer clan está cogido
-    setTimeout(() => {
-      const currentClanes = this.clanes();
-      if (currentClanes.length > 0) {
-        const clanesActualizados = currentClanes.map((clan, index) => ({
+    this.gameService.getGameAvailability(this.gameCode()).subscribe({
+      next: (response) => {
+        const takenClans = response.takenClans.map(id => id.toUpperCase());
+        const clanesActualizados = this.clanes().map(clan => ({
           ...clan,
-          available: index !== 0
+          available: !takenClans.includes(clan.id.toUpperCase())
         }));
         this.clanes.set(clanesActualizados);
+        this.isCodeVerified.set(true);
+        this.isVerifying.set(false);
+      },
+      error: () => {
+        // En caso de error (ej: partida no encontrada), resetear
+        const clanesReseteados = this.clanes().map(clan => ({ ...clan, available: true }));
+        this.clanes.set(clanesReseteados);
+        this.isCodeVerified.set(false);
+        this.isVerifying.set(false);
       }
-      
-      this.isCodeVerified.set(true);
-      this.isVerifying.set(false);
-    }, 600);
+    });
   }
 
   // Selecciona o deselecciona un clan

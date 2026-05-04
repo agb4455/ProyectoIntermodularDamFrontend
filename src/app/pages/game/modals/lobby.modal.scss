@@ -128,12 +128,12 @@
   border: 1px solid var(--color-border-faint);
   flex-shrink: 0;
 
-  &.clan-fury { background: rgba(192, 57, 43, 0.2); color: var(--color-clan-fury); border-color: var(--color-clan-fury); }
-  &.clan-divine { background: rgba(74, 144, 217, 0.2); color: var(--color-clan-divine); border-color: var(--color-clan-divine); }
-  &.clan-iron { background: rgba(138, 155, 168, 0.2); color: var(--color-clan-iron); border-color: var(--color-clan-iron); }
-  &.clan-song { background: rgba(139, 92, 246, 0.2); color: var(--color-clan-song); border-color: var(--color-clan-song); }
-  &.clan-rune { background: rgba(16, 185, 129, 0.2); color: var(--color-clan-rune); border-color: var(--color-clan-rune); }
-  &.clan-death { background: rgba(124, 107, 158, 0.2); color: var(--color-clan-death); border-color: var(--color-clan-death); }
+  &.clan-fury   { background: var(--color-clan-fury-bg);   color: var(--color-clan-fury);   border-color: var(--color-clan-fury);   }
+  &.clan-divine { background: var(--color-clan-divine-bg); color: var(--color-clan-divine); border-color: var(--color-clan-divine); }
+  &.clan-iron   { background: var(--color-clan-iron-bg);   color: var(--color-clan-iron);   border-color: var(--color-clan-iron);   }
+  &.clan-shadow { background: var(--color-clan-shadow-bg); color: var(--color-clan-shadow); border-color: var(--color-clan-shadow); }
+  &.clan-frost  { background: var(--color-clan-frost-bg);  color: var(--color-clan-frost);  border-color: var(--color-clan-frost);  }
+  &.clan-storm  { background: var(--color-clan-storm-bg);  color: var(--color-clan-storm);  border-color: var(--color-clan-storm);  }
 }
 
 .player-name {

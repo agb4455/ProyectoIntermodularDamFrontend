@@ -33,16 +33,10 @@ interface FinishedGameMock {
 })
 export class LobbyPageComponent {
   // Mock data for active games
-  readonly activeGames = signal<ActiveGameMock[]>([
-    { id: '1', name: 'Batalla por Midgard', code: 'A7X9-B', clan: 'fury', clanName: 'Berserkers' },
-    { id: '2', name: 'El Asedio de Valhalla', code: 'K9M2-Z', clan: 'rune', clanName: 'Seidr' }
-  ]);
+  readonly activeGames = signal<ActiveGameMock[]>([]);
 
   // Mock data for finished games
-  readonly finishedGames = signal<FinishedGameMock[]>([
-    { id: 'f1', name: 'Guerra del Invierno', code: 'W2N4-P', result: 'VICTORY' },
-    { id: 'f2', name: 'Conflicto de Sangre', code: 'B8V1-X', result: 'DEFEAT' }
-  ]);
+  readonly finishedGames = signal<FinishedGameMock[]>([]);
 
   // Estado de la pestaña activa
   readonly activeTab = signal<'active' | 'finished'>('active');

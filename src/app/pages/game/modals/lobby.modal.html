@@ -15,14 +15,14 @@
   <div class="players-list">
     @for (player of players(); track player.username; let i = $index) {
       <div class="player-item" (click)="onPlayerClick(player)">
-        <div class="clan-icon" [class]="'clan-' + player.clan">
+        <div class="clan-icon" [class]="'clan-' + player.clan.toLowerCase()">
           @switch (player.clan) {
-            @case ('fury') { 🪓 }
-            @case ('divine') { ⚡ }
-            @case ('iron') { 🛡️ }
-            @case ('song') { 🎵 }
-            @case ('rune') { 🌿 }
-            @case ('death') { 💀 }
+            @case ('FURY') { 🪓 }
+            @case ('DIVINE') { ✨ }
+            @case ('IRON') { 🛡️ }
+            @case ('SHADOW') { 🌑 }
+            @case ('FROST') { ❄️ }
+            @case ('STORM') { ⚡ }
             @default { ⚔️ }
           }
         </div>

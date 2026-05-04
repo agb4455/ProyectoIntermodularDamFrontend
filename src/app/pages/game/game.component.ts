@@ -12,7 +12,7 @@ import { ConfirmAbandonModalComponent } from './modals/confirm-abandon.modal';
 import { ArbolTecnologicoModalComponent } from './modals/arbol-tecnologico.modal';
 import { GameService } from '../../core/game/game.service';
 import { AuthService } from '../../core/auth/auth.service';
-import { ClanData } from '../../core/game/game-api.service';
+import { CLANS_DATA } from '../../core/game/clans.data';
 import { I18nService } from '../../core/i18n/i18n.service';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { Troop, EnemyTarget, ClanId, TroopType, TrainableTroopOption, GameLogEntry, Technology } from './modals/attack.types';
@@ -82,7 +82,6 @@ export class GamePageComponent implements OnInit {
     return (context?.clan as ClanId) ?? 'FURY';
   });
 
-  protected readonly allClans = signal<ClanData[]>([]);
 
   // --- Jugadores en el mapa (mock, vendrá del Socket.IO) ---
   protected readonly players = signal<PlayerNode[]>(this.getInitialPlayers());
@@ -90,11 +89,6 @@ export class GamePageComponent implements OnInit {
   ngOnInit(): void {
     // Preparar suscripciones (Dejado preparado para integración real)
     this.setupGameSubscriptions();
-
-    // Cargar clanes dinámicos
-    this.gameService.getClans().subscribe(clans => {
-      this.allClans.set(clans);
-    });
   }
 
   /**
@@ -116,13 +110,7 @@ export class GamePageComponent implements OnInit {
       health: { current: 3000, max: 3000 }
     };
 
-    const others: PlayerNode[] = [
-      { clan: 'DIVINE', username: 'Divine', health: { current: 2200, max: 3000 } },
-      { clan: 'IRON',   username: 'Iron',   health: { current: 2700, max: 3000 } },
-      { clan: 'STORM',  username: 'Storm',  health: { current: 1900, max: 3000 } },
-      { clan: 'SHADOW', username: 'Shadow', health: { current: 2400, max: 3000 } },
-      { clan: 'FROST',  username: 'Frost',  health: { current: 2600, max: 3000 } },
-    ];
+    const others: PlayerNode[] = [];
 
     let list = context?.isHost ? [localUser, ...others] : [...others, localUser];
     
@@ -162,80 +150,26 @@ export class GamePageComponent implements OnInit {
 
   private readonly defaultDeployTimeMs = 3200;
 
-  protected readonly availableTroops = signal<Troop[]>([
-    {
-      id: 'troop-1',
-      name: 'Guerrero 1',
-      type: TroopType.INFANTERIA,
-      clan: 'FURY',
-      currentHealth: 100,
+  protected readonly availableTroops = signal<Troop[]>(this.getInitialTroops());
+
+  private getInitialTroops(): Troop[] {
+    const clanId = this.localClan().toUpperCase();
+    const clanData = CLANS_DATA.find((c: any) => c.archetype === clanId);
+    if (!clanData) return [];
+
+    return (clanData.initialTroops || []).map((t: any) => ({
+      id: `troop-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+      name: t.name,
+      type: t.type as TroopType,
+      clan: clanId as ClanId,
+      currentHealth: 100, // TODO: Usar salud base de clans.yml si existe
       maxHealth: 100,
-      icon: '⚔️',
-      cost: 50,
+      icon: t.type === 'ATK' ? '⚔️' : (t.type === 'DEF' ? '🛡️' : '✨'),
+      cost: t.cost,
       isTraining: false,
       deployed: false,
-    },
-    {
-      id: 'troop-2',
-      name: 'Guerrero 2',
-      type: TroopType.INFANTERIA,
-      clan: 'FURY',
-      currentHealth: 75,
-      maxHealth: 100,
-      icon: '⚔️',
-      cost: 50,
-      isTraining: false,
-      deployed: false,
-    },
-    {
-      id: 'troop-3',
-      name: 'Arquero 1',
-      type: TroopType.ARQUERIA,
-      clan: 'FURY',
-      currentHealth: 60,
-      maxHealth: 80,
-      icon: '🏹',
-      cost: 75,
-      isTraining: false,
-      deployed: false,
-    },
-    {
-      id: 'troop-4',
-      name: 'Arquero 2',
-      type: TroopType.ARQUERIA,
-      clan: 'FURY',
-      currentHealth: 80,
-      maxHealth: 80,
-      icon: '🏹',
-      cost: 75,
-      isTraining: false,
-      deployed: false,
-    },
-    {
-      id: 'troop-5',
-      name: 'Caballería 1',
-      type: TroopType.CABALLERIA,
-      clan: 'FURY',
-      currentHealth: 120,
-      maxHealth: 150,
-      icon: '🐴',
-      cost: 150,
-      isTraining: false,
-      deployed: false,
-    },
-    {
-      id: 'troop-6',
-      name: 'Caballería 2',
-      type: TroopType.CABALLERIA,
-      clan: 'FURY',
-      currentHealth: 50,
-      maxHealth: 150,
-      icon: '🐴',
-      cost: 150,
-      isTraining: false,
-      deployed: false,
-    },
-  ]);
+    }));
+  }
 
   // --- Estado de entrenamiento secuencial ---
   protected readonly trainingQueue = computed(() =>
@@ -252,34 +186,24 @@ export class GamePageComponent implements OnInit {
   });
 
   // --- Opciones de entrenamiento (Mock, vendrá del middle server según tech tree) ---
-  protected readonly trainableTroopOptions = signal<TrainableTroopOption[]>([
-    {
-      type: TroopType.INFANTERIA,
-      name: 'Infantería',
-      cost: 50,
-      icon: '⚔️',
-      description: 'Guerreros básicos con hachas y escudos.'
-    },
-    {
-      type: TroopType.ARQUERIA,
-      name: 'Arquería',
-      cost: 75,
-      icon: '🏹',
-      description: 'Unidades a distancia para hostigar al enemigo.'
-    },
-    {
-      type: TroopType.CABALLERIA,
-      name: 'Caballería',
-      cost: 150,
-      icon: '🐴',
-      description: 'Unidades rápidas y poderosas montadas.'
-    }
-  ]);
+  protected readonly trainableTroopOptions = computed<TrainableTroopOption[]>(() => {
+    const clanId = this.localClan().toUpperCase();
+    const clanData = CLANS_DATA.find((c: any) => c.archetype === clanId);
+    if (!clanData) return [];
+
+    return (clanData.initialTroops || []).map((t: any) => ({
+      type: t.type as TroopType,
+      name: t.name,
+      cost: t.cost,
+      icon: t.type === 'ATK' ? '⚔️' : (t.type === 'DEF' ? '🛡️' : '✨'),
+      description: `Unidad básica de ${clanData.name}.`
+    }));
+  });
 
   // --- Estado del Árbol Tecnológico ---
   protected readonly clanTechnologies = computed(() => {
     const clanId = this.localClan().toUpperCase(); // FURY, IRON, etc...
-    const clanData = this.allClans().find((c: any) => c.archetype === clanId);
+    const clanData = CLANS_DATA.find((c: any) => c.archetype === clanId);
     return (clanData?.technologies as Technology[]) || [];
   });
 
@@ -306,13 +230,13 @@ export class GamePageComponent implements OnInit {
       id: `troop-${Date.now()}`,
       name: `${option.name} ${this.availableTroops().length + 1}`,
       type: option.type,
-      clan: 'FURY',
+      clan: this.localClan() as ClanId,
       currentHealth: 100,
       maxHealth: 100,
       icon: option.icon,
       cost: option.cost,
       isTraining: true,
-      trainingProgress: 0, // Inicia en 0 (En cola si no es el primero)
+      trainingProgress: 0,
       deployed: false
     };
 
@@ -559,7 +483,7 @@ export class GamePageComponent implements OnInit {
       return;
     }
 
-    const clans: ClanId[] = ['DIVINE', 'IRON', 'STORM', 'SHADOW', 'FROST', 'FURY'];
+    const clans: ClanId[] = ['FURY', 'DIVINE', 'IRON', 'SHADOW', 'FROST', 'STORM'];
     const clan = clans[Math.floor(Math.random() * clans.length)];
     const id = Math.floor(Math.random() * 1000); // ID más aleatorio para evitar colisiones
     
@@ -567,7 +491,7 @@ export class GamePageComponent implements OnInit {
       const nextIndex = ps.length;
       return [...ps, {
         clan,
-        username: `Guerrero_${id}`,
+        username: `Vikingo_${id}`,
         position: this.continentCoords[nextIndex] || this.continentCoords[5],
         health: { current: 3000, max: 3000 }
       }];
