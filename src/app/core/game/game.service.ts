@@ -2,12 +2,23 @@ import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SocketService } from './socket.service';
 import { AppConfigService } from '../config/app-config.service';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 export interface GameContext {
   code: string;
   clan: string;
   isHost: boolean;
+}
+
+export interface GameResponse {
+  id: string;
+  status: string;
+  maxPlayers: number;
+  createdAt: string;
+  startedAt?: string;
+  endedAt?: string;
+  winnerCharacterId?: string;
+  participants: any[];
 }
 
 @Injectable({
@@ -32,8 +43,16 @@ export class GameService {
   }
 
   /**
+   * Obtiene las partidas del usuario autenticado.
+   */
+  getMyGames(): Observable<GameResponse[]> {
+    return this.http.get<GameResponse[]>(
+      `${this.config.config.middleServerUrl}/api/games/my-games`
+    );
+  }
+
+  /**
    * Establece el contexto de la partida antes de entrar
-   * TODO: Integrar con el Middle Server para validar códigos y obtener estado real
    */
   setGameContext(context: GameContext): void {
     this.#gameContext.set(context);
@@ -47,22 +66,34 @@ export class GameService {
     this.socketService.disconnect();
   }
 
-  // TODO: Implementar llamadas reales al backend que devuelvan Observable<GameContext>.
-  // Por ahora, simulamos las peticiones conectando el socket y seteando un contexto falso.
-
-  createGame(clanId: string) {
-    this.socketService.connect();
-    // Simulate backend response
-    const mockContext: GameContext = { code: 'NEW-GAME', clan: clanId, isHost: true };
-    this.setGameContext(mockContext);
-    this.socketService.emit('join_game', { gameId: mockContext.code });
+  /**
+   * Crea una nueva partida en el servidor.
+   */
+  createGame(clanId: string): Observable<GameResponse> {
+    return this.http.post<GameResponse>(
+      `${this.config.config.middleServerUrl}/api/games`,
+      { clanId }
+    ).pipe(
+      tap(game => {
+        this.setGameContext({
+          code: game.id,
+          clan: clanId,
+          isHost: true
+        });
+        this.socketService.connect();
+        this.socketService.emit('join_game', { gameId: game.id });
+      })
+    );
   }
 
+  /**
+   * Se une a una partida existente.
+   * TODO: Implementar POST /api/games/join en el Middle Server si fuera necesario,
+   * por ahora usamos el flujo de socket directo.
+   */
   joinGame(code: string, clanId: string) {
+    this.setGameContext({ code, clan: clanId, isHost: false });
     this.socketService.connect();
-    // Simulate backend response
-    const mockContext: GameContext = { code, clan: clanId, isHost: false };
-    this.setGameContext(mockContext);
-    this.socketService.emit('join_game', { gameId: mockContext.code });
+    this.socketService.emit('join_game', { gameId: code });
   }
 }

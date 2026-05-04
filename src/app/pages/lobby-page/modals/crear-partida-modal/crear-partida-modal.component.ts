@@ -60,27 +60,23 @@ export class CrearPartidaModalComponent {
     this.closed.emit();
   }
 
-  // Crea la partida y redirige a lobbyPrevia
+  // Crea la partida y redirige a la partida en curso
   createGame(): void {
     if (!this.selectedClan()) return;
     this.isCreating.set(true);
 
-    // TODO: Llamar al servidor para crear partida y obtener el código real
-    // const generatedCode = await this.gameService.createGame(this.selectedClan()!);
-    const generatedCode = Math.random().toString(36).substring(2, 8).toUpperCase();
-    
-    const clanOption = this.clanes().find(c => c.id === this.selectedClan());
-    const archetype = clanOption?.archetype || 'FURY';
-    
-    this.gameService.setGameContext({
-      code: generatedCode,
-      clan: archetype,
-      isHost: true
+    this.gameService.createGame(this.selectedClan()!).subscribe({
+      next: (game) => {
+        // El GameService ya setea el contexto y conecta el socket vía 'tap'
+        setTimeout(() => {
+          this.close();
+          this.router.navigate(['/game']);
+        }, 400);
+      },
+      error: (err) => {
+        console.error('Error al crear la partida:', err);
+        this.isCreating.set(false);
+      }
     });
-
-    setTimeout(() => {
-      this.close();
-      this.router.navigate(['/game']);
-    }, 400);
   }
 }
