@@ -15,7 +15,7 @@ export class AppConfigService {
   private readonly http = inject(HttpClient);
 
   // Valores por defecto (desarrollo local) — se sobreescriben al cargar el JSON
-  private _config: AppConfig = { middleServerUrl: 'http://localhost:3000' };
+  private _config: AppConfig = { middleServerUrl: '' };
 
   /** Devuelve la configuración cargada */
   get config(): AppConfig {
