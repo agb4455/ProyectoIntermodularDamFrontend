@@ -348,19 +348,33 @@
   overflow: hidden;
 }
 
+.placeholder-map-fx {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .rune-mark {
   font-size: 8rem;
   color: var(--color-gold);
   opacity: 0.3;
   animation: runeGlow 4s infinite alternate ease-in-out;
+  position: relative;
+  z-index: 2;
 }
 
 .pulse-ring {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
   width: 100px; height: 100px;
   border: 2px solid var(--color-gold);
   border-radius: 50%;
   animation: radarPulse 3s infinite linear;
+  z-index: 1;
 }
 
 /* ==========================================================================
