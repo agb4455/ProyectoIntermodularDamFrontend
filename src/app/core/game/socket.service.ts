@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { AppConfigService } from '../config/app-config.service';
 import { AuthService } from '../auth/auth.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -68,6 +69,24 @@ export class SocketService {
       return;
     }
     this.socket.emit(event, payload);
+  }
+
+  listen(event: string): Observable<any> {
+    return new Observable(subscriber => {
+      this.socket?.on(event, (data) => subscriber.next(data));
+    });
+  }
+
+  /**
+   * Escucha un evento una sola vez y completa.
+   */
+  listenOnce(event: string): Observable<any> {
+    return new Observable(subscriber => {
+      this.socket?.once(event, (data) => {
+        subscriber.next(data);
+        subscriber.complete();
+      });
+    });
   }
 
   /**

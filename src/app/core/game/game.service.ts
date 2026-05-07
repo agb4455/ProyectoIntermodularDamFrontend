@@ -2,7 +2,7 @@ import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SocketService } from './socket.service';
 import { AppConfigService } from '../config/app-config.service';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, map } from 'rxjs';
 
 export interface GameContext {
   code: string;
@@ -37,8 +37,10 @@ export class GameService {
    * Obtiene los clanes ya ocupados en una partida.
    */
   getGameAvailability(code: string): Observable<{ takenClans: string[] }> {
-    return this.http.get<{ takenClans: string[] }>(
-      `${this.config.config.middleServerUrl}/api/games/${code}/availability`
+    this.socketService.connect();
+    this.socketService.emit('game:availability', { gameId: code });
+    return this.socketService.listenOnce('game:availability-results').pipe(
+      map(data => ({ takenClans: data.takenClans }))
     );
   }
 
@@ -46,9 +48,9 @@ export class GameService {
    * Obtiene las partidas del usuario autenticado.
    */
   getMyGames(): Observable<GameResponse[]> {
-    return this.http.get<GameResponse[]>(
-      `${this.config.config.middleServerUrl}/api/games/my-games`
-    );
+    this.socketService.connect();
+    this.socketService.emit('game:list');
+    return this.socketService.listenOnce('game:list-results');
   }
 
   /**
@@ -70,18 +72,16 @@ export class GameService {
    * Crea una nueva partida en el servidor.
    */
   createGame(clanId: string): Observable<GameResponse> {
-    return this.http.post<GameResponse>(
-      `${this.config.config.middleServerUrl}/api/games`,
-      { clanId }
-    ).pipe(
+    this.socketService.connect();
+    this.socketService.emit('game:create', { clanId });
+    
+    return this.socketService.listenOnce('game:created').pipe(
       tap(game => {
         this.setGameContext({
           code: game.id,
           clan: clanId,
           isHost: true
         });
-        this.socketService.connect();
-        this.socketService.emit('join_game', { gameId: game.id });
       })
     );
   }
