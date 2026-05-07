@@ -22,12 +22,12 @@ export class EntrenarModalComponent {
 
   // --- Outputs ---
   readonly closeModal = output<void>();
-  readonly train = output<TroopType>();
+  readonly train = output<string>();
 
   // --- Métodos ---
   protected onTrainClick(option: TrainableTroopOption): void {
     if (this.canAfford(option)) {
-      this.train.emit(option.type);
+      this.train.emit(option.id);
     }
   }
 

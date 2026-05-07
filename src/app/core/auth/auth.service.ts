@@ -10,8 +10,9 @@ export class AuthService {
   private readonly router = inject(Router);
   private readonly authApi = inject(AuthApiService);
 
-  // Estado interno privado — el token se guarda solo en memoria (nunca en localStorage)
-  readonly #session = signal<SessionState | null>(null);
+  // Estado interno privado — ahora se inicializa desde sessionStorage si existe
+  readonly #session = signal<SessionState | null>(this.loadSession());
+  readonly characterId = signal<string | null>(sessionStorage.getItem('characterId'));
 
   // Señales públicas de solo lectura
   readonly session = this.#session.asReadonly();
@@ -19,7 +20,21 @@ export class AuthService {
   readonly isAdmin = computed(() => this.#session()?.role === 'ADMIN');
   readonly username = computed(() => this.#session()?.username ?? '');
   readonly userId = computed(() => this.#session()?.userId ?? '');
-  readonly characterId = signal<string | null>(null);
+
+  private loadSession(): SessionState | null {
+    const token = sessionStorage.getItem('authToken');
+    if (!token) return null;
+    
+    const payload = this.#parseJwt(token);
+    if (!payload) return null;
+
+    return {
+      username: payload.username,
+      userId: payload.sub,
+      role: payload.role,
+      token,
+    };
+  }
 
   /**
    * Establece la sesión tras recibir el JWT del Middle Server.
@@ -35,6 +50,8 @@ export class AuthService {
       role: payload.role,
       token,
     });
+
+    sessionStorage.setItem('authToken', token);
   }
 
   /**
@@ -43,6 +60,9 @@ export class AuthService {
   clearSession(): void {
     this.#session.set(null);
     this.characterId.set(null);
+    sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem('characterId');
+    sessionStorage.removeItem('gameContext');
     this.router.navigate(['/']);
   }
 
@@ -51,6 +71,7 @@ export class AuthService {
    */
   setCharacterId(id: string): void {
     this.characterId.set(id);
+    sessionStorage.setItem('characterId', id);
   }
 
   /**

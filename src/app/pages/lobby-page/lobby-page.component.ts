@@ -15,6 +15,7 @@ interface ActiveGameModel {
   code: string;
   clan: string;
   clanName: string;
+  isHost: boolean;
 }
 
 interface FinishedGameModel {
@@ -64,24 +65,69 @@ export class LobbyPageComponent implements OnInit {
       next: (games) => {
         const active = games
           .filter(g => g.status !== 'FINISHED')
-          .map(g => ({
-            id: g.id,
-            name: `War ${g.id.substring(0, 4)}`,
-            code: g.id.substring(0, 6).toUpperCase(),
-            clan: 'fury', // TODO: Obtener el clan real del participante
-            clanName: 'Viking Clan'
-          }));
+          .map(g => {
+            let isHost = false;
+            let clan = 'fury';
+            let clanName = 'Viking Clan';
 
+            // Intentar extraer info real del estado persistido
+            if (g.latestStateJson) {
+              try {
+                const state = JSON.parse(g.latestStateJson);
+                const myUserId = this.authService.userId();
+                const myPlayer = Object.values(state.players || {}).find((p: any) => p.userId === myUserId) as any;
+                
+                if (myPlayer) {
+                  isHost = !!myPlayer.isHost;
+                  clan = (myPlayer.clanId || 'berserkers').toLowerCase();
+                  // Mapeo inverso de ID a nombre legible si es necesario
+                  const clanNames: Record<string, string> = {
+                    'berserkers': 'Berserkers',
+                    'valkirias': 'Valkirias',
+                    'jarls': 'Jarls de Hierro',
+                    'sombras': 'Sombras de Loki',
+                    'frost_guard': 'Guardianes del Hielo',
+                    'storm_bringers': 'Portadores de la Tormenta'
+                  };
+                  clanName = clanNames[clan] || (clan.charAt(0).toUpperCase() + clan.slice(1));
+                }
+              } catch (e) {
+                console.warn('Error parsing latestStateJson for game', g.id, e);
+              }
+            }
+            
+            // Si no pudimos determinar isHost desde el JSON (o no hay JSON), usar participants
+            if (!g.latestStateJson || !isHost) {
+              const myCharId = this.authService.characterId();
+              const myParticipant = g.participants?.find(p => p.characterId === myCharId);
+              if (myParticipant) {
+                isHost = myParticipant.joinOrder === 1;
+              } else if (g.participants?.length === 1) {
+                // Fallback de emergencia: si solo hay uno, es el host
+                isHost = true;
+              }
+            }
+
+            return {
+              id: g.id,
+              name: `War ${g.id.substring(0, 4)}`,
+              code: g.id.substring(0, 6).toUpperCase(),
+              clan: clan,
+              clanName: clanName,
+              isHost: isHost // Guardamos este dato para usarlo en onEnterGame
+            };
+          });
+
+        this.activeGames.set(active);
         const finished = games
           .filter(g => g.status === 'FINISHED')
           .map(g => ({
             id: g.id,
             name: `Legacy ${g.id.substring(0, 4)}`,
             code: g.id.substring(0, 6).toUpperCase(),
-            result: 'VICTORY' as const // TODO: Determinar victoria/derrota real
+            result: 'VICTORY' as const
           }));
 
-        this.activeGames.set(active);
         this.finishedGames.set(finished);
       },
       error: (err) => console.error('Error loading games:', err)
@@ -110,8 +156,8 @@ export class LobbyPageComponent implements OnInit {
   onEnterGame(gameId: string) {
     const game = this.activeGames().find(g => g.id === gameId);
     if (game) {
-      // Unirse formalmente a la partida (unirse a la sala de sockets y setear contexto)
-      this.gameService.joinGame(game.id, game.clan);
+      // Unirse formalmente a la partida pasando el flag de host si corresponde
+      this.gameService.joinGame(game.id, game.clan, game.isHost);
       // Navegar a la página del juego
       this.router.navigate(['/game']);
     }

@@ -50,6 +50,7 @@ export interface TroopGridCell {
 
 // Opción para el modal de entrenamiento
 export interface TrainableTroopOption {
+  id: string;
   type: TroopType;
   name: string;
   cost: number;

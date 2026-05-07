@@ -19,6 +19,7 @@ export interface GameResponse {
   endedAt?: string;
   winnerCharacterId?: string;
   participants: any[];
+  latestStateJson: string | null;
 }
 
 @Injectable({
@@ -30,8 +31,21 @@ export class GameService {
   private readonly config = inject(AppConfigService);
 
   // Estado actual de la partida en el cliente
-  readonly #gameContext = signal<GameContext | null>(null);
+  readonly #gameContext = signal<GameContext | null>(this.loadContext());
   readonly gameContext = this.#gameContext.asReadonly();
+  readonly myCharacterId = signal<string | null>(null);
+
+  private loadContext(): GameContext | null {
+    const saved = sessionStorage.getItem('gameContext');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Error parsing game context from session storage', e);
+      }
+    }
+    return null;
+  }
 
   /**
    * Obtiene los clanes ya ocupados en una partida.
@@ -58,6 +72,7 @@ export class GameService {
    */
   setGameContext(context: GameContext): void {
     this.#gameContext.set(context);
+    sessionStorage.setItem('gameContext', JSON.stringify(context));
   }
 
   /**
@@ -65,6 +80,7 @@ export class GameService {
    */
   clearGameContext(): void {
     this.#gameContext.set(null);
+    sessionStorage.removeItem('gameContext');
     this.socketService.disconnect();
   }
 

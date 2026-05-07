@@ -67,16 +67,24 @@ export class GamePageComponent implements OnInit {
 
   // --- Info del jugador local ---
   protected readonly username = this.authService.username;
-  protected readonly gameCode = signal(this.gameService.gameContext()?.code ?? '3F8A2C');
+  protected readonly gameCode = computed(() => this.gameService.gameContext()?.code ?? '000000');
+  protected readonly me = computed(() => {
+    const myId = this.gameService.myCharacterId();
+    if (myId) {
+      return this.players().find(p => p.characterId === myId);
+    }
+    // Fallback por nombre si aún no tenemos el ID
+    return this.players().find(p => p.username === this.username());
+  });
 
-  // Determina si el usuario actual es el anfitrión (el primero en la lista en este mock)
   protected readonly isHost = computed(() => {
-    // Si venimos del lobby con contexto, lo usamos. Si no, usamos el orden de la lista.
+    const myPlayer = this.me();
+    if (myPlayer && myPlayer.isHost !== undefined) {
+      return myPlayer.isHost;
+    }
+    // Fallback al contexto del servicio si el jugador aún no está en la lista
     const context = this.gameService.gameContext();
-    if (context) return context.isHost;
-
-    const list = this.players();
-    return list.length > 0 && list[0].username === this.username();
+    return context?.isHost ?? false;
   });
 
   protected readonly localClan = computed(() => {
@@ -118,10 +126,11 @@ export class GamePageComponent implements OnInit {
       
       // Guardar mi characterId si viene en el payload
       if (data.myCharacterId) {
+        this.gameService.myCharacterId.set(data.myCharacterId);
         this.authService.setCharacterId(data.myCharacterId);
       }
       
-      if (data.phase) this.currentPhase.set(data.phase);
+      if (data.phase) this.currentPhase.set(data.phase.toUpperCase());
       
       if (data.players) {
         // data.players es un objeto { characterId: player }, lo convertimos a array
@@ -202,7 +211,7 @@ export class GamePageComponent implements OnInit {
     // Escuchar eliminación de jugador
     socket.on('game:player-eliminated', (data: any) => {
       if (data.characterId) {
-        this.players.update(ps => ps.filter(p => p.username !== data.username));
+        this.players.update(ps => ps.filter(p => p.characterId !== data.characterId));
         this.addLogEntry(
           this.i18n.translate('GAME.LOG_PLAYER_ELIMINATED', { player: data.username }),
           'system'
@@ -216,6 +225,7 @@ export class GamePageComponent implements OnInit {
   private getInitialPlayers(): PlayerNode[] {
     const context = this.gameService.gameContext();
     const localUser: PlayerNode = {
+      characterId: this.authService.characterId() || 'me',
       clan: (context?.clan as ClanId) ?? 'FURY',
       username: this.authService.username(),
       health: { current: 3000, max: 3000 }
@@ -307,6 +317,7 @@ export class GamePageComponent implements OnInit {
     if (!clanData) return [];
 
     return (clanData.initialTroops || []).map((t: any) => ({
+      id: t.id,
       type: t.type as TroopType,
       name: t.name,
       cost: t.cost,
@@ -335,8 +346,8 @@ export class GamePageComponent implements OnInit {
     this.showEntrenarModal.set(false);
   }
 
-  protected onTrainTroop(type: TroopType): void {
-    const option = this.trainableTroopOptions().find(o => o.type === type);
+  protected onTrainTroop(id: string): void {
+    const option = this.trainableTroopOptions().find(o => o.id === id);
     if (!option || this.gold() < option.cost) return;
 
     const gameContext = this.gameService.gameContext();
@@ -348,7 +359,7 @@ export class GamePageComponent implements OnInit {
     // Emitir evento al servidor para entrenar tropa
     this.socketService.emit('game:train', {
       gameId: gameContext.code,
-      troopTypeId: type
+      troopTypeId: id
     });
 
     // Registrar en el log (feedback local inmediato)
@@ -421,6 +432,7 @@ export class GamePageComponent implements OnInit {
 
   // --- Acciones de la barra superior ---
   protected goBack(): void {
+    this.gameService.clearGameContext();
     this.router.navigate(['/lobby']);
   }
 
@@ -438,6 +450,7 @@ export class GamePageComponent implements OnInit {
 
   protected onConfirmAbandon(): void {
     this.showAbandonModal.set(false);
+    this.gameService.clearGameContext();
     this.router.navigate(['/lobby']);
   }
 
@@ -626,6 +639,7 @@ export class GamePageComponent implements OnInit {
     this.players.update(ps => {
       const nextIndex = ps.length;
       return [...ps, {
+        characterId: `mock-${id}`,
         clan,
         username: `Vikingo_${id}`,
         position: this.continentCoords[nextIndex] || this.continentCoords[5],
