@@ -13,33 +13,25 @@ import { BanRecord } from './admin-page.model';
 export class AdminPageComponent {
   
   public readonly globalStats = signal({
-    totalUsers: 1248,
-    totalGames: 3592,
-    bannedUsers: 42
+    totalUsers: 0,
+    totalGames: 0,
+    bannedUsers: 0
   });
 
   public readonly monitoringMetrics = signal({
-    activeUsers: 34,
-    activeGames: 12,
-    finishedGamesLastHour: 8,
-    serverLoad: 78
+    activeUsers: 0,
+    activeGames: 0,
+    finishedGamesLastHour: 0,
+    serverLoad: 0
   });
 
   // Only active bans
-  public readonly bans = signal<BanRecord[]>([
-    { id: '1', user: 'RagnarTheRed', reason: 'Insultos reiterados en el chat', expiresIn: '48 horas' },
-    { id: '3', user: 'HackerViking', reason: 'Exploit de recursos', expiresIn: 'Permanente' },
-    { id: '5', user: 'Bot123', reason: 'Uso de bots', expiresIn: '7 días' },
-  ]);
+  public readonly bans = signal<BanRecord[]>([]);
 
   public readonly searchQuery = signal<string>('');
   
   // Dummy users for the search simulation
-  private readonly allUsers = [
-    { username: 'LokiTrickster', status: 'Activo' },
-    { username: 'Loki99', status: 'Activo' },
-    { username: 'OdinAllfather', status: 'Activo' },
-  ];
+  private readonly allUsers: any[] = [];
 
   public readonly searchResults = computed(() => {
     const query = this.searchQuery().toLowerCase().trim();

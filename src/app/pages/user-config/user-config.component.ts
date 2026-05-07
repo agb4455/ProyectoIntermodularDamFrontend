@@ -5,6 +5,7 @@ import { ThemeService } from '../../core/theme/theme.service';
 import { I18nService, Language } from '../../core/i18n/i18n.service';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { CambiarContrasenaModalComponent } from './modals/cambiar-contrasena.modal';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-user-config',
@@ -15,11 +16,12 @@ import { CambiarContrasenaModalComponent } from './modals/cambiar-contrasena.mod
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserConfigComponent {
-  // Signals para manejar el estado del usuario.
-  // En producción estos vendrán de un AuthService / UserService.
-  readonly userName = signal<string>('Ragnar Lothbrok');
-  readonly userEmail = signal<string>('ragnar@vikingwars.com');
-  readonly userClan = signal<string>('Jarl del Clan Furia');
+  private readonly authService = inject(AuthService);
+  
+  // Datos reales del usuario autenticado
+  readonly userName = computed(() => this.authService.username());
+  readonly userEmail = signal<string>(''); // El email no está en el JWT actual, requiere endpoint /profile
+  readonly userClan = signal<string>('');  // El clan depende de la partida activa
   
   readonly i18n = inject(I18nService);
   private themeService = inject(ThemeService);

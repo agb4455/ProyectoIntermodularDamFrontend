@@ -48,8 +48,7 @@ export class VisualizarTropasModalComponent {
   }
 
   protected getTrainingProgress(troop: Troop): number {
-    // MOCK: En el futuro vendrá del servidor
-    return troop.trainingProgress ?? 45;
+    return troop.trainingProgress ?? 0;
   }
   protected getHealthPercentage(troop: Troop): number {
     return (troop.currentHealth / troop.maxHealth) * 100;

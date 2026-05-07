@@ -308,20 +308,6 @@
           </div>
         </div>
 
-        <div class="debug-section">
-          <label>Entrenamiento (Tropa Activa)</label>
-          <div class="debug-row">
-            <button (click)="debugAddProgress(-10)">-10%</button>
-            <button (click)="debugAddProgress(10)">+10%</button>
-            <button (click)="debugAddProgress(25)">+25%</button>
-          </div>
-          <button
-            class="btn-full btn-success"
-            [disabled]="!activeTrainingTroop()"
-            (click)="debugCompleteTraining()">
-            Completar Entrenamiento
-          </button>
-        </div>
 
       </div>
     }

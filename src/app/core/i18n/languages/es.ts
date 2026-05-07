@@ -148,9 +148,10 @@ export const es = {
       RESEARCH: 'Sabiduria'
     },
     troop_types: {
-      infanteria: 'Infantería',
-      arqueria: 'Arquería',
-      caballeria: 'Caballería'
+      ATK: 'Ofensiva',
+      DEF: 'Defensiva',
+      HEAL: 'Sanadora',
+      SUPP: 'Apoyo'
     },
     troop_desc: {
       infanteria: 'Guerreros básicos con hachas y escudos.',

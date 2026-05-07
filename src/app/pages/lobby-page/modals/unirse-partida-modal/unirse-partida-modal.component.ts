@@ -132,7 +132,7 @@ export class UnirsePartidaModalComponent implements OnInit {
     const archetype = clanOption?.archetype || 'FURY';
 
     // Llamada real al servicio para emitir join_game via socket
-    this.gameService.joinGame(this.gameCode(), archetype);
+    this.gameService.joinGame(this.gameCode(), this.selectedClan()!);
 
     // Navegamos a la página de juego. El modal se cerrará automáticamente
     // al destruirse el LobbyPageComponent, pero forzamos el cierre por seguridad.

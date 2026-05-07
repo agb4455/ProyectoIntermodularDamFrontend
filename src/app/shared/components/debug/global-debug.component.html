@@ -26,33 +26,6 @@
             </button>
           </div>
 
-          <!-- Bloque de Auth -->
-          <div class="debug-section">
-            <label>Sesión</label>
-            <div class="button-group">
-              <button (click)="toggleAuth()" [class.active]="authService.isLoggedIn()" class="action-btn">
-                {{ authService.isLoggedIn() ? '🔓 Logout' : '🔒 Login' }}
-              </button>
-            </div>
-            @if (authService.isLoggedIn()) {
-              <div class="user-info">
-                <span>👤 {{ authService.username() }}</span>
-              </div>
-            }
-          </div>
-
-          <!-- Bloque de Rol -->
-          <div class="debug-section">
-            <label>Rol de Usuario</label>
-            <button 
-              (click)="toggleAdmin()" 
-              [disabled]="!authService.isLoggedIn()" 
-              [class.admin]="authService.isAdmin()"
-              class="action-btn"
-            >
-              {{ authService.isAdmin() ? '🛡️ ADMIN' : '👤 USER' }}
-            </button>
-          </div>
 
           <!-- Info de Sistema -->
           <div class="debug-footer">

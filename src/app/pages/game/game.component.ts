@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, signal, computed, inject, isDevMode, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, computed, inject, isDevMode, OnInit, OnDestroy } from '@angular/core';
 import { UpperCasePipe, CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AtacarModalComponent } from './modals/atacar.modal';
@@ -41,7 +41,7 @@ import { GamePhase, PlayerNode, ActiveAttack } from './game.model';
   styleUrl: './game.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GamePageComponent implements OnInit {
+export class GamePageComponent implements OnInit, OnDestroy {
 
   private readonly gameService = inject(GameService);
   private readonly authService = inject(AuthService);
@@ -59,11 +59,13 @@ export class GamePageComponent implements OnInit {
     { x: 72, y: 82 }  // Vanaheim (Bottom Right)
   ];
 
-  // --- Estado de la partida (llegará vía Socket.IO) ---
+  // --- Estado de la partida (Sincronizado vía Socket.IO) ---
   protected readonly currentPhase = signal<GamePhase>('WAITING');
   protected readonly health = signal({ current: 3000, max: 3000 });
-  protected readonly gold = signal(150);
-  protected readonly researchPts = signal(25);
+  protected readonly gold = signal(0);
+  protected readonly researchPts = signal(0);
+  protected readonly now = signal(Date.now());
+  private ticker: any;
 
   // --- Info del jugador local ---
   protected readonly username = this.authService.username;
@@ -93,18 +95,29 @@ export class GamePageComponent implements OnInit {
   });
 
 
-  // --- Jugadores en el mapa (mock, vendrá del Socket.IO) ---
+  // --- Jugadores en el mapa (Sincronizados desde el servidor) ---
   protected readonly players = signal<PlayerNode[]>(this.getInitialPlayers());
 
   ngOnInit(): void {
     // Preparar suscripciones
     this.setupGameSubscriptions();
 
+    // Iniciar ticker para animaciones de progreso
+    this.ticker = setInterval(() => {
+      this.now.set(Date.now());
+    }, 500);
+
     // Asegurar que estamos unidos a la partida en el servidor (para refrescos de página)
     const context = this.gameService.gameContext();
     if (context) {
       console.log('[GAME] Re-uniéndose a la partida:', context.code);
       this.gameService.joinGame(context.code, context.clan, context.isHost);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.ticker) {
+      clearInterval(this.ticker);
     }
   }
 
@@ -138,10 +151,24 @@ export class GamePageComponent implements OnInit {
         this.players.set(playersList.map((p: any, i: number) => ({
           ...p,
           username: p.username || `Vikingo_${i + 1}`,
-          position: this.continentCoords[i] || this.continentCoords[0]
+          position: this.continentCoords[i] || this.continentCoords[0],
+          health: { 
+            current: p.capitalHealth ?? 3000, 
+            max: p.maxCapitalHealth ?? 3000 
+          }
         })));
+
+        // Sincronizar mis recursos locales si estoy en la lista
+        const myData = data.players[this.gameService.myCharacterId() || ''];
+        if (myData) {
+          if (myData.economicCredits !== undefined) this.gold.set(myData.economicCredits);
+          if (myData.researchCredits !== undefined) this.researchPts.set(myData.researchCredits);
+          if (myData.capitalHealth !== undefined) {
+            this.health.set({ current: myData.capitalHealth, max: myData.maxCapitalHealth || 3000 });
+          }
+        }
       }
-      if (data.characterHealth) this.health.set(data.characterHealth);
+      
       console.log('[GAME] Estado sincronizado:', data);
     });
 
@@ -227,15 +254,14 @@ export class GamePageComponent implements OnInit {
     const localUser: PlayerNode = {
       characterId: this.authService.characterId() || 'me',
       clan: (context?.clan as ClanId) ?? 'FURY',
+      clanId: this.getClanIdByArchetype((context?.clan as ClanId) ?? 'FURY'),
       username: this.authService.username(),
       health: { current: 3000, max: 3000 }
     };
 
     const others: PlayerNode[] = [];
-
     let list = context?.isHost ? [localUser, ...others] : [...others, localUser];
     
-    // Asignar coordenadas fijas por orden
     return list.map((p, i) => ({
       ...p,
       position: this.continentCoords[i] || this.continentCoords[5]
@@ -262,36 +288,102 @@ export class GamePageComponent implements OnInit {
   // --- Log de la partida ---
   protected readonly gameLogs = signal<GameLogEntry[]>([]);
 
-  // --- Tropas disponibles (mock, vendrá del servidor) ---
-  private readonly troopDeployTimeMs: Record<TroopType, number> = {
-    [TroopType.INFANTERIA]: 3200,
-    [TroopType.ARQUERIA]: 3600,
-    [TroopType.CABALLERIA]: 2800,
-  };
+  protected readonly availableTroops = computed(() => {
+    const myPlayer = this.me();
+    if (!myPlayer) return [];
 
-  private readonly defaultDeployTimeMs = 3200;
+    const clanId = myPlayer.clanId || this.getClanIdByArchetype(myPlayer.clan);
+    const allTroops: Troop[] = [];
 
-  protected readonly availableTroops = signal<Troop[]>(this.getInitialTroops());
+    // 1. Tropas reales (ya entrenadas)
+    if (myPlayer.troops) {
+      myPlayer.troops.forEach((t: any) => {
+        allTroops.push({
+          id: t.id,
+          typeId: t.typeId,
+          name: this.getTroopName(t.typeId),
+          type: this.getTroopType(t.typeId),
+          clan: clanId as ClanId,
+          currentHealth: t.currentPoints,
+          maxHealth: t.maxPoints,
+          icon: this.getTroopIcon(t.typeId),
+          cost: 0,
+          isTraining: false,
+          deployed: t.deployed
+        });
+      });
+    }
 
-  private getInitialTroops(): Troop[] {
-    const clanId = this.localClan().toUpperCase();
-    const clanData = CLANS_DATA.find((c: any) => 
-      c.archetype === clanId || c.id.toUpperCase() === clanId
-    );
-    if (!clanData) return [];
+    // 2. Cola de entrenamiento
+    if (myPlayer.trainingQueue) {
+      myPlayer.trainingQueue.forEach((q: any) => {
+        const duration = this.getTroopDuration(q.troopTypeId) * 1000;
+        const startTime = q.completesAt - duration;
+        const elapsed = this.now() - startTime;
+        const progress = Math.min(100, Math.max(0, (elapsed / duration) * 100));
 
-    return (clanData.initialTroops || []).map((t: any) => ({
-      id: `troop-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
-      name: t.name,
-      type: t.type as TroopType,
-      clan: clanId as ClanId,
-      currentHealth: 100, // TODO: Usar salud base de clans.yml si existe
-      maxHealth: 100,
-      icon: t.type === 'ATK' ? '⚔️' : (t.type === 'DEF' ? '🛡️' : '✨'),
-      cost: t.cost,
-      isTraining: false,
-      deployed: false,
-    }));
+        allTroops.push({
+          id: q.trainingId,
+          typeId: q.troopTypeId,
+          name: this.getTroopName(q.troopTypeId),
+          type: this.getTroopType(q.troopTypeId),
+          clan: clanId as ClanId,
+          currentHealth: 0,
+          maxHealth: 100,
+          icon: this.getTroopIcon(q.troopTypeId),
+          cost: 0,
+          isTraining: true,
+          trainingProgress: progress,
+          deployed: false,
+          completesAt: q.completesAt
+        });
+      });
+    }
+
+    return allTroops;
+  });
+
+  private getClanIdByArchetype(archetype: ClanId): string {
+    const data = CLANS_DATA.find(c => c.archetype === archetype);
+    return data?.id || 'berserkers';
+  }
+
+  // --- Helpers de datos de tropas ---
+  private getTroopData(typeId: string): any {
+    for (const clan of CLANS_DATA) {
+      const troop = clan.initialTroops?.find((t: any) => t.id === typeId);
+      if (troop) return troop;
+      
+      for (const tech of clan.technologies || []) {
+        const techTroop = tech.unlocks?.troops?.find((t: any) => t.id === typeId);
+        if (techTroop) return techTroop;
+      }
+    }
+    return null;
+  }
+
+  private getTroopName(typeId: string): string {
+    return this.getTroopData(typeId)?.name || typeId;
+  }
+
+  private getTroopType(typeId: string): TroopType {
+    const type = this.getTroopData(typeId)?.type;
+    return (type as TroopType) || TroopType.ATK;
+  }
+
+  private getTroopIcon(typeId: string): string {
+    const type = this.getTroopType(typeId);
+    switch (type) {
+      case TroopType.ATK: return '⚔️';
+      case TroopType.DEF: return '🛡️';
+      case TroopType.HEAL: return '✨';
+      case TroopType.SUPP: return '🏹';
+      default: return '👤';
+    }
+  }
+
+  private getTroopDuration(typeId: string): number {
+    return this.getTroopData(typeId)?.trainingTimeSeconds || 30;
   }
 
   // --- Estado de entrenamiento secuencial ---
@@ -308,22 +400,48 @@ export class GamePageComponent implements OnInit {
     return troop ? (troop.trainingProgress ?? 0) : 0;
   });
 
-  // --- Opciones de entrenamiento (Mock, vendrá del middle server según tech tree) ---
+  // --- Opciones de entrenamiento (Actualizadas según tech tree) ---
   protected readonly trainableTroopOptions = computed<TrainableTroopOption[]>(() => {
-    const clanId = this.localClan().toUpperCase();
+    const myPlayer = this.me();
+    if (!myPlayer) return [];
+
+    const clanId = myPlayer.clanId || this.getClanIdByArchetype(myPlayer.clan);
     const clanData = CLANS_DATA.find((c: any) => 
-      c.archetype === clanId || c.id.toUpperCase() === clanId
+      c.archetype === myPlayer.clan || c.id === clanId
     );
     if (!clanData) return [];
 
-    return (clanData.initialTroops || []).map((t: any) => ({
+    // Opciones iniciales
+    const options: TrainableTroopOption[] = (clanData.initialTroops || []).map((t: any) => ({
       id: t.id,
       type: t.type as TroopType,
       name: t.name,
       cost: t.cost,
-      icon: t.type === 'ATK' ? '⚔️' : (t.type === 'DEF' ? '🛡️' : '✨'),
+      icon: this.getTroopIcon(t.id),
       description: `Unidad básica de ${clanData.name}.`
     }));
+
+    // Añadir tropas desbloqueadas por tecnologías
+    const unlockedIds = myPlayer.unlockedResearches || [];
+    clanData.technologies?.forEach((tech: any) => {
+      if (unlockedIds.includes(tech.id) && tech.unlocks?.troops) {
+        tech.unlocks.troops.forEach((t: any) => {
+          // Evitar duplicados
+          if (!options.find(o => o.id === t.id)) {
+            options.push({
+              id: t.id,
+              type: t.type as TroopType,
+              name: t.name,
+              cost: t.cost,
+              icon: this.getTroopIcon(t.id),
+              description: tech.name
+            });
+          }
+        });
+      }
+    });
+
+    return options;
   });
 
   // --- Estado del Árbol Tecnológico ---
@@ -363,7 +481,7 @@ export class GamePageComponent implements OnInit {
     });
 
     // Registrar en el log (feedback local inmediato)
-    const troopName = this.i18n.translate(`GAME.troop_types.${option.type}`);
+    const troopName = option.name;
     this.addLogEntry(this.i18n.translate('GAME.LOG_TRAIN', { troop: troopName }), 'train');
   }
 
@@ -495,7 +613,7 @@ export class GamePageComponent implements OnInit {
     this.targetEnemy.set({
       clan: player.clan,
       username: player.username,
-      health: { current: 2500, max: 3000 }, // Mock
+      health: player.health ?? { current: 3000, max: 3000 },
     });
     this.selectedTroopsForAttack.set([]);
     this.showAtacarModal.set(true);
@@ -605,8 +723,8 @@ export class GamePageComponent implements OnInit {
 
   private estimateDeploymentDurationMs(troopIds: string[]): number {
     const selectedTroops = this.availableTroops().filter((troop) => troopIds.includes(troop.id));
-    const durations = selectedTroops.map((troop) => this.troopDeployTimeMs[troop.type as TroopType] ?? this.defaultDeployTimeMs);
-    return durations.length > 0 ? Math.max(...durations) : this.defaultDeployTimeMs;
+    const durations = selectedTroops.map((troop) => this.getTroopDuration(troop.typeId) * 100); // 10% del tiempo de entrenamiento para despliegue visual o valor fijo
+    return durations.length > 0 ? Math.max(...durations) : 2000;
   }
 
   // --- MÉTODOS DE DEBUG (Solo para desarrollo) ---
@@ -639,8 +757,9 @@ export class GamePageComponent implements OnInit {
     this.players.update(ps => {
       const nextIndex = ps.length;
       return [...ps, {
-        characterId: `mock-${id}`,
+        characterId: `debug-${id}`,
         clan,
+        clanId: this.getClanIdByArchetype(clan),
         username: `Vikingo_${id}`,
         position: this.continentCoords[nextIndex] || this.continentCoords[5],
         health: { current: 3000, max: 3000 }
@@ -650,27 +769,6 @@ export class GamePageComponent implements OnInit {
 
   protected debugRemovePlayer(): void {
     this.players.update(ps => ps.length > 1 ? ps.slice(0, -1) : ps);
-  }
-
-  protected debugAddProgress(step: number): void {
-    const troop = this.activeTrainingTroop();
-    if (!troop) return;
-
-    const current = troop.trainingProgress ?? 0;
-    const next = Math.min(100, Math.max(0, current + step));
-
-    this.availableTroops.update(ts => ts.map(t =>
-      t.id === troop.id ? { ...t, trainingProgress: next } : t
-    ));
-  }
-
-  protected debugCompleteTraining(): void {
-    const troop = this.activeTrainingTroop();
-    if (troop) {
-      this.availableTroops.update(ts => ts.map(t =>
-        t.id === troop.id ? { ...t, isTraining: false, trainingProgress: 100 } : t
-      ));
-    }
   }
 }
 

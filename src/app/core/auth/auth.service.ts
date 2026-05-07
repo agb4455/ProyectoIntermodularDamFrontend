@@ -81,22 +81,6 @@ export class AuthService {
     return this.#session()?.token ?? null;
   }
 
-  /**
-   * ESTADOS DE DEBUG — PARA TESTING LOCAL SOLAMENTE
-   * Permiten simular estados de sesión sin un backend real.
-   */
-  mockLogin(role: UserRole = 'USER'): void {
-    this.#session.set({
-      username: role === 'ADMIN' ? 'DebugAdmin' : 'Ragnar_Fury',
-      userId: 'mock-user-id-' + Math.random().toString(36).substring(7),
-      role: role,
-      token: 'mock-jwt-token-for-debug',
-    });
-  }
-
-  mockLogout(): void {
-    this.clearSession();
-  }
 
   /**
    * Llama al endpoint POST /api/login del Middle Server.

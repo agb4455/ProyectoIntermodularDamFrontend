@@ -7,9 +7,10 @@ export type ClanId = 'FURY' | 'DIVINE' | 'IRON' | 'SHADOW' | 'FROST' | 'STORM';
 
 // Información de una tropa individual
 export interface Troop {
-  id: string;                 // UUID único de la tropa
-  name: string;              // Nombre del tipo de tropa (ej: "Guerrero", "Arquero")
-  type: TroopType;           // Tipo de tropa
+  id: string;                 // UUID único de la tropa (o trainingId si está en cola)
+  typeId: string;            // ID del tipo de tropa (ej: "berserker_guerrero")
+  name: string;              // Nombre del tipo de tropa (ej: "Guerrero Berserker")
+  type: TroopType;           // Categoría de tropa (ATK, DEF, etc.)
   clan: ClanId;              // Clan propietario
   currentHealth: number;     // Vitalidad actual
   maxHealth: number;         // Vitalidad máxima
@@ -18,14 +19,15 @@ export interface Troop {
   isTraining: boolean;       // ¿Está en entrenamiento?
   trainingProgress?: number; // % de progreso del entrenamiento (0-100)
   deployed: boolean;         // ¿Ya está desplegada?
+  completesAt?: number;      // Timestamp de finalización si está en entrenamiento
 }
 
-// Definición de tipos de tropas (según el árbol tecnológico)
+// Definición de tipos de tropas (Categorías del servidor)
 export enum TroopType {
-  INFANTERIA = 'infanteria',
-  ARQUERIA = 'arqueria',
-  CABALLERIA = 'caballeria',
-  // Posteriormente más tipos según tech tree
+  ATK = 'ATK',
+  DEF = 'DEF',
+  HEAL = 'HEAL',
+  SUPP = 'SUPP'
 }
 
 // Información de enemigo a atacar

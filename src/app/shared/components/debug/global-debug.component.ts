@@ -27,19 +27,4 @@ export class GlobalDebugComponent {
     this.themeService.toggle();
   }
 
-  toggleAuth(): void {
-    if (this.authService.isLoggedIn()) {
-      this.authService.mockLogout();
-    } else {
-      this.authService.mockLogin('USER');
-    }
-  }
-
-  toggleAdmin(): void {
-    if (this.authService.isAdmin()) {
-      this.authService.mockLogin('USER');
-    } else {
-      this.authService.mockLogin('ADMIN');
-    }
-  }
 }

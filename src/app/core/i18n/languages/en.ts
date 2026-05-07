@@ -148,9 +148,10 @@ export const en = {
       RESEARCH: 'Research'
     },
     troop_types: {
-      infanteria: 'Infantry',
-      arqueria: 'Archery',
-      caballeria: 'Cavalry'
+      ATK: 'Offense',
+      DEF: 'Defense',
+      HEAL: 'Healer',
+      SUPP: 'Support'
     },
     troop_desc: {
       infanteria: 'Basic warriors with axes and shields.',

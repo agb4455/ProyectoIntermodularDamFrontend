@@ -14,45 +14,8 @@ export class StatisticsComponent {
   
   // Datos hardcodeados siguiendo el mockup y requerimientos
   // Estos datos se conectarán al backend en una fase posterior
-  protected readonly stats = signal<StatMetric[]>([
-    {
-      id: 'time',
-      label: 'Tiempo de juego total',
-      value: '14h 25m',
-      icon: 'time'
-    },
-    {
-      id: 'money',
-      label: 'Dinero total gastado',
-      value: '124.500',
-      icon: 'money'
-    },
-    {
-      id: 'trained',
-      label: 'Tropas entrenadas',
-      value: '1.240',
-      icon: 'trained'
-    },
-    {
-      id: 'deployed',
-      label: 'Tropas desplegadas',
-      value: '850',
-      icon: 'deployed'
-    },
-    {
-      id: 'attacks',
-      label: 'Ataques realizados',
-      value: '312',
-      icon: 'attacks'
-    },
-    {
-      id: 'wins',
-      label: 'Partidas ganadas',
-      value: '24',
-      icon: 'wins'
-    }
-  ]);
+  protected readonly stats = signal<StatMetric[]>([]);
 
   // Estátistica destacada para la "Barra" superior del contenedor
-  protected readonly totalGlory = signal<string>('Gloria Eterna: 4.800');
+  protected readonly totalGlory = signal<string>('Gloria Eterna: 0');
 }

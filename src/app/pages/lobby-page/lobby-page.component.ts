@@ -119,16 +119,21 @@ export class LobbyPageComponent implements OnInit {
           });
 
         this.activeGames.set(active);
-        const finished = games
+        const finishedGamesList: FinishedGameModel[] = games
           .filter(g => g.status === 'FINISHED')
-          .map(g => ({
-            id: g.id,
-            name: `Legacy ${g.id.substring(0, 4)}`,
-            code: g.id.substring(0, 6).toUpperCase(),
-            result: 'VICTORY' as const
-          }));
+          .map(g => {
+            const myCharId = this.authService.characterId();
+            const isWinner = g.winnerCharacterId === myCharId;
+            
+            return {
+              id: g.id,
+              name: `Legacy ${g.id.substring(0, 4)}`,
+              code: g.id.substring(0, 6).toUpperCase(),
+              result: isWinner ? 'VICTORY' : 'DEFEAT'
+            };
+          });
 
-        this.finishedGames.set(finished);
+        this.finishedGames.set(finishedGamesList);
       },
       error: (err) => console.error('Error loading games:', err)
     });

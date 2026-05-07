@@ -23,9 +23,9 @@
             <div class="troop-info">
               <div class="troop-icon">{{ option.icon }}</div>
               <div class="troop-details">
-                <span class="troop-name">{{ 'GAME.troop_types.' + option.type | translate }}</span>
+                <span class="troop-name">{{ option.name }}</span>
                 @if (option.description) {
-                  <span class="troop-desc">{{ 'GAME.troop_desc.' + option.type | translate }}</span>
+                  <span class="troop-desc">{{ option.description }}</span>
                 }
               </div>
             </div>
