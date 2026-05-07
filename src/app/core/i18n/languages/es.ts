@@ -165,9 +165,14 @@ export const es = {
       LOG: 'Log de Batalla'
     },
     LOG_START: 'ha iniciado la partida',
+    LOG_PHASE_CHANGE: 'La fase ha cambiado a: {{ phase }}',
     LOG_ATTACK: 'ha lanzado un ataque contra {{ target }}',
-    LOG_TRAIN: 'ha entrenado {{ troop }}',
-    LOG_RESEARCH: 'ha investigado {{ tech }}',
+    LOG_TRAIN: 'ha comenzado a entrenar {{ troop }}',
+    LOG_TRAIN_CONFIRM: 'Entrenamiento confirmado por el Gran Salón',
+    LOG_TRAIN_COMPLETE: '{{ troop }} se ha unido a las filas',
+    LOG_RESEARCH: 'ha comenzado a investigar {{ tech }}',
+    LOG_RESEARCH_CONFIRM: 'Los sabios han comenzado la investigación',
+    LOG_RESEARCH_COMPLETE: '{{ tech }} ha sido dominado por el clan',
     MODALS: {
       LEAVE_CONFIRM: {
         TITLE: '¿ABANDONAR BATALLA?',

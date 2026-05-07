@@ -188,6 +188,15 @@ export class GamePageComponent implements OnInit, OnDestroy {
       console.log('[GAME] Entrenamiento en cola:', data);
     });
 
+    // Escuchar entrenamiento finalizado
+    socket.on('player:troop-trained', (data: any) => {
+      if (data.characterId === this.gameService.myCharacterId()) {
+        const troopName = this.getTroopName(data.troop.typeId);
+        this.addLogEntry(this.i18n.translate('GAME.LOG_TRAIN_COMPLETE', { troop: troopName }), 'train');
+      }
+      console.log('[GAME] Tropa entrenada:', data);
+    });
+
     // Escuchar confirmación de investigación iniciada
     socket.on('player:research-started', (data: any) => {
       if (data.researchId) {
@@ -196,6 +205,17 @@ export class GamePageComponent implements OnInit, OnDestroy {
       }
       if (data.researchCredits !== undefined) this.researchPts.set(data.researchCredits);
       console.log('[GAME] Investigación iniciada:', data);
+    });
+
+    // Escuchar investigación finalizada
+    socket.on('player:research-complete', (data: any) => {
+      if (data.characterId === this.gameService.myCharacterId()) {
+        // Encontrar el nombre de la tecnología
+        const tech = this.clanTechnologies().find(t => t.id === data.researchId);
+        const techName = tech?.name || data.researchId;
+        this.addLogEntry(this.i18n.translate('GAME.LOG_RESEARCH_COMPLETE', { tech: techName }), 'research');
+      }
+      console.log('[GAME] Investigación completada:', data);
     });
 
     // Escuchar ataques lanzados por otros jugadores
