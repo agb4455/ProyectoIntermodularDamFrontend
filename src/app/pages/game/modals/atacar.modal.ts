@@ -8,8 +8,9 @@ import { AnadirTropaAtaqueModalComponent } from './anadir-tropa-ataque.modal';
 
 /**
  * Modal para atacar a un enemigo
- * Muestra una grilla de tropas seleccionadas y un botón "+" para añadir más
+ * Muestra una grilla de tropas seleccionadas con animaciones y feedback visual
  * Cada celda de la grilla contiene una tropa con su health bar
+ * Soporta cálculo hexagonal de ventajas de clan (1.5x multiplicador)
  */
 @Component({
   selector: 'app-atacar-modal',
@@ -34,6 +35,7 @@ export class AtacarModalComponent {
   // --- Estado local ---
   readonly selectedTroopIds = signal<string[]>([]);
   readonly showAnadirModal = signal(false);
+  readonly showDamagePreview = signal(false);
 
   // --- Estado derivado ---
   readonly troopGrid = computed<TroopGridCell[]>(() => {
@@ -56,21 +58,32 @@ export class AtacarModalComponent {
 
   readonly canLaunchAttack = computed(() => this.selectedTroopIds().length > 0);
 
+  // Cálculo del poder de ataque y bonificadores hexagonales
+  readonly estimatedDamage = computed(() => {
+    const troops = this.troopGrid().map(cell => cell.troop);
+    const baseDamage = troops.reduce((sum, t) => sum + t.currentHealth, 0);
+    const typeMultiplier = this.getHexagonalMultiplier();
+    return Math.floor(baseDamage * typeMultiplier);
+  });
+
   readonly advantageState = computed(() => {
     const attackerClan = this.localClan();
     const defenderClan = this.target().clan;
 
     if (CLAN_ADVANTAGES[attackerClan] === defenderClan) {
+      const multiplier = this.getHexagonalMultiplier();
       return {
         type: 'advantage' as const,
         message: this.i18n.translate('GAME.MODALS.ATTACK.ADVANTAGE', { enemyClan: CLAN_NAMES[defenderClan] }),
-        icon: '⚡'
+        icon: '⚡',
+        multiplier: `${multiplier.toFixed(2)}x`
       };
     } else if (CLAN_ADVANTAGES[defenderClan] === attackerClan) {
       return {
         type: 'disadvantage' as const,
         message: this.i18n.translate('GAME.MODALS.ATTACK.DISADVANTAGE', { enemyClan: CLAN_NAMES[defenderClan] }),
-        icon: '🛡️'
+        icon: '🛡️',
+        multiplier: '1.0x'
       };
     }
     return null;
@@ -87,9 +100,14 @@ export class AtacarModalComponent {
 
   protected onAttackClick(): void {
     if (this.canLaunchAttack()) {
-      this.launchAttack.emit(this.selectedTroopIds());
-      this.selectedTroopIds.set([]);
-      this.showAnadirModal.set(false);
+      // Animación visual antes de enviar
+      this.showDamagePreview.set(true);
+      setTimeout(() => {
+        this.launchAttack.emit(this.selectedTroopIds());
+        this.selectedTroopIds.set([]);
+        this.showAnadirModal.set(false);
+        this.showDamagePreview.set(false);
+      }, 400);
     }
   }
 
@@ -118,6 +136,20 @@ export class AtacarModalComponent {
 
   protected getHealthPercentage(troop: Troop): number {
     return (troop.currentHealth / troop.maxHealth) * 100;
+  }
+
+  /**
+   * Calcula el multiplicador hexagonal según la ventaja de clan
+   * Sistema: FURY ➔ IRON ➔ DIVINE ➔ SHADOW ➔ STORM ➔ FROST ➔ FURY (ciclo)
+   * Si el atacante tiene ventaja: 1.5x
+   * Si el atacante NO tiene ventaja: 1.0x
+   */
+  protected getHexagonalMultiplier(): number {
+    const attackerClan = this.localClan();
+    const defenderClan = this.target().clan;
+    
+    // Verificar si el atacante tiene ventaja sobre el defensor
+    return CLAN_ADVANTAGES[attackerClan] === defenderClan ? 1.5 : 1.0;
   }
 
   protected closeAtacarModal(): void {

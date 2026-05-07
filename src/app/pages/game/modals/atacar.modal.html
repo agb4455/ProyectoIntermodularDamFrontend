@@ -7,11 +7,14 @@
       <button class="btn-close" (click)="closeAtacarModal()" [title]="'CONFIG.BTN_CANCEL' | translate">✕</button>
     </div>
     
-    <!-- Banner de Ventaja Táctica -->
+    <!-- Banner de Ventaja Táctica con Multiplicador -->
     @if (advantageState(); as state) {
       <div class="advantage-banner" [attr.data-type]="state.type">
         <span class="advantage-icon">{{ state.icon }}</span>
         <p class="advantage-message">{{ state.message }}</p>
+        @if (state.multiplier) {
+          <span class="multiplier-badge">{{ state.multiplier }}</span>
+        }
       </div>
     }
 
@@ -21,7 +24,8 @@
       <div
         class="troops-grid"
         [style.grid-template-columns]="'repeat(' + gridCols() + ', 1fr)'"
-        [class.empty]="troopGrid().length === 0">
+        [class.empty]="troopGrid().length === 0"
+        [class.animate]="showDamagePreview()">
         @for (cell of troopGrid(); track cell.troopId) {
           <div class="grid-cell" (click)="onRemoveTroop(cell.troopId)" title="Clic para eliminar">
             <!-- Icono de tropa -->
@@ -54,6 +58,19 @@
           <span class="plus-icon">+</span>
         </button>
       </div>
+
+      <!-- Preview de Daño Estimado -->
+      @if (canLaunchAttack()) {
+        <div class="damage-preview">
+          <div class="preview-label">Daño Estimado:</div>
+          <div class="preview-value">{{ estimatedDamage() }}</div>
+          @if ((getHexagonalMultiplier() - 1) > 0.01) {
+            <div class="preview-multiplier">
+              (+{{ ((getHexagonalMultiplier() - 1) * 100).toFixed(0) }}% por ventaja)
+            </div>
+          }
+        </div>
+      }
     </div>
 
     <!-- Footer -->
@@ -61,7 +78,8 @@
       <button
         class="btn-attack"
         (click)="onAttackClick()"
-        [disabled]="!canLaunchAttack()">
+        [disabled]="!canLaunchAttack()"
+        [class.launching]="showDamagePreview()">
         {{ 'GAME.MODALS.ATTACK.BTN_ATTACK' | translate }}
       </button>
     </div>

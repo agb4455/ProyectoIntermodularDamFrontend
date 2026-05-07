@@ -8,4 +8,10 @@ export interface ClanDetail {
   beatenBy: string;
   colorVar: string;
   icon: string;
+  // Estadísticas dinámicas (del servidor)
+  winRate?: number;
+  totalGames?: number;
+  totalPlayers?: number;
+  avgHealth?: number;
+  avgLevel?: number;
 }

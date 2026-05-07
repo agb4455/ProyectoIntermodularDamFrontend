@@ -13,15 +13,35 @@
   <header class="page-header">
     <h1 class="animate-glow">LINAJES DEL NORTE</h1>
     <div class="title-divider"></div>
+    @if (isLoading()) {
+      <div class="loading-indicator">
+        <span class="spinner">⟳</span> Cargando estadísticas...
+      </div>
+    }
   </header>
 
   <main class="clans-explorer">
+    <!-- Mensaje de error si aplica -->
+    @if (error()) {
+      <div class="error-banner">
+        <span class="error-icon">⚠️</span>
+        {{ error() }}
+      </div>
+    }
+
     <div class="clans-list">
       @for (clan of clans(); track clan.id) {
         <section class="clan-detail-card forged-border glass-panel" [style.--clan-color]="'var(' + clan.colorVar + ')'">
           <div class="clan-visual">
             <div class="clan-ring"></div>
             <div class="clan-icon">{{ clan.icon }}</div>
+            <!-- Estadísticas dinámicas si están disponibles -->
+            @if ((clan.totalPlayers ?? 0) > 0) {
+              <div class="clan-stats-badge">
+                <span class="stat">👥 {{ clan.totalPlayers }}</span>
+                <span class="stat">📊 {{ (clan.winRate ?? 0).toFixed(1) }}%</span>
+              </div>
+            }
           </div>
           
           <div class="clan-header">
@@ -30,6 +50,24 @@
           </div>
           
           <p class="clan-desc">{{ clan.description }}</p>
+          
+          <!-- Estadísticas detalladas (si están disponibles) -->
+          @if ((clan.totalGames ?? 0) > 0) {
+            <div class="stats-detail">
+              <div class="stat-row">
+                <span class="stat-label">Partidas:</span>
+                <span class="stat-value">{{ clan.totalGames }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">Jugadores:</span>
+                <span class="stat-value">{{ clan.totalPlayers }}</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">Salud Media:</span>
+                <span class="stat-value">{{ clan.avgHealth }}</span>
+              </div>
+            </div>
+          }
           
           <div class="advantage-section">
             <div class="advantage-item positive">

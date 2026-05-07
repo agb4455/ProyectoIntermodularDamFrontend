@@ -12,6 +12,7 @@ import { ConfirmAbandonModalComponent } from './modals/confirm-abandon.modal';
 import { ArbolTecnologicoModalComponent } from './modals/arbol-tecnologico.modal';
 import { GameService } from '../../core/game/game.service';
 import { AuthService } from '../../core/auth/auth.service';
+import { SocketService } from '../../core/game/socket.service';
 import { CLANS_DATA } from '../../core/game/clans.data';
 import { I18nService } from '../../core/i18n/i18n.service';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
@@ -44,6 +45,7 @@ export class GamePageComponent implements OnInit {
 
   private readonly gameService = inject(GameService);
   private readonly authService = inject(AuthService);
+  private readonly socketService = inject(SocketService);
   private readonly router = inject(Router);
   private readonly i18n: I18nService = inject(I18nService);
   protected readonly isDevelopment = signal(isDevMode());
@@ -92,14 +94,103 @@ export class GamePageComponent implements OnInit {
   }
 
   /**
-   * [PREPARADO] Configura las suscripciones a eventos de Socket.IO
-   * Actualmente desconectado ya que el Middle Server está en desarrollo
+   * Configura las suscripciones a eventos de Socket.IO en tiempo real
+   * Se conecta a los eventos del Middle Server para sincronizar estado del juego
    */
   private setupGameSubscriptions(): void {
-    // TODO: Suscribirse a game:state-update para sincronizar fase, oro y puntos
-    // TODO: Suscribirse a game:attack-launched para mostrar ataques de otros jugadores
-    // TODO: Suscribirse a game:battle-resolved para actualizar salud de capitales
-    console.log('[GAME] Suscripciones preparadas. Esperando Middle Server...');
+    const socket = this.socketService.getSocket();
+    if (!socket) {
+      console.warn('[GAME] Socket no disponible. Reintentando en 1s...');
+      setTimeout(() => this.setupGameSubscriptions(), 1000);
+      return;
+    }
+
+    // Escuchar sincronización de estado general (fase, jugadores, etc)
+    socket.on('game:state-sync', (data: any) => {
+      if (data.currentPhase) this.currentPhase.set(data.currentPhase);
+      if (data.players) this.players.set(data.players.map((p: any, i: number) => ({
+        ...p,
+        position: this.continentCoords[i] || this.continentCoords[5]
+      })));
+      if (data.characterHealth) this.health.set(data.characterHealth);
+      console.log('[GAME] Estado sincronizado:', data);
+    });
+
+    // Escuchar actualización de recursos (oro y créditos de investigación)
+    socket.on('player:resources-updated', (data: any) => {
+      if (data.economicCredits !== undefined) this.gold.set(data.economicCredits);
+      if (data.researchCredits !== undefined) this.researchPts.set(data.researchCredits);
+      console.log('[GAME] Recursos actualizados:', data);
+    });
+
+    // Escuchar confirmación de entrenamiento iniciado
+    socket.on('player:train-queued', (data: any) => {
+      if (data.trainingQueue) {
+        this.addLogEntry(this.i18n.translate('GAME.LOG_TRAIN_CONFIRM'), 'train');
+      }
+      if (data.economicCredits !== undefined) this.gold.set(data.economicCredits);
+      console.log('[GAME] Entrenamiento en cola:', data);
+    });
+
+    // Escuchar confirmación de investigación iniciada
+    socket.on('player:research-started', (data: any) => {
+      if (data.researchId) {
+        this.unlockedTechnologies.update(techs => [...techs, data.researchId]);
+        this.addLogEntry(this.i18n.translate('GAME.LOG_RESEARCH_CONFIRM'), 'research');
+      }
+      if (data.researchCredits !== undefined) this.researchPts.set(data.researchCredits);
+      console.log('[GAME] Investigación iniciada:', data);
+    });
+
+    // Escuchar ataques lanzados por otros jugadores
+    socket.on('game:attack-launched', (data: any) => {
+      if (data.fromPlayer && data.toPlayer) {
+        this.addLogEntry(
+          this.i18n.translate('GAME.LOG_ATTACK_RECEIVED', { attacker: data.fromPlayer }),
+          'attack',
+          data.fromPlayer
+        );
+      }
+      console.log('[GAME] Ataque recibido:', data);
+    });
+
+    // Escuchar resultados de batalla
+    socket.on('game:battle-result', (data: any) => {
+      if (data.defenderCharacterId === this.authService.characterId?.()) {
+        if (data.characterHealth) this.health.set(data.characterHealth);
+        if (data.battleLog) {
+          this.addLogEntry(
+            this.i18n.translate('GAME.LOG_BATTLE_RESULT', { attacker: data.attackerUsername }),
+            'attack'
+          );
+        }
+      }
+      console.log('[GAME] Resultado de batalla:', data);
+    });
+
+    // Escuchar cambios de fase
+    socket.on('game:phase-changed', (data: any) => {
+      if (data.newPhase) {
+        this.currentPhase.set(data.newPhase);
+        this.addLogEntry(
+          this.i18n.translate('GAME.LOG_PHASE_CHANGE', { phase: data.newPhase }),
+          'system'
+        );
+      }
+    });
+
+    // Escuchar eliminación de jugador
+    socket.on('game:player-eliminated', (data: any) => {
+      if (data.characterId) {
+        this.players.update(ps => ps.filter(p => p.username !== data.username));
+        this.addLogEntry(
+          this.i18n.translate('GAME.LOG_PLAYER_ELIMINATED', { player: data.username }),
+          'system'
+        );
+      }
+    });
+
+    console.log('[GAME] Suscripciones a eventos Socket.IO configuradas correctamente');
   }
 
   private getInitialPlayers(): PlayerNode[] {
@@ -228,27 +319,19 @@ export class GamePageComponent implements OnInit {
     const option = this.trainableTroopOptions().find(o => o.type === type);
     if (!option || this.gold() < option.cost) return;
 
-    // Descontar oro (Mock)
-    this.gold.update(g => g - option.cost);
+    const gameContext = this.gameService.gameContext();
+    if (!gameContext) {
+      console.error('[GAME] No hay contexto de partida disponible');
+      return;
+    }
 
-    // Añadir tropa a la lista (Mock)
-    const newTroop: Troop = {
-      id: `troop-${Date.now()}`,
-      name: `${option.name} ${this.availableTroops().length + 1}`,
-      type: option.type,
-      clan: this.localClan() as ClanId,
-      currentHealth: 100,
-      maxHealth: 100,
-      icon: option.icon,
-      cost: option.cost,
-      isTraining: true,
-      trainingProgress: 0,
-      deployed: false
-    };
+    // Emitir evento al servidor para entrenar tropa
+    this.socketService.emit('game:train', {
+      gameId: gameContext.code,
+      troopTypeId: type
+    });
 
-    this.availableTroops.update(ts => [...ts, newTroop]);
-
-    // Registrar en el log
+    // Registrar en el log (feedback local inmediato)
     const troopName = this.i18n.translate(`GAME.troop_types.${option.type}`);
     this.addLogEntry(this.i18n.translate('GAME.LOG_TRAIN', { troop: troopName }), 'train');
   }
@@ -273,13 +356,19 @@ export class GamePageComponent implements OnInit {
     const tech = this.clanTechnologies().find(t => t.id === techId);
     if (!tech || this.researchPts() < tech.researchCost) return;
 
-    // Descontar puntos de investigación
-    this.researchPts.update(pts => pts - tech.researchCost);
+    const gameContext = this.gameService.gameContext();
+    if (!gameContext) {
+      console.error('[GAME] No hay contexto de partida disponible');
+      return;
+    }
 
-    // Marcar como desbloqueada
-    this.unlockedTechnologies.update(techs => [...techs, techId]);
+    // Emitir evento al servidor para investigar tecnología
+    this.socketService.emit('game:research', {
+      gameId: gameContext.code,
+      researchId: techId
+    });
 
-    // Registrar en el log
+    // Registrar en el log (feedback local inmediato)
     const msg = this.i18n.translate('GAME.LOG_RESEARCH', { tech: tech.name });
     this.addLogEntry(msg, 'research');
   }
@@ -338,9 +427,20 @@ export class GamePageComponent implements OnInit {
 
   // --- Acciones del Lobby ---
   protected onStartGame(): void {
-    // En un caso real, esto enviaría un evento al servidor
-    // Para el prototipo, simplemente cambiamos de fase
-    this.currentPhase.set('PREPARATION');
+    const gameContext = this.gameService.gameContext();
+    if (!gameContext) {
+      console.error('[GAME] No hay contexto de partida disponible');
+      return;
+    }
+
+    if (!this.isHost()) {
+      this.avisoMessage.set(this.i18n.translate('GAME.MODALS.ONLY_HOST_CAN_START'));
+      this.showAvisoModal.set(true);
+      return;
+    }
+
+    // Emitir evento al servidor para iniciar la partida
+    this.socketService.emit('game:start', { gameId: gameContext.code });
     this.addLogEntry(this.i18n.translate('GAME.LOG_START'), 'system');
   }
 
@@ -380,20 +480,30 @@ export class GamePageComponent implements OnInit {
   }
 
   protected onLaunchAttack(troopIds: string[]): void {
-    // TODO: enviar ataque al servidor
-    console.log('Attack launched with troops:', troopIds);
+    const gameContext = this.gameService.gameContext();
+    const targetEnemy = this.targetEnemy();
     
+    if (!gameContext) {
+      console.error('[GAME] No hay contexto de partida disponible');
+      return;
+    }
+
+    if (!targetEnemy) {
+      console.warn('[GAME] No hay enemigo objetivo seleccionado');
+      return;
+    }
+
+    // Emitir evento al servidor para lanzar ataque
+    this.socketService.emit('game:attack', {
+      gameId: gameContext.code,
+      targetUsername: targetEnemy.username,
+      troopIds: troopIds
+    });
+
     // Registrar el ataque activo con camino visual
     const attacker = this.players().find((p) => p.username === this.username())
       ?? this.players().find((p) => p.clan === 'FURY');
-    const defender = this.players().find((p) => p.username === this.targetEnemy()?.username);
-
-    if (!attacker) {
-      console.warn('No se encontró al atacante local en players()', this.username());
-    }
-    if (!defender) {
-      console.warn('No se encontró al defensor target en players()', this.targetEnemy()?.username);
-    }
+    const defender = this.players().find((p) => p.username === targetEnemy?.username);
 
     if (attacker && defender && attacker.position && defender.position) {
       const pathId = this.generatePathId(attacker, defender);
@@ -414,8 +524,8 @@ export class GamePageComponent implements OnInit {
     }
     
     // Registrar en el log
-    if (this.targetEnemy()) {
-      const msg = this.i18n.translate('GAME.LOG_ATTACK', { target: this.targetEnemy()?.username ?? '' });
+    if (targetEnemy) {
+      const msg = this.i18n.translate('GAME.LOG_ATTACK', { target: targetEnemy.username ?? '' });
       this.addLogEntry(msg, 'attack');
     }
 
