@@ -88,11 +88,10 @@ export class GameService {
 
   /**
    * Se une a una partida existente.
-   * TODO: Implementar POST /api/games/join en el Middle Server si fuera necesario,
-   * por ahora usamos el flujo de socket directo.
+   * Emite el evento join_game y establece el contexto local.
    */
-  joinGame(code: string, clanId: string) {
-    this.setGameContext({ code, clan: clanId, isHost: false });
+  joinGame(code: string, clanId: string, isHost: boolean = false) {
+    this.setGameContext({ code, clan: clanId, isHost });
     this.socketService.connect();
     this.socketService.emit('join_game', { gameId: code, clanId });
   }

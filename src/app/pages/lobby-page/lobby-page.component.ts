@@ -108,8 +108,13 @@ export class LobbyPageComponent implements OnInit {
   }
 
   onEnterGame(gameId: string) {
-    // Navigate to game page
-    this.router.navigate(['/game']);
+    const game = this.activeGames().find(g => g.id === gameId);
+    if (game) {
+      // Unirse formalmente a la partida (unirse a la sala de sockets y setear contexto)
+      this.gameService.joinGame(game.id, game.clan);
+      // Navegar a la página del juego
+      this.router.navigate(['/game']);
+    }
   }
 
   onLeaveGame(gameId: string) {

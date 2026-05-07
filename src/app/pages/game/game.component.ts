@@ -89,8 +89,15 @@ export class GamePageComponent implements OnInit {
   protected readonly players = signal<PlayerNode[]>(this.getInitialPlayers());
 
   ngOnInit(): void {
-    // Preparar suscripciones (Dejado preparado para integración real)
+    // Preparar suscripciones
     this.setupGameSubscriptions();
+
+    // Asegurar que estamos unidos a la partida en el servidor (para refrescos de página)
+    const context = this.gameService.gameContext();
+    if (context) {
+      console.log('[GAME] Re-uniéndose a la partida:', context.code);
+      this.gameService.joinGame(context.code, context.clan, context.isHost);
+    }
   }
 
   /**
