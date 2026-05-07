@@ -18,6 +18,8 @@ export class AuthService {
   readonly isLoggedIn = computed(() => this.#session() !== null);
   readonly isAdmin = computed(() => this.#session()?.role === 'ADMIN');
   readonly username = computed(() => this.#session()?.username ?? '');
+  readonly userId = computed(() => this.#session()?.userId ?? '');
+  readonly characterId = signal<string | null>(null);
 
   /**
    * Establece la sesión tras recibir el JWT del Middle Server.
@@ -29,6 +31,7 @@ export class AuthService {
 
     this.#session.set({
       username: payload.username,
+      userId: payload.sub,
       role: payload.role,
       token,
     });
@@ -39,7 +42,15 @@ export class AuthService {
    */
   clearSession(): void {
     this.#session.set(null);
+    this.characterId.set(null);
     this.router.navigate(['/']);
+  }
+
+  /**
+   * Establece el ID del personaje activo para la partida actual.
+   */
+  setCharacterId(id: string): void {
+    this.characterId.set(id);
   }
 
   /**
@@ -56,6 +67,7 @@ export class AuthService {
   mockLogin(role: UserRole = 'USER'): void {
     this.#session.set({
       username: role === 'ADMIN' ? 'DebugAdmin' : 'Ragnar_Fury',
+      userId: 'mock-user-id-' + Math.random().toString(36).substring(7),
       role: role,
       token: 'mock-jwt-token-for-debug',
     });

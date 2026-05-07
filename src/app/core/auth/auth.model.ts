@@ -17,6 +17,7 @@ export interface JwtPayload {
 // Estado de sesión que expone el servicio
 export interface SessionState {
   username: string;
+  userId: string;
   role: UserRole;
   token: string;
 }

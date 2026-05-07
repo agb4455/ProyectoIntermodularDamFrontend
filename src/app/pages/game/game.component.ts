@@ -107,11 +107,24 @@ export class GamePageComponent implements OnInit {
 
     // Escuchar sincronización de estado general (fase, jugadores, etc)
     socket.on('game:state-sync', (data: any) => {
-      if (data.currentPhase) this.currentPhase.set(data.currentPhase);
-      if (data.players) this.players.set(data.players.map((p: any, i: number) => ({
-        ...p,
-        position: this.continentCoords[i] || this.continentCoords[5]
-      })));
+      console.log('[Socket] Sincronización de estado recibida:', data);
+      
+      // Guardar mi characterId si viene en el payload
+      if (data.myCharacterId) {
+        this.authService.setCharacterId(data.myCharacterId);
+      }
+      
+      if (data.phase) this.currentPhase.set(data.phase);
+      
+      if (data.players) {
+        // data.players es un objeto { characterId: player }, lo convertimos a array
+        const playersList = Object.values(data.players);
+        this.players.set(playersList.map((p: any, i: number) => ({
+          ...p,
+          username: p.username || `Vikingo_${i + 1}`,
+          position: this.continentCoords[i] || this.continentCoords[0]
+        })));
+      }
       if (data.characterHealth) this.health.set(data.characterHealth);
       console.log('[GAME] Estado sincronizado:', data);
     });
@@ -156,7 +169,7 @@ export class GamePageComponent implements OnInit {
 
     // Escuchar resultados de batalla
     socket.on('game:battle-result', (data: any) => {
-      if (data.defenderCharacterId === this.authService.characterId?.()) {
+      if (data.targetCharacterId === this.authService.characterId()) {
         if (data.characterHealth) this.health.set(data.characterHealth);
         if (data.battleLog) {
           this.addLogEntry(
