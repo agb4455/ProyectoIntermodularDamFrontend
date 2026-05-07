@@ -94,6 +94,6 @@ export class GameService {
   joinGame(code: string, clanId: string) {
     this.setGameContext({ code, clan: clanId, isHost: false });
     this.socketService.connect();
-    this.socketService.emit('join_game', { gameId: code });
+    this.socketService.emit('join_game', { gameId: code, clanId });
   }
 }

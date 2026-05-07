@@ -78,7 +78,7 @@ export class UnirsePartidaModalComponent implements OnInit {
   // Actualiza el código del juego introducido
   updateCode(event: Event): void {
     const input = event.target as HTMLInputElement;
-    this.gameCode.set(input.value.toUpperCase());
+    this.gameCode.set(input.value);
     
     // Si cambia el código, resetear la verificación y clanes
     this.isCodeVerified.set(false);
@@ -128,32 +128,24 @@ export class UnirsePartidaModalComponent implements OnInit {
     if (!this.selectedClan() || !this.gameCode().trim()) return;
     this.isJoining.set(true);
 
-    // TODO: Llamar al servidor para validar código y unirse
-    // const result = await this.gameService.joinGame(this.gameCode(), this.selectedClan()!);
-    // Si el servidor responde que la sala está llena, disparar lobbyFull.emit()
-
     const clanOption = this.clanes().find(c => c.id === this.selectedClan());
     const archetype = clanOption?.archetype || 'FURY';
 
-    // Simulación: Establecer contexto como JUGADOR (no host)
-    this.gameService.setGameContext({
-      code: this.gameCode(),
-      clan: archetype,
-      isHost: false
-    });
+    // Llamada real al servicio para emitir join_game via socket
+    this.gameService.joinGame(this.gameCode(), archetype);
 
-    // SIMULACIÓN: Si el código es 'FULL', disparamos el modal de sala llena
-    if (this.gameCode() === 'FULL') {
-      setTimeout(() => {
-        this.isJoining.set(false);
-        this.lobbyFull.emit();
-      }, 800);
-      return;
-    }
-
+    // Navegamos a la página de juego. El modal se cerrará automáticamente
+    // al destruirse el LobbyPageComponent, pero forzamos el cierre por seguridad.
     setTimeout(() => {
-      this.close();
-      this.router.navigate(['/game']);
+      console.log('[UnirsePartida] Navegando a /game...');
+      this.router.navigate(['/game']).then(success => {
+        if (success) {
+          this.close();
+        } else {
+          console.error('[UnirsePartida] Error al navegar a /game');
+          this.isJoining.set(false);
+        }
+      });
     }, 400);
   }
 }

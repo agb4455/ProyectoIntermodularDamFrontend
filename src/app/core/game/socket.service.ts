@@ -18,7 +18,7 @@ export class SocketService {
    * Si ya existe una conexión, no crea una nueva (una sesión por usuario).
    */
   connect(): void {
-    if (this.socket?.connected) {
+    if (this.socket) {
       return;
     }
 
@@ -64,10 +64,11 @@ export class SocketService {
    * Emite un evento al servidor.
    */
   emit(event: string, payload?: any): void {
-    if (!this.socket?.connected) {
-      console.warn(`[SocketService] Intento de emitir evento '${event}' sin estar conectado.`);
+    if (!this.socket) {
+      console.warn(`[SocketService] Intento de emitir evento '${event}' sin inicializar el socket.`);
       return;
     }
+    // No bloqueamos si no está conectado aún, dejamos que socket.io lo bufferee
     this.socket.emit(event, payload);
   }
 

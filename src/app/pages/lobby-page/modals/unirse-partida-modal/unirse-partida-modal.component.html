@@ -26,7 +26,7 @@
         [value]="gameCode()" 
         (input)="updateCode($event)"
         autocomplete="off"
-        maxlength="10"
+        maxlength="36"
       />
       <button class="btn-verify" [disabled]="!gameCode() || isVerifying()" (click)="verifyCode()">
         @if (isVerifying()) {
