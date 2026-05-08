@@ -261,6 +261,28 @@
   </app-aviso-modal>
 }
 
+<!-- Toast de Ataque Finalizado (Solo PC) -->
+@if (recentAttackResult()) {
+  <div class="attack-toast-container desktop-only" (click)="openAttackResultModal()">
+    <div class="attack-toast">
+      <div class="toast-icon">⚔️</div>
+      <div class="toast-content">
+        <span class="toast-title">Ataque Finalizado</span>
+        <span class="toast-desc">Haz clic para ver el reporte</span>
+      </div>
+      <button class="toast-close" (click)="$event.stopPropagation(); dismissAttackToast()">✕</button>
+    </div>
+  </div>
+}
+
+<!-- Modal de Resultado de Ataque -->
+@if (showAttackResultModal()) {
+  <app-attack-result-modal
+    [data]="recentAttackResult()"
+    (closeModal)="closeAttackResultModal()">
+  </app-attack-result-modal>
+}
+
 <!-- Modal de Lobby (Espera) -->
 @if (currentPhase() === 'WAITING') {
   <app-lobby-modal

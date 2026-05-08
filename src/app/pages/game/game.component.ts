@@ -10,6 +10,7 @@ import { LobbyModalComponent } from './modals/lobby.modal';
 import { AvisoModalComponent } from './modals/aviso.modal';
 import { ConfirmAbandonModalComponent } from './modals/confirm-abandon.modal';
 import { ArbolTecnologicoModalComponent } from './modals/arbol-tecnologico.modal';
+import { AttackResultModalComponent } from './modals/attack-result.modal';
 import { GameService } from '../../core/game/game.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { SocketService } from '../../core/game/socket.service';
@@ -33,6 +34,7 @@ import { GamePhase, PlayerNode, ActiveAttack } from './game.model';
     AvisoModalComponent,
     ConfirmAbandonModalComponent,
     ArbolTecnologicoModalComponent,
+    AttackResultModalComponent,
     TranslatePipe,
     UpperCasePipe,
     CommonModule
@@ -232,6 +234,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     // Escuchar resultados de batalla
     socket.on('game:battle-result', (data: any) => {
+      // Si somos el defensor
       if (data.targetCharacterId === this.authService.characterId()) {
         if (data.characterHealth) this.health.set(data.characterHealth);
         if (data.battleLog) {
@@ -241,6 +244,19 @@ export class GamePageComponent implements OnInit, OnDestroy {
           );
         }
       }
+      
+      // Si somos el atacante
+      if (data.attackerCharacterId === this.authService.characterId()) {
+        this.recentAttackResult.set(data);
+        
+        // Auto-dismiss del toast después de 15 segundos si no se interactúa con él
+        setTimeout(() => {
+          if (this.recentAttackResult() === data && !this.showAttackResultModal()) {
+            this.dismissAttackToast();
+          }
+        }, 15000);
+      }
+      
       console.log('[GAME] Resultado de batalla:', data);
     });
 
@@ -264,6 +280,26 @@ export class GamePageComponent implements OnInit, OnDestroy {
           'system'
         );
       }
+    });
+
+    // Escuchar el fin de la partida
+    socket.on('game:ended', (data: any) => {
+      this.currentPhase.set('FINISHED');
+      const isWinner = data.winnerCharacterId === this.authService.characterId();
+      
+      this.addLogEntry(
+        isWinner 
+          ? this.i18n.translate('GAME.LOG_GAME_WON') 
+          : this.i18n.translate('GAME.LOG_GAME_LOST'),
+        'system'
+      );
+      
+      // Mostrar alerta o modal de fin de partida (simplificado para MVP)
+      setTimeout(() => {
+        alert(isWinner ? '¡Has ganado la partida!' : 'La partida ha terminado.');
+        this.gameService.clearGameContext();
+        this.router.navigate(['/lobby']);
+      }, 3000);
     });
 
     console.log('[GAME] Suscripciones a eventos Socket.IO configuradas correctamente');
@@ -298,9 +334,12 @@ export class GamePageComponent implements OnInit, OnDestroy {
   protected readonly showDebugPanel = signal(false);
   protected readonly showAvisoModal = signal(false);
   protected readonly showAbandonModal = signal(false);
+  protected readonly showAttackResultModal = signal(false);
+  
   protected readonly avisoMessage = signal('');
   protected readonly targetEnemy = signal<EnemyTarget | null>(null);
   protected readonly selectedTroopsForAttack = signal<string[]>([]);
+  protected readonly recentAttackResult = signal<any>(null);
 
   // --- Ataque activo (camino visual) ---
   protected readonly activeAttack = signal<ActiveAttack | null>(null);
@@ -582,12 +621,31 @@ export class GamePageComponent implements OnInit, OnDestroy {
     this.showReglasModal.set(false);
   }
 
+  protected openAttackResultModal(): void {
+    this.showAttackResultModal.set(true);
+  }
+
+  protected closeAttackResultModal(): void {
+    this.showAttackResultModal.set(false);
+    this.recentAttackResult.set(null);
+  }
+
+  protected dismissAttackToast(): void {
+    this.recentAttackResult.set(null);
+  }
+
   protected openAbandon(): void {
     this.showAbandonModal.set(true);
   }
 
   protected onConfirmAbandon(): void {
     this.showAbandonModal.set(false);
+
+    const gameContext = this.gameService.gameContext();
+    if (gameContext) {
+      this.socketService.emit('game:abandon', { gameId: gameContext.code });
+    }
+
     this.gameService.clearGameContext();
     this.router.navigate(['/lobby']);
   }
