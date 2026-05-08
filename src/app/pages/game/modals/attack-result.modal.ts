@@ -6,7 +6,7 @@ import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 @Component({
   selector: 'app-attack-result-modal',
   standalone: true,
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule],
   template: `
     <div class="scrim" (click)="onClose()"></div>
     <div class="attack-result-modal">

@@ -181,10 +181,18 @@ export class GamePageComponent implements OnInit, OnDestroy {
       console.log('[GAME] Recursos actualizados:', data);
     });
 
+    // Escuchar nuevos logs compartidos
+    socket.on('game:new-log', (logEntry: GameLogEntry) => {
+      // Evitar duplicados si nosotros fuimos quienes emitimos este log
+      if (!this.gameLogs().some(l => l.id === logEntry.id)) {
+        this.gameLogs.update(logs => [logEntry, ...logs]);
+      }
+    });
+
     // Escuchar confirmación de entrenamiento iniciado
     socket.on('player:train-queued', (data: any) => {
       if (data.trainingQueue) {
-        this.addLogEntry(this.i18n.translate('GAME.LOG_TRAIN_CONFIRM'), 'train');
+        this.broadcastLogEntry(this.i18n.translate('GAME.LOG_TRAIN_CONFIRM'), 'train');
       }
       if (data.economicCredits !== undefined) this.gold.set(data.economicCredits);
       console.log('[GAME] Entrenamiento en cola:', data);
@@ -194,7 +202,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
     socket.on('player:troop-trained', (data: any) => {
       if (data.characterId === this.gameService.myCharacterId()) {
         const troopName = this.getTroopName(data.troop.typeId);
-        this.addLogEntry(this.i18n.translate('GAME.LOG_TRAIN_COMPLETE', { troop: troopName }), 'train');
+        this.broadcastLogEntry(this.i18n.translate('GAME.LOG_TRAIN_COMPLETE', { troop: troopName }), 'train');
       }
       console.log('[GAME] Tropa entrenada:', data);
     });
@@ -203,7 +211,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
     socket.on('player:research-started', (data: any) => {
       if (data.researchId) {
         this.unlockedTechnologies.update(techs => [...techs, data.researchId]);
-        this.addLogEntry(this.i18n.translate('GAME.LOG_RESEARCH_CONFIRM'), 'research');
+        this.broadcastLogEntry(this.i18n.translate('GAME.LOG_RESEARCH_CONFIRM'), 'research');
       }
       if (data.researchCredits !== undefined) this.researchPts.set(data.researchCredits);
       console.log('[GAME] Investigación iniciada:', data);
@@ -215,7 +223,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
         // Encontrar el nombre de la tecnología
         const tech = this.clanTechnologies().find(t => t.id === data.researchId);
         const techName = tech?.name || data.researchId;
-        this.addLogEntry(this.i18n.translate('GAME.LOG_RESEARCH_COMPLETE', { tech: techName }), 'research');
+        this.broadcastLogEntry(this.i18n.translate('GAME.LOG_RESEARCH_COMPLETE', { tech: techName }), 'research');
       }
       console.log('[GAME] Investigación completada:', data);
     });
@@ -223,7 +231,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
     // Escuchar ataques lanzados por otros jugadores
     socket.on('game:attack-launched', (data: any) => {
       if (data.fromPlayer && data.toPlayer) {
-        this.addLogEntry(
+        this.addLocalLogEntry(
           this.i18n.translate('GAME.LOG_ATTACK_RECEIVED', { attacker: data.fromPlayer }),
           'attack',
           data.fromPlayer
@@ -238,7 +246,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
       if (data.targetCharacterId === this.authService.characterId()) {
         if (data.characterHealth) this.health.set(data.characterHealth);
         if (data.battleLog) {
-          this.addLogEntry(
+          this.addLocalLogEntry(
             this.i18n.translate('GAME.LOG_BATTLE_RESULT', { attacker: data.attackerUsername }),
             'attack'
           );
@@ -264,7 +272,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
     socket.on('game:phase-changed', (data: any) => {
       if (data.newPhase) {
         this.currentPhase.set(data.newPhase);
-        this.addLogEntry(
+        this.addLocalLogEntry(
           this.i18n.translate('GAME.LOG_PHASE_CHANGE', { phase: data.newPhase }),
           'system'
         );
@@ -275,7 +283,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
     socket.on('game:player-eliminated', (data: any) => {
       if (data.characterId) {
         this.players.update(ps => ps.filter(p => p.characterId !== data.characterId));
-        this.addLogEntry(
+        this.addLocalLogEntry(
           this.i18n.translate('GAME.LOG_PLAYER_ELIMINATED', { player: data.username }),
           'system'
         );
@@ -287,7 +295,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
       this.currentPhase.set('FINISHED');
       const isWinner = data.winnerCharacterId === this.authService.characterId();
       
-      this.addLogEntry(
+      this.addLocalLogEntry(
         isWinner 
           ? this.i18n.translate('GAME.LOG_GAME_WON') 
           : this.i18n.translate('GAME.LOG_GAME_LOST'),
@@ -541,7 +549,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     // Registrar en el log (feedback local inmediato)
     const troopName = option.name;
-    this.addLogEntry(this.i18n.translate('GAME.LOG_TRAIN', { troop: troopName }), 'train');
+    this.broadcastLogEntry(this.i18n.translate('GAME.LOG_TRAIN', { troop: troopName }), 'train');
   }
 
   protected openTropas(): void {
@@ -578,7 +586,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     // Registrar en el log (feedback local inmediato)
     const msg = this.i18n.translate('GAME.LOG_RESEARCH', { tech: tech.name });
-    this.addLogEntry(msg, 'research');
+    this.broadcastLogEntry(msg, 'research');
   }
 
   protected openLog(): void {
@@ -592,7 +600,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
   /**
    * Añade una entrada al log de la partida
    */
-  private addLogEntry(action: string, type: GameLogEntry['type'], performer: string = this.username()): void {
+  private addLocalLogEntry(action: string, type: GameLogEntry['type'], performer: string = this.username()): void {
     const now = new Date();
     const timestamp = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
     
@@ -605,6 +613,32 @@ export class GamePageComponent implements OnInit, OnDestroy {
     };
 
     this.gameLogs.update(logs => [newEntry, ...logs]); // Nuevo arriba
+  }
+
+  /**
+   * Añade una entrada al log local y la retransmite a la sala entera
+   */
+  private broadcastLogEntry(action: string, type: GameLogEntry['type'], performer: string = this.username()): void {
+    const gameContext = this.gameService.gameContext();
+    if (!gameContext) return;
+    
+    const now = new Date();
+    const timestamp = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    
+    const newEntry: GameLogEntry = {
+      id: `log-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+      performer,
+      action,
+      timestamp,
+      type
+    };
+
+    this.gameLogs.update(logs => [newEntry, ...logs]);
+
+    this.socketService.emit('game:send-log', {
+      gameId: gameContext.code,
+      logEntry: newEntry
+    });
   }
 
   // --- Acciones de la barra superior ---
@@ -670,7 +704,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     // Emitir evento al servidor para iniciar la partida
     this.socketService.emit('game:start', { gameId: gameContext.code });
-    this.addLogEntry(this.i18n.translate('GAME.LOG_START'), 'system');
+    this.broadcastLogEntry(this.i18n.translate('GAME.LOG_START'), 'system');
   }
 
   // --- Clic en territorio enemigo ---
@@ -755,7 +789,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
     // Registrar en el log
     if (targetEnemy) {
       const msg = this.i18n.translate('GAME.LOG_ATTACK', { target: targetEnemy.username ?? '' });
-      this.addLogEntry(msg, 'attack');
+      this.broadcastLogEntry(msg, 'attack');
     }
 
     this.closeAtacarModal();

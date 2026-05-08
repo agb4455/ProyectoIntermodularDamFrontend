@@ -1,6 +1,6 @@
 import { ClanId } from './modals/attack.types';
 
-export type GamePhase = 'WAITING' | 'PREPARATION' | 'WAR' | 'END';
+export type GamePhase = 'WAITING' | 'PREPARATION' | 'WAR' | 'END' | 'FINISHED';
 
 export interface PlayerNode {
   characterId: string;
