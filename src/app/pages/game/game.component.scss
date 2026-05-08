@@ -147,6 +147,12 @@
   align-items: center;
   gap: 6px;
 
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &:hover {
     border-color: var(--color-gold);
     color: var(--color-gold);
@@ -255,6 +261,12 @@
   position: relative;
   background-color: var(--color-bg-primary);
   overflow: hidden;
+}
+
+.map-scroll-area {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .map-bg {
@@ -641,3 +653,102 @@
   from { transform: translateY(10px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+/* ==========================================================================
+   Ajustes para Móviles
+   ========================================================================== */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .map-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex: 1;
+  }
+
+  .map-scroll-area {
+    min-width: 800px;
+  }
+
+  .topbar-left {
+    width: auto;
+  }
+
+  .game-logo,
+  .player-info {
+    display: none;
+  }
+
+  /* Ajustes del topbar para evitar solapamiento */
+  .topbar {
+    padding: 0 10px;
+    gap: 5px;
+  }
+
+  .topbar-right {
+    width: auto;
+    gap: 5px;
+  }
+
+  .phase-indicator {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    white-space: nowrap;
+  }
+
+  .btn-abandon {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+  }
+
+  .btn-rules {
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+
+    .text {
+      display: none;
+    }
+
+    .icon {
+      display: flex;
+    }
+  }
+
+  .stats-card {
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 16px;
+    gap: 12px;
+    white-space: nowrap;
+
+    .stats-divider {
+      height: 24px;
+    }
+
+    .stat-health-value {
+      font-size: 0.88rem;
+    }
+  }
+
+  .actions-overlay {
+    position: relative;
+    width: 100%;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    top: auto;
+    transform: none;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 16px;
+    background-color: var(--color-bg-card);
+    border-top: 1px solid var(--color-border-default);
+    z-index: 30;
+  }
+}
+
