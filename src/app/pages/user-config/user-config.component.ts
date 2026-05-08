@@ -49,7 +49,7 @@ export class UserConfigComponent {
 
   // Acción: Editar Foto de Perfil
   onEditAvatar(): void {
-    console.log('Abriendo selector de avatar...');
+    // console.log('Abriendo selector de avatar...');
     this.prepareMinIOUpload();
   }
 
@@ -62,25 +62,25 @@ export class UserConfigComponent {
    */
   private prepareMinIOUpload(): void {
     // TODO: Implementar input type="file" y enviar multipart/form-data al Middle Server
-    console.warn('[CONFIG] Envío de avatar preparado. El Middle Server procesará la imagen.');
+    // console.warn('[CONFIG] Envío de avatar preparado. El Middle Server procesará la imagen.');
   }
 
   // Acción: Guardar cambios en el servidor
   onSave(): void {
-    console.log('Guardando cambios en el servidor...', {
+    /* console.log('Guardando cambios en el servidor...', {
       nombre: this.userName(),
       email: this.userEmail(),
       idioma: this.i18n.currentLang(),
       darkMode: this.isDarkMode()
-    });
+    }); */
     
     // TODO: Delegar persistencia al Middle Server (quien se comunica con el DB Server)
-    console.info('[CONFIG] Solicitud de guardado preparada para el Middle Server.');
+    // console.info('[CONFIG] Solicitud de guardado preparada para el Middle Server.');
   }
 
   // Acción: Descartar cambios
   onCancel(): void {
-    console.log('Cambios descartados');
+    // console.log('Cambios descartados');
     // Reiniciar valores o volver al Lobby
   }
 }

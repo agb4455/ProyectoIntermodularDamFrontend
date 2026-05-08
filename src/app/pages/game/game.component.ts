@@ -112,7 +112,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
     // Asegurar que estamos unidos a la partida en el servidor (para refrescos de página)
     const context = this.gameService.gameContext();
     if (context) {
-      console.log('[GAME] Re-uniéndose a la partida:', context.code);
+      // console.log('[GAME] Re-uniéndose a la partida:', context.code);
       this.gameService.joinGame(context.code, context.clan, context.isHost);
     }
   }
@@ -130,14 +130,14 @@ export class GamePageComponent implements OnInit, OnDestroy {
   private setupGameSubscriptions(): void {
     const socket = this.socketService.getSocket();
     if (!socket) {
-      console.warn('[GAME] Socket no disponible. Reintentando en 1s...');
+      // console.warn('[GAME] Socket no disponible. Reintentando en 1s...');
       setTimeout(() => this.setupGameSubscriptions(), 1000);
       return;
     }
 
     // Escuchar sincronización de estado general (fase, jugadores, etc)
     socket.on('game:state-sync', (data: any) => {
-      console.log('[Socket] Sincronización de estado recibida:', data);
+      // console.log('[Socket] Sincronización de estado recibida:', data);
       
       // Guardar mi characterId si viene en el payload
       if (data.myCharacterId) {
@@ -171,14 +171,14 @@ export class GamePageComponent implements OnInit, OnDestroy {
         }
       }
       
-      console.log('[GAME] Estado sincronizado:', data);
+      // console.log('[GAME] Estado sincronizado:', data);
     });
 
     // Escuchar actualización de recursos (oro y créditos de investigación)
     socket.on('player:resources-updated', (data: any) => {
       if (data.economicCredits !== undefined) this.gold.set(data.economicCredits);
       if (data.researchCredits !== undefined) this.researchPts.set(data.researchCredits);
-      console.log('[GAME] Recursos actualizados:', data);
+      // console.log('[GAME] Recursos actualizados:', data);
     });
 
     // Escuchar nuevos logs compartidos
@@ -195,7 +195,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
         this.broadcastLogEntry(this.i18n.translate('GAME.LOG_TRAIN_CONFIRM'), 'train');
       }
       if (data.economicCredits !== undefined) this.gold.set(data.economicCredits);
-      console.log('[GAME] Entrenamiento en cola:', data);
+      // console.log('[GAME] Entrenamiento en cola:', data);
     });
 
     // Escuchar entrenamiento finalizado
@@ -204,7 +204,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
         const troopName = this.getTroopName(data.troop.typeId);
         this.broadcastLogEntry(this.i18n.translate('GAME.LOG_TRAIN_COMPLETE', { troop: troopName }), 'train');
       }
-      console.log('[GAME] Tropa entrenada:', data);
+      // console.log('[GAME] Tropa entrenada:', data);
     });
 
     // Escuchar confirmación de investigación iniciada
@@ -214,7 +214,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
         this.broadcastLogEntry(this.i18n.translate('GAME.LOG_RESEARCH_CONFIRM'), 'research');
       }
       if (data.researchCredits !== undefined) this.researchPts.set(data.researchCredits);
-      console.log('[GAME] Investigación iniciada:', data);
+      // console.log('[GAME] Investigación iniciada:', data);
     });
 
     // Escuchar investigación finalizada
@@ -225,7 +225,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
         const techName = tech?.name || data.researchId;
         this.broadcastLogEntry(this.i18n.translate('GAME.LOG_RESEARCH_COMPLETE', { tech: techName }), 'research');
       }
-      console.log('[GAME] Investigación completada:', data);
+      // console.log('[GAME] Investigación completada:', data);
     });
 
     // Escuchar ataques lanzados por otros jugadores
@@ -237,7 +237,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
           data.fromPlayer
         );
       }
-      console.log('[GAME] Ataque recibido:', data);
+      // console.log('[GAME] Ataque recibido:', data);
     });
 
     // Escuchar resultados de batalla
@@ -265,7 +265,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
         }, 15000);
       }
       
-      console.log('[GAME] Resultado de batalla:', data);
+      // console.log('[GAME] Resultado de batalla:', data);
     });
 
     // Escuchar cambios de fase
@@ -310,7 +310,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
       }, 3000);
     });
 
-    console.log('[GAME] Suscripciones a eventos Socket.IO configuradas correctamente');
+    // console.log('[GAME] Suscripciones a eventos Socket.IO configuradas correctamente');
   }
 
   private getInitialPlayers(): PlayerNode[] {
@@ -537,7 +537,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     const gameContext = this.gameService.gameContext();
     if (!gameContext) {
-      console.error('[GAME] No hay contexto de partida disponible');
+      // console.error('[GAME] No hay contexto de partida disponible');
       return;
     }
 
@@ -574,7 +574,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     const gameContext = this.gameService.gameContext();
     if (!gameContext) {
-      console.error('[GAME] No hay contexto de partida disponible');
+      // console.error('[GAME] No hay contexto de partida disponible');
       return;
     }
 
@@ -692,7 +692,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
   protected onStartGame(): void {
     const gameContext = this.gameService.gameContext();
     if (!gameContext) {
-      console.error('[GAME] No hay contexto de partida disponible');
+      // console.error('[GAME] No hay contexto de partida disponible');
       return;
     }
 
@@ -747,12 +747,12 @@ export class GamePageComponent implements OnInit, OnDestroy {
     const targetEnemy = this.targetEnemy();
     
     if (!gameContext) {
-      console.error('[GAME] No hay contexto de partida disponible');
+      // console.error('[GAME] No hay contexto de partida disponible');
       return;
     }
 
     if (!targetEnemy) {
-      console.warn('[GAME] No hay enemigo objetivo seleccionado');
+      // console.warn('[GAME] No hay enemigo objetivo seleccionado');
       return;
     }
 
@@ -849,7 +849,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
   }
 
   protected debugTogglePhase(): void {
-    const phases: GamePhase[] = ['WAITING', 'PREPARATION', 'WAR', 'END'];
+    const phases: GamePhase[] = ['WAITING', 'PREPARATION', 'WAR', 'END', 'FINISHED'];
     const current = this.currentPhase();
     const nextIndex = (phases.indexOf(current) + 1) % phases.length;
     this.currentPhase.set(phases[nextIndex]);
@@ -874,7 +874,12 @@ export class GamePageComponent implements OnInit, OnDestroy {
         clanId: this.getClanIdByArchetype(clan),
         username: `Vikingo_${id}`,
         position: this.continentCoords[nextIndex] || this.continentCoords[5],
-        health: { current: 3000, max: 3000 }
+        health: { current: 3000, max: 3000 },
+        troops: [],
+        trainingQueue: [],
+        unlockedResearches: [],
+        economicCredits: 0,
+        researchCredits: 0
       }];
     });
   }

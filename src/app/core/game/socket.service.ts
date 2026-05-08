@@ -24,7 +24,7 @@ export class SocketService {
 
     const token = this.authService.getToken();
     if (!token) {
-      console.warn('[SocketService] Intento de conexión sin token JWT. Abortando.');
+      // console.warn('[SocketService] Intento de conexión sin token JWT. Abortando.');
       return;
     }
 
@@ -38,15 +38,15 @@ export class SocketService {
     });
 
     this.socket.on('connect', () => {
-      console.log('[SocketService] Conectado al servidor WebSocket:', this.socket?.id);
+      // console.log('[SocketService] Conectado al servidor WebSocket:', this.socket?.id);
     });
 
     this.socket.on('disconnect', (reason: string) => {
-      console.log('[SocketService] Desconectado del servidor WebSocket:', reason);
+      // console.log('[SocketService] Desconectado del servidor WebSocket:', reason);
     });
 
     this.socket.on('connect_error', (error: Error) => {
-      console.error('[SocketService] Error de conexión:', error.message);
+      // console.error('[SocketService] Error de conexión:', error.message);
     });
   }
 
@@ -65,7 +65,7 @@ export class SocketService {
    */
   emit(event: string, payload?: any): void {
     if (!this.socket) {
-      console.warn(`[SocketService] Intento de emitir evento '${event}' sin inicializar el socket.`);
+      // console.warn(`[SocketService] Intento de emitir evento '${event}' sin inicializar el socket.`);
       return;
     }
     // No bloqueamos si no está conectado aún, dejamos que socket.io lo bufferee
