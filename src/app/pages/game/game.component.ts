@@ -149,15 +149,25 @@ export class GamePageComponent implements OnInit, OnDestroy {
       
       if (data.players) {
         // data.players es un objeto { characterId: player }, lo convertimos a array
-        const playersList = Object.values(data.players);
-        this.players.set(playersList.map((p: any, i: number) => ({
+        // Usamos un Map temporal para asegurar unicidad por characterId si el payload viniera corrupto
+        const playersMap = new Map<string, any>();
+        Object.entries(data.players).forEach(([id, p]: [string, any]) => {
+          playersMap.set(id, {
+            ...p,
+            characterId: id,
+            clan: p.clan || 'FURY',
+            username: p.username || `Vikingo_${id.substring(0, 4)}`,
+            health: { 
+              current: p.capitalHealth ?? 3000, 
+              max: p.maxCapitalHealth ?? 3000 
+            }
+          });
+        });
+
+        const playersList = Array.from(playersMap.values());
+        this.players.set(playersList.map((p, i) => ({
           ...p,
-          username: p.username || `Vikingo_${i + 1}`,
-          position: this.continentCoords[i] || this.continentCoords[0],
-          health: { 
-            current: p.capitalHealth ?? 3000, 
-            max: p.maxCapitalHealth ?? 3000 
-          }
+          position: this.continentCoords[i] || this.continentCoords[0]
         })));
 
         // Sincronizar mis recursos locales si estoy en la lista

@@ -13,9 +13,9 @@
 
   <!-- Lista de Jugadores -->
   <div class="players-list">
-    @for (player of players(); track player.username; let i = $index) {
+    @for (player of players(); track player.characterId; let i = $index) {
       <div class="player-item" (click)="onPlayerClick(player)">
-        <div class="clan-icon" [class]="'clan-' + player.clan.toLowerCase()">
+        <div class="clan-icon" [class]="'clan-' + (player.clan || 'FURY').toLowerCase()">
           @switch (player.clan) {
             @case ('FURY') { 🪓 }
             @case ('DIVINE') { ✨ }

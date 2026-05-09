@@ -68,10 +68,10 @@
 
     <!-- Nodos de jugadores sobre los continentes -->
     <div class="territory-overlay">
-      @for (player of players(); track player.username) {
+      @for (player of players(); track player.characterId) {
         <div
           class="player-node"
-          [class]="'player-node node-' + player.clan.toLowerCase()"
+          [class]="'player-node node-' + (player.clan || 'FURY').toLowerCase()"
           [style.left.%]="player.position?.x ?? 0"
           [style.top.%]="player.position?.y ?? 0"
           [title]="player.username"
@@ -86,7 +86,7 @@
             </div>
           }
 
-          <div class="player-clan-icon" [class]="'clan-' + player.clan.toLowerCase()">
+          <div class="player-clan-icon" [class]="'clan-' + (player.clan || 'FURY').toLowerCase()">
             @switch (player.clan) {
               @case ('FURY') { 🪓 }
               @case ('DIVINE') { ✨ }
