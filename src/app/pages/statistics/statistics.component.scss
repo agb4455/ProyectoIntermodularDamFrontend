@@ -184,3 +184,46 @@
     transform: translateY(0);
   }
 }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 600px) {
+  .stat-item {
+    padding: 12px 15px;
+  }
+
+  .stat-icon-wrapper {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    padding: 6px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .stat-label {
+    font-size: clamp(0.75rem, 3.5vw, 0.95rem);
+    white-space: nowrap;
+  }
+
+  .stat-spacer {
+    margin: 0 8px;
+    min-width: 5px;
+  }
+
+  .stat-value {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+    white-space: nowrap;
+  }
+
+  .stats-panel-bar {
+    .glory-text {
+      font-size: 1rem;
+    }
+  }
+}
