@@ -243,6 +243,7 @@ export const es = {
         READY: 'LISTO',
         TRAINING: 'ENTRENANDO',
         QUEUED: 'EN COLA',
+        DEPLOYED: 'EN CAMPAÑA',
         EMPTY_TERRITORY: 'No hay tropas en este territorio'
       },
       RULES: {

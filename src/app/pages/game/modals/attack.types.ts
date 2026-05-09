@@ -32,6 +32,7 @@ export enum TroopType {
 
 // Información de enemigo a atacar
 export interface EnemyTarget {
+  characterId: string;
   clan: ClanId;
   username: string;
   health: { current: number; max: number };

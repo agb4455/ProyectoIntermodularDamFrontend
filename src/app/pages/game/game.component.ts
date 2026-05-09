@@ -736,6 +736,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     // Abrir modal de ataque (permitido en otras fases)
     this.targetEnemy.set({
+      characterId: player.characterId,
       clan: player.clan,
       username: player.username,
       health: player.health ?? { current: 3000, max: 3000 },
@@ -772,7 +773,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
     // Emitir evento al servidor para lanzar ataque
     this.socketService.emit('game:attack', {
       gameId: gameContext.code,
-      targetUsername: targetEnemy.username,
+      targetCharacterId: targetEnemy.characterId,
       troopIds: troopIds
     });
 

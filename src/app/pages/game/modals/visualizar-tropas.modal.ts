@@ -42,7 +42,8 @@ export class VisualizarTropasModalComponent {
   });
 
   // --- Métodos ---
-  protected getTroopStatus(troop: Troop): 'READY' | 'TRAINING' | 'QUEUED' {
+  protected getTroopStatus(troop: Troop): 'READY' | 'TRAINING' | 'QUEUED' | 'DEPLOYED' {
+    if (troop.deployed) return 'DEPLOYED';
     if (!troop.isTraining) return 'READY';
     return troop.id === this.activeTrainingId() ? 'TRAINING' : 'QUEUED';
   }

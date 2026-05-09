@@ -38,8 +38,12 @@ export class AnadirTropaAtaqueModalComponent {
   }
 
   // --- Estado derivado ---
+  readonly selectableTroops = computed(() => 
+    this.availableTroops().filter(t => !t.deployed && !t.isTraining && t.currentHealth > 0)
+  );
+
   readonly gridCols = computed(() => {
-    const count = this.availableTroops().length;
+    const count = this.selectableTroops().length;
     return count > 0 ? Math.ceil(Math.sqrt(count)) : 0;
   });
 

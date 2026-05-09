@@ -11,7 +11,7 @@
       <div
         class="troops-grid"
         [style.grid-template-columns]="'repeat(' + gridCols() + ', 1fr)'">
-        @for (troop of availableTroops(); track troop.id) {
+        @for (troop of selectableTroops(); track troop.id) {
           <div
             class="grid-cell troop-card"
             [class.selected]="isTroopSelected(troop.id)"
