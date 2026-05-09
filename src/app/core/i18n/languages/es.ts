@@ -299,5 +299,38 @@ export const es = {
       TITLE: 'Ataque Finalizado',
       DESC: 'Haz clic para ver el reporte'
     }
+  },
+  ADMIN: {
+    TITLE: 'Panel de Administración',
+    TOTAL_USERS: 'Usuarios Totales',
+    TOTAL_GAMES: 'Partidas Totales',
+    BANNED_USERS: 'Usuarios Baneados',
+    REALTIME_MONITORING: 'Monitoreo en Tiempo Real',
+    ACTIVE_USERS: 'Usuarios Activos',
+    ACTIVE_GAMES: 'Partidas Activas',
+    FINISHED_GAMES_HOUR: 'Partidas Terminadas (Última hora)',
+    SERVER_LOAD: 'Carga del Servidor',
+    BAN_MANAGEMENT: 'Gestión de Baneos',
+    SEARCH_USER: 'Buscar usuario para banear...',
+    UNBAN: 'LEVANTAR BAN',
+    BAN: 'BANEAR',
+    BANNED_BADGE: 'BANEADO',
+    TABLE: {
+      USER: 'Usuario',
+      EMAIL: 'Email',
+      CREATED_AT: 'Registrado el',
+      STATUS: 'Estado',
+      ACTION: 'Acción'
+    }
+  },
+  STATISTICS: {
+    TITLE: 'Tus Hazañas',
+    GLORY: 'Gloria Eterna',
+    TIME: 'Tiempo de Juego',
+    MONEY: 'Créditos Ganados',
+    TRAINED: 'Tropas Entrenadas',
+    DEPLOYED: 'Tropas Desplegadas',
+    ATTACKS: 'Ataques Realizados',
+    WINS: 'Victorias'
   }
 };

@@ -1,6 +1,6 @@
 <div class="stats-page">
   <header class="stats-header">
-    <h1 class="stats-title">ESTADÍSTICAS</h1>
+    <h1 class="stats-title">{{ 'STATISTICS.TITLE' | translate }}</h1>
   </header>
 
   <main class="stats-card">
@@ -46,7 +46,7 @@
               }
             }
           </div>
-          <span class="stat-label">{{ stat.label }}</span>
+          <span class="stat-label">{{ stat.label | translate }}</span>
           <div class="stat-spacer"></div>
           <span class="stat-value">{{ stat.value }}</span>
         </div>

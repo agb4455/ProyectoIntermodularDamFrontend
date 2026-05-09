@@ -299,5 +299,38 @@ export const en = {
       TITLE: 'Attack Finished',
       DESC: 'Click to view report'
     }
+  },
+  ADMIN: {
+    TITLE: 'Oracle Panel',
+    TOTAL_USERS: 'Total Warriors',
+    TOTAL_GAMES: 'Total Sagas',
+    BANNED_USERS: 'Exiled Warriors',
+    REALTIME_MONITORING: 'Real-time Visions',
+    ACTIVE_USERS: 'Active Warriors',
+    ACTIVE_GAMES: 'Active Sagas',
+    FINISHED_GAMES_HOUR: 'Finished Sagas (Last hour)',
+    SERVER_LOAD: 'Oracle Burden',
+    BAN_MANAGEMENT: 'Exile Management',
+    SEARCH_USER: 'Search warrior to exile...',
+    UNBAN: 'LIFT EXILE',
+    BAN: 'EXILE',
+    BANNED_BADGE: 'EXILED',
+    TABLE: {
+      USER: 'Warrior',
+      EMAIL: 'Email',
+      CREATED_AT: 'Oath Sworn',
+      STATUS: 'State',
+      ACTION: 'Action'
+    }
+  },
+  STATISTICS: {
+    TITLE: 'Your Sagas',
+    GLORY: 'Eternal Glory',
+    TIME: 'Battle Time',
+    MONEY: 'Spoils Won',
+    TRAINED: 'Warriors Trained',
+    DEPLOYED: 'Warriors Deployed',
+    ATTACKS: 'Raids Launched',
+    WINS: 'Victories'
   }
 };

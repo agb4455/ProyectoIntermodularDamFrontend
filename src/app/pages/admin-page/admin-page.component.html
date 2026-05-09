@@ -1,21 +1,21 @@
 <div class="admin-dashboard">
   <!-- LEFT PANEL: TOTALS -->
   <aside class="sidebar">
-    <h2>Administración</h2>
+    <h2>{{ 'ADMIN.TITLE' | translate }}</h2>
     
     <div class="global-stats">
       <div class="stat-card">
-        <div class="stat-label">Usuarios Totales</div>
+        <div class="stat-label">{{ 'ADMIN.TOTAL_USERS' | translate }}</div>
         <div class="stat-value">{{ globalStats().totalUsers }}</div>
       </div>
       
       <div class="stat-card">
-        <div class="stat-label">Partidas Totales</div>
+        <div class="stat-label">{{ 'ADMIN.TOTAL_GAMES' | translate }}</div>
         <div class="stat-value">{{ globalStats().totalGames }}</div>
       </div>
       
       <div class="stat-card danger">
-        <div class="stat-label">Usuarios Baneados</div>
+        <div class="stat-label">{{ 'ADMIN.BANNED_USERS' | translate }}</div>
         <div class="stat-value">{{ globalStats().bannedUsers }}</div>
       </div>
     </div>
@@ -26,27 +26,27 @@
     
     <!-- MONITORING / GRAPH AREA -->
     <section class="metrics-container">
-      <h3>Monitoreo en Tiempo Real</h3>
+      <h3>{{ 'ADMIN.REALTIME_MONITORING' | translate }}</h3>
       <div class="metrics-grid">
         
         <div class="metric-box">
           <div class="metric-value highlight">{{ monitoringMetrics().activeUsers }}</div>
-          <div class="metric-label">Usuarios Activos</div>
+          <div class="metric-label">{{ 'ADMIN.ACTIVE_USERS' | translate }}</div>
         </div>
 
         <div class="metric-box">
           <div class="metric-value highlight">{{ monitoringMetrics().activeGames }}</div>
-          <div class="metric-label">Partidas Activas</div>
+          <div class="metric-label">{{ 'ADMIN.ACTIVE_GAMES' | translate }}</div>
         </div>
 
         <div class="metric-box">
           <div class="metric-value">{{ monitoringMetrics().finishedGamesLastHour }}</div>
-          <div class="metric-label">Partidas Terminadas<br>(Última hora)</div>
+          <div class="metric-label">{{ 'ADMIN.FINISHED_GAMES_HOUR' | translate }}</div>
         </div>
 
         <div class="metric-box load">
           <div class="metric-value warning">{{ monitoringMetrics().serverLoad }}<span class="unit">%</span></div>
-          <div class="metric-label">Carga del Servidor</div>
+          <div class="metric-label">{{ 'ADMIN.SERVER_LOAD' | translate }}</div>
         </div>
 
       </div>
@@ -55,7 +55,7 @@
     <!-- BANS SECTION -->
     <section class="bans-container">
       <div class="bans-header">
-        <h2>Gestión de Baneos</h2>
+        <h2>{{ 'ADMIN.BAN_MANAGEMENT' | translate }}</h2>
       </div>
 
       <!-- Tabla de baneos activos sólamente -->
@@ -63,21 +63,21 @@
         <table class="bans-table">
           <thead>
             <tr>
-              <th>Usuario</th>
-              <th>Motivo</th>
-              <th>Expira en</th>
-              <th>Estado</th>
-              <th>Acción</th>
+              <th>{{ 'ADMIN.TABLE.USER' | translate }}</th>
+              <th>{{ 'ADMIN.TABLE.EMAIL' | translate }}</th>
+              <th>{{ 'ADMIN.TABLE.CREATED_AT' | translate }}</th>
+              <th>{{ 'ADMIN.TABLE.STATUS' | translate }}</th>
+              <th>{{ 'ADMIN.TABLE.ACTION' | translate }}</th>
             </tr>
           </thead>
           <tbody>
-            @for (ban of bans(); track ban.id) {
+            @for (user of bans(); track user.id) {
               <tr>
-                <td><strong>{{ ban.user }}</strong></td>
-                <td>{{ ban.reason }}</td>
-                <td>{{ ban.expiresIn }}</td>
-                <td><span class="badge badge-active">Activo</span></td>
-                <td><button class="btn" (click)="unban(ban.id)">LEVANTAR BAN</button></td>
+                <td><strong>{{ user.username }}</strong></td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.createdAt | date:'short' }}</td>
+                <td><span class="badge badge-active">{{ 'ADMIN.BANNED_BADGE' | translate }}</span></td>
+                <td><button class="btn" (click)="unban(user.id)">{{ 'ADMIN.UNBAN' | translate }}</button></td>
               </tr>
             }
           </tbody>
@@ -87,16 +87,16 @@
       <!-- Buscador para añadir ban --- al pie de la tarjeta, ancho completo -->
       <div class="bans-footer">
         <div class="search-wrapper">
-          <input type="text" class="search-input" placeholder="Buscar usuario para banear..." [value]="searchQuery()" (input)="updateSearch($event)">
+          <input type="text" class="search-input" [placeholder]="'ADMIN.SEARCH_USER' | translate" [value]="searchQuery()" (input)="updateSearch($event)">
           @if (searchResults().length > 0) {
             <div class="search-dropdown">
-              @for (user of searchResults(); track user.username) {
+              @for (user of searchResults(); track user.id) {
                 <div class="dropdown-item">
                   <div class="user-info">
                     <span class="username">{{ user.username }}</span>
-                    <span class="status">{{ user.status }}</span>
+                    <span class="status">{{ user.role }}</span>
                   </div>
-                  <button class="btn btn-danger solid" (click)="banUser(user.username)">BANEAR</button>
+                  <button class="btn btn-danger solid" (click)="banUser(user.id)">{{ 'ADMIN.BAN' | translate }}</button>
                 </div>
               }
             </div>
