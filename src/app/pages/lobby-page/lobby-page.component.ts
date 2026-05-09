@@ -170,7 +170,17 @@ export class LobbyPageComponent implements OnInit {
 
   onLeaveGame(gameId: string) {
     if (confirm(this.i18n.translate('LOBBY.MESSAGES.CONFIRM_LEAVE'))) {
-      this.activeGames.update(games => games.filter(g => g.id !== gameId));
+      // Comunicar el abandono al servidor antes de actualizar la UI
+      this.gameService.leaveGame(gameId).subscribe({
+        next: () => {
+          // Eliminar la tarjeta del listado local solo tras confirmación del servidor
+          this.activeGames.update(games => games.filter(g => g.id !== gameId));
+        },
+        error: (err) => {
+          // La partida posiblemente ya inició: informar al usuario
+          alert(err?.message ?? 'No se pudo abandonar la partida. Inténtalo desde dentro del juego.');
+        }
+      });
     }
   }
 

@@ -2,7 +2,7 @@ import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SocketService } from './socket.service';
 import { AppConfigService } from '../config/app-config.service';
-import { Observable, tap, map } from 'rxjs';
+import { Observable, tap, map, switchMap, throwError, race } from 'rxjs';
 
 export interface GameContext {
   code: string;
@@ -98,6 +98,32 @@ export class GameService {
           clan: clanId,
           isHost: true
         });
+      })
+    );
+  }
+
+  /**
+   * Sale de una partida en fase waiting desde el lobby.
+   * Emite lobby:leave y espera confirmación lobby:left.
+   * Limpia el gameContext si la partida abandonada era la activa.
+   */
+  leaveGame(gameId: string): Observable<{ gameId: string }> {
+    this.socketService.connect();
+    this.socketService.emit('lobby:leave', { gameId });
+
+    // Escuchar confirmación o error, race entre los dos
+    return race(
+      this.socketService.listenOnce('lobby:left'),
+      this.socketService.listenOnce('lobby:leave-error').pipe(
+        switchMap(err => throwError(() => new Error(err?.message ?? 'Error al salir del lobby')))
+      )
+    ).pipe(
+      tap(() => {
+        // Limpiar el contexto si era la partida activa
+        const ctx = this.#gameContext();
+        if (ctx && (ctx.code === gameId || ctx.code.startsWith(gameId.substring(0, 6)))) {
+          this.clearGameContext();
+        }
       })
     );
   }

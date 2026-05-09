@@ -55,4 +55,28 @@ export class AuthApiService {
     const body: RegisterCredentials = { username, email, password };
     return this.http.post<LoginResponse>(url, body);
   }
+
+  /**
+   * Obtiene el perfil del usuario autenticado desde el Middle Server.
+   */
+  getProfile(): Observable<{ email: string; username: string; avatarUrl: string }> {
+    const url = `${this.configService.config.middleServerUrl}/api/profile`;
+    return this.http.get<{ email: string; username: string; avatarUrl: string }>(url);
+  }
+
+  /**
+   * Actualiza el correo electrónico del usuario.
+   */
+  updateEmail(email: string): Observable<void> {
+    const url = `${this.configService.config.middleServerUrl}/api/profile/email`;
+    return this.http.put<void>(url, { email });
+  }
+
+  /**
+   * Cambia la contraseña del usuario.
+   */
+  changePassword(currentPassword: string, newPassword: string): Observable<void> {
+    const url = `${this.configService.config.middleServerUrl}/api/profile/password`;
+    return this.http.put<void>(url, { currentPassword, newPassword });
+  }
 }

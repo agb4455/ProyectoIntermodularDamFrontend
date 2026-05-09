@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthApiService } from '../../../core/auth/auth-api.service';
 
 @Component({
   selector: 'app-cambiar-contrasena-modal',
@@ -138,7 +139,7 @@ export class CambiarContrasenaModalComponent {
 
   passwordForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authApiService: AuthApiService) {
     this.passwordForm = this.fb.group({
       currentPassword: ['', [Validators.required]],
       newPassword: ['', [Validators.required, Validators.minLength(8)]],
@@ -157,12 +158,22 @@ export class CambiarContrasenaModalComponent {
   onSubmit() {
     if (this.passwordForm.invalid) return;
     this.loading.set(true);
+    this.error.set('');
     
-    // Simulación de cambio de contraseña
-    setTimeout(() => {
-      this.loading.set(false);
-      this.success.set(true);
-      setTimeout(() => this.onClose(), 2000);
-    }, 1500);
+    const { currentPassword, newPassword } = this.passwordForm.value;
+
+    this.authApiService.changePassword(currentPassword, newPassword).subscribe({
+      next: () => {
+        this.loading.set(false);
+        this.success.set(true);
+        setTimeout(() => this.onClose(), 2000);
+      },
+      error: (err) => {
+        this.loading.set(false);
+        // Mostrar mensaje de error (401 u otros)
+        const msg = err.status === 401 ? 'La contraseña actual es incorrecta' : 'Error al cambiar la contraseña';
+        this.error.set(msg);
+      }
+    });
   }
 }
