@@ -67,7 +67,8 @@ export const en = {
       DEFEAT: 'Defeat'
     },
     MESSAGES: {
-      CONFIRM_LEAVE: 'Are you sure you want to abandon this game? You will lose automatically.'
+      CONFIRM_LEAVE: 'Are you sure you want to abandon this game? You will lose automatically.',
+      LEAVE_ERROR: 'Could not abandon the game. Try from within the game.'
     },
     MODALS: {
       CREATE: {
@@ -122,7 +123,8 @@ export const en = {
       REQUIRED_FIELDS: 'Please complete all fields correctly',
       LOGIN_ERROR: 'Error during sign in. Try again.',
       REGISTER_ERROR: 'Error during registration. Try again.'
-    }
+    },
+    EMAIL: 'Email'
   },
   CONFIG: {
     TITLE: 'WARRIOR SETTINGS',
@@ -133,14 +135,18 @@ export const en = {
     LIGHT_MODE: 'Odin\'s Day',
     BTN_SAVE: 'SAVE CHANGES',
     BTN_CANCEL: 'DISCARD',
-    CHANGE_PASSWORD: 'Change Password'
+    CHANGE_PASSWORD: 'Change Password',
+    SECURITY: 'SECURITY',
+    SECURITY_DESC: 'Secure your access',
+    LANGUAGE_DESC: 'Battle language'
   },
   GAME: {
     PHASES: {
       WAITING: 'WAITING',
       PREPARATION: 'PREPARATION',
       WAR: 'WAR',
-      END: 'FINISH'
+      END: 'FINISH',
+      FINISHED: 'CONCLUDED'
     },
     STATS: {
       HEALTH: 'Health',
@@ -167,6 +173,11 @@ export const en = {
     LOG_START: 'has started the game',
     LOG_PHASE_CHANGE: 'Phase has changed to: {{ phase }}',
     LOG_ATTACK: 'has launched an attack against {{ target }}',
+    LOG_ATTACK_RECEIVED: 'WATCH OUT! {{ attacker }} is attacking you',
+    LOG_BATTLE_RESULT: 'The battle against {{ attacker }} has ended',
+    LOG_PLAYER_ELIMINATED: '{{ player }} has been eliminated from the map',
+    LOG_GAME_WON: 'YOU HAVE CONQUERED THE NORTH! Supreme victory',
+    LOG_GAME_LOST: 'Your capital has fallen. Valhalla awaits you',
     LOG_TRAIN: 'has started training {{ troop }}',
     LOG_TRAIN_CONFIRM: 'Recruitment confirmed by the Great Hall',
     LOG_TRAIN_COMPLETE: '{{ troop }} has joined the ranks',
@@ -182,6 +193,16 @@ export const en = {
         BTN_LEAVE: 'RETREAT'
       },
       PREPARATION_AVISO: 'In the preparation phase you cannot attack. Take the opportunity to train troops and improve your clan.',
+      ONLY_HOST_CAN_START: 'Only the host can start the quest.',
+      REPORT: {
+        TITLE: 'Combat Report',
+        CAPITAL_DAMAGE: 'Damage to rival capital:',
+        ENEMY_DESTROYED: 'Enemy troops destroyed:',
+        OWN_LOSSES: 'Own troops lost:',
+        RESEARCH_EARNED: 'Research credits earned:',
+        ELIMINATED_BANNER: 'YOU HAVE ELIMINATED YOUR RIVAL!',
+        ACCEPT: 'Accept'
+      },
       ATTACK: {
         TITLE: 'ATTACK MODAL',
         SUBTITLE: 'Select troops for the assault on {{ target }}',
@@ -213,6 +234,8 @@ export const en = {
         DESC: 'Unlock the ancient wisdom of your clan.',
         BTN_RESEARCH: 'RESEARCH',
         UNLOCKED: 'UNLOCKED',
+        AVAILABLE: 'AVAILABLE',
+        LOCKED: 'LOCKED',
         COST: 'Cost',
         REQUIREMENTS: 'Requirements'
       },
@@ -271,6 +294,10 @@ export const en = {
           DESC: 'Each clan has a unique tech tree with **8 researches**. They unlock elite troops, stat improvements, and the Ultimate Weapon. Invest your Research Points wisely.'
         }
       }
+    },
+    ATTACK_TOAST: {
+      TITLE: 'Attack Finished',
+      DESC: 'Click to view report'
     }
   }
 };

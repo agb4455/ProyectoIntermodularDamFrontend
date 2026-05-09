@@ -18,7 +18,7 @@
                 <div class="card-header">{{ 'CONFIG.PROFILE' | translate | uppercase }}</div>
                 <div class="form-row stack-mobile">
                     <div class="info-txt">
-                        <span class="label">Email</span>
+                        <span class="label">{{ 'AUTH.EMAIL' | translate }}</span>
                         <span class="desc">{{ 'AUTH.USERNAME' | translate }}</span>
                     </div>
                     <input type="email" [ngModel]="userEmail()" (ngModelChange)="userEmail.set($event)" class="viking-input">
@@ -26,11 +26,11 @@
             </section>
 
             <section class="card">
-                <div class="card-header">SEGURIDAD</div>
+                <div class="card-header">{{ 'CONFIG.SECURITY' | translate | uppercase }}</div>
                 <div class="form-row">
                     <div class="info-txt">
                         <span class="label">{{ 'AUTH.PASSWORD' | translate }}</span>
-                        <span class="desc">Asegura tu acceso</span>
+                        <span class="desc">{{ 'CONFIG.SECURITY_DESC' | translate }}</span>
                     </div>
                     <button class="btn btn-ghost btn-mobile-small" style="border: 1px solid var(--color-gold); color: var(--color-gold); font-family: 'Outfit';" (click)="onChangePassword()">{{ 'CONFIG.CHANGE_PASSWORD' | translate | uppercase }}</button>
                 </div>
@@ -41,7 +41,7 @@
                 <div class="form-row">
                     <div class="info-txt">
                         <span class="label">{{ 'CONFIG.LANGUAGE' | translate }}</span>
-                        <span class="desc">Idioma de la batalla</span>
+                        <span class="desc">{{ 'CONFIG.LANGUAGE_DESC' | translate }}</span>
                     </div>
                     <div class="language-pill-selector">
                         <div class="pill-bg" [class.shift-right]="i18n.currentLang() === 'en'"></div>

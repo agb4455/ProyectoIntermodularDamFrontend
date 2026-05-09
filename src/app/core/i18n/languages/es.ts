@@ -67,7 +67,8 @@ export const es = {
       DEFEAT: 'Derrota'
     },
     MESSAGES: {
-      CONFIRM_LEAVE: '¿Estás seguro de que quieres abandonar esta partida? Perderás automáticamente.'
+      CONFIRM_LEAVE: '¿Estás seguro de que quieres abandonar esta partida? Perderás automáticamente.',
+      LEAVE_ERROR: 'No se pudo abandonar la partida. Inténtalo desde dentro del juego.'
     },
     MODALS: {
       CREATE: {
@@ -122,7 +123,8 @@ export const es = {
       REQUIRED_FIELDS: 'Por favor completa todos los campos correctamente',
       LOGIN_ERROR: 'Error en el inicio de sesión. Inténtalo de nuevo.',
       REGISTER_ERROR: 'Error en el registro. Inténtalo de nuevo.'
-    }
+    },
+    EMAIL: 'Email'
   },
   CONFIG: {
     TITLE: 'AJUSTES DEL USUARIO',
@@ -133,14 +135,18 @@ export const es = {
     LIGHT_MODE: 'Día de Odín',
     BTN_SAVE: 'GUARDAR CAMBIOS',
     BTN_CANCEL: 'DESCARTAR',
-    CHANGE_PASSWORD: 'Cambiar Contraseña'
+    CHANGE_PASSWORD: 'Cambiar Contraseña',
+    SECURITY: 'SEGURIDAD',
+    SECURITY_DESC: 'Asegura tu acceso',
+    LANGUAGE_DESC: 'Idioma de la batalla'
   },
   GAME: {
     PHASES: {
       WAITING: 'ESPERANDO',
       PREPARATION: 'PREPARACIÓN',
       WAR: 'Ragnarök',
-      END: 'FIN'
+      END: 'FIN',
+      FINISHED: 'FINALIZADO'
     },
     STATS: {
       HEALTH: 'Vida',
@@ -167,6 +173,11 @@ export const es = {
     LOG_START: 'ha iniciado la partida',
     LOG_PHASE_CHANGE: 'La fase ha cambiado a: {{ phase }}',
     LOG_ATTACK: 'ha lanzado un ataque contra {{ target }}',
+    LOG_ATTACK_RECEIVED: '¡CUIDADO! {{ attacker }} te está atacando',
+    LOG_BATTLE_RESULT: 'La batalla contra {{ attacker }} ha terminado',
+    LOG_PLAYER_ELIMINATED: '{{ player }} ha sido eliminado del mapa',
+    LOG_GAME_WON: '¡HAS CONQUISTADO EL NORTE! Victoria suprema',
+    LOG_GAME_LOST: 'Tu capital ha caído. El Valhalla te espera',
     LOG_TRAIN: 'ha comenzado a entrenar {{ troop }}',
     LOG_TRAIN_CONFIRM: 'Entrenamiento confirmado por el Gran Salón',
     LOG_TRAIN_COMPLETE: '{{ troop }} se ha unido a las filas',
@@ -182,6 +193,16 @@ export const es = {
         BTN_LEAVE: 'RETIRADA'
       },
       PREPARATION_AVISO: 'En la fase de preparación no se puede atacar. Aprovecha para entrenar tropas y mejorar tu clan.',
+      ONLY_HOST_CAN_START: 'Solo el anfitrión puede iniciar la travesía.',
+      REPORT: {
+        TITLE: 'Reporte de Combate',
+        CAPITAL_DAMAGE: 'Daño a la capital rival:',
+        ENEMY_DESTROYED: 'Tropas enemigas destruidas:',
+        OWN_LOSSES: 'Tropas propias perdidas:',
+        RESEARCH_EARNED: 'Créditos de investigación ganados:',
+        ELIMINATED_BANNER: '¡HAS ELIMINADO A TU RIVAL!',
+        ACCEPT: 'Aceptar'
+      },
       ATTACK: {
         TITLE: 'MODAL DE ATAQUE',
         SUBTITLE: 'Selecciona las tropas para el asalto a {{ target }}',
@@ -213,6 +234,8 @@ export const es = {
         DESC: 'Desbloquea la sabiduría ancestral de tu clan.',
         BTN_RESEARCH: 'INVESTIGAR',
         UNLOCKED: 'DESBLOQUEADO',
+        AVAILABLE: 'DISPONIBLE',
+        LOCKED: 'BLOQUEADO',
         COST: 'Coste',
         REQUIREMENTS: 'Requisitos'
       },
@@ -271,6 +294,10 @@ export const es = {
           DESC: 'Cada clan dispone de un árbol tecnológico único con **8 investigaciones**. Desbloquean tropas de élite, mejoras de estadísticas y el Arma Definitiva. Invierte tus Puntos de Investigación con cabeza.'
         }
       }
+    },
+    ATTACK_TOAST: {
+      TITLE: 'Ataque Finalizado',
+      DESC: 'Haz clic para ver el reporte'
     }
   }
 };

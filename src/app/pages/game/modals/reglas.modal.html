@@ -4,7 +4,7 @@
     <header class="modal-header">
       <div class="header-title">
         <span class="header-icon">📜</span>
-        <h2>{{ 'GAME.RULES.TITLE' | translate }}</h2>
+        <h2>{{ 'GAME.MODALS.RULES.TITLE' | translate }}</h2>
       </div>
       <button class="btn-close" (click)="onClose()" [title]="'CONFIG.BTN_CANCEL' | translate">✕</button>
     </header>
@@ -14,50 +14,50 @@
       
       <!-- Objetivo -->
       <section class="rules-section">
-        <h3><span class="icon">🎯</span> {{ 'GAME.RULES.OBJ.TITLE' | translate }}</h3>
-        <p>{{ 'GAME.RULES.OBJ.DESC' | translate }}</p>
+        <h3><span class="icon">🎯</span> {{ 'GAME.MODALS.RULES.OBJ.TITLE' | translate }}</h3>
+        <p>{{ 'GAME.MODALS.RULES.OBJ.DESC' | translate }}</p>
       </section>
 
       <!-- Fases -->
       <section class="rules-section">
-        <h3><span class="icon">⏳</span> {{ 'GAME.RULES.PHASES.TITLE' | translate }}</h3>
+        <h3><span class="icon">⏳</span> {{ 'GAME.MODALS.RULES.PHASES.TITLE' | translate }}</h3>
         <div class="phase-list">
           <div class="phase-item preparation">
-            <span class="phase-tag">{{ 'GAME.RULES.PHASES.PREP_TITLE' | translate }}</span>
-            <p>{{ 'GAME.RULES.PHASES.PREP_DESC' | translate }}</p>
+            <span class="phase-tag">{{ 'GAME.MODALS.RULES.PHASES.PREP_TITLE' | translate }}</span>
+            <p>{{ 'GAME.MODALS.RULES.PHASES.PREP_DESC' | translate }}</p>
           </div>
           <div class="phase-item war">
-            <span class="phase-tag">{{ 'GAME.RULES.PHASES.WAR_TITLE' | translate }}</span>
-            <p>{{ 'GAME.RULES.PHASES.WAR_DESC' | translate }}</p>
+            <span class="phase-tag">{{ 'GAME.MODALS.RULES.PHASES.WAR_TITLE' | translate }}</span>
+            <p>{{ 'GAME.MODALS.RULES.PHASES.WAR_DESC' | translate }}</p>
           </div>
           <div class="phase-item end">
-            <span class="phase-tag">{{ 'GAME.RULES.PHASES.END_TITLE' | translate }}</span>
-            <p>{{ 'GAME.RULES.PHASES.END_DESC' | translate }}</p>
+            <span class="phase-tag">{{ 'GAME.MODALS.RULES.PHASES.END_TITLE' | translate }}</span>
+            <p>{{ 'GAME.MODALS.RULES.PHASES.END_DESC' | translate }}</p>
           </div>
         </div>
       </section>
 
       <!-- Recursos -->
       <section class="rules-section">
-        <h3><span class="icon">💰</span> {{ 'GAME.RULES.RESOURCES.TITLE' | translate }}</h3>
+        <h3><span class="icon">💰</span> {{ 'GAME.MODALS.RULES.RESOURCES.TITLE' | translate }}</h3>
         <div class="resources-grid">
           <div class="resource-card gold">
             <span class="res-icon">🪙</span>
-            <h4>{{ 'GAME.RULES.RESOURCES.GOLD_TITLE' | translate }}</h4>
-            <p>{{ 'GAME.RULES.RESOURCES.GOLD_DESC' | translate }}</p>
+            <h4>{{ 'GAME.MODALS.RULES.RESOURCES.GOLD_TITLE' | translate }}</h4>
+            <p>{{ 'GAME.MODALS.RULES.RESOURCES.GOLD_DESC' | translate }}</p>
           </div>
           <div class="resource-card research">
             <span class="res-icon">🧪</span>
-            <h4>{{ 'GAME.RULES.RESOURCES.RES_TITLE' | translate }}</h4>
-            <p>{{ 'GAME.RULES.RESOURCES.RES_DESC' | translate }}</p>
+            <h4>{{ 'GAME.MODALS.RULES.RESOURCES.RES_TITLE' | translate }}</h4>
+            <p>{{ 'GAME.MODALS.RULES.RESOURCES.RES_DESC' | translate }}</p>
           </div>
         </div>
       </section>
 
       <!-- Clanes -->
       <section class="rules-section">
-        <h3><span class="icon">⚔️</span> {{ 'GAME.RULES.ADVANTAGES.TITLE' | translate }}</h3>
-        <p>{{ 'GAME.RULES.ADVANTAGES.DESC' | translate }}</p>
+        <h3><span class="icon">⚔️</span> {{ 'GAME.MODALS.RULES.ADVANTAGES.TITLE' | translate }}</h3>
+        <p>{{ 'GAME.MODALS.RULES.ADVANTAGES.DESC' | translate }}</p>
         
         <div class="advantage-graph-container">
           <!-- Grafo SVG de Ventajas -->
@@ -70,17 +70,17 @@
             </defs>
 
             <!-- Conexiones (Flechas) -->
-            <!-- Fury -> Song -->
+            <!-- Fury -> Iron -->
             <path d="M 285 65 L 340 145" class="arrow-path" marker-end="url(#arrowhead)" />
-            <!-- Song -> Death -->
+            <!-- Iron -> Divine -->
             <path d="M 340 195 L 285 275" class="arrow-path" marker-end="url(#arrowhead)" />
-            <!-- Death -> Divine -->
+            <!-- Divine -> Shadow -->
             <path d="M 245 305 L 155 305" class="arrow-path" marker-end="url(#arrowhead)" />
-            <!-- Divine -> Rune -->
+            <!-- Shadow -> Storm -->
             <path d="M 115 275 L 60 195" class="arrow-path" marker-end="url(#arrowhead)" />
-            <!-- Rune -> Iron -->
+            <!-- Storm -> Frost -->
             <path d="M 60 145 L 115 65" class="arrow-path" marker-end="url(#arrowhead)" />
-            <!-- Iron -> Fury -->
+            <!-- Frost -> Fury -->
             <path d="M 155 35 L 245 35" class="arrow-path" marker-end="url(#arrowhead)" />
 
             <!-- Nodos de Clanes -->
@@ -90,35 +90,35 @@
               <text y="5" class="node-icon">🔴</text>
               <text y="50" class="node-label">FURY</text>
             </g>
-            <!-- Song -->
-            <g class="node song" transform="translate(350, 170)">
+            <!-- Iron -->
+            <g class="node iron" transform="translate(350, 170)">
               <circle r="35" class="node-bg" />
               <text y="5" class="node-icon">🟣</text>
-              <text y="50" class="node-label">SONG</text>
-            </g>
-            <!-- Death -->
-            <g class="node death" transform="translate(300, 290)">
-              <circle r="35" class="node-bg" />
-              <text y="5" class="node-icon">💀</text>
-              <text y="50" class="node-label">DEATH</text>
+              <text y="50" class="node-label">IRON</text>
             </g>
             <!-- Divine -->
-            <g class="node divine" transform="translate(100, 290)">
+            <g class="node divine" transform="translate(300, 290)">
               <circle r="35" class="node-bg" />
-              <text y="5" class="node-icon">🔵</text>
+              <text y="5" class="node-icon">💀</text>
               <text y="50" class="node-label">DIVINE</text>
             </g>
-            <!-- Rune -->
-            <g class="node rune" transform="translate(50, 170)">
+            <!-- Shadow -->
+            <g class="node shadow" transform="translate(100, 290)">
+              <circle r="35" class="node-bg" />
+              <text y="5" class="node-icon">🔵</text>
+              <text y="50" class="node-label">SHADOW</text>
+            </g>
+            <!-- Storm -->
+            <g class="node storm" transform="translate(50, 170)">
               <circle r="35" class="node-bg" />
               <text y="5" class="node-icon">🟢</text>
-              <text y="50" class="node-label">RUNE</text>
+              <text y="50" class="node-label">STORM</text>
             </g>
-            <!-- Iron -->
-            <g class="node iron" transform="translate(100, 50)">
+            <!-- Frost -->
+            <g class="node frost" transform="translate(100, 50)">
               <circle r="35" class="node-bg" />
               <text y="5" class="node-icon">⚪</text>
-              <text y="50" class="node-label">IRON</text>
+              <text y="50" class="node-label">FROST</text>
             </g>
 
             <!-- Centro Multiplicador -->
@@ -130,47 +130,47 @@
         </div>
 
         <ul class="clans-advantages-text">
-          <li>{{ 'GAME.RULES.ADVANTAGES.FURY_SONG' | translate }}</li>
-          <li>{{ 'GAME.RULES.ADVANTAGES.SONG_DEATH' | translate }}</li>
-          <li>{{ 'GAME.RULES.ADVANTAGES.DEATH_DIVINE' | translate }}</li>
-          <li>{{ 'GAME.RULES.ADVANTAGES.DIVINE_RUNE' | translate }}</li>
-          <li>{{ 'GAME.RULES.ADVANTAGES.RUNE_IRON' | translate }}</li>
-          <li>{{ 'GAME.RULES.ADVANTAGES.IRON_FURY' | translate }}</li>
+          <li>{{ 'GAME.MODALS.RULES.ADVANTAGES.FURY_IRON' | translate }}</li>
+          <li>{{ 'GAME.MODALS.RULES.ADVANTAGES.IRON_DIVINE' | translate }}</li>
+          <li>{{ 'GAME.MODALS.RULES.ADVANTAGES.DIVINE_SHADOW' | translate }}</li>
+          <li>{{ 'GAME.MODALS.RULES.ADVANTAGES.SHADOW_STORM' | translate }}</li>
+          <li>{{ 'GAME.MODALS.RULES.ADVANTAGES.STORM_FROST' | translate }}</li>
+          <li>{{ 'GAME.MODALS.RULES.ADVANTAGES.FROST_FURY' | translate }}</li>
         </ul>
       </section>
 
       <!-- Resolución de Combate -->
       <section class="rules-section">
-        <h3><span class="icon">🛡️</span> {{ 'GAME.RULES.COMBAT.TITLE' | translate }}</h3>
+        <h3><span class="icon">🛡️</span> {{ 'GAME.MODALS.RULES.COMBAT.TITLE' | translate }}</h3>
         <div class="combat-mechanics-grid">
           <div class="mechanic-card">
-            <h4>{{ 'GAME.RULES.COMBAT.SIM_TITLE' | translate }}</h4>
-            <p>{{ 'GAME.RULES.COMBAT.SIM_DESC' | translate }}</p>
+            <h4>{{ 'GAME.MODALS.RULES.COMBAT.SIM_TITLE' | translate }}</h4>
+            <p>{{ 'GAME.MODALS.RULES.COMBAT.SIM_DESC' | translate }}</p>
           </div>
           <div class="mechanic-card">
-            <h4>{{ 'GAME.RULES.COMBAT.SHIELD_TITLE' | translate }}</h4>
-            <p>{{ 'GAME.RULES.COMBAT.SHIELD_DESC' | translate }}</p>
+            <h4>{{ 'GAME.MODALS.RULES.COMBAT.SHIELD_TITLE' | translate }}</h4>
+            <p>{{ 'GAME.MODALS.RULES.COMBAT.SHIELD_DESC' | translate }}</p>
           </div>
           <div class="mechanic-card">
-            <h4>{{ 'GAME.RULES.COMBAT.DEF_TITLE' | translate }}</h4>
-            <p>{{ 'GAME.RULES.COMBAT.DEF_DESC' | translate }}</p>
+            <h4>{{ 'GAME.MODALS.RULES.COMBAT.DEF_TITLE' | translate }}</h4>
+            <p>{{ 'GAME.MODALS.RULES.COMBAT.DEF_DESC' | translate }}</p>
           </div>
           <div class="mechanic-card">
-            <h4>{{ 'GAME.RULES.COMBAT.SURV_TITLE' | translate }}</h4>
-            <p>{{ 'GAME.RULES.COMBAT.SURV_DESC' | translate }}</p>
+            <h4>{{ 'GAME.MODALS.RULES.COMBAT.SURV_TITLE' | translate }}</h4>
+            <p>{{ 'GAME.MODALS.RULES.COMBAT.SURV_DESC' | translate }}</p>
           </div>
         </div>
         
         <div class="rule-tip">
           <span class="tip-icon">💡</span>
-          <p>{{ 'GAME.RULES.COMBAT.TIP' | translate }}</p>
+          <p>{{ 'GAME.MODALS.RULES.COMBAT.TIP' | translate }}</p>
         </div>
       </section>
 
        <!-- Tecnología -->
        <section class="rules-section">
-        <h3><span class="icon">⚡</span> {{ 'GAME.RULES.TECH.TITLE' | translate }}</h3>
-        <p>{{ 'GAME.RULES.TECH.DESC' | translate }}</p>
+        <h3><span class="icon">⚡</span> {{ 'GAME.MODALS.RULES.TECH.TITLE' | translate }}</h3>
+        <p>{{ 'GAME.MODALS.RULES.TECH.DESC' | translate }}</p>
       </section>
 
     </div>

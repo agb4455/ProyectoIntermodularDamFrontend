@@ -271,8 +271,8 @@
     <div class="attack-toast">
       <div class="toast-icon">⚔️</div>
       <div class="toast-content">
-        <span class="toast-title">Ataque Finalizado</span>
-        <span class="toast-desc">Haz clic para ver el reporte</span>
+        <span class="toast-title">{{ 'GAME.ATTACK_TOAST.TITLE' | translate }}</span>
+        <span class="toast-desc">{{ 'GAME.ATTACK_TOAST.DESC' | translate }}</span>
       </div>
       <button class="toast-close" (click)="$event.stopPropagation(); dismissAttackToast()">✕</button>
     </div>

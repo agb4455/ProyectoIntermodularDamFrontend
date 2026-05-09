@@ -178,7 +178,7 @@ export class LobbyPageComponent implements OnInit {
         },
         error: (err) => {
           // La partida posiblemente ya inició: informar al usuario
-          alert(err?.message ?? 'No se pudo abandonar la partida. Inténtalo desde dentro del juego.');
+          alert(this.i18n.translate('LOBBY.MESSAGES.LEAVE_ERROR'));
         }
       });
     }

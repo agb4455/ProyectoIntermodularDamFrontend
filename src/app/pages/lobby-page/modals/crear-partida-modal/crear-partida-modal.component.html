@@ -10,8 +10,8 @@
 
   <!-- Cabecera -->
   <header class="modal-header">
-    <h2 class="modal-title" id="modal-title">{{ 'MODALS.CREATE.TITLE' | translate }}</h2>
-    <p class="modal-subtitle">{{ 'MODALS.CREATE.SUBTITLE' | translate }}</p>
+    <h2 class="modal-title" id="modal-title">{{ 'LOBBY.MODALS.CREATE.TITLE' | translate }}</h2>
+    <p class="modal-subtitle">{{ 'LOBBY.MODALS.CREATE.SUBTITLE' | translate }}</p>
   </header>
 
   <!-- Grid de clanes -->
@@ -37,9 +37,9 @@
   <!-- Mensaje de selección -->
   <p class="selection-hint">
     @if (selectedClan()) {
-      <span class="hint-active">{{ 'MODALS.CREATE.HINT_ACTIVE' | translate }}</span>
+      <span class="hint-active">{{ 'LOBBY.MODALS.CREATE.HINT_ACTIVE' | translate }}</span>
     } @else {
-      <span class="hint-empty">{{ 'MODALS.CREATE.HINT_EMPTY' | translate }}</span>
+      <span class="hint-empty">{{ 'LOBBY.MODALS.CREATE.HINT_EMPTY' | translate }}</span>
     }
   </p>
 
@@ -53,9 +53,9 @@
     >
       @if (isCreating()) {
         <span class="creating-spinner" aria-hidden="true"></span>
-        {{ 'MODALS.CREATE.FORGING' | translate }}
+        {{ 'LOBBY.MODALS.CREATE.FORGING' | translate }}
       } @else {
-        {{ 'MODALS.CREATE.BTN' | translate }}
+        {{ 'LOBBY.MODALS.CREATE.BTN' | translate }}
       }
     </button>
   </footer>

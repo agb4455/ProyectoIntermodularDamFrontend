@@ -6,40 +6,40 @@ import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 @Component({
   selector: 'app-attack-result-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   template: `
     <div class="scrim" (click)="onClose()"></div>
     <div class="attack-result-modal">
       <header class="modal-header">
-        <h2 class="modal-title">⚔️ Reporte de Combate</h2>
+        <h2 class="modal-title">⚔️ {{ 'GAME.MODALS.REPORT.TITLE' | translate }}</h2>
         <button class="btn-close" (click)="onClose()">✕</button>
       </header>
       <div class="modal-body">
         <div class="stat-row">
-          <span>Daño a la capital rival:</span>
+          <span>{{ 'GAME.MODALS.REPORT.CAPITAL_DAMAGE' | translate }}</span>
           <span class="stat-val damage">{{ data().capitalDamage }}</span>
         </div>
         <div class="stat-row">
-          <span>Tropas enemigas destruidas:</span>
+          <span>{{ 'GAME.MODALS.REPORT.ENEMY_DESTROYED' | translate }}</span>
           <span class="stat-val">{{ data().defenderTroopsDestroyed }}</span>
         </div>
         <div class="stat-row">
-          <span>Tropas propias perdidas:</span>
+          <span>{{ 'GAME.MODALS.REPORT.OWN_LOSSES' | translate }}</span>
           <span class="stat-val losses">{{ data().attackerTroopsLost }}</span>
         </div>
         <div class="stat-row">
-          <span>Créditos de investigación ganados:</span>
+          <span>{{ 'GAME.MODALS.REPORT.RESEARCH_EARNED' | translate }}</span>
           <span class="stat-val research">+{{ data().researchCreditsEarned }} 🧪</span>
         </div>
         
         @if (data().defenderEliminated) {
           <div class="eliminated-banner">
-            ¡HAS ELIMINADO A TU RIVAL!
+            {{ 'GAME.MODALS.REPORT.ELIMINATED_BANNER' | translate }}
           </div>
         }
       </div>
       <footer class="modal-footer">
-        <button class="btn-confirm" (click)="onClose()">Aceptar</button>
+        <button class="btn-confirm" (click)="onClose()">{{ 'GAME.MODALS.REPORT.ACCEPT' | translate }}</button>
       </footer>
     </div>
   `,

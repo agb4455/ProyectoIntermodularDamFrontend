@@ -304,7 +304,10 @@ export class GamePageComponent implements OnInit, OnDestroy {
       
       // Mostrar alerta o modal de fin de partida (simplificado para MVP)
       setTimeout(() => {
-        alert(isWinner ? '¡Has ganado la partida!' : 'La partida ha terminado.');
+        const msg = isWinner 
+          ? this.i18n.translate('GAME.LOG_GAME_WON') 
+          : this.i18n.translate('GAME.LOG_GAME_LOST');
+        alert(msg);
         this.gameService.clearGameContext();
         this.router.navigate(['/lobby']);
       }, 3000);
