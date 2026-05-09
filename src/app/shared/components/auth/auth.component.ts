@@ -94,7 +94,11 @@ export class AuthComponent {
       },
       error: (err) => {
         this.loading.set(false);
-        this.error.set(this.i18n.translate('AUTH.VALIDATION.REGISTER_ERROR'));
+        if (err.status === 409 && err.error?.message) {
+          this.error.set(err.error.message);
+        } else {
+          this.error.set(this.i18n.translate('AUTH.VALIDATION.REGISTER_ERROR'));
+        }
       }
     });
   }
