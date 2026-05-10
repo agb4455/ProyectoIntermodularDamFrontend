@@ -2,7 +2,7 @@
   <div class="debug-container" [class.expanded]="isExpanded">
     
     <!-- Botón flotante / trigger -->
-    <button class="debug-trigger" (click)="toggleExpanded()" title="Herramientas de Debug">
+    <button class="debug-trigger" (click)="toggleExpanded()" [title]="'DEBUG.TITLE' | translate">
       <span class="icon">🛠️</span>
       @if (!isExpanded) {
         <span class="status-dot" [class.active]="authService.isLoggedIn()"></span>
@@ -13,14 +13,14 @@
     @if (isExpanded) {
       <div class="debug-panel">
         <div class="debug-header">
-          <h3>DEBUG TOOLS</h3>
+          <h3>{{ 'DEBUG.TOOLS' | translate }}</h3>
           <button class="close-btn" (click)="toggleExpanded()">×</button>
         </div>
 
         <div class="debug-content">
           <!-- Bloque de Tema -->
           <div class="debug-section">
-            <label>Tema</label>
+            <label>{{ 'DEBUG.THEME' | translate }}</label>
             <button (click)="toggleTheme()" class="action-btn">
               {{ themeService.theme() === 'dark' ? '🌙 Dark' : '☀️ Light' }}
             </button>
@@ -29,7 +29,7 @@
 
           <!-- Info de Sistema -->
           <div class="debug-footer">
-            <p>Viking Clan Wars v0.1.0-debug</p>
+            <p>{{ 'DEBUG.SYSTEM_INFO' | translate }}</p>
           </div>
         </div>
       </div>

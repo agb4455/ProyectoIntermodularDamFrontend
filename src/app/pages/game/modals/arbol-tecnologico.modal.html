@@ -32,7 +32,7 @@
         <!-- Columnas de Tiers -->
         @for (tier of tieredTechnologies(); track $index) {
           <div class="tier-section">
-            <div class="tier-header">Tier {{ $index + 1 }}</div>
+            <div class="tier-header">{{ 'GAME.MODALS.TECH.TIER' | translate }} {{ $index + 1 }}</div>
             
             @for (tech of tier; track tech.id) {
               <div 
@@ -74,7 +74,7 @@
                       @if (isUnlocked(tech.id)) {
                         {{ 'GAME.MODALS.TECH.UNLOCKED' | translate }}
                       } @else if (tech.tier === 3) {
-                        LEGENDARIO
+                        {{ 'GAME.MODALS.TECH.LEGENDARY' | translate }}
                       } @else {
                         {{ 'GAME.MODALS.TECH.BTN_RESEARCH' | translate }}
                       }

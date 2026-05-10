@@ -2,14 +2,15 @@ export const en = {
   NAV: {
     HOME: 'Home',
     MENU: 'Menu',
-    LOBBY: 'War',
+    LOBBY: 'WAR CHAMBER',
     CHARACTERS: 'Lineages',
     RULES: 'Midgard Laws',
     ADMIN: 'Oracle',
     CONFIG: 'Settings',
     STATS: 'Sagas',
     LOGOUT: 'Depart for Valhalla',
-    LOGIN: 'Login'
+    LOGIN: 'Login',
+    USER_MENU_TITLE: 'Profile / User Menu'
   },
   SHOW: '▼ SHOW',
   HIDE: '▲ HIDE',
@@ -77,14 +78,16 @@ export const en = {
         HINT_ACTIVE: 'Clan selected — ready for battle',
         HINT_EMPTY: 'Select a clan to continue',
         FORGING: 'Forging game…',
-        BTN: 'CREATE GAME'
+        BTN: 'CREATE GAME',
+        SELECT_CLAN: 'Select clan'
       },
       JOIN: {
         TITLE: 'JOIN THE QUEST',
         SUBTITLE: 'Enter the War Codex to enter battle.',
         CODE_PLACEHOLDER: 'Codex (Ex: A7X9-B)',
         BTN: 'ENTER BATTLE',
-        JOINING: 'Searching for clan…'
+        JOINING: 'Searching for clan…',
+        CHOOSE_DESTINY: 'Choose your destiny'
       },
       FULL: {
         TITLE: 'ROOM FULL',
@@ -166,6 +169,14 @@ export const en = {
       arqueria: 'Ranged units to harass the enemy.',
       caballeria: 'Fast and powerful mounted units.'
     },
+    CLAN_NAMES: {
+      FURY: 'Berserkers',
+      DIVINE: 'Valkyries',
+      IRON: 'Iron Jarls',
+      SHADOW: 'Shadows of Loki',
+      FROST: 'Frost Guard',
+      STORM: 'Storm Bringers'
+    },
     ACTIONS: {
       TRAIN: 'Train Troops',
       TROOPS: 'View Troops',
@@ -212,7 +223,11 @@ export const en = {
         DISADVANTAGE: 'WATCH OUT! The {{ enemyClan }} clan has a defensive advantage over you (reduced damage).',
         BTN_ATTACK: 'LAUNCH ATTACK',
         EMPTY_GRID: 'Press the "+" button to deploy warriors',
-        SELECTED_HINT: 'selected'
+        SELECTED_HINT: 'selected',
+        ESTIMATED_DAMAGE: 'Estimated Damage',
+        ADVANTAGE_HINT: 'by advantage',
+        CLICK_TO_REMOVE: 'Click to remove',
+        ADD_TROOP: 'Add troop'
       },
       AVISO_TITLE: 'WARRIOR NOTICE!',
       WAITING: {
@@ -220,7 +235,8 @@ export const en = {
         HOST_TITLE: 'WARRIOR ASSEMBLY',
         MIN_PLAYERS: 'At least 2 warriors are needed to set sail',
         BTN_START: 'START CONQUEST!',
-        PLAYER_COUNT: '{{ current }}/{{ max }} Players'
+        PLAYER_COUNT: '{{ current }}/{{ max }} Players',
+        HOST_BADGE: 'HOST'
       },
       TRAIN: {
         TITLE: 'TRAINING CAMP',
@@ -239,7 +255,9 @@ export const en = {
         AVAILABLE: 'AVAILABLE',
         LOCKED: 'LOCKED',
         COST: 'Cost',
-        REQUIREMENTS: 'Requirements'
+        REQUIREMENTS: 'Requirements',
+        TIER: 'Tier',
+        LEGENDARY: 'LEGENDARY'
       },
       STATUS: {
         READY: 'READY',
@@ -301,6 +319,15 @@ export const en = {
     ATTACK_TOAST: {
       TITLE: 'Attack Finished',
       DESC: 'Click to view report'
+    },
+    LOG: {
+      FILTERS: {
+        ALL: 'All',
+        ATTACK: 'Attacks',
+        TRAIN: 'Training',
+        RESEARCH: 'Research'
+      },
+      AUTO_SCROLL: 'Auto-scroll to end'
     }
   },
   ADMIN: {
@@ -336,5 +363,18 @@ export const en = {
     DEPLOYED: 'Troops Deployed',
     ATTACKS: 'Attacks Launched',
     WINS: 'Victories'
+  },
+  DEBUG: {
+    TITLE: 'Debug Tools',
+    TOOLS: 'DEBUG TOOLS',
+    ECONOMY: 'Economy (Gold)',
+    PHASE: 'Game Phase',
+    PLAYERS: 'Players',
+    ADD: 'Add',
+    REMOVE: 'Remove',
+    NEXT_PHASE: 'Next Phase',
+    THEME: 'Theme',
+    SYSTEM_INFO: 'Viking Clan Wars v0.1.0-debug',
+    OPEN_PANEL: 'Open Debug Panel'
   }
 };

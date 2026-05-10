@@ -2,14 +2,14 @@ export const es = {
   NAV: {
     HOME: 'Inicio',
     MENU: 'Menú',
-    LOBBY: 'Lobby',
+    LOBBY: 'CÁMARA DE GUERRA',
     CHARACTERS: 'Personajes',
     ADMIN: 'Admin',
     CONFIG: 'Ajustes',
     STATS: 'Estadisticas',
     LOGOUT: 'Cerrar sesion',
     LOGIN: 'Iniciar Sesión',
-    RULES: 'reglas del Juego'
+    RULES: 'Reglas del Juego'
   },
   SHOW: '▼ MOSTRAR',
   HIDE: '▲ ESCONDER',
@@ -77,14 +77,16 @@ export const es = {
         HINT_ACTIVE: 'Clan seleccionado — listo para la batalla',
         HINT_EMPTY: 'Selecciona un clan para continuar',
         FORGING: 'Forjando partida…',
-        BTN: 'CREAR PARTIDA'
+        BTN: 'CREAR PARTIDA',
+        SELECT_CLAN: 'Seleccionar clan'
       },
       JOIN: {
         TITLE: 'UNIRSE A LA PARTIDA',
         SUBTITLE: 'Introduce el Codigo de Partida para entrar en batalla.',
         CODE_PLACEHOLDER: 'Codigo (Ej: A7X9-B)',
         BTN: 'ENTRAR EN BATALLA',
-        JOINING: 'Buscando clan…'
+        JOINING: 'Buscando clan…',
+        CHOOSE_DESTINY: 'Elige tu destino'
       },
       FULL: {
         TITLE: 'SALA LLENA',
@@ -166,6 +168,14 @@ export const es = {
       arqueria: 'Unidades a distancia para hostigar al enemigo.',
       caballeria: 'Unidades rápidas y poderosas montadas.'
     },
+    CLAN_NAMES: {
+      FURY: 'Berserkers',
+      DIVINE: 'Valkirias',
+      IRON: 'Jarls',
+      SHADOW: 'Sombras',
+      FROST: 'Frost Guard',
+      STORM: 'Storm Bringers'
+    },
     ACTIONS: {
       TRAIN: 'Entrenar Tropas',
       TROOPS: 'Ver Tropas',
@@ -212,7 +222,11 @@ export const es = {
         DISADVANTAGE: '¡CUIDADO! El clan {{ enemyClan }} tiene ventaja defensiva sobre ti (daño reducido).',
         BTN_ATTACK: 'LANZAR ATAQUE',
         EMPTY_GRID: 'Pulsa el botón "+" para desplegar guerreros',
-        SELECTED_HINT: 'seleccionada'
+        SELECTED_HINT: 'seleccionada',
+        ESTIMATED_DAMAGE: 'Daño Estimado',
+        ADVANTAGE_HINT: 'por ventaja',
+        CLICK_TO_REMOVE: 'Clic para eliminar',
+        ADD_TROOP: 'Añadir tropa'
       },
       AVISO_TITLE: '¡AVISO GUERRERO!',
       WAITING: {
@@ -220,7 +234,8 @@ export const es = {
         HOST_TITLE: 'ASAMBLEA DE GUERREROS',
         MIN_PLAYERS: 'Se necesitan al menos 2 guerreros para zarpar',
         BTN_START: '¡INICIAR CONQUISTA!',
-        PLAYER_COUNT: '{{ current }}/{{ max }} Jugadores'
+        PLAYER_COUNT: '{{ current }}/{{ max }} Jugadores',
+        HOST_BADGE: 'HOST'
       },
       TRAIN: {
         TITLE: 'CAMPO DE ENTRENAMIENTO',
@@ -239,7 +254,9 @@ export const es = {
         AVAILABLE: 'DISPONIBLE',
         LOCKED: 'BLOQUEADO',
         COST: 'Coste',
-        REQUIREMENTS: 'Requisitos'
+        REQUIREMENTS: 'Requisitos',
+        TIER: 'Tier',
+        LEGENDARY: 'LEGENDARIO'
       },
       STATUS: {
         READY: 'LISTO',
@@ -301,6 +318,15 @@ export const es = {
     ATTACK_TOAST: {
       TITLE: 'Ataque Finalizado',
       DESC: 'Haz clic para ver el reporte'
+    },
+    LOG: {
+      FILTERS: {
+        ALL: 'Todos',
+        ATTACK: 'Ataques',
+        TRAIN: 'Entrenamiento',
+        RESEARCH: 'Investigación'
+      },
+      AUTO_SCROLL: 'Auto-scroll al final'
     }
   },
   ADMIN: {
@@ -336,5 +362,18 @@ export const es = {
     DEPLOYED: 'Tropas Desplegadas',
     ATTACKS: 'Ataques Realizados',
     WINS: 'Victorias'
+  },
+  DEBUG: {
+    TITLE: 'Herramientas de Debug',
+    TOOLS: 'DEBUG TOOLS',
+    ECONOMY: 'Economía (Oro)',
+    PHASE: 'Fase de Juego',
+    PLAYERS: 'Jugadores',
+    ADD: 'Añadir',
+    REMOVE: 'Quitar',
+    NEXT_PHASE: 'Siguiente Fase',
+    THEME: 'Tema',
+    SYSTEM_INFO: 'Viking Clan Wars v0.1.0-debug',
+    OPEN_PANEL: 'Abrir Panel Debug'
   }
 };

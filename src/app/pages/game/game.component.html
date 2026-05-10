@@ -3,7 +3,7 @@
   <!-- Izquierda: volver + logo + usuario -->
   <div class="topbar-left">
     <button class="btn-back" [title]="'LOBBY.ABANDON' | translate" (click)="goBack()">←</button>
-    <div class="game-logo" title="Viking Clan Wars">⚔️</div>
+    <div class="game-logo" [title]="'HOME.HERO_TITLE' | translate">⚔️</div>
     <div class="player-info">
       <span class="player-name">{{ username() }}</span>
       <span class="game-number">#{{ gameCode() }}</span>
@@ -19,7 +19,7 @@
 
   <!-- Derecha: reglas + abandonar -->
   <div class="topbar-right">
-    <button class="btn-rules" title="Ver Reglas del Juego" (click)="openRules()">
+    <button class="btn-rules" [title]="'NAV.RULES' | translate" (click)="openRules()">
       <span class="icon">
         <!-- Icono info -->
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
@@ -301,19 +301,19 @@
 @if (isDevelopment()) {
   <!-- PANEL DE DEBUG (Solo Desarrollo) -->
   <div class="debug-container">
-    <button class="debug-trigger" (click)="toggleDebugPanel()" title="Abrir Panel Debug">
+    <button class="debug-trigger" (click)="toggleDebugPanel()" [title]="'DEBUG.OPEN_PANEL' | translate">
       ⚙️
     </button>
 
     @if (showDebugPanel()) {
       <div class="debug-panel">
         <div class="debug-header">
-          <span>DEBUG TOOLS</span>
+          <span>{{ 'DEBUG.TOOLS' | translate }}</span>
           <button (click)="toggleDebugPanel()" class="btn-close-debug">✕</button>
         </div>
 
         <div class="debug-section">
-          <label>Economía (Oro)</label>
+          <label>{{ 'DEBUG.ECONOMY' | translate }}</label>
           <div class="debug-row">
             <button (click)="debugAddGold(50)">+50</button>
             <button (click)="debugAddGold(500)">+500</button>
@@ -322,15 +322,15 @@
         </div>
 
         <div class="debug-section">
-          <label>Fase de Juego</label>
-          <button class="btn-full" (click)="debugTogglePhase()">Siguiente Fase</button>
+          <label>{{ 'DEBUG.PHASE' | translate }}</label>
+          <button class="btn-full" (click)="debugTogglePhase()">{{ 'DEBUG.NEXT_PHASE' | translate }}</button>
         </div>
 
         <div class="debug-section">
-          <label>Jugadores ({{ players().length }})</label>
+          <label>{{ 'DEBUG.PLAYERS' | translate }} ({{ players().length }})</label>
           <div class="debug-row">
-            <button (click)="debugAddPlayer()">Añadir</button>
-            <button (click)="debugRemovePlayer()">Quitar</button>
+            <button (click)="debugAddPlayer()">{{ 'DEBUG.ADD' | translate }}</button>
+            <button (click)="debugRemovePlayer()">{{ 'DEBUG.REMOVE' | translate }}</button>
           </div>
         </div>
 

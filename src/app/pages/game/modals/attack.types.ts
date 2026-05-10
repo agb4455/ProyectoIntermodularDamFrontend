@@ -93,11 +93,4 @@ export const CLAN_ADVANTAGES: Record<string, string> = {
   FROST: 'FURY'
 };
 
-export const CLAN_NAMES: Record<string, string> = {
-  FURY: 'Berserkers',
-  DIVINE: 'Valkirias',
-  IRON: 'Jarls',
-  SHADOW: 'Sombras',
-  FROST: 'Frost Guard',
-  STORM: 'Storm Bringers'
-};
+

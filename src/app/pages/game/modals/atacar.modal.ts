@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { inject } from '@angular/core';
 import { I18nService } from '../../../core/i18n/i18n.service';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
-import { EnemyTarget, Troop, TroopGridCell, ClanId, CLAN_ADVANTAGES, CLAN_NAMES } from './attack.types';
+import { EnemyTarget, Troop, TroopGridCell, ClanId, CLAN_ADVANTAGES } from './attack.types';
 import { AnadirTropaAtaqueModalComponent } from './anadir-tropa-ataque.modal';
 
 /**
@@ -74,14 +74,14 @@ export class AtacarModalComponent {
       const multiplier = this.getHexagonalMultiplier();
       return {
         type: 'advantage' as const,
-        message: this.i18n.translate('GAME.MODALS.ATTACK.ADVANTAGE', { enemyClan: CLAN_NAMES[defenderClan] }),
+        message: this.i18n.translate('GAME.MODALS.ATTACK.ADVANTAGE', { enemyClan: this.i18n.translate('GAME.CLAN_NAMES.' + defenderClan) }),
         icon: '⚡',
         multiplier: `${multiplier.toFixed(2)}x`
       };
     } else if (CLAN_ADVANTAGES[defenderClan] === attackerClan) {
       return {
         type: 'disadvantage' as const,
-        message: this.i18n.translate('GAME.MODALS.ATTACK.DISADVANTAGE', { enemyClan: CLAN_NAMES[defenderClan] }),
+        message: this.i18n.translate('GAME.MODALS.ATTACK.DISADVANTAGE', { enemyClan: this.i18n.translate('GAME.CLAN_NAMES.' + defenderClan) }),
         icon: '🛡️',
         multiplier: '1.0x'
       };

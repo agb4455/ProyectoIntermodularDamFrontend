@@ -1,12 +1,12 @@
 <!-- UNIRSE PARTIDA MODAL — UnirsePartidaModalComponent -->
 
 <!-- Scrim de fondo — click fuera cierra el modal -->
-<div class="modal-overlay" (click)="close()" aria-label="Cerrar modal"></div>
+<div class="modal-overlay" (click)="close()" [attr.aria-label]="'CONFIG.BTN_CANCEL' | translate"></div>
 
 <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="modal-title">
 
   <!-- Botón cerrar -->
-  <button class="btn-close" (click)="close()" aria-label="Cerrar">✕</button>
+  <button class="btn-close" (click)="close()" [attr.aria-label]="'CONFIG.BTN_CANCEL' | translate">✕</button>
 
   <!-- Cabecera -->
   <header class="modal-header">
@@ -41,7 +41,7 @@
   <!-- Círculos de Clanes -->
   @if (isCodeVerified()) {
     <div class="clanes-section">
-      <label class="code-label">ELIGE TU DESTINO</label>
+      <label class="code-label">{{ 'LOBBY.MODALS.JOIN.CHOOSE_DESTINY' | translate | uppercase }}</label>
       <div class="clanes-circles-container">
         @for (clan of clanes(); track clan.id) {
           <div class="clan-wrapper">
@@ -52,7 +52,7 @@
               [attr.data-clan]="clan.id"
               (click)="selectClan(clan.id)"
               [attr.aria-pressed]="selectedClan() === clan.id"
-              [attr.aria-label]="'Seleccionar clan ' + clan.name"
+              [attr.aria-label]="('LOBBY.MODALS.CREATE.SELECT_CLAN' | translate) + ' ' + clan.name"
               [disabled]="!clan.available"
             >
               <span class="clan-icon" aria-hidden="true">{{ clan.icon }}</span>

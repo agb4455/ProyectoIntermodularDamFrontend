@@ -16,25 +16,25 @@
           class="filter-btn" 
           [class.active]="filteredType() === 'all'"
           (click)="setFilter('all')">
-          📋 Todos
+          📋 {{ 'GAME.LOG.FILTERS.ALL' | translate }}
         </button>
         <button 
           class="filter-btn" 
           [class.active]="filteredType() === 'attack'"
           (click)="setFilter('attack')">
-          ⚔️ Ataques
+          ⚔️ {{ 'GAME.LOG.FILTERS.ATTACK' | translate }}
         </button>
         <button 
           class="filter-btn" 
           [class.active]="filteredType() === 'train'"
           (click)="setFilter('train')">
-          👷 Entrenamiento
+          👷 {{ 'GAME.LOG.FILTERS.TRAIN' | translate }}
         </button>
         <button 
           class="filter-btn" 
           [class.active]="filteredType() === 'research'"
           (click)="setFilter('research')">
-          🧪 Investigación
+          🧪 {{ 'GAME.LOG.FILTERS.RESEARCH' | translate }}
         </button>
       </div>
       <div class="log-controls">
@@ -42,7 +42,7 @@
           class="control-btn"
           [class.enabled]="autoScroll()"
           (click)="toggleAutoScroll()"
-          title="Auto-scroll al final">
+          [title]="'GAME.LOG.AUTO_SCROLL' | translate">
           {{ autoScroll() ? '🔽' : '⬆️' }}
         </button>
       </div>

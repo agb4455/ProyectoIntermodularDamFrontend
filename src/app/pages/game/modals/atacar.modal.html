@@ -27,7 +27,7 @@
         [class.empty]="troopGrid().length === 0"
         [class.animate]="showDamagePreview()">
         @for (cell of troopGrid(); track cell.troopId) {
-          <div class="grid-cell" (click)="onRemoveTroop(cell.troopId)" title="Clic para eliminar">
+          <div class="grid-cell" (click)="onRemoveTroop(cell.troopId)" [title]="'GAME.MODALS.ATTACK.CLICK_TO_REMOVE' | translate">
             <!-- Icono de tropa -->
             <div class="troop-icon">
               {{ cell.troop.icon || cell.troop.type }}
@@ -54,7 +54,7 @@
 
       <!-- Botón para añadir tropas -->
       <div class="add-troop-section">
-        <button class="btn-add-troop" (click)="onAddTroopClick()" title="Añadir tropa">
+        <button class="btn-add-troop" (click)="onAddTroopClick()" [title]="'GAME.MODALS.ATTACK.ADD_TROOP' | translate">
           <span class="plus-icon">+</span>
         </button>
       </div>
@@ -62,11 +62,11 @@
       <!-- Preview de Daño Estimado -->
       @if (canLaunchAttack()) {
         <div class="damage-preview">
-          <div class="preview-label">Daño Estimado:</div>
+          <div class="preview-label">{{ 'GAME.MODALS.ATTACK.ESTIMATED_DAMAGE' | translate }}:</div>
           <div class="preview-value">{{ estimatedDamage() }}</div>
           @if ((getHexagonalMultiplier() - 1) > 0.01) {
             <div class="preview-multiplier">
-              (+{{ ((getHexagonalMultiplier() - 1) * 100).toFixed(0) }}% por ventaja)
+              (+{{ ((getHexagonalMultiplier() - 1) * 100).toFixed(0) }}% {{ 'GAME.MODALS.ATTACK.ADVANTAGE_HINT' | translate }})
             </div>
           }
         </div>
