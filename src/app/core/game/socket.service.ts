@@ -2,6 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { AppConfigService } from '../config/app-config.service';
 import { AuthService } from '../auth/auth.service';
+import { I18nService } from '../i18n/i18n.service';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,6 +12,8 @@ import { Observable } from 'rxjs';
 export class SocketService {
   private readonly appConfig = inject(AppConfigService);
   private readonly authService = inject(AuthService);
+  private readonly i18n = inject(I18nService);
+  private readonly router = inject(Router);
   
   private socket: Socket | null = null;
 
@@ -47,6 +51,15 @@ export class SocketService {
 
     this.socket.on('connect_error', (error: Error) => {
       // console.error('[SocketService] Error de conexión:', error.message);
+    });
+
+    // Escuchar baneo del usuario
+    this.socket.on('user:banned', () => {
+      const message = this.i18n.translate('GAME.BANNED_MESSAGE');
+      window.alert(message);
+      this.authService.clearSession();
+      this.disconnect();
+      this.router.navigate(['/']);
     });
   }
 

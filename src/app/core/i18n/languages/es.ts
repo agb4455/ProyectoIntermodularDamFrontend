@@ -124,7 +124,8 @@ export const es = {
     VALIDATION: {
       REQUIRED_FIELDS: 'Por favor completa todos los campos correctamente',
       LOGIN_ERROR: 'Error en el inicio de sesión. Inténtalo de nuevo.',
-      REGISTER_ERROR: 'Error en el registro. Inténtalo de nuevo.'
+      REGISTER_ERROR: 'Error en el registro. Inténtalo de nuevo.',
+      BANNED_USER: 'Tu cuenta ha sido baneada del sistema.'
     },
     EMAIL: 'Email'
   },
@@ -327,7 +328,9 @@ export const es = {
         RESEARCH: 'Investigación'
       },
       AUTO_SCROLL: 'Auto-scroll al final'
-    }
+    },
+    BANNED_TITLE: 'ACCESO DENEGADO',
+    BANNED_MESSAGE: 'Has sido expulsado del sistema por un administrador.'
   },
   ADMIN: {
     TITLE: 'Panel de Administración',

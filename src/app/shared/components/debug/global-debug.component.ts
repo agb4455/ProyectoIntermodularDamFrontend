@@ -4,10 +4,12 @@ import { DebugService } from '../../../core/debug/debug.service';
 import { AuthService } from '../../../core/auth/auth.service';
 import { ThemeService } from '../../../core/theme/theme.service';
 
+import { TranslatePipe } from '../../../core/i18n/translate.pipe';
+
 @Component({
   selector: 'app-global-debug',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './global-debug.component.html',
   styleUrl: './global-debug.component.scss'
 })

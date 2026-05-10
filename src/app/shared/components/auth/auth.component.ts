@@ -72,7 +72,11 @@ export class AuthComponent {
       },
       error: (err) => {
         this.loading.set(false);
-        this.error.set(this.i18n.translate('AUTH.VALIDATION.LOGIN_ERROR'));
+        if (err.status === 403) {
+          this.error.set(this.i18n.translate('AUTH.VALIDATION.BANNED_USER'));
+        } else {
+          this.error.set(this.i18n.translate('AUTH.VALIDATION.LOGIN_ERROR'));
+        }
       }
     });
   }

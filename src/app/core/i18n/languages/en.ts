@@ -125,7 +125,8 @@ export const en = {
     VALIDATION: {
       REQUIRED_FIELDS: 'Please complete all fields correctly',
       LOGIN_ERROR: 'Error during sign in. Try again.',
-      REGISTER_ERROR: 'Error during registration. Try again.'
+      REGISTER_ERROR: 'Error during registration. Try again.',
+      BANNED_USER: 'Your account has been banned from the system.'
     },
     EMAIL: 'Email'
   },
@@ -328,7 +329,9 @@ export const en = {
         RESEARCH: 'Research'
       },
       AUTO_SCROLL: 'Auto-scroll to end'
-    }
+    },
+    BANNED_TITLE: 'ACCESS DENIED',
+    BANNED_MESSAGE: 'You have been expelled from the system by an administrator.'
   },
   ADMIN: {
     TITLE: 'Oracle Panel',
