@@ -323,6 +323,14 @@ export class GamePageComponent implements OnInit, OnDestroy {
       }, 3000);
     });
 
+    // Escuchar errores del servidor
+    socket.on('game:error', (data: any) => {
+      if (data.message) {
+        this.avisoMessage.set(data.message);
+        this.showAvisoModal.set(true);
+      }
+    });
+
     // console.log('[GAME] Suscripciones a eventos Socket.IO configuradas correctamente');
   }
 
@@ -690,11 +698,17 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     const gameContext = this.gameService.gameContext();
     if (gameContext) {
+      // Emitimos el evento de abandono
       this.socketService.emit('game:abandon', { gameId: gameContext.code });
+      
+      // Damos un pequeño margen para que el socket envíe el mensaje antes de desconectar
+      setTimeout(() => {
+        this.gameService.clearGameContext();
+        this.router.navigate(['/lobby']);
+      }, 100);
+    } else {
+      this.router.navigate(['/lobby']);
     }
-
-    this.gameService.clearGameContext();
-    this.router.navigate(['/lobby']);
   }
 
   protected onCancelAbandon(): void {
@@ -848,9 +862,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
   }
 
   private estimateDeploymentDurationMs(troopIds: string[]): number {
-    const selectedTroops = this.availableTroops().filter((troop) => troopIds.includes(troop.id));
-    const durations = selectedTroops.map((troop) => this.getTroopDuration(troop.typeId) * 100); // 10% del tiempo de entrenamiento para despliegue visual o valor fijo
-    return durations.length > 0 ? Math.max(...durations) : 2000;
+    // Sincronizado con config.troopTravelTimeMs del Middle Server (10 segundos)
+    return 10000;
   }
 
   // --- MÉTODOS DE DEBUG (Solo para desarrollo) ---

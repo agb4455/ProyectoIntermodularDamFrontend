@@ -111,13 +111,13 @@
   border: 2px solid var(--color-phase-preparation);
   box-shadow: 0 0 12px var(--color-info-bg);
 
-  &[data-phase="GUERRA"] {
+  &[data-phase="WAR"] {
     color: var(--color-phase-war);
     border-color: var(--color-phase-war);
     box-shadow: 0 0 12px var(--color-error-bg);
   }
 
-  &[data-phase="FIN"] {
+  &[data-phase="END"] {
     color: var(--color-phase-end);
     border-color: var(--color-phase-end);
     box-shadow: 0 0 12px var(--color-warning-bg);
