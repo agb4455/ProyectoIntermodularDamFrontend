@@ -99,6 +99,9 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   // --- Jugadores en el mapa (Sincronizados desde el servidor) ---
   protected readonly players = signal<PlayerNode[]>(this.getInitialPlayers());
+  
+  // --- Ataques activos (Array para soportar múltiples ataques simultáneos) ---
+  protected readonly activeAttacks = signal<ActiveAttack[]>([]);
 
   ngOnInit(): void {
     // Preparar suscripciones
@@ -149,7 +152,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
       
       if (data.players) {
         // data.players es un objeto { characterId: player }, lo convertimos a array
-        // Usamos un Map temporal para asegurar unicidad por characterId si el payload viniera corrupto
         const playersMap = new Map<string, any>();
         Object.entries(data.players).forEach(([id, p]: [string, any]) => {
           playersMap.set(id, {
@@ -169,16 +171,47 @@ export class GamePageComponent implements OnInit, OnDestroy {
           ...p,
           position: this.continentCoords[i] || this.continentCoords[0]
         })));
+      }
 
-        // Sincronizar mis recursos locales si estoy en la lista
-        const myData = data.players[this.gameService.myCharacterId() || ''];
-        if (myData) {
-          if (myData.economicCredits !== undefined) this.gold.set(myData.economicCredits);
-          if (myData.researchCredits !== undefined) this.researchPts.set(myData.researchCredits);
-          if (myData.capitalHealth !== undefined) {
-            this.health.set({ current: myData.capitalHealth, max: myData.maxCapitalHealth || 3000 });
-          }
+      // Sincronizar mis recursos locales si estoy en la lista
+      const myId = this.gameService.myCharacterId() || '';
+      const myData = data.players ? data.players[myId] : null;
+      if (myData) {
+        if (myData.economicCredits !== undefined) this.gold.set(myData.economicCredits);
+        if (myData.researchCredits !== undefined) this.researchPts.set(myData.researchCredits);
+        if (myData.capitalHealth !== undefined) {
+          this.health.set({ current: myData.capitalHealth, max: myData.maxCapitalHealth || 3000 });
         }
+      }
+
+      // Detectar ataques en curso para re-activar animaciones (útil para reconexiones o joins tardíos)
+      if (data.players) {
+        const now = Date.now();
+        const activeAttacksMap = new Map<string, any>();
+
+        Object.entries(data.players).forEach(([fromCharId, p]: [string, any]) => {
+          if (p.troops && Array.isArray(p.troops)) {
+            p.troops.forEach((t: any) => {
+              // Si la tropa está desplegada y aún no ha llegado a su destino
+              if (t.deployed && t.travelTargetId && t.arrivalAt > now) {
+                const key = `${fromCharId}-${t.travelTargetId}-${t.arrivalAt}`;
+                if (!activeAttacksMap.has(key)) {
+                  activeAttacksMap.set(key, {
+                    fromCharacterId: fromCharId,
+                    toCharacterId: t.travelTargetId,
+                    arrivalAt: t.arrivalAt,
+                    troopCount: 0,
+                    fromPlayer: p.username || 'Desconocido'
+                  });
+                }
+                activeAttacksMap.get(key).troopCount++;
+              }
+            });
+          }
+        });
+
+        // Disparar las animaciones detectadas
+        activeAttacksMap.forEach(attackData => this.triggerAttackAnimation(attackData));
       }
       
       // console.log('[GAME] Estado sincronizado:', data);
@@ -249,30 +282,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
         );
       }
 
-      // 2. Disparar animación visual del ataque para todos (menos el atacante, que ya la disparó localmente)
-      if (data.fromCharacterId !== this.authService.characterId()) {
-        const attacker = this.players().find((p) => p.characterId === data.fromCharacterId);
-        const defender = this.players().find((p) => p.characterId === data.toCharacterId);
-
-        if (attacker && defender && attacker.position && defender.position) {
-          const pathId = this.generatePathId(attacker, defender);
-          const durationMs = 10000; // O sincronizado con config si se envía
-
-          this.activeAttack.set({
-            attacker,
-            defender,
-            troopIds: Array(data.troopCount).fill('unknown'), // Dummy IDs para el render
-            pathId,
-            durationMs,
-          });
-          
-          setTimeout(() => {
-            if (this.activeAttack()?.pathId === pathId) {
-              this.activeAttack.set(null);
-            }
-          }, durationMs);
-        }
-      }
+      // 2. Disparar animación visual del ataque para todos
+      this.triggerAttackAnimation(data);
     });
 
     // Confirmación de que nuestro ataque fue lanzado (ahora solo como log de depuración o info extra)
@@ -400,8 +411,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
   protected readonly selectedTroopsForAttack = signal<string[]>([]);
   protected readonly recentAttackResult = signal<any>(null);
 
-  // --- Ataque activo (camino visual) ---
-  protected readonly activeAttack = signal<ActiveAttack | null>(null);
 
   // --- Log de la partida ---
   protected readonly gameLogs = signal<GameLogEntry[]>([]);
@@ -821,27 +830,20 @@ export class GamePageComponent implements OnInit, OnDestroy {
       troopIds: troopIds
     });
 
-    // Registrar el ataque activo con camino visual
+    // Feedback local inmediato (predicción)
     const attacker = this.players().find((p) => p.username === this.username())
       ?? this.players().find((p) => p.clan === 'FURY');
     const defender = this.players().find((p) => p.username === targetEnemy?.username);
 
-    if (attacker && defender && attacker.position && defender.position) {
-      const pathId = this.generatePathId(attacker, defender);
+    if (attacker && defender) {
       const durationMs = this.estimateDeploymentDurationMs(troopIds);
-
-      this.activeAttack.set({
-        attacker,
-        defender,
-        troopIds,
-        pathId,
-        durationMs,
+      this.triggerAttackAnimation({
+        fromCharacterId: attacker.characterId,
+        toCharacterId: defender.characterId,
+        arrivalAt: Date.now() + durationMs,
+        totalTravelTimeMs: durationMs,
+        troopCount: troopIds.length
       });
-      
-      // Limpiar el ataque cuando termine el despliegue visual
-      setTimeout(() => {
-        this.activeAttack.set(null);
-      }, durationMs);
     }
     
     // Registrar en el log
@@ -855,40 +857,83 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
 
   /**
-   * Genera un path SVG directo entre dos puntos
+   * Genera el path SVG para un ataque específico de la lista
    */
-  protected generateAttackPath(): string {
-    const attack = this.activeAttack();
-    if (!attack || !attack.attacker.position || !attack.defender.position) {
-      return '';
-    }
+  protected generatePathForAttack(attack: ActiveAttack): string {
+    const attacker = this.players().find(p => p.characterId === attack.attacker.characterId);
+    const defender = this.players().find(p => p.characterId === attack.defender.characterId);
 
-    const p0 = attack.attacker.position;
-    const p2 = attack.defender.position;
+    if (!attacker?.position || !defender?.position) return '';
 
-    // Calcular punto de control desplazado perpendicularmente (inspirado en prueba_ia)
+    const p0 = attacker.position;
+    const p2 = defender.position;
+
     const midX = (p0.x + p2.x) / 2;
     const midY = (p0.y + p2.y) / 2;
-
     const dx = p2.x - p0.x;
     const dy = p2.y - p0.y;
     const len = Math.sqrt(dx * dx + dy * dy) || 1;
-
-    // El desplazamiento es proporcional a la distancia, limitado a un máximo
     const offset = Math.min(15, len * 0.25);
-
-    // Vector normal (-dy, dx) para desplazar hacia un lado
     const midX_offset = midX + (-dy / len) * offset;
     const midY_offset = midY + (dx / len) * offset;
 
     return `M ${p0.x} ${p0.y} Q ${midX_offset} ${midY_offset} ${p2.x} ${p2.y}`;
   }
 
+  /**
+   * Dispara o actualiza una animación de ataque sincronizada
+   */
+  private triggerAttackAnimation(data: any): void {
+    const attacker = this.players().find((p) => p.characterId === data.fromCharacterId);
+    const defender = this.players().find((p) => p.characterId === data.toCharacterId);
+
+    if (!attacker || !defender || !attacker.position || !defender.position) return;
+
+    const now = Date.now();
+    const arrivalAt = data.arrivalAt;
+    const totalDurationMs = data.totalTravelTimeMs || 10000;
+    const startTime = arrivalAt - totalDurationMs;
+    const elapsedMs = now - startTime;
+    const remainingMs = arrivalAt - now;
+
+    // Si el ataque ya debería haber llegado, no lo mostramos
+    if (remainingMs <= 0) return;
+
+    const pathId = this.generatePathId(attacker, defender);
+    
+    // Evitar duplicados
+    if (this.activeAttacks().some(a => a.pathId === pathId)) return;
+
+    // Calcular progreso para el "salto" inicial si el ataque ya empezó
+    const progress = Math.max(0, Math.min(0.99, elapsedMs / totalDurationMs));
+    const remainingDurMs = arrivalAt - now;
+
+    const newAttack: ActiveAttack = {
+      attacker,
+      defender,
+      troopIds: Array(data.troopCount || 0).fill('unknown'),
+      pathId,
+      durationMs: remainingDurMs,
+      startTime,
+      arrivalAt,
+      beginSeconds: 0, // Ya no usamos begin negativo
+      progress: progress // Guardamos el progreso inicial
+    };
+
+    this.activeAttacks.update(current => [...current, newAttack]);
+
+    // Limpiar automáticamente al llegar
+    setTimeout(() => {
+      this.activeAttacks.update(current => current.filter(a => a.pathId !== pathId));
+    }, remainingDurMs);
+  }
+
   private generatePathId(attacker: PlayerNode, defender: PlayerNode): string {
-    // Sanitizar IDs (quitar espacios)
-    const a = attacker.username.replace(/\s+/g, '-');
-    const d = defender.username.replace(/\s+/g, '-');
-    return `attack-path-${a}-${d}-${Date.now()}`;
+    // Sanitizar nombres: solo caracteres alfanuméricos para evitar IDs inválidos en SVG
+    const a = attacker.username.replace(/[^a-zA-Z0-9]/g, '');
+    const d = defender.username.replace(/[^a-zA-Z0-9]/g, '');
+    // El ID debe ser estable durante el viaje para que la animación no se reinicie
+    return `attack-path-${a}-${d}`;
   }
 
   private estimateDeploymentDurationMs(troopIds: string[]): number {

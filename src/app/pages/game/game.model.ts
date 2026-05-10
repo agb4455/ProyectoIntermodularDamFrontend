@@ -22,5 +22,9 @@ export interface ActiveAttack {
   defender: PlayerNode;
   troopIds: string[];
   pathId: string; // ID único para el path
-  durationMs: number; // Duración del despliegue / animación del camino
+  durationMs: number; // Duración total del viaje
+  startTime: number; // Timestamp de inicio
+  arrivalAt: number; // Timestamp de llegada
+  beginSeconds: number; // Offset negativo para sincronizar progreso (-elapsed)
+  progress: number;     // Progreso actual (0 a 1) para saltar al punto correcto
 }

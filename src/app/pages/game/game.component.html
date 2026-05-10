@@ -101,9 +101,16 @@
       }
     </div>
 
-    <!-- SVG Overlay para camino de ataque (al final para estar encima) -->
-    @if (activeAttack()) {
+    <!-- SVG Overlay para caminos de ataque (soporta múltiples ataques simultáneos) -->
+    @for (attack of activeAttacks(); track attack.pathId) {
       <svg class="attack-path-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <!-- El path debe estar antes para asegurar que las referencias lo encuentren -->
+        <path
+          class="attack-path"
+          [attr.d]="generatePathForAttack(attack)"
+          [attr.id]="attack.pathId">
+        </path>
+
         <defs>
           <linearGradient id="attack-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" style="stop-color: var(--color-phase-war); stop-opacity: 0.95" />
@@ -111,29 +118,25 @@
           </linearGradient>
         </defs>
 
-        <!-- Path base para el hilo de ataque -->
-        <path
-          class="attack-path"
-          [attr.d]="generateAttackPath()"
-          [attr.id]="activeAttack()!.pathId">
-        </path>
-
-        <!-- Texto con chevrons '>' siguiendo el camino -->
-        <text class="attack-text">
-          <textPath [attr.href]="'#' + activeAttack()!.pathId" startOffset="0%">
+        <text class="attack-chevron">
+          <textPath [attr.href]="'#' + attack.pathId" [attr.xlink:href]="'#' + attack.pathId" [attr.startOffset]="(attack.progress * 100) + '%'">
             >>>>>>>>>>>>>
-            <animate attributeName="startOffset" from="0%" to="100%" [attr.dur]="(activeAttack()!.durationMs / 1000) + 's'" repeatCount="indefinite" />
+            <animate attributeName="startOffset" [attr.from]="(attack.progress * 100) + '%'" to="100%" [attr.dur]="(attack.durationMs / 1000) + 's'" begin="0s" fill="freeze" />
           </textPath>
         </text>
 
-        <!-- Marcador móvil con avatar del atacante -->
-        <g class="attack-avatar-group">
-          <circle class="attack-avatar-ring" cx="0" cy="0" r="3" />
-          <text class="attack-avatar-icon" x="0" y="0" text-anchor="middle" dominant-baseline="central">
-            {{ activeAttack()!.attacker.username.charAt(0) }}
-          </text>
-          <animateMotion [attr.dur]="(activeAttack()!.durationMs / 1000) + 's'" fill="freeze">
-            <mpath [attr.href]="'#' + activeAttack()!.pathId"></mpath>
+        <g>
+          <!-- Runner simplificado: triángulo centrado en 0,0 y apuntando a la derecha (eje X) -->
+          <path class="troop-runner-svg" d="M-2,-1.5 L2,0 L-2,1.5 Z" fill="var(--color-phase-war)" />
+          <animateMotion 
+            [attr.dur]="(attack.durationMs / 1000) + 's'" 
+            fill="freeze" 
+            rotate="auto" 
+            begin="0s"
+            [attr.keyPoints]="attack.progress + '; 1'"
+            keyTimes="0; 1"
+            calcMode="linear">
+            <mpath [attr.href]="'#' + attack.pathId" [attr.xlink:href]="'#' + attack.pathId" />
           </animateMotion>
         </g>
       </svg>

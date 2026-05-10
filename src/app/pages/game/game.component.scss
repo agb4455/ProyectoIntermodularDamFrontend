@@ -416,46 +416,38 @@
 /* Línea de ataque con efecto de dashes animados */
 .attack-path {
   stroke: var(--color-phase-war); 
-  stroke-width: 1.2; 
+  stroke-width: 0.8; 
   fill: none;
-  opacity: 0.9; 
+  stroke-opacity: 0.6; 
   stroke-linecap: round;
-  stroke-dasharray: 2 2;
+  stroke-dasharray: 4 4;
   animation: dashMove 1s linear infinite;
-  filter: drop-shadow(0 0 6px var(--color-error-bg));
+  filter: drop-shadow(0 0 2px var(--color-phase-war));
 }
 
-.attack-text {
+.attack-chevron {
   font-family: var(--font-title, 'Inter'), system-ui, sans-serif;
   font-size: 3px;
-  fill: var(--color-gold);
+  fill: var(--color-phase-war);
   fill-opacity: 0.6;
   font-weight: 900;
   pointer-events: none;
 }
 
-.attack-text textPath {
+.attack-chevron textPath {
   dominant-baseline: central;
 }
 
-/* Representación visual de tropas atacando */
-.attack-avatar-group {
+/* Representación visual de tropas atacando (Runner) */
+.troop-runner-svg {
   pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)) drop-shadow(0 0 5px var(--color-phase-war));
 }
 
-.attack-avatar-ring {
-  fill: var(--color-bg-overlay);
-  stroke: var(--color-gold);
-  stroke-width: 0.3;
-  filter: drop-shadow(0 0 1.2px var(--color-gold-muted));
-}
-
-.attack-avatar-icon {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 3px;
-  fill: var(--color-gold);
-  font-weight: 800;
-  text-shadow: 0 0 1px var(--color-bg-overlay);
+@keyframes pulse-runner {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 /* ==========================================================================
