@@ -238,16 +238,46 @@ export class GamePageComponent implements OnInit, OnDestroy {
       // console.log('[GAME] Investigación completada:', data);
     });
 
-    // Escuchar ataques lanzados por otros jugadores
-    socket.on('game:attack-launched', (data: any) => {
-      if (data.fromPlayer && data.toPlayer) {
+    // Escuchar ataques lanzados por otros jugadores (movimiento de tropas)
+    socket.on('game:troop-deployed', (data: any) => {
+      // 1. Si somos el defensor, mostrar el log local de advertencia
+      if (data.toCharacterId === this.authService.characterId()) {
         this.addLocalLogEntry(
           this.i18n.translate('GAME.LOG_ATTACK_RECEIVED', { attacker: data.fromPlayer }),
           'attack',
           data.fromPlayer
         );
       }
-      // console.log('[GAME] Ataque recibido:', data);
+
+      // 2. Disparar animación visual del ataque para todos (menos el atacante, que ya la disparó localmente)
+      if (data.fromCharacterId !== this.authService.characterId()) {
+        const attacker = this.players().find((p) => p.characterId === data.fromCharacterId);
+        const defender = this.players().find((p) => p.characterId === data.toCharacterId);
+
+        if (attacker && defender && attacker.position && defender.position) {
+          const pathId = this.generatePathId(attacker, defender);
+          const durationMs = 10000; // O sincronizado con config si se envía
+
+          this.activeAttack.set({
+            attacker,
+            defender,
+            troopIds: Array(data.troopCount).fill('unknown'), // Dummy IDs para el render
+            pathId,
+            durationMs,
+          });
+          
+          setTimeout(() => {
+            if (this.activeAttack()?.pathId === pathId) {
+              this.activeAttack.set(null);
+            }
+          }, durationMs);
+        }
+      }
+    });
+
+    // Confirmación de que nuestro ataque fue lanzado (ahora solo como log de depuración o info extra)
+    socket.on('game:attack-launched', (data: any) => {
+      // console.log('[GAME] Confirmación de ataque propio:', data);
     });
 
     // Escuchar resultados de batalla
