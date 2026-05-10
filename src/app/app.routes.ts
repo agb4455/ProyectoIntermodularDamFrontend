@@ -17,7 +17,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/admin-page/admin-page.component').then((c) => c.AdminPageComponent),
   },
   {
-    path: 'stats/user',
+    path: 'stats',
     canActivate: [authGuard],
     loadComponent: () => import('./pages/statistics/statistics.component').then((c) => c.StatisticsComponent),
   },

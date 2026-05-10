@@ -17,8 +17,11 @@ export class StatisticsApiService {
   private readonly http = inject(HttpClient);
   private readonly configService = inject(AppConfigService);
 
-  getUserStats(): Observable<UserStats> {
-    const url = `${this.configService.config.middleServerUrl}/api/profile/stats`;
+  getUserStats(gameId?: string): Observable<UserStats> {
+    let url = `${this.configService.config.middleServerUrl}/api/profile/stats`;
+    if (gameId) {
+      url += `?gameId=${gameId}`;
+    }
     return this.http.get<UserStats>(url);
   }
 }

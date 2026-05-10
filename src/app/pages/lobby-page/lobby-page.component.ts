@@ -185,7 +185,7 @@ export class LobbyPageComponent implements OnInit {
   }
 
   onViewStats(gameId: string) {
-    this.router.navigate(['/stats/game']);
+    this.router.navigate(['/stats'], { queryParams: { gameId } });
   }
 
   onDeleteFinished(gameId: string) {

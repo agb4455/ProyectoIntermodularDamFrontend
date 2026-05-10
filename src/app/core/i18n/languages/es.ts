@@ -327,6 +327,7 @@ export const es = {
   STATISTICS: {
     TITLE: 'Tus Hazañas',
     GLORY: 'Gloria Eterna',
+    MATCH_DETAILS: 'Detalles de la Batalla',
     TIME: 'Tiempo de Juego',
     MONEY: 'Créditos Ganados',
     TRAINED: 'Tropas Entrenadas',

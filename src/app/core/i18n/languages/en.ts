@@ -325,13 +325,14 @@ export const en = {
     }
   },
   STATISTICS: {
-    TITLE: 'Your Sagas',
+    TITLE: 'Your Feats',
     GLORY: 'Eternal Glory',
-    TIME: 'Battle Time',
-    MONEY: 'Spoils Won',
-    TRAINED: 'Warriors Trained',
-    DEPLOYED: 'Warriors Deployed',
-    ATTACKS: 'Raids Launched',
+    MATCH_DETAILS: 'Match Details',
+    TIME: 'Play Time',
+    MONEY: 'Credits Earned',
+    TRAINED: 'Troops Trained',
+    DEPLOYED: 'Troops Deployed',
+    ATTACKS: 'Attacks Launched',
     WINS: 'Victories'
   }
 };

@@ -4,6 +4,7 @@ import { StatMetric } from './statistics.model';
 import { StatisticsApiService } from '../../core/statistics/statistics-api.service';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { I18nService } from '../../core/i18n/i18n.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-stats',
@@ -16,15 +17,22 @@ import { I18nService } from '../../core/i18n/i18n.service';
 export class StatisticsComponent implements OnInit {
   private readonly statsApi = inject(StatisticsApiService);
   private readonly i18n = inject(I18nService);
+  private readonly route = inject(ActivatedRoute);
   
-  // Datos hardcodeados siguiendo el mockup y requerimientos
-  // Estos datos se conectarán al backend en una fase posterior
   protected readonly stats = signal<StatMetric[]>([]);
-  protected readonly totalGlory = signal<string>('Gloria Eterna: 0');
+  protected readonly totalGlory = signal<string>('');
+  protected readonly isMatchStats = signal<boolean>(false);
 
   ngOnInit(): void {
-    this.statsApi.getUserStats().subscribe(data => {
-      this.totalGlory.set(`${this.i18n.translate('STATISTICS.GLORY')}: ${data.totalWins * 1000}`);
+    const gameId = this.route.snapshot.queryParamMap.get('gameId');
+    this.isMatchStats.set(!!gameId);
+
+    this.statsApi.getUserStats(gameId || undefined).subscribe(data => {
+      if (this.isMatchStats()) {
+        this.totalGlory.set(`${this.i18n.translate('STATISTICS.MATCH_DETAILS')}`);
+      } else {
+        this.totalGlory.set(`${this.i18n.translate('STATISTICS.GLORY')}: ${data.totalWins * 1000}`);
+      }
       
       const mappedStats: StatMetric[] = [
         { id: 'time', label: 'STATISTICS.TIME', value: `${data.totalPlayTimeMinutes} min`, icon: 'time' },
