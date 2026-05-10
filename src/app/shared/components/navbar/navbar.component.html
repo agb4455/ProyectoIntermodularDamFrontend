@@ -42,7 +42,7 @@
         </div>
         <div class="mobile-user-links">
           <a [routerLink]="['/config']" class="mobile-nav-link" (click)="closeMobileMenu()">{{ 'NAV.CONFIG' | translate }}</a>
-          <a [routerLink]="['/stats/user']" class="mobile-nav-link" (click)="closeMobileMenu()">{{ 'NAV.STATS' | translate }}</a>
+          <a [routerLink]="['/stats']" class="mobile-nav-link" (click)="closeMobileMenu()">{{ 'NAV.STATS' | translate }}</a>
           @if (authService.isAdmin()) {
             <a [routerLink]="['/admin']" class="mobile-nav-link" (click)="closeMobileMenu()">{{ 'NAV.ADMIN' | translate }}</a>
           }
@@ -83,7 +83,7 @@
       @if (dropdownOpen() && authService.isLoggedIn()) {
         <div class="dropdown-content">
           <a [routerLink]="['/config']" class="dropdown-item" (click)="closeDropdown()">{{ 'NAV.CONFIG' | translate }}</a>
-          <a [routerLink]="['/stats/user']" class="dropdown-item" (click)="closeDropdown()">{{ 'NAV.STATS' | translate }}</a>
+          <a [routerLink]="['/stats']" class="dropdown-item" (click)="closeDropdown()">{{ 'NAV.STATS' | translate }}</a>
           @if (authService.isAdmin()) {
             <a [routerLink]="['/admin']" class="dropdown-item" (click)="closeDropdown()">{{ 'NAV.ADMIN' | translate }}</a>
           }

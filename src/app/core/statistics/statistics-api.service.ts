@@ -10,6 +10,7 @@ export interface UserStats {
   totalTrained: number;
   totalCreditsEarned: number;
   totalPlayTimeMinutes: number;
+  totalTroopsDeployed: number;
 }
 
 @Injectable({ providedIn: 'root' })

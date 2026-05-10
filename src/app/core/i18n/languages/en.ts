@@ -141,6 +141,8 @@ export const en = {
     LANGUAGE_DESC: 'Battle language'
   },
   GAME: {
+    VICTORY: 'VICTORY',
+    DEFEAT: 'DEFEAT',
     PHASES: {
       WAITING: 'WAITING',
       PREPARATION: 'PREPARATION',

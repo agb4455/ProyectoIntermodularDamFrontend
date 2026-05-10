@@ -9,6 +9,12 @@
       <span class="glory-text">{{ totalGlory() }}</span>
     </div>
 
+    @if (matchResult()) {
+      <div class="result-banner" [class]="matchResult()?.toLowerCase()">
+        <span class="result-text">{{ (matchResult() === 'VICTORY' ? 'GAME.VICTORY' : 'GAME.DEFEAT') | translate }}</span>
+      </div>
+    }
+
     <div class="stats-list">
       @for (stat of stats(); track stat.id) {
         <div class="stat-item">
