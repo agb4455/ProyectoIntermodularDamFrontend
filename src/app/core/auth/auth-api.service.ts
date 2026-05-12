@@ -100,4 +100,13 @@ export class AuthApiService {
     const url = `${this.configService.config.middleServerUrl}/api/avatar/url`;
     return this.http.put<{ avatarUrl: string }>(url, { avatarUrl });
   }
+
+  /**
+   * Solicita una renovación del JWT actual (Silent Refresh).
+   * @returns Observable con el nuevo token JWT
+   */
+  refreshToken(): Observable<LoginResponse> {
+    const url = `${this.configService.config.middleServerUrl}/api/auth/refresh`;
+    return this.http.post<LoginResponse>(url, {});
+  }
 }

@@ -14,6 +14,9 @@ export class AuthService {
   readonly #session = signal<SessionState | null>(this.loadSession());
   readonly characterId = signal<string | null>(sessionStorage.getItem('characterId'));
 
+  /** Timer para la renovación proactiva del token */
+  private refreshTimer?: any;
+
   // Señales públicas de solo lectura
   readonly session = this.#session.asReadonly();
   readonly isLoggedIn = computed(() => this.#session() !== null);
@@ -32,13 +35,17 @@ export class AuthService {
     const payload = this.#parseJwt(token);
     if (!payload) return null;
 
-    return {
+    const session: SessionState = {
       username: payload.username,
       userId: payload.sub,
       role: payload.role,
       token,
       avatarUrl: sessionStorage.getItem('avatarUrl') ?? undefined,
     };
+
+    // Si hay sesión al cargar, programar la renovación
+    this.scheduleTokenRefresh(token);
+    return session;
   }
 
   /**
@@ -58,6 +65,9 @@ export class AuthService {
     });
 
     sessionStorage.setItem('authToken', token);
+
+    // Programar la renovación proactiva
+    this.scheduleTokenRefresh(token);
   }
 
   /**
@@ -81,6 +91,12 @@ export class AuthService {
     sessionStorage.removeItem('avatarUrl');
     sessionStorage.removeItem('characterId');
     sessionStorage.removeItem('gameContext');
+    
+    // Cancelar cualquier renovación programada
+    if (this.refreshTimer) {
+      clearTimeout(this.refreshTimer);
+    }
+
     this.router.navigate(['/']);
   }
 
@@ -166,6 +182,53 @@ export class AuthService {
       // JWT malformado — se ignora y no se establece sesión
       return null;
     }
+  }
+
+  /**
+   * Programa la renovación automática del token antes de que expire.
+   * Basado en el campo 'exp' del JWT (seguridad proactiva).
+   */
+  private scheduleTokenRefresh(token: string): void {
+    // Cancelar cualquier timer previo
+    if (this.refreshTimer) {
+      clearTimeout(this.refreshTimer);
+    }
+
+    const payload = this.#parseJwt(token);
+    if (!payload || !payload.exp) return;
+
+    const expiresAtMs = payload.exp * 1000;
+    const nowMs = Date.now();
+    
+    // Renovar 5 minutos antes de expirar (o inmediatamente si ya está cerca)
+    const marginMs = 5 * 60 * 1000;
+    const timeoutMs = expiresAtMs - nowMs - marginMs;
+
+    if (timeoutMs <= 0) {
+      // Si el token está a punto de expirar o ya expiró, intentamos renovar ya
+      this.executeRefresh();
+    } else {
+      this.refreshTimer = setTimeout(() => this.executeRefresh(), timeoutMs);
+    }
+  }
+
+  /**
+   * Ejecuta la llamada al API para obtener un nuevo token.
+   */
+  private executeRefresh(): void {
+    if (!this.isLoggedIn()) return;
+
+    this.authApi.refreshToken().subscribe({
+      next: (res) => {
+        console.log('[AuthService] Token renovado automáticamente');
+        this.setSession(res.token);
+      },
+      error: (err) => {
+        console.error('[AuthService] Fallo en renovación de token:', err);
+        // Si el refresh falla (ej. usuario baneado o server caído), no forzamos logout inmediato,
+        // pero el usuario eventualmente recibirá 401 en otras peticiones.
+      }
+    });
   }
 }
 
