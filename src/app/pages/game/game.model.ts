@@ -15,6 +15,7 @@ export interface PlayerNode {
   economicCredits?: number;
   researchCredits?: number;
   unlockedResearches?: string[]; // IDs de tecnologías desbloqueadas
+  researchInProgress?: { researchId: string; completesAt: number }; // Investigación actual
 }
 
 export interface ActiveAttack {

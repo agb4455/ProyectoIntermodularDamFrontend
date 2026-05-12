@@ -41,6 +41,7 @@
                 [class.unlocked]="isUnlocked(tech.id)"
                 [class.available]="isUnlockable(tech)"
                 [class.locked]="!isUnlocked(tech.id) && !isUnlockable(tech)"
+                [class.researching]="isResearching(tech.id)"
                 [class.legendary]="tech.tier === 3"
                 (click)="onResearchClick(tech)"
               >
@@ -48,6 +49,8 @@
                   <div class="tech-icon-container">
                     @if (isUnlocked(tech.id)) {
                       <span class="status-icon">✓</span>
+                    } @else if (isResearching(tech.id)) {
+                      <span class="status-icon anim-spin">🔬</span>
                     } @else if (!isUnlockable(tech)) {
                       <span class="status-icon">🔒</span>
                     } @else {
@@ -67,12 +70,15 @@
                     
                     <div class="status-tag" [ngClass]="{
                       'unlocked': isUnlocked(tech.id),
+                      'researching': isResearching(tech.id),
                       'available': isUnlockable(tech),
                       'locked': !isUnlocked(tech.id) && !isUnlockable(tech),
                       'special': tech.tier === 3
                     }">
                       @if (isUnlocked(tech.id)) {
                         {{ 'GAME.MODALS.TECH.UNLOCKED' | translate }}
+                      } @else if (isResearching(tech.id)) {
+                        {{ 'GAME.MODALS.TECH.RESEARCHING' | translate }}
                       } @else if (tech.tier === 3) {
                         {{ 'GAME.MODALS.TECH.LEGENDARY' | translate }}
                       } @else {
@@ -83,9 +89,9 @@
                 </div>
 
                 <!-- Barra de progreso si estuviera investigándose -->
-                <!-- @if (!isUnlocked(tech.id) && isUnlockable(tech)) {
-                   <div class="card-progress" style="width: 0%"></div>
-                } -->
+                @if (isResearching(tech.id)) {
+                   <div class="card-progress" [style.width.%]="currentProgress()"></div>
+                }
               </div>
             }
           </div>
@@ -97,6 +103,7 @@
     <!-- LEYENDA -->
     <div class="modal-footer">
       <div class="legend-item"><div class="legend-color unlocked"></div> {{ 'GAME.MODALS.TECH.UNLOCKED' | translate | uppercase }}</div>
+      <div class="legend-item"><div class="legend-color researching"></div> {{ 'GAME.MODALS.TECH.RESEARCHING' | translate | uppercase }}</div>
       <div class="legend-item"><div class="legend-color available"></div> {{ 'GAME.MODALS.TECH.AVAILABLE' | translate | uppercase }}</div>
       <div class="legend-item"><div class="legend-color locked"></div> {{ 'GAME.MODALS.TECH.LOCKED' | translate | uppercase }}</div>
     </div>

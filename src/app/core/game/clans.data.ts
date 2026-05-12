@@ -7,25 +7,25 @@ export const CLANS_DATA: any[] = [
     "archetype": "FURY",
     "description": "Guerreros pose\u00eddos por la furia de Od\u00edn, incapaces de sentir dolor en el calor de la batalla. Su sed de sangre los convierte en armas vivientes sin igual.",
     "color": "#C0392B",
-    "baseCapitalHealth": 1000,
+    "baseCapitalHealth": 3000,
     "advantages": [
       "IRON",
       "FROST"
     ],
     "initialTroops": [
       {
-        "id": "berserker_guerrero",
-        "name": "Guerrero Berserker",
+        "id": "bersk_devorador_almas",
+        "name": "Devorador de Almas",
         "type": "ATK",
-        "power": 22,
+        "power": 45,
         "trainingTimeSeconds": 45,
         "cost": 80
       },
       {
-        "id": "corredor_de_furia",
-        "name": "Corredor de Furia",
+        "id": "bersk_segador_sangre",
+        "name": "Segador de Sangre",
         "type": "ATK",
-        "power": 15,
+        "power": 30,
         "trainingTimeSeconds": 30,
         "cost": 55
       }
@@ -87,7 +87,7 @@ export const CLANS_DATA: any[] = [
       {
         "id": "bersk_filo_runado",
         "name": "Filo R\u00fanico",
-        "description": "Los herreros graban s\u00edmbolos de poder en las armas de guerra, desatando una nueva clase de devastador en el campo de batalla.",
+        "description": "Los herreros graban s\u00edmbolos de poder en las armas de guerra, desatando al Martillo del Abismo en el campo de batalla.",
         "researchCost": 500,
         "durationSeconds": 240,
         "requirements": [
@@ -97,10 +97,10 @@ export const CLANS_DATA: any[] = [
         "unlocks": {
           "troops": [
             {
-              "id": "devastador_runico",
-              "name": "Devastador R\u00fanico",
+              "id": "bersk_martillo_abismo",
+              "name": "Martillo del Abismo",
               "type": "ATK",
-              "power": 35,
+              "power": 75,
               "trainingTimeSeconds": 70,
               "cost": 130
             }
@@ -168,7 +168,7 @@ export const CLANS_DATA: any[] = [
       {
         "id": "bersk_campeon_del_caos",
         "name": "Campe\u00f3n del Caos",
-        "description": "La encarnaci\u00f3n viviente de la destrucci\u00f3n vikinga; una unidad legendaria cuya presencia sola decide el destino de las batallas.",
+        "description": "La encarnaci\u00f3n viviente de la destrucci\u00f3n vikinga; un Se\u00f1or de la Guerra cuya presencia sola decide el destino de las batallas.",
         "researchCost": 1500,
         "durationSeconds": 900,
         "requirements": [
@@ -178,10 +178,10 @@ export const CLANS_DATA: any[] = [
         "unlocks": {
           "troops": [
             {
-              "id": "campeon_del_caos",
-              "name": "Campe\u00f3n del Caos",
+              "id": "bersk_senor_de_la_guerra",
+              "name": "Se\u00f1or de la Guerra",
               "type": "ATK",
-              "power": 75,
+              "power": 180,
               "trainingTimeSeconds": 180,
               "cost": 350
             }
@@ -196,7 +196,7 @@ export const CLANS_DATA: any[] = [
     "archetype": "DIVINE",
     "description": "Mensajeras de los dioses y conductoras de almas, las Valkirias canalizan el poder de Asgard para sanar y fortalecer a sus aliados. Su gracia en batalla es superada \u00fanicamente por su ferocidad.",
     "color": "#8E44AD",
-    "baseCapitalHealth": 1500,
+    "baseCapitalHealth": 3000,
     "advantages": [
       "FURY",
       "SHADOW"
@@ -206,7 +206,7 @@ export const CLANS_DATA: any[] = [
         "id": "escudera_sagrada",
         "name": "Escudera Sagrada",
         "type": "DEF",
-        "power": 18,
+        "power": 40,
         "trainingTimeSeconds": 40,
         "cost": 70
       },
@@ -214,7 +214,7 @@ export const CLANS_DATA: any[] = [
         "id": "sanadora_de_luz",
         "name": "Sanadora de Luz",
         "type": "HEAL",
-        "power": 20,
+        "power": 45,
         "trainingTimeSeconds": 50,
         "cost": 85
       }
@@ -289,7 +289,7 @@ export const CLANS_DATA: any[] = [
               "id": "valkirie_de_asalto",
               "name": "Valkiria de Asalto",
               "type": "SUPP",
-              "power": 28,
+              "power": 65,
               "trainingTimeSeconds": 65,
               "cost": 110
             }
@@ -370,7 +370,7 @@ export const CLANS_DATA: any[] = [
               "id": "serafin_de_batalla",
               "name": "Seraf\u00edn de Batalla",
               "type": "HEAL",
-              "power": 65,
+              "power": 150,
               "trainingTimeSeconds": 160,
               "cost": 300
             }
@@ -385,7 +385,7 @@ export const CLANS_DATA: any[] = [
     "archetype": "IRON",
     "description": "Se\u00f1ores feudales forjados en las fraguas del norte, los Jarls construyen fortalezas impenetrables y tropas envueltas en acero. Su econom\u00eda de guerra es absolutamente inigualable.",
     "color": "#7F8C8D",
-    "baseCapitalHealth": 2000,
+    "baseCapitalHealth": 3000,
     "advantages": [
       "STORM",
       "DIVINE"
@@ -395,7 +395,7 @@ export const CLANS_DATA: any[] = [
         "id": "escudero_de_hierro",
         "name": "Escudero de Hierro",
         "type": "DEF",
-        "power": 20,
+        "power": 50,
         "trainingTimeSeconds": 50,
         "cost": 90
       },
@@ -403,7 +403,7 @@ export const CLANS_DATA: any[] = [
         "id": "lancero_del_muro",
         "name": "Lancero del Muro",
         "type": "DEF",
-        "power": 17,
+        "power": 40,
         "trainingTimeSeconds": 45,
         "cost": 75
       }
@@ -497,7 +497,7 @@ export const CLANS_DATA: any[] = [
               "id": "guardia_del_senor",
               "name": "Guardia del Se\u00f1or",
               "type": "DEF",
-              "power": 38,
+              "power": 85,
               "trainingTimeSeconds": 80,
               "cost": 160
             }
@@ -559,7 +559,7 @@ export const CLANS_DATA: any[] = [
               "id": "titan_de_hierro",
               "name": "Tit\u00e1n de Hierro",
               "type": "DEF",
-              "power": 80,
+              "power": 200,
               "trainingTimeSeconds": 200,
               "cost": 400
             }
@@ -574,17 +574,17 @@ export const CLANS_DATA: any[] = [
     "archetype": "SHADOW",
     "description": "Hijos del enga\u00f1o y la astucia, las Sombras de Loki atacan desde la oscuridad antes de que el enemigo pueda reaccionar. Su velocidad y sigilo los hacen virtualmente indetectables en cualquier terreno.",
     "color": "#2C3E50",
-    "baseCapitalHealth": 1200,
+    "baseCapitalHealth": 3000,
     "advantages": [
       "DIVINE",
       "IRON"
     ],
     "initialTroops": [
       {
-        "id": "asesino_veloz",
-        "name": "Asesino Veloz",
+        "id": "somb_acechador_vacio",
+        "name": "Acechador del Vac\u00edo",
         "type": "ATK",
-        "power": 18,
+        "power": 40,
         "trainingTimeSeconds": 35,
         "cost": 65
       },
@@ -592,7 +592,7 @@ export const CLANS_DATA: any[] = [
         "id": "explorador_nocturno",
         "name": "Explorador Nocturno",
         "type": "SUPP",
-        "power": 12,
+        "power": 25,
         "trainingTimeSeconds": 28,
         "cost": 50
       }
@@ -654,7 +654,7 @@ export const CLANS_DATA: any[] = [
       {
         "id": "somb_infiltrador_del_vacio",
         "name": "Infiltrador del Vac\u00edo",
-        "description": "Una nueva clase de guerrero surge de la oscuridad absoluta, capaz de penetrar l\u00edneas enemigas sin ser jam\u00e1s detectado.",
+        "description": "Una nueva clase de guerrero surge de la oscuridad absoluta, la Hoja Espectral, capaz de penetrar líneas enemigas sin ser jamás detectada.",
         "researchCost": 480,
         "durationSeconds": 250,
         "requirements": [
@@ -664,10 +664,10 @@ export const CLANS_DATA: any[] = [
         "unlocks": {
           "troops": [
             {
-              "id": "infiltrador_del_vacio",
-              "name": "Infiltrador del Vac\u00edo",
+              "id": "somb_hoja_espectral",
+              "name": "Hoja Espectral",
               "type": "ATK",
-              "power": 30,
+              "power": 65,
               "trainingTimeSeconds": 60,
               "cost": 115
             }
@@ -735,7 +735,7 @@ export const CLANS_DATA: any[] = [
       {
         "id": "somb_fantasma_de_midgard",
         "name": "Fantasma de Midgard",
-        "description": "El asesino supremo, un ser que parece surgir de la nada y desvanecerse antes de que el enemigo pueda reaccionar o contraatacar.",
+        "description": "El Ejecutor de las Sombras, un ser que parece surgir de la nada y desvanecerse antes de que el enemigo pueda reaccionar o contraatacar.",
         "researchCost": 1400,
         "durationSeconds": 820,
         "requirements": [
@@ -745,10 +745,10 @@ export const CLANS_DATA: any[] = [
         "unlocks": {
           "troops": [
             {
-              "id": "fantasma_de_midgard",
-              "name": "Fantasma de Midgard",
+              "id": "somb_ejecutor_sombras",
+              "name": "Ejecutor de las Sombras",
               "type": "ATK",
-              "power": 70,
+              "power": 160,
               "trainingTimeSeconds": 150,
               "cost": 310
             }
@@ -763,17 +763,17 @@ export const CLANS_DATA: any[] = [
     "archetype": "FROST",
     "description": "Nacidos en las tundras del extremo norte, los Guardianes del Hielo dominan el arte del control del campo de batalla. Sus enemigos se mueven como insectos atrapados en \u00e1mbar glacial.",
     "color": "#5DADE2",
-    "baseCapitalHealth": 1700,
+    "baseCapitalHealth": 3000,
     "advantages": [
       "FURY",
       "STORM"
     ],
     "initialTroops": [
       {
-        "id": "lancero_de_hielo",
-        "name": "Lancero de Hielo",
+        "id": "frost_cazador_glacial",
+        "name": "Cazador Glacial",
         "type": "ATK",
-        "power": 16,
+        "power": 35,
         "trainingTimeSeconds": 42,
         "cost": 72
       },
@@ -781,7 +781,7 @@ export const CLANS_DATA: any[] = [
         "id": "escudo_glaciar",
         "name": "Escudo Glaciar",
         "type": "DEF",
-        "power": 22,
+        "power": 50,
         "trainingTimeSeconds": 55,
         "cost": 95
       }
@@ -856,7 +856,7 @@ export const CLANS_DATA: any[] = [
               "id": "guardian_de_hielo",
               "name": "Guardi\u00e1n de Hielo",
               "type": "DEF",
-              "power": 36,
+              "power": 80,
               "trainingTimeSeconds": 75,
               "cost": 145
             }
@@ -937,7 +937,7 @@ export const CLANS_DATA: any[] = [
               "id": "coloso_de_hielo",
               "name": "Coloso de Hielo",
               "type": "DEF",
-              "power": 78,
+              "power": 190,
               "trainingTimeSeconds": 190,
               "cost": 380
             }
@@ -952,25 +952,25 @@ export const CLANS_DATA: any[] = [
     "archetype": "STORM",
     "description": "Adoradores de Thor y el poder de los cielos, los Portadores de la Tormenta desatan el caos el\u00e9ctrico sobre sus enemigos. Sus ataques de \u00e1rea barren ej\u00e9rcitos enteros antes de que puedan organizarse.",
     "color": "#F39C12",
-    "baseCapitalHealth": 1300,
+    "baseCapitalHealth": 3000,
     "advantages": [
       "SHADOW",
       "FROST"
     ],
     "initialTroops": [
       {
-        "id": "jinete_del_rayo",
-        "name": "Jinete del Rayo",
+        "id": "storm_tronador_cielos",
+        "name": "Tronador de los Cielos",
         "type": "ATK",
-        "power": 20,
+        "power": 45,
         "trainingTimeSeconds": 38,
         "cost": 75
       },
       {
-        "id": "arquero_de_tormenta",
-        "name": "Arquero de Tormenta",
+        "id": "storm_arquero_electrico",
+        "name": "Arquero El\u00e9ctrico",
         "type": "ATK",
-        "power": 17,
+        "power": 38,
         "trainingTimeSeconds": 32,
         "cost": 60
       }
@@ -1042,10 +1042,10 @@ export const CLANS_DATA: any[] = [
         "unlocks": {
           "troops": [
             {
-              "id": "heraldo_de_la_tormenta",
-              "name": "Heraldo de la Tormenta",
+              "id": "storm_vanguardia_tempestad",
+              "name": "Vanguardia de la Tempestad",
               "type": "ATK",
-              "power": 33,
+              "power": 75,
               "trainingTimeSeconds": 68,
               "cost": 125
             }
@@ -1113,7 +1113,7 @@ export const CLANS_DATA: any[] = [
       {
         "id": "storm_avatar_de_thor",
         "name": "Avatar de Thor",
-        "description": "La encarnaci\u00f3n del dios del trueno en forma humana; una unidad capaz de devastar ej\u00e9rcitos enteros con ataques el\u00e9ctricos masivos.",
+        "description": "La encarnaci\u00f3n del dios del trueno en forma humana; el Soberano del Rayo es capaz de devastar ej\u00e9rcitos enteros con ataques el\u00e9ctricos masivos.",
         "researchCost": 1500,
         "durationSeconds": 900,
         "requirements": [
@@ -1123,10 +1123,10 @@ export const CLANS_DATA: any[] = [
         "unlocks": {
           "troops": [
             {
-              "id": "avatar_de_thor",
-              "name": "Avatar de Thor",
+              "id": "storm_soberano_del_rayo",
+              "name": "Soberano del Rayo",
               "type": "ATK",
-              "power": 85,
+              "power": 220,
               "trainingTimeSeconds": 200,
               "cost": 420
             }

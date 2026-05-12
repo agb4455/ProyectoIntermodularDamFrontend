@@ -257,7 +257,8 @@ export const es = {
         COST: 'Coste',
         REQUIREMENTS: 'Requisitos',
         TIER: 'Tier',
-        LEGENDARY: 'LEGENDARIO'
+        LEGENDARY: 'LEGENDARIO',
+        RESEARCHING: 'INVESTIGANDO'
       },
       STATUS: {
         READY: 'LISTO',

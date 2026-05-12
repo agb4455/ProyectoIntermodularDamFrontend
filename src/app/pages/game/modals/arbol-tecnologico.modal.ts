@@ -43,6 +43,7 @@ export class ArbolTecnologicoModalComponent implements AfterViewInit {
   readonly researchPoints = input.required<number>();
   readonly technologies = input.required<Technology[]>();
   readonly unlockedTechs = input.required<string[]>();
+  readonly researchInProgress = input<{ researchId: string; completesAt: number } | null | undefined>();
 
   // --- Outputs ---
   readonly closeModal = output<void>();
@@ -60,6 +61,10 @@ export class ArbolTecnologicoModalComponent implements AfterViewInit {
   private startX = 0;
   private scrollLeft = 0;
 
+  // --- Real-time progress ticker ---
+  protected readonly now = signal(Date.now());
+  private ticker: any;
+
   constructor() {
     // Redibujar conexiones cuando cambian las tecnologías o el estado de desbloqueo
     effect(() => {
@@ -73,6 +78,17 @@ export class ArbolTecnologicoModalComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.setupResizeObserver();
     setTimeout(() => this.drawLines(), 200);
+
+    // Iniciar ticker para animaciones de progreso internas
+    this.ticker = setInterval(() => {
+      this.now.set(Date.now());
+    }, 500);
+  }
+
+  ngOnDestroy(): void {
+    if (this.ticker) {
+      clearInterval(this.ticker);
+    }
   }
 
   // --- Reactive Tiers Calculation ---
@@ -119,6 +135,19 @@ export class ArbolTecnologicoModalComponent implements AfterViewInit {
     }
 
     return tiers.filter(t => t !== undefined);
+  });
+
+  protected readonly currentProgress = computed(() => {
+    const inProgress = this.researchInProgress();
+    if (!inProgress) return 0;
+
+    const tech = this.technologies().find(t => t.id === inProgress.researchId);
+    if (!tech) return 0;
+
+    const duration = tech.durationSeconds * 1000;
+    const startTime = inProgress.completesAt - duration;
+    const elapsed = this.now() - startTime;
+    return Math.min(100, Math.max(0, (elapsed / duration) * 100));
   });
 
   // --- Métodos de Dibujo ---
@@ -210,6 +239,10 @@ export class ArbolTecnologicoModalComponent implements AfterViewInit {
     if (this.researchPoints() < tech.researchCost) return false;
     if (!tech.requirements || tech.requirements.length === 0) return true;
     return tech.requirements.every(reqId => this.isUnlocked(reqId));
+  }
+
+  protected isResearching(techId: string): boolean {
+    return this.researchInProgress()?.researchId === techId;
   }
 
   protected onResearchClick(tech: Technology): void {

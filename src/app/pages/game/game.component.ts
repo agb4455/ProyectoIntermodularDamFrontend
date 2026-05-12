@@ -182,6 +182,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
         if (myData.capitalHealth !== undefined) {
           this.health.set({ current: myData.capitalHealth, max: myData.maxCapitalHealth || 3000 });
         }
+        // Sincronizar investigaciones si es necesario (el computed 'unlockedTechnologies' ya lo leerá de 'me')
       }
 
       // Detectar ataques en curso para re-activar animaciones (útil para reconexiones o joins tardíos)
@@ -253,11 +254,10 @@ export class GamePageComponent implements OnInit, OnDestroy {
     // Escuchar confirmación de investigación iniciada
     socket.on('player:research-started', (data: any) => {
       if (data.researchId) {
-        this.unlockedTechnologies.update(techs => [...techs, data.researchId]);
         this.broadcastLogEntry(this.i18n.translate('GAME.LOG_RESEARCH_CONFIRM'), 'research');
       }
       if (data.researchCredits !== undefined) this.researchPts.set(data.researchCredits);
-      // console.log('[GAME] Investigación iniciada:', data);
+      // La actualización visual de la barra de progreso vendrá en el siguiente sync del servidor
     });
 
     // Escuchar investigación finalizada
@@ -268,7 +268,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
         const techName = tech?.name || data.researchId;
         this.broadcastLogEntry(this.i18n.translate('GAME.LOG_RESEARCH_COMPLETE', { tech: techName }), 'research');
       }
-      // console.log('[GAME] Investigación completada:', data);
     });
 
     // Escuchar ataques lanzados por otros jugadores (movimiento de tropas)
@@ -527,6 +526,19 @@ export class GamePageComponent implements OnInit, OnDestroy {
     return troop ? (troop.trainingProgress ?? 0) : 0;
   });
 
+  protected readonly researchProgress = computed(() => {
+    const myPlayer = this.me();
+    if (!myPlayer || !myPlayer.researchInProgress) return 0;
+
+    const currentTech = this.clanTechnologies().find(t => t.id === myPlayer.researchInProgress?.researchId);
+    if (!currentTech) return 0;
+
+    const duration = currentTech.durationSeconds * 1000;
+    const startTime = myPlayer.researchInProgress.completesAt - duration;
+    const elapsed = this.now() - startTime;
+    return Math.min(100, Math.max(0, (elapsed / duration) * 100));
+  });
+
   // --- Opciones de entrenamiento (Actualizadas según tech tree) ---
   protected readonly trainableTroopOptions = computed<TrainableTroopOption[]>(() => {
     const myPlayer = this.me();
@@ -580,7 +592,9 @@ export class GamePageComponent implements OnInit, OnDestroy {
     return (clanData?.technologies as Technology[]) || [];
   });
 
-  protected readonly unlockedTechnologies = signal<string[]>([]);
+  protected readonly unlockedTechnologies = computed(() => {
+    return this.me()?.unlockedResearches || [];
+  });
 
   // --- Acciones de los botones laterales ---
   protected openEntrenarTropas(): void {

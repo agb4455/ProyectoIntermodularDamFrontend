@@ -258,7 +258,8 @@ export const en = {
         COST: 'Cost',
         REQUIREMENTS: 'Requirements',
         TIER: 'Tier',
-        LEGENDARY: 'LEGENDARY'
+        LEGENDARY: 'LEGENDARY',
+        RESEARCHING: 'RESEARCHING'
       },
       STATUS: {
         READY: 'READY',

@@ -217,6 +217,12 @@
     cursor: not-allowed;
   }
 
+  &.researching {
+    border-color: v.$color-gold;
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
+    animation: pulse-research 2s infinite ease-in-out;
+  }
+
   &.legendary {
     border: 2px solid v.$color-clan-song; // Usando color violeta de SKALDS para legendario
     box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
@@ -306,6 +312,37 @@
   &.available { background: v.$color-success; color: v.$color-text-primary; }
   &.locked { background: v.$color-bg-primary; color: v.$color-text-disabled; }
   &.special { background: v.$color-clan-song; color: v.$color-text-primary; }
+  &.researching { 
+    background: v.$color-gold-muted; 
+    color: v.$color-text-primary;
+    border: 1px solid v.$color-gold;
+  }
+}
+
+.card-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, v.$color-gold-dark, v.$color-gold);
+  box-shadow: 0 0 10px v.$color-gold-muted;
+  transition: width 0.5s ease;
+  z-index: 100;
+}
+
+.anim-spin {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-research {
+  0% { border-color: v.$color-gold-muted; }
+  50% { border-color: v.$color-gold; }
+  100% { border-color: v.$color-gold-muted; }
 }
 
 // LEYENDA / FOOTER
@@ -332,6 +369,11 @@
 
     &.unlocked { background: v.$color-gold; }
     &.available { background: v.$color-success; }
+    &.researching { 
+      background: v.$color-gold-muted; 
+      border: 1px solid v.$color-gold;
+      box-shadow: 0 0 5px v.$color-gold;
+    }
     &.locked { background: v.$color-bg-primary; border: 1px solid v.$color-border-default; }
   }
 }
