@@ -214,6 +214,12 @@ export class GamePageComponent implements OnInit, OnDestroy {
         // Disparar las animaciones detectadas
         activeAttacksMap.forEach(attackData => this.triggerAttackAnimation(attackData));
       }
+      // Sincronizar el log de batalla persistente
+      if (data.battleLog && Array.isArray(data.battleLog)) {
+        // Invertimos para que los más nuevos aparezcan arriba en la señal local
+        const sortedLogs = [...data.battleLog].reverse();
+        this.gameLogs.set(sortedLogs);
+      }
       
       // console.log('[GAME] Estado sincronizado:', data);
     });
@@ -225,9 +231,9 @@ export class GamePageComponent implements OnInit, OnDestroy {
       // console.log('[GAME] Recursos actualizados:', data);
     });
 
-    // Escuchar nuevos logs compartidos
+    // Escuchar nuevos logs compartidos (para actualizaciones en tiempo real)
     socket.on('game:new-log', (logEntry: GameLogEntry) => {
-      // Evitar duplicados si nosotros fuimos quienes emitimos este log
+      // Evitar duplicados por ID
       if (!this.gameLogs().some(l => l.id === logEntry.id)) {
         this.gameLogs.update(logs => [logEntry, ...logs]);
       }
@@ -235,39 +241,24 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     // Escuchar confirmación de entrenamiento iniciado
     socket.on('player:train-queued', (data: any) => {
-      if (data.trainingQueue) {
-        this.broadcastLogEntry(this.i18n.translate('GAME.LOG_TRAIN_CONFIRM'), 'train');
-      }
       if (data.economicCredits !== undefined) this.gold.set(data.economicCredits);
       // console.log('[GAME] Entrenamiento en cola:', data);
     });
 
     // Escuchar entrenamiento finalizado
     socket.on('player:troop-trained', (data: any) => {
-      if (data.characterId === this.gameService.myCharacterId()) {
-        const troopName = this.getTroopName(data.troop.typeId);
-        this.broadcastLogEntry(this.i18n.translate('GAME.LOG_TRAIN_COMPLETE', { troop: troopName }), 'train');
-      }
       // console.log('[GAME] Tropa entrenada:', data);
     });
 
     // Escuchar confirmación de investigación iniciada
     socket.on('player:research-started', (data: any) => {
-      if (data.researchId) {
-        this.broadcastLogEntry(this.i18n.translate('GAME.LOG_RESEARCH_CONFIRM'), 'research');
-      }
       if (data.researchCredits !== undefined) this.researchPts.set(data.researchCredits);
       // La actualización visual de la barra de progreso vendrá en el siguiente sync del servidor
     });
 
     // Escuchar investigación finalizada
     socket.on('player:research-complete', (data: any) => {
-      if (data.characterId === this.gameService.myCharacterId()) {
-        // Encontrar el nombre de la tecnología
-        const tech = this.clanTechnologies().find(t => t.id === data.researchId);
-        const techName = tech?.name || data.researchId;
-        this.broadcastLogEntry(this.i18n.translate('GAME.LOG_RESEARCH_COMPLETE', { tech: techName }), 'research');
-      }
+      // El log ahora viene del servidor
     });
 
     // Escuchar ataques lanzados por otros jugadores (movimiento de tropas)
@@ -295,12 +286,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
       // Si somos el defensor
       if (data.targetCharacterId === this.authService.characterId()) {
         if (data.characterHealth) this.health.set(data.characterHealth);
-        if (data.battleLog) {
-          this.addLocalLogEntry(
-            this.i18n.translate('GAME.LOG_BATTLE_RESULT', { attacker: data.attackerUsername }),
-            'attack'
-          );
-        }
       }
       
       // Si somos el atacante
@@ -322,10 +307,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
     socket.on('game:phase-changed', (data: any) => {
       if (data.newPhase) {
         this.currentPhase.set(data.newPhase);
-        this.addLocalLogEntry(
-          this.i18n.translate('GAME.LOG_PHASE_CHANGE', { phase: data.newPhase }),
-          'system'
-        );
       }
     });
 
@@ -333,10 +314,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
     socket.on('game:player-eliminated', (data: any) => {
       if (data.characterId) {
         this.players.update(ps => ps.filter(p => p.characterId !== data.characterId));
-        this.addLocalLogEntry(
-          this.i18n.translate('GAME.LOG_PLAYER_ELIMINATED', { player: data.username }),
-          'system'
-        );
       }
     });
 
@@ -344,13 +321,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
     socket.on('game:ended', (data: any) => {
       this.currentPhase.set('FINISHED');
       const isWinner = data.winnerCharacterId === this.authService.characterId();
-      
-      this.addLocalLogEntry(
-        isWinner 
-          ? this.i18n.translate('GAME.LOG_GAME_WON') 
-          : this.i18n.translate('GAME.LOG_GAME_LOST'),
-        'system'
-      );
       
       // Mostrar alerta o modal de fin de partida (simplificado para MVP)
       setTimeout(() => {
@@ -432,6 +402,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
           clan: clanId as ClanId,
           currentHealth: t.currentPoints,
           maxHealth: t.maxPoints,
+          power: t.maxPoints, // Usamos maxPoints como los puntos de acción base
           icon: this.getTroopIcon(t.typeId),
           cost: 0,
           isTraining: false,
@@ -446,7 +417,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
         const duration = this.getTroopDuration(q.troopTypeId) * 1000;
         const startTime = q.completesAt - duration;
         const elapsed = this.now() - startTime;
-        const progress = Math.min(100, Math.max(0, (elapsed / duration) * 100));
+        const progress = Math.floor(Math.min(100, Math.max(0, (elapsed / duration) * 100)));
 
         allTroops.push({
           id: q.trainingId,
@@ -456,6 +427,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
           clan: clanId as ClanId,
           currentHealth: 0,
           maxHealth: 100,
+          power: this.getTroopPower(q.troopTypeId),
           icon: this.getTroopIcon(q.troopTypeId),
           cost: 0,
           isTraining: true,
@@ -512,6 +484,10 @@ export class GamePageComponent implements OnInit, OnDestroy {
     return this.getTroopData(typeId)?.trainingTimeSeconds || 30;
   }
 
+  private getTroopPower(typeId: string): number {
+    return this.getTroopData(typeId)?.power || 0;
+  }
+
   // --- Estado de entrenamiento secuencial ---
   protected readonly trainingQueue = computed(() =>
     this.availableTroops().filter(t => t.isTraining)
@@ -536,7 +512,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
     const duration = currentTech.durationSeconds * 1000;
     const startTime = myPlayer.researchInProgress.completesAt - duration;
     const elapsed = this.now() - startTime;
-    return Math.min(100, Math.max(0, (elapsed / duration) * 100));
+    return Math.floor(Math.min(100, Math.max(0, (elapsed / duration) * 100)));
   });
 
   // --- Opciones de entrenamiento (Actualizadas según tech tree) ---
@@ -556,6 +532,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
       type: t.type as TroopType,
       name: t.name,
       cost: t.cost,
+      power: t.power,
       icon: this.getTroopIcon(t.id),
       description: `Unidad básica de ${clanData.name}.`
     }));
@@ -572,6 +549,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
               type: t.type as TroopType,
               name: t.name,
               cost: t.cost,
+              power: t.power,
               icon: this.getTroopIcon(t.id),
               description: tech.name
             });
@@ -615,15 +593,10 @@ export class GamePageComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Emitir evento al servidor para entrenar tropa
     this.socketService.emit('game:train', {
       gameId: gameContext.code,
       troopTypeId: id
     });
-
-    // Registrar en el log (feedback local inmediato)
-    const troopName = option.name;
-    this.broadcastLogEntry(this.i18n.translate('GAME.LOG_TRAIN', { troop: troopName }), 'train');
   }
 
   protected openTropas(): void {
@@ -657,10 +630,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
       gameId: gameContext.code,
       researchId: techId
     });
-
-    // Registrar en el log (feedback local inmediato)
-    const msg = this.i18n.translate('GAME.LOG_RESEARCH', { tech: tech.name });
-    this.broadcastLogEntry(msg, 'research');
   }
 
   protected openLog(): void {
@@ -784,7 +753,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     // Emitir evento al servidor para iniciar la partida
     this.socketService.emit('game:start', { gameId: gameContext.code });
-    this.broadcastLogEntry(this.i18n.translate('GAME.LOG_START'), 'system');
   }
 
   // --- Clic en territorio enemigo ---
@@ -860,12 +828,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
       });
     }
     
-    // Registrar en el log
-    if (targetEnemy) {
-      const msg = this.i18n.translate('GAME.LOG_ATTACK', { target: targetEnemy.username ?? '' });
-      this.broadcastLogEntry(msg, 'attack');
-    }
-
     this.closeAtacarModal();
   }
 

@@ -14,6 +14,7 @@ export interface Troop {
   clan: ClanId;              // Clan propietario
   currentHealth: number;     // Vitalidad actual
   maxHealth: number;         // Vitalidad máxima
+  power: number;             // Puntos de acción (AP)
   icon: string;              // URL o identificador del icono SVG
   cost: number;              // Costo en puntos económicos
   isTraining: boolean;       // ¿Está en entrenamiento?
@@ -57,6 +58,7 @@ export interface TrainableTroopOption {
   type: TroopType;
   name: string;
   cost: number;
+  power: number;             // Puntos de acción (AP)
   icon: string;
   description?: string;
 }

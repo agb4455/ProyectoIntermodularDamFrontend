@@ -17,7 +17,9 @@
       
       <div class="hero-actions animate-fade-in-slow">
         <button class="btn-mithic-primary" (click)="enterValhalla()">
-          <span class="rune">᚛</span> {{ 'HOME.START_ADVENTURE' | translate }} <span class="rune">᚜</span>
+          <span class="rune">᚛</span> 
+          {{ (authService.isLoggedIn() ? 'HOME.GO_TO_LOBBY' : 'HOME.START_ADVENTURE') | translate }} 
+          <span class="rune">᚜</span>
         </button>
       </div>
 
@@ -129,7 +131,7 @@
       <h2 class="title-font">{{ 'HOME.SECTIONS.CTA.TITLE' | translate }}</h2>
       <p>{{ 'HOME.SECTIONS.CTA.DESC' | translate }}</p>
       <button class="btn-mithic-primary big" (click)="enterValhalla()">
-        {{ 'HOME.SECTIONS.CTA.BTN' | translate }}
+        {{ (authService.isLoggedIn() ? 'HOME.GO_TO_LOBBY' : 'HOME.SECTIONS.CTA.BTN') | translate }}
       </button>
     </div>
   </section>

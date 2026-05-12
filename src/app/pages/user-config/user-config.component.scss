@@ -31,8 +31,9 @@
   text-align: center;
 }
 
-.main-layout {
+.config-main-layout {
   display: flex;
+  flex-direction: row;
   flex-grow: 1;
   min-height: 0;
   gap: 2rem;
@@ -48,30 +49,94 @@
   background: $color-bg-glass;
   border: 1px solid $color-border-default;
   border-radius: 12px;
-  padding: 2rem;
+  padding: 3rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
 }
 
-.avatar-preview {
+.avatar-container {
+  position: relative;
   width: 160px;
   height: 160px;
-  border-radius: 50%;
-  border: 4px solid $color-gold;
-  background: $color-bg-card;
-  object-fit: cover;
+
+  .avatar-preview {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 4px solid $color-gold;
+    background: $color-bg-card;
+    object-fit: cover;
+    box-shadow: 0 0 20px $color-gold-muted;
+  }
+
+  .btn-edit-avatar {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: $color-gold;
+    color: $color-text-inverse;
+    border: 2px solid $color-bg-card;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      background: $color-gold-light;
+    }
+  }
+}
+
+.user-meta {
+  text-align: center;
+  
+  .user-name {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    color: $color-gold;
+    font-size: 1.6rem;
+  }
+
+  .user-clan {
+    margin: 5px 0 0;
+    color: $color-text-secondary;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
 }
 
 /* ==========================================================================
    Área de Formulario y Tarjetas
    ========================================================================== */
 
+.config-content-panel {
+  flex-grow: 1;
+  background: $color-bg-glass;
+  border: 1px solid $color-border-default;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .form-scroll-area {
   flex-grow: 1;
   overflow-y: auto;
-  padding-right: 1rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -82,9 +147,9 @@
 
 .card {
   background: $color-bg-card;
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 1.5rem;
-  border: 1px solid $color-border-default;
+  border: 1px solid $color-border-faint;
 }
 
 .card-header {
@@ -262,7 +327,7 @@
     gap: 1.5rem;
   }
 
-  .main-layout {
+  .config-main-layout {
     flex-direction: column;
     overflow: visible;
   }
@@ -271,9 +336,14 @@
     width: 100%;
   }
 
+  .config-content-panel {
+    border: none;
+    background: transparent;
+  }
+
   .form-scroll-area {
     overflow: visible;
-    padding-right: 0;
+    padding: 0;
   }
 }
 

@@ -1,4 +1,5 @@
 import { Component, input, output, signal, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/auth/auth.service';
@@ -20,6 +21,7 @@ export class AuthComponent {
   private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
   private readonly i18n = inject(I18nService);
+  private readonly router = inject(Router);
 
   loading = signal(false);
   error = signal('');
@@ -69,6 +71,7 @@ export class AuthComponent {
       next: () => {
         this.loading.set(false);
         this.closeModal.emit();
+        this.router.navigate(['/lobby']);
       },
       error: (err) => {
         this.loading.set(false);
@@ -95,6 +98,7 @@ export class AuthComponent {
       next: () => {
         this.loading.set(false);
         this.closeModal.emit();
+        this.router.navigate(['/lobby']);
       },
       error: (err) => {
         this.loading.set(false);

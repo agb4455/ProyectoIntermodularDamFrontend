@@ -20,6 +20,10 @@ export class AuthService {
   readonly isAdmin = computed(() => this.#session()?.role === 'ADMIN');
   readonly username = computed(() => this.#session()?.username ?? '');
   readonly userId = computed(() => this.#session()?.userId ?? '');
+  readonly avatarUrl = computed(() => {
+    const s = this.#session();
+    return s ? (s as SessionState).avatarUrl ?? '' : '';
+  });
 
   private loadSession(): SessionState | null {
     const token = sessionStorage.getItem('authToken');
@@ -33,6 +37,7 @@ export class AuthService {
       userId: payload.sub,
       role: payload.role,
       token,
+      avatarUrl: sessionStorage.getItem('avatarUrl') ?? undefined,
     };
   }
 
@@ -49,9 +54,21 @@ export class AuthService {
       userId: payload.sub,
       role: payload.role,
       token,
+      avatarUrl: undefined, // Se cargará después via getProfile si no existe
     });
 
     sessionStorage.setItem('authToken', token);
+  }
+
+  /**
+   * Actualiza la URL del avatar en la sesión actual y en el almacenamiento persistente.
+   */
+  updateAvatarUrl(avatarUrl: string): void {
+    const current = this.#session();
+    if (current) {
+      this.#session.set({ ...current, avatarUrl });
+      sessionStorage.setItem('avatarUrl', avatarUrl);
+    }
   }
 
   /**
@@ -61,6 +78,7 @@ export class AuthService {
     this.#session.set(null);
     this.characterId.set(null);
     sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem('avatarUrl');
     sessionStorage.removeItem('characterId');
     sessionStorage.removeItem('gameContext');
     this.router.navigate(['/']);
@@ -85,11 +103,13 @@ export class AuthService {
   /**
    * Llama al endpoint POST /api/login del Middle Server.
    * Recibe el JWT, lo parsea y establece la sesión de usuario.
+   * Carga el perfil inmediatamente para obtener el avatar.
    */
   login(username: string, password: string): Observable<void> {
     return this.authApi.login(username, password).pipe(
       map(({ token }) => {
         this.setSession(token);
+        this.syncProfile(); // Carga asíncrona del perfil
       })
     );
   }
@@ -102,8 +122,25 @@ export class AuthService {
     return this.authApi.register(username, email, password).pipe(
       map(({ token }) => {
         this.setSession(token);
+        this.syncProfile();
       })
     );
+  }
+
+  /**
+   * Sincroniza los datos del perfil (email, avatar) con el servidor.
+   */
+  private syncProfile(): void {
+    this.authApi.getProfile().subscribe({
+      next: (profile) => {
+        if (profile.avatarUrl) {
+          this.updateAvatarUrl(profile.avatarUrl);
+        }
+      },
+      error: (err) => {
+        console.error('[AuthService] Error syncing profile:', err);
+      }
+    });
   }
 
   /**

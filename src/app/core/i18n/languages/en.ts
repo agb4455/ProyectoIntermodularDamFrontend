@@ -18,6 +18,7 @@ export const en = {
     HERO_TITLE: 'VIKING CLAN WARS',
     HERO_SUBTITLE: 'Conquer the Northern Lands. Forge your legend. Crush your enemies.',
     START_ADVENTURE: 'TO ARMS!',
+    GO_TO_LOBBY: 'GO TO LOBBY',
     EXPLORE_ERA: 'Explore the Codex',
     SECTIONS: {
       ERAS: {
@@ -142,8 +143,12 @@ export const en = {
     CHANGE_PASSWORD: 'Change Password',
     SECURITY: 'SECURITY',
     SECURITY_DESC: 'Secure your access',
-    LANGUAGE_DESC: 'Battle language'
+    LANGUAGE_DESC: 'Battle language',
+    EDIT_AVATAR: 'Edit avatar',
+    CHOOSE_AVATAR: 'Choose your Avatar',
+    UPLOAD_CUSTOM: 'Upload Custom Photo'
   },
+  OR: 'or',
   GAME: {
     VICTORY: 'VICTORY',
     DEFEAT: 'DEFEAT',
@@ -158,6 +163,13 @@ export const en = {
       HEALTH: 'Health',
       GOLD: 'Gold',
       RESEARCH: 'Research'
+    },
+    STATUS: {
+      READY: 'READY',
+      TRAINING: 'TRAINING',
+      QUEUED: 'QUEUED',
+      DEPLOYED: 'IN CAMPAIGN',
+      EMPTY_TERRITORY: 'No troops in this territory'
     },
     troop_types: {
       ATK: 'Offense',
@@ -260,13 +272,6 @@ export const en = {
         TIER: 'Tier',
         LEGENDARY: 'LEGENDARY',
         RESEARCHING: 'RESEARCHING'
-      },
-      STATUS: {
-        READY: 'READY',
-        TRAINING: 'TRAINING',
-        QUEUED: 'QUEUED',
-        DEPLOYED: 'IN CAMPAIGN',
-        EMPTY_TERRITORY: 'No troops in this territory'
       },
       RULES: {
         TITLE: 'MIDGARD LAWS',

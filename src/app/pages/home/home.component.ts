@@ -16,8 +16,13 @@ import { ClanPreview } from './home.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
-  private readonly authService = inject(AuthService);
+  protected readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+
+  constructor() {
+    // Permitimos que el usuario vea la home aunque esté logueado, 
+    // pero los botones le llevarán al lobby en lugar de pedir login.
+  }
 
   // Lista de clanes para la sección de previsualización
   protected readonly clans = signal<ClanPreview[]>([
@@ -30,14 +35,8 @@ export class HomeComponent {
   ]);
 
   protected enterValhalla(): void {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/game']);
-    } else {
-      // Como el modal de auth está en la Navbar, podríamos disparar un evento global
-      // o simplemente navegar a /lobby y que el guard de auth (si existiera) lo pida.
-      // Aquí, por simplicidad y siguiendo la estructura actual, navegamos a lobby.
-      this.router.navigate(['/game']);
-    }
+    // Siempre navegamos al lobby; si no está logueado, el authGuard se encargará de pedir login
+    this.router.navigate(['/lobby']);
   }
 
   protected getArchetypeIcon(archetype: string): string {

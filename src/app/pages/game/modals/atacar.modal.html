@@ -28,9 +28,10 @@
         [class.animate]="showDamagePreview()">
         @for (cell of troopGrid(); track cell.troopId) {
           <div class="grid-cell" (click)="onRemoveTroop(cell.troopId)" [title]="'GAME.MODALS.ATTACK.CLICK_TO_REMOVE' | translate">
-            <!-- Icono de tropa -->
-            <div class="troop-icon">
-              {{ cell.troop.icon || cell.troop.type }}
+            <!-- Nombre y Puntos de Acción -->
+            <div class="troop-info-text">
+              <span class="troop-name">{{ cell.troop.name }}</span>
+              <span class="troop-power">{{ cell.troop.power }} AP</span>
             </div>
 
             <!-- Health bar -->

@@ -32,8 +32,8 @@ export const adminGuard: CanActivateFn = () => {
     if (authService.isAdmin()) {
       return true;
     }
-    // Usuario autenticado pero sin permisos de admin -> Redirigir a home a secas
-    return router.createUrlTree(['/']);
+    // Usuario autenticado pero sin permisos de admin -> Redirigir al lobby
+    return router.createUrlTree(['/lobby']);
   }
 
   // Usuario no autenticado -> Redirigir a home y pedir login

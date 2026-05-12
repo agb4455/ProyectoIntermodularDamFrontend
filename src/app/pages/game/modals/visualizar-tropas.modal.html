@@ -19,9 +19,10 @@
             [style.--progress]="getTrainingProgress(troop) + '%'">
 
             <div class="cell-content">
-              <!-- Icono de tropa -->
-              <div class="troop-icon">
-                {{ troop.icon || troop.type }}
+              <!-- Nombre y Puntos de Acción -->
+              <div class="troop-info-text">
+                <span class="troop-name">{{ troop.name }}</span>
+                <span class="troop-power">{{ troop.power }} AP</span>
               </div>
 
               <!-- Badge de estado -->

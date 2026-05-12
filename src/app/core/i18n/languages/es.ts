@@ -17,6 +17,7 @@ export const es = {
     HERO_TITLE: 'VIKING CLAN WARS',
     HERO_SUBTITLE: 'Conquista las Tierras del Norte. Forja tu leyenda. Arrasa con tus enemigos.',
     START_ADVENTURE: '¡A LAS ARMAS!',
+    GO_TO_LOBBY: 'IR AL LOBBY',
     EXPLORE_ERA: 'Explora el Códice',
     SECTIONS: {
       ERAS: {
@@ -141,8 +142,12 @@ export const es = {
     CHANGE_PASSWORD: 'Cambiar Contraseña',
     SECURITY: 'SEGURIDAD',
     SECURITY_DESC: 'Asegura tu acceso',
-    LANGUAGE_DESC: 'Idioma de la batalla'
+    LANGUAGE_DESC: 'Idioma de la batalla',
+    EDIT_AVATAR: 'Editar avatar',
+    CHOOSE_AVATAR: 'Elige tu Avatar',
+    UPLOAD_CUSTOM: 'Subir Foto Personalizada'
   },
+  OR: 'o',
   GAME: {
     VICTORY: 'VICTORIA',
     DEFEAT: 'DERROTA',
@@ -157,6 +162,13 @@ export const es = {
       HEALTH: 'Vida',
       GOLD: 'Oro',
       RESEARCH: 'Sabiduria'
+    },
+    STATUS: {
+      READY: 'LISTO',
+      TRAINING: 'ENTRENANDO',
+      QUEUED: 'EN COLA',
+      DEPLOYED: 'EN CAMPAÑA',
+      EMPTY_TERRITORY: 'No hay tropas en este territorio'
     },
     troop_types: {
       ATK: 'Ofensiva',
@@ -256,16 +268,9 @@ export const es = {
         LOCKED: 'BLOQUEADO',
         COST: 'Coste',
         REQUIREMENTS: 'Requisitos',
-        TIER: 'Tier',
+        TIER: 'Estamento',
         LEGENDARY: 'LEGENDARIO',
         RESEARCHING: 'INVESTIGANDO'
-      },
-      STATUS: {
-        READY: 'LISTO',
-        TRAINING: 'ENTRENANDO',
-        QUEUED: 'EN COLA',
-        DEPLOYED: 'EN CAMPAÑA',
-        EMPTY_TERRITORY: 'No hay tropas en este territorio'
       },
       RULES: {
         TITLE: 'LEYES DE MIDGARD',

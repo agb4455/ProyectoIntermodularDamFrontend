@@ -20,5 +20,6 @@ export interface SessionState {
   userId: string;
   role: UserRole;
   token: string;
+  avatarUrl?: string;
 }
 

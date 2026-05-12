@@ -49,7 +49,7 @@ export class VisualizarTropasModalComponent {
   }
 
   protected getTrainingProgress(troop: Troop): number {
-    return troop.trainingProgress ?? 0;
+    return Math.floor(troop.trainingProgress ?? 0);
   }
   protected getHealthPercentage(troop: Troop): number {
     return (troop.currentHealth / troop.maxHealth) * 100;

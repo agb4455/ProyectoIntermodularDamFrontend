@@ -1,24 +1,27 @@
 import { ChangeDetectionStrategy, Component, signal, inject, computed, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ThemeService } from '../../core/theme/theme.service';
 import { I18nService, Language } from '../../core/i18n/i18n.service';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { CambiarContrasenaModalComponent } from './modals/cambiar-contrasena.modal';
+import { SelectorAvatarModalComponent } from './modals/selector-avatar.modal';
 import { AuthService } from '../../core/auth/auth.service';
 import { AuthApiService } from '../../core/auth/auth-api.service';
 
 @Component({
   selector: 'app-user-config',
   standalone: true,
-  imports: [CommonModule, FormsModule, CambiarContrasenaModalComponent, TranslatePipe],
+  imports: [CommonModule, FormsModule, CambiarContrasenaModalComponent, SelectorAvatarModalComponent, TranslatePipe],
   templateUrl: './user-config.component.html',
   styleUrl: './user-config.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserConfigComponent implements OnInit {
-  private readonly authService = inject(AuthService);
+  public readonly authService = inject(AuthService);
   private readonly authApiService = inject(AuthApiService);
+  private readonly router = inject(Router);
   
   // Datos reales del usuario autenticado
   readonly userName = computed(() => this.authService.username());
@@ -31,12 +34,16 @@ export class UserConfigComponent implements OnInit {
   readonly isDarkMode = computed(() => this.themeService.theme() === 'dark');
 
   readonly showPasswordModal = signal(false);
+  readonly showAvatarModal = signal(false);
 
   ngOnInit(): void {
     this.authApiService.getProfile().subscribe({
       next: (profile) => {
         this.userEmail.set(profile.email);
         this.originalEmail = profile.email;
+        if (profile.avatarUrl) {
+          this.authService.updateAvatarUrl(profile.avatarUrl);
+        }
       },
       error: () => {
         // Ignorar error y dejar en blanco
@@ -62,22 +69,18 @@ export class UserConfigComponent implements OnInit {
     this.i18n.setLanguage(lang.toLowerCase() as Language);
   }
 
-  // Acción: Editar Foto de Perfil
+  // Acción: Abrir selector de avatar
   onEditAvatar(): void {
-    // console.log('Abriendo selector de avatar...');
-    this.prepareMinIOUpload();
+    this.showAvatarModal.set(true);
   }
 
-  /**
-   * [PREPARADO] Envío de avatar al Middle Server
-   * El Middle Server se encargará de:
-   * 1. Redimensionar a 200x200 (sharp)
-   * 2. Subir a MinIO
-   * 3. Persistir la URL en el DB Server
-   */
-  private prepareMinIOUpload(): void {
-    // TODO: Implementar input type="file" y enviar multipart/form-data al Middle Server
-    // console.warn('[CONFIG] Envío de avatar preparado. El Middle Server procesará la imagen.');
+  onAvatarSelected(url: string): void {
+    this.authService.updateAvatarUrl(url);
+    this.showAvatarModal.set(false);
+  }
+
+  onAvatarModalClosed(): void {
+    this.showAvatarModal.set(false);
   }
 
   // Acción: Guardar cambios en el servidor
@@ -87,19 +90,22 @@ export class UserConfigComponent implements OnInit {
       this.authApiService.updateEmail(currentEmail).subscribe({
         next: () => {
           this.originalEmail = currentEmail;
-          // Feedback de éxito (podría ser un toast)
+          this.router.navigate(['/lobby']);
         },
         error: (err) => {
-          // Si es 409, el email ya está en uso
           const msg = err.status === 409 ? 'El email ya está registrado' : 'Error al actualizar email';
-          alert(msg); // Placeholder para un Toast real
+          alert(msg);
         }
       });
+    } else {
+      // Si no hay cambios, simplemente volvemos al lobby
+      this.router.navigate(['/lobby']);
     }
   }
 
   // Acción: Descartar cambios
   onCancel(): void {
     this.userEmail.set(this.originalEmail);
+    this.router.navigate(['/lobby']);
   }
 }

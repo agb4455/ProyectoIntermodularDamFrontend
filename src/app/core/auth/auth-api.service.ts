@@ -79,4 +79,25 @@ export class AuthApiService {
     const url = `${this.configService.config.middleServerUrl}/api/profile/password`;
     return this.http.put<void>(url, { currentPassword, newPassword });
   }
+
+  /**
+   * Sube una nueva imagen de avatar al servidor.
+   * @param file Archivo de imagen (JPEG, PNG, WebP)
+   * @returns Observable con la nueva URL del avatar
+   */
+  uploadAvatar(file: File): Observable<{ avatarUrl: string }> {
+    const url = `${this.configService.config.middleServerUrl}/api/avatar`;
+    const formData = new FormData();
+    formData.append('avatar', file);
+    return this.http.post<{ avatarUrl: string }>(url, formData);
+  }
+
+  /**
+   * Actualiza la URL del avatar del usuario (para avatares predeterminados).
+   * @param avatarUrl URL del avatar predefinido
+   */
+  updateAvatarUrl(avatarUrl: string): Observable<{ avatarUrl: string }> {
+    const url = `${this.configService.config.middleServerUrl}/api/avatar/url`;
+    return this.http.put<{ avatarUrl: string }>(url, { avatarUrl });
+  }
 }

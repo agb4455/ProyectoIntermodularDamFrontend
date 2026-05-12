@@ -23,13 +23,11 @@
               <div class="selection-badge">✓</div>
             }
 
-            <!-- Icono de tropa -->
-            <div class="troop-icon">
-              {{ troop.icon || troop.type }}
+            <!-- Nombre y Puntos de Acción -->
+            <div class="troop-info-text">
+              <span class="troop-name">{{ troop.name }}</span>
+              <span class="troop-power">{{ troop.power }} AP</span>
             </div>
-
-            <!-- Nombre de la tropa -->
-            <span class="troop-name">{{ 'GAME.TROOP_TYPES.' + troop.type | translate }}</span>
 
             <!-- Health bar -->
             <div class="health-bar">

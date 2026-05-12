@@ -3,60 +3,70 @@
         <h1>{{ 'NAV.CONFIG' | translate | uppercase }}</h1>
     </header>
     
-    <div class="main-layout">
+    <div class="config-main-layout">
         <aside class="sidebar">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ userName() }}" alt="Avatar" class="avatar-preview">
-            <div style="text-align: center;">
-                <h2 style="margin: 0; font-family: 'Cinzel', serif; color: var(--color-gold);">{{ userName() }}</h2>
-                <p style="margin: 5px 0; color: var(--color-text-secondary); font-size: 0.9rem;">{{ userClan() }}</p>
+            <div class="avatar-container">
+                <img [src]="authService.avatarUrl() || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + userName()" alt="Avatar" class="avatar-preview">
+                <button class="btn-edit-avatar" (click)="onEditAvatar()" [title]="'CONFIG.EDIT_AVATAR' | translate">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </button>
             </div>
-            <button class="btn btn-ghost" style="border: 1px solid var(--color-gold); color: var(--color-gold); font-size: 0.7rem; padding: 0.5rem 1rem;" (click)="onEditAvatar()">{{ 'NAV.CHARACTERS' | translate | uppercase }}</button>
+
+            <div class="user-meta">
+                <h2 class="user-name">{{ userName() }}</h2>
+                <p class="user-clan">{{ userClan() }}</p>
+            </div>
         </aside>
 
-        <div class="form-scroll-area">
-            <section class="card">
-                <div class="card-header">{{ 'CONFIG.PROFILE' | translate | uppercase }}</div>
-                <div class="form-row stack-mobile">
-                    <div class="info-txt">
-                        <span class="label">{{ 'AUTH.EMAIL' | translate }}</span>
-                        <span class="desc">{{ 'AUTH.USERNAME' | translate }}</span>
+        <div class="config-content-panel">
+            <div class="form-scroll-area">
+                <section class="card">
+                    <div class="card-header">{{ 'CONFIG.PROFILE' | translate | uppercase }}</div>
+                    <div class="form-row stack-mobile">
+                        <div class="info-txt">
+                            <span class="label">{{ 'AUTH.EMAIL' | translate }}</span>
+                            <span class="desc">{{ 'AUTH.USERNAME' | translate }}</span>
+                        </div>
+                        <input type="email" [ngModel]="userEmail()" (ngModelChange)="userEmail.set($event)" class="viking-input">
                     </div>
-                    <input type="email" [ngModel]="userEmail()" (ngModelChange)="userEmail.set($event)" class="viking-input">
-                </div>
-            </section>
+                </section>
 
-            <section class="card">
-                <div class="card-header">{{ 'CONFIG.SECURITY' | translate | uppercase }}</div>
-                <div class="form-row">
-                    <div class="info-txt">
-                        <span class="label">{{ 'AUTH.PASSWORD' | translate }}</span>
-                        <span class="desc">{{ 'CONFIG.SECURITY_DESC' | translate }}</span>
+                <section class="card">
+                    <div class="card-header">{{ 'CONFIG.SECURITY' | translate | uppercase }}</div>
+                    <div class="form-row">
+                        <div class="info-txt">
+                            <span class="label">{{ 'AUTH.PASSWORD' | translate }}</span>
+                            <span class="desc">{{ 'CONFIG.SECURITY_DESC' | translate }}</span>
+                        </div>
+                        <button class="btn btn-ghost btn-mobile-small" style="border: 1px solid var(--color-gold); color: var(--color-gold); font-family: 'Outfit';" (click)="onChangePassword()">{{ 'CONFIG.CHANGE_PASSWORD' | translate | uppercase }}</button>
                     </div>
-                    <button class="btn btn-ghost btn-mobile-small" style="border: 1px solid var(--color-gold); color: var(--color-gold); font-family: 'Outfit';" (click)="onChangePassword()">{{ 'CONFIG.CHANGE_PASSWORD' | translate | uppercase }}</button>
-                </div>
-            </section>
+                </section>
 
-            <section class="card">
-                <div class="card-header">{{ 'CONFIG.TITLE' | translate | uppercase }}</div>
-                <div class="form-row">
-                    <div class="info-txt">
-                        <span class="label">{{ 'CONFIG.LANGUAGE' | translate }}</span>
-                        <span class="desc">{{ 'CONFIG.LANGUAGE_DESC' | translate }}</span>
+                <section class="card">
+                    <div class="card-header">{{ 'CONFIG.TITLE' | translate | uppercase }}</div>
+                    <div class="form-row">
+                        <div class="info-txt">
+                            <span class="label">{{ 'CONFIG.LANGUAGE' | translate }}</span>
+                            <span class="desc">{{ 'CONFIG.LANGUAGE_DESC' | translate }}</span>
+                        </div>
+                        <div class="language-pill-selector">
+                            <div class="pill-bg" [class.shift-right]="i18n.currentLang() === 'en'"></div>
+                            <button class="pill-btn" [class.active]="i18n.currentLang() === 'es'" (click)="setLanguage('ES')">ES</button>
+                            <button class="pill-btn" [class.active]="i18n.currentLang() === 'en'" (click)="setLanguage('EN')">EN</button>
+                        </div>
                     </div>
-                    <div class="language-pill-selector">
-                        <div class="pill-bg" [class.shift-right]="i18n.currentLang() === 'en'"></div>
-                        <button class="pill-btn" [class.active]="i18n.currentLang() === 'es'" (click)="setLanguage('ES')">ES</button>
-                        <button class="pill-btn" [class.active]="i18n.currentLang() === 'en'" (click)="setLanguage('EN')">EN</button>
+                    <div class="form-row" style="margin-top: 1rem;">
+                        <div class="info-txt">
+                            <span class="label">{{ 'CONFIG.THEME' | translate }}</span>
+                            <span class="desc">{{ (isDarkMode() ? 'CONFIG.DARK_MODE' : 'CONFIG.LIGHT_MODE') | translate }}</span>
+                        </div>
+                        <div class="toggle-switch" [class.active]="isDarkMode()" (click)="toggleTheme()"></div>
                     </div>
-                </div>
-                <div class="form-row" style="margin-top: 1rem;">
-                    <div class="info-txt">
-                        <span class="label">{{ 'CONFIG.THEME' | translate }}</span>
-                        <span class="desc">{{ (isDarkMode() ? 'CONFIG.DARK_MODE' : 'CONFIG.LIGHT_MODE') | translate }}</span>
-                    </div>
-                    <div class="toggle-switch" [class.active]="isDarkMode()" (click)="toggleTheme()"></div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
     </div>
 
@@ -68,4 +78,11 @@
 
 @if (showPasswordModal()) {
     <app-cambiar-contrasena-modal (closed)="onPasswordModalClosed()"></app-cambiar-contrasena-modal>
+}
+
+@if (showAvatarModal()) {
+    <app-selector-avatar-modal 
+        (closed)="onAvatarModalClosed()"
+        (avatarSelected)="onAvatarSelected($event)">
+    </app-selector-avatar-modal>
 }

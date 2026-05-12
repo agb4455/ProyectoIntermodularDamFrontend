@@ -31,9 +31,13 @@
       @if (authService.isLoggedIn()) {
         <div class="mobile-user-header">
           <div class="mobile-avatar">
-            <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
-              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
-            </svg>
+            @if (authService.avatarUrl()) {
+              <img [src]="authService.avatarUrl()" alt="Avatar" class="nav-avatar-img">
+            } @else {
+              <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+              </svg>
+            }
           </div>
           <div class="mobile-user-info">
             <span class="user-label">{{ 'AUTH.USERNAME' | translate | uppercase }}:</span>
@@ -75,9 +79,13 @@
     <!-- Menú de usuario -->
     <div class="user-menu" [title]="'NAV.USER_MENU_TITLE' | translate">
       <div class="user-avatar" (click)="handleUserClick()">
-        <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
-          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
-        </svg>
+        @if (authService.avatarUrl()) {
+          <img [src]="authService.avatarUrl()" alt="Avatar" class="nav-avatar-img">
+        } @else {
+          <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+          </svg>
+        }
       </div>
 
       @if (dropdownOpen() && authService.isLoggedIn()) {
