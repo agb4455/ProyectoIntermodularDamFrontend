@@ -239,7 +239,9 @@ export const es = {
         ESTIMATED_DAMAGE: 'Daño Estimado',
         ADVANTAGE_HINT: 'por ventaja',
         CLICK_TO_REMOVE: 'Clic para eliminar',
-        ADD_TROOP: 'Añadir tropa'
+        ADD_TROOP: 'Añadir tropa',
+        PREV_PAGE: 'Página anterior',
+        NEXT_PAGE: 'Página siguiente'
       },
       AVISO_TITLE: '¡AVISO GUERRERO!',
       WAITING: {

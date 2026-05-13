@@ -131,6 +131,9 @@
 
 .troops-grid {
   display: grid;
+  /* Columnas fijas a 3; las filas crecen automáticamente a 88px cada una */
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 88px;
   gap: 8px;
   min-height: 100px;
   background: $color-overlay-strong;
@@ -155,8 +158,11 @@
   transition: all 0.2s;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  aspect-ratio: 1;
+  gap: 5px;
+  /* Alto fijo para que las celdas no se desborden del contenedor */
+  height: 88px;
+  min-width: 0;
+  overflow: hidden;
   align-items: center;
   justify-content: flex-start;
 
@@ -229,6 +235,49 @@
 .add-troop-section {
   display: flex;
   justify-content: center;
+}
+
+/* Controles de paginación entre el grid y el botón de añadir */
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn-page-nav {
+  background: linear-gradient(135deg, $color-bg-card 0%, $color-bg-secondary 100%);
+  border: 1px solid $color-border-default;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: $color-gold;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    border-color: $color-gold;
+    box-shadow: 0 0 8px $color-gold-muted;
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.page-indicator {
+  font-size: 0.75rem;
+  color: $color-text-secondary;
+  min-width: 50px;
+  text-align: center;
+  letter-spacing: 0.5px;
 }
 
 .btn-add-troop {

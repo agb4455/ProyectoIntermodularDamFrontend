@@ -32,10 +32,14 @@ export class AtacarModalComponent {
   readonly closeModal = output<void>();
   readonly launchAttack = output<string[]>(); // IDs de tropas seleccionadas
 
+  // --- Constantes de paginación ---
+  private readonly PAGE_SIZE = 6;
+
   // --- Estado local ---
   readonly selectedTroopIds = signal<string[]>([]);
   readonly showAnadirModal = signal(false);
   readonly showDamagePreview = signal(false);
+  readonly currentPage = signal(0);
 
   // --- Estado derivado ---
   readonly troopGrid = computed<TroopGridCell[]>(() => {
@@ -51,10 +55,21 @@ export class AtacarModalComponent {
       .filter((cell): cell is TroopGridCell => cell !== null);
   });
 
-  readonly gridCols = computed(() => {
-    const count = this.troopGrid().length;
-    return count > 0 ? Math.ceil(Math.sqrt(count)) : 0;
+  // Número total de páginas según el grid completo
+  readonly totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.troopGrid().length / this.PAGE_SIZE))
+  );
+
+  // Tropas visibles en la página actual
+  readonly pagedTroopGrid = computed<TroopGridCell[]>(() => {
+    const page = this.currentPage();
+    return this.troopGrid().slice(page * this.PAGE_SIZE, (page + 1) * this.PAGE_SIZE);
   });
+
+  // Visibilidad de controles de paginación
+  readonly showPagination = computed(() => this.totalPages() > 1);
+  readonly canGoPrev = computed(() => this.currentPage() > 0);
+  readonly canGoNext = computed(() => this.currentPage() < this.totalPages() - 1);
 
   readonly canLaunchAttack = computed(() => this.selectedTroopIds().length > 0);
 
@@ -96,6 +111,10 @@ export class AtacarModalComponent {
 
   protected onRemoveTroop(troopId: string): void {
     this.selectedTroopIds.update((ids) => ids.filter((id) => id !== troopId));
+    // Retroceder página si la actual queda vacía tras eliminar la tropa
+    if (this.currentPage() >= this.totalPages()) {
+      this.currentPage.update(p => Math.max(0, p - 1));
+    }
   }
 
   protected onAttackClick(): void {
@@ -128,6 +147,8 @@ export class AtacarModalComponent {
       return combined;
     });
     this.showAnadirModal.set(false);
+    // Ir a la última página para que el usuario vea las tropas recién añadidas
+    this.currentPage.set(this.totalPages() - 1);
   }
 
   protected isTroopSelected(troopId: string): boolean {
@@ -150,6 +171,14 @@ export class AtacarModalComponent {
     
     // Verificar si el atacante tiene ventaja sobre el defensor
     return CLAN_ADVANTAGES[attackerClan] === defenderClan ? 1.5 : 1.0;
+  }
+
+  protected onPrevPage(): void {
+    if (this.canGoPrev()) this.currentPage.update(p => p - 1);
+  }
+
+  protected onNextPage(): void {
+    if (this.canGoNext()) this.currentPage.update(p => p + 1);
   }
 
   protected closeAtacarModal(): void {

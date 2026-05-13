@@ -240,7 +240,9 @@ export const en = {
         ESTIMATED_DAMAGE: 'Estimated Damage',
         ADVANTAGE_HINT: 'by advantage',
         CLICK_TO_REMOVE: 'Click to remove',
-        ADD_TROOP: 'Add troop'
+        ADD_TROOP: 'Add troop',
+        PREV_PAGE: 'Previous page',
+        NEXT_PAGE: 'Next page'
       },
       AVISO_TITLE: 'WARRIOR NOTICE!',
       WAITING: {

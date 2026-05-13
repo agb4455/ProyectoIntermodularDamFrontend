@@ -20,13 +20,12 @@
 
     <!-- Body -->
     <div class="modal-body">
-      <!-- Grilla de tropas seleccionadas (matriz de Forge of Empires) -->
+      <!-- Grilla de tropas seleccionadas para el ataque (máx. 6 por página) -->
       <div
         class="troops-grid"
-        [style.grid-template-columns]="'repeat(' + gridCols() + ', 1fr)'"
         [class.empty]="troopGrid().length === 0"
         [class.animate]="showDamagePreview()">
-        @for (cell of troopGrid(); track cell.troopId) {
+        @for (cell of pagedTroopGrid(); track cell.troopId) {
           <div class="grid-cell" (click)="onRemoveTroop(cell.troopId)" [title]="'GAME.MODALS.ATTACK.CLICK_TO_REMOVE' | translate">
             <!-- Nombre y Puntos de Acción -->
             <div class="troop-info-text">
@@ -52,6 +51,23 @@
           </div>
         }
       </div>
+
+      <!-- Controles de paginación (visibles solo si hay más de 6 tropas) -->
+      @if (showPagination()) {
+        <div class="pagination-controls">
+          <button
+            class="btn-page-nav"
+            (click)="onPrevPage()"
+            [disabled]="!canGoPrev()"
+            [title]="'GAME.MODALS.ATTACK.PREV_PAGE' | translate">&#9664;</button>
+          <span class="page-indicator">{{ currentPage() + 1 }} / {{ totalPages() }}</span>
+          <button
+            class="btn-page-nav"
+            (click)="onNextPage()"
+            [disabled]="!canGoNext()"
+            [title]="'GAME.MODALS.ATTACK.NEXT_PAGE' | translate">&#9654;</button>
+        </div>
+      }
 
       <!-- Botón para añadir tropas -->
       <div class="add-troop-section">
