@@ -42,4 +42,14 @@ export class LobbyModalComponent {
   protected onPlayerClick(player: PlayerNode): void {
     this.playerClick.emit(player);
   }
+
+  protected copyToClipboard(): void {
+    const code = this.gameCode();
+    if (code) {
+      navigator.clipboard.writeText(code).then(() => {
+        // En un futuro podríamos añadir un toast, por ahora un simple log
+        console.log('Código copiado al portapapeles:', code);
+      });
+    }
+  }
 }

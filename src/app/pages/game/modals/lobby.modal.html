@@ -8,7 +8,11 @@
   <!-- Caja de Código -->
   <div class="code-section">
     <div class="code-label">{{ 'LOBBY.MODALS.JOIN.CODE_PLACEHOLDER' | translate }}</div>
-    <div class="code-value">{{ gameCode() }}</div>
+    <div class="code-value" 
+         (click)="copyToClipboard()" 
+         [title]="'LOBBY.MODALS.JOIN.CODE_PLACEHOLDER' | translate">
+      {{ gameCode() }}
+    </div>
   </div>
 
   <!-- Lista de Jugadores -->
