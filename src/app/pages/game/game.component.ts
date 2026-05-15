@@ -299,7 +299,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
           }
         }, 15000);
       }
-      
+      // añadir aqui cualquier accion que deba procesarse desde el middle(llega del middle aqui)
+
       // console.log('[GAME] Resultado de batalla:', data);
     });
 
