@@ -5,7 +5,7 @@ FROM node:22-alpine AS build
 WORKDIR /app
 
 # Copy package files and install dependencies
-COPY package*.json ./
+COPY package*.json .npmrc ./
 RUN npm install
 
 # Build the project (no backend URL injection needed as it uses relative paths via Nginx proxy)
