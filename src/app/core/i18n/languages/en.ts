@@ -175,7 +175,13 @@ export const en = {
       ATK: 'Offense',
       DEF: 'Defense',
       HEAL: 'Healer',
-      SUPP: 'Support'
+      SUPP: 'Support',
+      FURY: 'Fury',
+      DIVINE: 'Divine',
+      IRON: 'Iron',
+      SHADOW: 'Shadow',
+      FROST: 'Frost',
+      STORM: 'Storm'
     },
     troop_desc: {
       infanteria: 'Basic warriors with axes and shields.',

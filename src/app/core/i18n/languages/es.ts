@@ -174,7 +174,13 @@ export const es = {
       ATK: 'Ofensiva',
       DEF: 'Defensiva',
       HEAL: 'Sanadora',
-      SUPP: 'Apoyo'
+      SUPP: 'Apoyo',
+      FURY: 'Furia',
+      DIVINE: 'Divino',
+      IRON: 'Hierro',
+      SHADOW: 'Sombra',
+      FROST: 'Escarcha',
+      STORM: 'Tormenta'
     },
     troop_desc: {
       infanteria: 'Guerreros básicos con hachas y escudos.',
