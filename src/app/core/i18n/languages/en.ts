@@ -10,7 +10,8 @@ export const en = {
     STATS: 'Sagas',
     LOGOUT: 'Depart for Valhalla',
     LOGIN: 'Login',
-    USER_MENU_TITLE: 'Profile / User Menu'
+    USER_MENU_TITLE: 'Profile / User Menu',
+    RANKING: 'Ranking'
   },
   SHOW: '▼ SHOW',
   HIDE: '▲ HIDE',
@@ -386,6 +387,20 @@ export const en = {
     DEPLOYED: 'Troops Deployed',
     ATTACKS: 'Attacks Launched',
     WINS: 'Victories'
+  },
+  RANKING: {
+    TITLE: 'HERO RANKING',
+    SUBTITLE: 'The three most glorious clans of Midgard',
+    POSITION: 'Position',
+    PLAYER: 'Warrior',
+    GLORY: 'Eternal Glory',
+    NO_PLAYERS: 'No one has claimed their glory yet...',
+    PODIUM_1ST: 'Supreme Champion 👑',
+    PODIUM_2ND: 'Warlord ⚔️',
+    PODIUM_3RD: 'Hero of Midgard 🛡️',
+    FORMULA: 'Glory Formula',
+    FORMULA_DESC: 'Eternal Glory = (Wins × 1000) + (Attacks × 50) + (Credits / 10)',
+    BACK: 'BACK TO HOME'
   },
   SHARED: {
     MODAL: {

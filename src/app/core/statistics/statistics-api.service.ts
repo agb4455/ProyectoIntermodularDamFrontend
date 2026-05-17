@@ -13,6 +13,13 @@ export interface UserStats {
   totalTroopsDeployed: number;
 }
 
+export interface RankingUser {
+  position: number;
+  username: string;
+  avatarUrl?: string;
+  gloriaEterna: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class StatisticsApiService {
   private readonly http = inject(HttpClient);
@@ -24,5 +31,9 @@ export class StatisticsApiService {
       url += `?gameId=${gameId}`;
     }
     return this.http.get<UserStats>(url);
+  }
+
+  getRanking(): Observable<RankingUser[]> {
+    return this.http.get<RankingUser[]>(`${this.configService.config.middleServerUrl}/api/ranking`);
   }
 }

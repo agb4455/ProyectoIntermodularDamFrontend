@@ -9,7 +9,8 @@ export const es = {
     STATS: 'Estadisticas',
     LOGOUT: 'Cerrar sesion',
     LOGIN: 'Iniciar Sesión',
-    RULES: 'Reglas del Juego'
+    RULES: 'Reglas del Juego',
+    RANKING: 'Ranking'
   },
   SHOW: '▼ MOSTRAR',
   HIDE: '▲ ESCONDER',
@@ -385,6 +386,20 @@ export const es = {
     DEPLOYED: 'Tropas Desplegadas',
     ATTACKS: 'Ataques Realizados',
     WINS: 'Victorias'
+  },
+  RANKING: {
+    TITLE: 'RANKING DE HÉROES',
+    SUBTITLE: 'Los tres clanes más gloriosos de Midgard',
+    POSITION: 'Posición',
+    PLAYER: 'Guerrero',
+    GLORY: 'Gloria Eterna',
+    NO_PLAYERS: 'Nadie ha reclamado su gloria aún...',
+    PODIUM_1ST: 'Campeón Supremo 👑',
+    PODIUM_2ND: 'Señor de la Guerra ⚔️',
+    PODIUM_3RD: 'Héroe de Midgard 🛡️',
+    FORMULA: 'Fórmula de Gloria',
+    FORMULA_DESC: 'Gloria Eterna = (Victorias × 1000) + (Ataques × 50) + (Créditos / 10)',
+    BACK: 'VOLVER AL INICIO'
   },
   SHARED: {
     MODAL: {

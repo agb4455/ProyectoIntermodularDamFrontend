@@ -772,6 +772,16 @@ export class GamePageComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // No abrir si el jugador local está muerto
+    if (this.health().current <= 0) {
+      return;
+    }
+
+    // No abrir si el jugador objetivo está muerto
+    if (player.health && player.health.current <= 0) {
+      return;
+    }
+
     // Si estamos en PREPARACIÓN, no se puede atacar. Mostrar aviso.
     if (this.currentPhase() === 'PREPARATION') {
       this.avisoMessage.set(this.i18n.translate('GAME.MODALS.PREPARATION_AVISO'));

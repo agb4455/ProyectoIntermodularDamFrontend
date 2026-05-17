@@ -49,3 +49,40 @@ app-root {
     padding-top: 0;
   }
 }
+
+/* ==========================================================================
+   Custom Scrollbar Styling (Global)
+   ========================================================================== */
+
+/* Soporte para Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
+}
+
+/* Soporte para Chrome, Safari y Edge */
+*::-webkit-scrollbar {
+  width: 10px;  /* Ancho de barra vertical */
+  height: 10px; /* Alto de barra horizontal */
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--color-scrollbar-track);
+  border-radius: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--color-scrollbar-thumb);
+  border: 2.5px solid var(--color-scrollbar-track); /* Espaciado elegante */
+  border-radius: 8px;
+  transition: background 0.2s ease-in-out;
+}
+
+/* Efectos interactivos Premium */
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold); /* Toque dorado vikingo al pasar el cursor */
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: var(--color-gold-dark); /* Dorado oscuro al presionar */
+}

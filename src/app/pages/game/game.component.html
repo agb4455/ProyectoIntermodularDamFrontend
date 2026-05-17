@@ -31,7 +31,9 @@
       </span>
       <span class="text">{{ 'NAV.RULES' | translate }}</span>
     </button>
-    <button class="btn-abandon" (click)="openAbandon()">{{ 'LOBBY.ABANDON' | translate }}</button>
+    @if (health().current > 0) {
+      <button class="btn-abandon" (click)="openAbandon()">{{ 'LOBBY.ABANDON' | translate }}</button>
+    }
   </div>
 </header>
 

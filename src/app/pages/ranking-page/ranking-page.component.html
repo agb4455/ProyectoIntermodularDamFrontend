@@ -1,0 +1,77 @@
+<div class="ranking-container">
+  <!-- Efectos de Ambiente -->
+  <div class="sky-fx"></div>
+
+  <header class="page-header animate-fade-in">
+    <h1 class="animate-glow">{{ 'RANKING.TITLE' | translate }}</h1>
+    <p class="subtitle">{{ 'RANKING.SUBTITLE' | translate }}</p>
+    <div class="title-divider"></div>
+  </header>
+
+  <main class="ranking-content animate-fade-in">
+    <!-- ESTADOS Y LISTADO -->
+    @if (loading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+      </div>
+    } @else if (error()) {
+      <div class="error-state glass-panel forged-border">
+        <span class="error-icon">⚠️</span>
+        <p>No se pudo conectar con el Valhalla. Inténtalo más tarde.</p>
+      </div>
+    } @else if (ranking().length === 0) {
+      <div class="empty-state glass-panel forged-border">
+        <span class="empty-icon">🛡️</span>
+        <p>{{ 'RANKING.NO_PLAYERS' | translate }}</p>
+      </div>
+    } @else {
+      <section class="ranking-list">
+        @for (player of ranking(); track player.username) {
+          <div class="ranking-row glass-panel forged-border" [ngClass]="'rank-' + player.position">
+            
+            <!-- Badge de Posición del Podio -->
+            <div class="rank-badge-container">
+              @if (player.position === 1) {
+                <div class="badge gold">1</div>
+              } @else if (player.position === 2) {
+                <div class="badge silver">2</div>
+              } @else if (player.position === 3) {
+                <div class="badge bronze">3</div>
+              }
+            </div>
+
+            <!-- Avatar del Guerrero -->
+            <div class="player-avatar">
+              @if (player.avatarUrl) {
+                <img [src]="player.avatarUrl" alt="Avatar">
+              } @else {
+                <div class="avatar-placeholder">⚔️</div>
+              }
+            </div>
+
+            <!-- Información del Guerrero -->
+            <div class="player-info">
+              <span class="username">{{ player.username }}</span>
+              <span class="title">
+                @if (player.position === 1) {
+                  {{ 'RANKING.PODIUM_1ST' | translate }}
+                } @else if (player.position === 2) {
+                  {{ 'RANKING.PODIUM_2ND' | translate }}
+                } @else if (player.position === 3) {
+                  {{ 'RANKING.PODIUM_3RD' | translate }}
+                }
+              </span>
+            </div>
+
+            <!-- Puntuación Rúnica -->
+            <div class="player-score">
+              <span class="score-value">{{ player.gloriaEterna }}</span>
+              <span class="score-label">{{ 'RANKING.GLORY' | translate }}</span>
+            </div>
+
+          </div>
+        }
+      </section>
+    }
+  </main>
+</div>

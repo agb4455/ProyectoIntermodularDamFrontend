@@ -39,4 +39,8 @@ export const routes: Routes = [
     path: 'reglas',
     loadComponent: () => import('./pages/rules-page/rules-page.component').then((c) => c.RulesPageComponent),
   },
+  {
+    path: 'ranking',
+    loadComponent: () => import('./pages/ranking-page/ranking-page.component').then((c) => c.RankingPageComponent),
+  },
 ];

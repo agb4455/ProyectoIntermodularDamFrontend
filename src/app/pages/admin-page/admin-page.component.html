@@ -6,17 +6,17 @@
     <div class="global-stats">
       <div class="stat-card">
         <div class="stat-label">{{ 'ADMIN.TOTAL_USERS' | translate }}</div>
-        <div class="stat-value">{{ globalStats()?.totalUsers }}</div>
+        <div class="stat-value">{{ globalStats().totalUsers }}</div>
       </div>
       
       <div class="stat-card">
         <div class="stat-label">{{ 'ADMIN.TOTAL_GAMES' | translate }}</div>
-        <div class="stat-value">{{ globalStats()?.totalGames }}</div>
+        <div class="stat-value">{{ globalStats().totalGames }}</div>
       </div>
       
       <div class="stat-card danger">
         <div class="stat-label">{{ 'ADMIN.BANNED_USERS' | translate }}</div>
-        <div class="stat-value">{{ globalStats()?.bannedUsers }}</div>
+        <div class="stat-value">{{ globalStats().bannedUsers }}</div>
       </div>
     </div>
   </aside>
@@ -30,22 +30,22 @@
       <div class="metrics-grid">
         
         <div class="metric-box">
-          <div class="metric-value highlight">{{ monitoringMetrics()?.activeUsers }}</div>
+          <div class="metric-value highlight">{{ monitoringMetrics().activeUsers }}</div>
           <div class="metric-label">{{ 'ADMIN.ACTIVE_USERS' | translate }}</div>
         </div>
 
         <div class="metric-box">
-          <div class="metric-value highlight">{{ monitoringMetrics()?.activeGames }}</div>
+          <div class="metric-value highlight">{{ monitoringMetrics().activeGames }}</div>
           <div class="metric-label">{{ 'ADMIN.ACTIVE_GAMES' | translate }}</div>
         </div>
 
         <div class="metric-box">
-          <div class="metric-value">{{ monitoringMetrics()?.finishedGamesLastHour }}</div>
+          <div class="metric-value">{{ monitoringMetrics().finishedGamesLastHour }}</div>
           <div class="metric-label">{{ 'ADMIN.FINISHED_GAMES_HOUR' | translate }}</div>
         </div>
 
         <div class="metric-box load">
-          <div class="metric-value warning">{{ monitoringMetrics()?.serverLoad }}<span class="unit">%</span></div>
+          <div class="metric-value warning">{{ monitoringMetrics().serverLoad }}<span class="unit">%</span></div>
           <div class="metric-label">{{ 'ADMIN.SERVER_LOAD' | translate }}</div>
         </div>
 

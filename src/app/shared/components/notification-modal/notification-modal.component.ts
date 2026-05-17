@@ -1,7 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject, computed } from '@angular/core';
 import { NotificationModalService } from '../../services/notification-modal.service';
 import { I18nService } from '../../../core/i18n/i18n.service';
-import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 
 /**
  * Modal global de notificaciones.
@@ -11,7 +10,7 @@ import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 @Component({
   selector: 'app-notification-modal',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [],
   templateUrl: './notification-modal.component.html',
   styleUrl: './notification-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

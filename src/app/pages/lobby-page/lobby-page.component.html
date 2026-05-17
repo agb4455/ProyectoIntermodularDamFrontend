@@ -54,7 +54,9 @@
               </span>
               <div class="card-actions">
                 <button class="btn btn-gold btn-sm" (click)="onEnterGame(game.id)">{{ 'LOBBY.ENTER' | translate | uppercase }}</button>
-                <button class="btn btn-danger btn-sm" (click)="onLeaveGame(game.id)">{{ 'LOBBY.ABANDON' | translate | uppercase }}</button>
+                @if (!game.isDead) {
+                  <button class="btn btn-danger btn-sm" (click)="onLeaveGame(game.id)">{{ 'LOBBY.ABANDON' | translate | uppercase }}</button>
+                }
               </div>
             </div>
             <div class="card-meta">

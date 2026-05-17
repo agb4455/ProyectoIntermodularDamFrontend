@@ -17,6 +17,7 @@ interface ActiveGameModel {
   clan: string;
   clanName: string;
   isHost: boolean;
+  isDead: boolean;
 }
 
 interface FinishedGameModel {
@@ -71,6 +72,7 @@ export class LobbyPageComponent implements OnInit {
             let isHost = false;
             let clan = 'fury';
             let clanName = 'Viking Clan';
+            let isDead = false;
 
             // Intentar extraer info real del estado persistido
             if (g.latestStateJson) {
@@ -82,6 +84,9 @@ export class LobbyPageComponent implements OnInit {
                 if (myPlayer) {
                   isHost = !!myPlayer.isHost;
                   clan = (myPlayer.clanId || 'berserkers').toLowerCase();
+                  if (myPlayer.capitalHealth !== undefined && myPlayer.capitalHealth <= 0) {
+                    isDead = true;
+                  }
                   // Mapeo inverso de ID a nombre legible si es necesario
                   const clanNames: Record<string, string> = {
                     'berserkers': 'Berserkers',
@@ -116,7 +121,8 @@ export class LobbyPageComponent implements OnInit {
               code: g.id.substring(0, 6).toUpperCase(),
               clan: clan,
               clanName: clanName,
-              isHost: isHost // Guardamos este dato para usarlo en onEnterGame
+              isHost: isHost, // Guardamos este dato para usarlo en onEnterGame
+              isDead: isDead
             };
           });
 
