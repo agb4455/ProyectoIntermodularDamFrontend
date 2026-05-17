@@ -130,8 +130,27 @@ export class LobbyPageComponent implements OnInit {
         const finishedGamesList: FinishedGameModel[] = games
           .filter(g => g.status === 'FINISHED')
           .map(g => {
-            const myCharId = this.authService.characterId();
-            const isWinner = g.winnerCharacterId === myCharId;
+            const myUserId = this.authService.userId();
+            let myCharId = this.authService.characterId();
+            
+            if (g.participants) {
+              const myParticipant = g.participants.find((p: any) => p.userId === myUserId);
+              if (myParticipant && myParticipant.characterId) {
+                myCharId = myParticipant.characterId;
+              }
+            }
+            
+            if (!myCharId && g.latestStateJson) {
+              try {
+                const state = JSON.parse(g.latestStateJson);
+                const myPlayer = Object.values(state.players || {}).find((p: any) => p.userId === myUserId) as any;
+                if (myPlayer && myPlayer.characterId) {
+                  myCharId = myPlayer.characterId;
+                }
+              } catch (e) {}
+            }
+
+            const isWinner = !!(g.winnerCharacterId && myCharId && g.winnerCharacterId === myCharId);
             
             return {
               id: g.id,
