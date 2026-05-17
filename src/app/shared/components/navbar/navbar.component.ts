@@ -6,6 +6,7 @@ import { AuthComponent } from '../auth/auth.component';
 import { LogoComponent } from '../logo/logo.component';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { I18nService } from '../../../core/i18n/i18n.service';
+import { SocketService } from '../../../core/game/socket.service';
 
 @Component({
   selector: 'app-navbar',
@@ -21,6 +22,7 @@ export class NavbarComponent {
   protected readonly authService = inject(AuthService);
   protected readonly i18n = inject(I18nService);
   private readonly route = inject(ActivatedRoute);
+  private readonly socketService = inject(SocketService);
 
   // Estado del dropdown — cerrado por defecto
   protected readonly dropdownOpen = signal<boolean>(false);
@@ -87,5 +89,13 @@ export class NavbarComponent {
   /** Cierra el menú móvil */
   protected closeMobileMenu(): void {
     this.mobileMenuOpen.set(false);
+  }
+
+  /** Cierra la sesión del usuario y desconecta el socket limpiamente */
+  protected logout(): void {
+    this.closeDropdown();
+    this.closeMobileMenu();
+    this.authService.clearSession();
+    this.socketService.disconnect();
   }
 }

@@ -2,6 +2,7 @@ import { Component, signal, inject, computed, isDevMode } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { GlobalDebugComponent } from './shared/components/debug/global-debug.component';
+import { NotificationModalComponent } from './shared/components/notification-modal/notification-modal.component';
 import { ThemeService } from './core/theme/theme.service';
 import { I18nService } from './core/i18n/i18n.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -9,7 +10,7 @@ import { filter, map } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, GlobalDebugComponent],
+  imports: [RouterOutlet, NavbarComponent, GlobalDebugComponent, NotificationModalComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

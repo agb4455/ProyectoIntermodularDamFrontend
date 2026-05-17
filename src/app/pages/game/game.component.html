@@ -39,25 +39,33 @@
 <main class="main-content">
 
   <!-- Tarjeta de stats flotante centrada -->
-  <div class="stats-card">
-    <!-- Izquierda: Vida -->
-    <div class="stat-health-block">
-      <span class="stat-health-label">{{ 'GAME.STATS.HEALTH' | translate }}</span>
-      <span class="stat-health-value">{{ health().current }} / {{ health().max }}</span>
-    </div>
-    <!-- Divisor -->
-    <div class="stats-divider"></div>
-    <!-- Derecha: Dinero + Ptos. Investigación -->
-    <div class="stat-right-block">
-      <div class="stat-item">
-        <span>{{ 'GAME.STATS.GOLD' | translate }}:</span>
-        <span class="stat-value gold">{{ gold() }} 💰</span>
+  <div class="stats-card" [class.is-spectator]="health().current <= 0">
+    <div class="stats-content">
+      <!-- Izquierda: Vida -->
+      <div class="stat-health-block">
+        <span class="stat-health-label">{{ 'GAME.STATS.HEALTH' | translate }}</span>
+        <span class="stat-health-value" [class.dead]="health().current <= 0">{{ health().current }} / {{ health().max }}</span>
       </div>
-      <div class="stat-item">
-        <span>{{ 'GAME.STATS.RESEARCH' | translate }}:</span>
-        <span class="stat-value">{{ researchPts() }} 🧪</span>
+      <!-- Divisor -->
+      <div class="stats-divider"></div>
+      <!-- Derecha: Dinero + Ptos. Investigación -->
+      <div class="stat-right-block">
+        <div class="stat-item">
+          <span>{{ 'GAME.STATS.GOLD' | translate }}:</span>
+          <span class="stat-value gold">{{ gold() }} 💰</span>
+        </div>
+        <div class="stat-item">
+          <span>{{ 'GAME.STATS.RESEARCH' | translate }}:</span>
+          <span class="stat-value">{{ researchPts() }} 🧪</span>
+        </div>
       </div>
     </div>
+
+    @if (health().current <= 0) {
+      <div class="spectator-watermark">
+        <div class="spectator-text">{{ 'GAME.SPECTATOR' | translate }}</div>
+      </div>
+    }
   </div>
 
   <!-- Mapa principal -->

@@ -81,7 +81,6 @@ export class GameService {
   clearGameContext(): void {
     this.#gameContext.set(null);
     sessionStorage.removeItem('gameContext');
-    this.socketService.disconnect();
   }
 
   /**

@@ -17,6 +17,7 @@ import { SocketService } from '../../core/game/socket.service';
 import { CLANS_DATA } from '../../core/game/clans.data';
 import { I18nService } from '../../core/i18n/i18n.service';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
+import { NotificationModalService } from '../../shared/services/notification-modal.service';
 import { Troop, EnemyTarget, ClanId, TroopType, TrainableTroopOption, GameLogEntry, Technology } from './modals/attack.types';
 
 import { GamePhase, PlayerNode, ActiveAttack } from './game.model';
@@ -50,6 +51,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
   private readonly socketService = inject(SocketService);
   private readonly router = inject(Router);
   private readonly i18n: I18nService = inject(I18nService);
+  private readonly notificationModal = inject(NotificationModalService);
   protected readonly isDevelopment = signal(isDevMode());
 
   private readonly continentCoords = [
@@ -323,14 +325,21 @@ export class GamePageComponent implements OnInit, OnDestroy {
       this.currentPhase.set('FINISHED');
       const isWinner = data.winnerCharacterId === this.authService.characterId();
       
-      // Mostrar alerta o modal de fin de partida (simplificado para MVP)
+      // Mostrar modal de fin de partida con navegación al lobby
       setTimeout(() => {
         const msg = isWinner 
           ? this.i18n.translate('GAME.LOG_GAME_WON') 
           : this.i18n.translate('GAME.LOG_GAME_LOST');
-        alert(msg);
-        this.gameService.clearGameContext();
-        this.router.navigate(['/lobby']);
+        const title = isWinner
+          ? this.i18n.translate('GAME.MODALS.VICTORY_TITLE')
+          : this.i18n.translate('GAME.MODALS.DEFEAT_TITLE');
+        const showFn = isWinner
+          ? this.notificationModal.showSuccess.bind(this.notificationModal)
+          : this.notificationModal.showError.bind(this.notificationModal);
+        showFn(title, msg, () => {
+          this.gameService.clearGameContext();
+          this.router.navigate(['/lobby']);
+        });
       }, 3000);
     });
 

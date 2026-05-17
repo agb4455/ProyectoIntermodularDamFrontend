@@ -8,6 +8,7 @@ import { UnirsePartidaModalComponent } from './modals/unirse-partida-modal/unirs
 import { SalaLlenaModalComponent } from './modals/sala-llena-modal/sala-llena-modal.component';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { I18nService } from '../../core/i18n/i18n.service';
+import { NotificationModalService } from '../../shared/services/notification-modal.service';
 
 interface ActiveGameModel {
   id: string;
@@ -52,6 +53,7 @@ export class LobbyPageComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly gameService = inject(GameService);
   private readonly i18n = inject(I18nService);
+  private readonly notificationModal = inject(NotificationModalService);
   readonly username = this.authService.username;
 
   constructor(private router: Router) {}
@@ -169,19 +171,26 @@ export class LobbyPageComponent implements OnInit {
   }
 
   onLeaveGame(gameId: string) {
-    if (confirm(this.i18n.translate('LOBBY.MESSAGES.CONFIRM_LEAVE'))) {
-      // Comunicar el abandono al servidor antes de actualizar la UI
-      this.gameService.leaveGame(gameId).subscribe({
-        next: () => {
-          // Eliminar la tarjeta del listado local solo tras confirmación del servidor
-          this.activeGames.update(games => games.filter(g => g.id !== gameId));
-        },
-        error: (err) => {
-          // La partida posiblemente ya inició: informar al usuario
-          alert(this.i18n.translate('LOBBY.MESSAGES.LEAVE_ERROR'));
-        }
-      });
-    }
+    this.notificationModal.showConfirm(
+      this.i18n.translate('LOBBY.MESSAGES.CONFIRM_LEAVE_TITLE'),
+      this.i18n.translate('LOBBY.MESSAGES.CONFIRM_LEAVE'),
+      () => {
+        // Comunicar el abandono al servidor antes de actualizar la UI
+        this.gameService.leaveGame(gameId).subscribe({
+          next: () => {
+            // Eliminar la tarjeta del listado local solo tras confirmación del servidor
+            this.activeGames.update(games => games.filter(g => g.id !== gameId));
+          },
+          error: () => {
+            // La partida posiblemente ya inició: informar al usuario
+            this.notificationModal.showWarning(
+              this.i18n.translate('LOBBY.MESSAGES.ERROR_TITLE'),
+              this.i18n.translate('LOBBY.MESSAGES.LEAVE_ERROR')
+            );
+          }
+        });
+      }
+    );
   }
 
   onViewStats(gameId: string) {

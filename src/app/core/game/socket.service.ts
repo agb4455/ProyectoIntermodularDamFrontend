@@ -5,6 +5,7 @@ import { AuthService } from '../auth/auth.service';
 import { I18nService } from '../i18n/i18n.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { NotificationModalService } from '../../shared/services/notification-modal.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class SocketService {
   private readonly authService = inject(AuthService);
   private readonly i18n = inject(I18nService);
   private readonly router = inject(Router);
+  private readonly notificationModal = inject(NotificationModalService);
   
   private socket: Socket | null = null;
 
@@ -56,10 +58,12 @@ export class SocketService {
     // Escuchar baneo del usuario
     this.socket.on('user:banned', () => {
       const message = this.i18n.translate('GAME.BANNED_MESSAGE');
-      window.alert(message);
+      const title = this.i18n.translate('GAME.BANNED_TITLE');
       this.authService.clearSession();
       this.disconnect();
-      this.router.navigate(['/']);
+      this.notificationModal.showError(title, message, () => {
+        this.router.navigate(['/']);
+      });
     });
   }
 

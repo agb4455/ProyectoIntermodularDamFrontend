@@ -68,7 +68,9 @@ export const es = {
       DEFEAT: 'Derrota'
     },
     MESSAGES: {
+      CONFIRM_LEAVE_TITLE: '¿ABANDONAR PARTIDA?',
       CONFIRM_LEAVE: '¿Estás seguro de que quieres abandonar esta partida? Perderás automáticamente.',
+      ERROR_TITLE: 'ERROR',
       LEAVE_ERROR: 'No se pudo abandonar la partida. Inténtalo desde dentro del juego.'
     },
     MODALS: {
@@ -145,10 +147,12 @@ export const es = {
     LANGUAGE_DESC: 'Idioma de la batalla',
     EDIT_AVATAR: 'Editar avatar',
     CHOOSE_AVATAR: 'Elige tu Avatar',
-    UPLOAD_CUSTOM: 'Subir Foto Personalizada'
+    UPLOAD_CUSTOM: 'Subir Foto Personalizada',
+    ERROR_TITLE: 'ERROR'
   },
   OR: 'o',
   GAME: {
+    SPECTATOR: 'ESPECTADOR',
     VICTORY: 'VICTORIA',
     DEFEAT: 'DERROTA',
     PHASES: {
@@ -250,6 +254,8 @@ export const es = {
         NEXT_PAGE: 'Página siguiente'
       },
       AVISO_TITLE: '¡AVISO GUERRERO!',
+      VICTORY_TITLE: '¡VICTORIA!',
+      DEFEAT_TITLE: 'DERROTA',
       WAITING: {
         WAIT_TITLE: 'ESPERANDO AL ANFITRIÓN',
         HOST_TITLE: 'ASAMBLEA DE GUERREROS',
@@ -379,6 +385,13 @@ export const es = {
     DEPLOYED: 'Tropas Desplegadas',
     ATTACKS: 'Ataques Realizados',
     WINS: 'Victorias'
+  },
+  SHARED: {
+    MODAL: {
+      BTN_OK: 'ENTENDIDO',
+      BTN_CONFIRM: 'CONFIRMAR',
+      BTN_CANCEL: 'CANCELAR'
+    }
   },
   DEBUG: {
     TITLE: 'Herramientas de Debug',

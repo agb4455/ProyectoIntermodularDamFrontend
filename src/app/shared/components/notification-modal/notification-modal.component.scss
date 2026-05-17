@@ -1,0 +1,322 @@
+/*
+  ESTILOS DEL MODAL GLOBAL DE NOTIFICACIONES
+  Componente reutilizable con variantes: warning, success, error, confirm, info.
+  Usa los design tokens definidos en tokens.scss / variables.scss.
+*/
+
+@use "../../../../styles/variables" as *;
+
+/* ==========================================================================
+   Scrim (Fondo oscuro con desenfoque)
+   ========================================================================== */
+
+.notification-scrim {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg-overlay);
+  z-index: 9998;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: scrimFadeIn 0.2s ease-out;
+}
+
+/* ==========================================================================
+   Card del Modal
+   ========================================================================== */
+
+.notification-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  background: var(--color-bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 2px solid var(--color-warning);
+  border-radius: 20px;
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow:
+    0 20px 60px var(--color-bg-overlay),
+    inset 0 0 30px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  animation: modalSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* --- Variantes de color (borde + sombra exterior) --- */
+
+  &[data-variant="warning"] {
+    border-color: var(--color-warning);
+    box-shadow:
+      0 20px 60px var(--color-bg-overlay),
+      0 0 40px var(--color-warning-bg),
+      inset 0 0 20px var(--color-warning-bg);
+  }
+
+  &[data-variant="success"] {
+    border-color: var(--color-success);
+    box-shadow:
+      0 20px 60px var(--color-bg-overlay),
+      0 0 40px var(--color-success-bg),
+      inset 0 0 20px var(--color-success-bg);
+  }
+
+  &[data-variant="error"] {
+    border-color: var(--color-error);
+    box-shadow:
+      0 20px 60px var(--color-bg-overlay),
+      0 0 40px var(--color-error-bg),
+      inset 0 0 20px var(--color-error-bg);
+  }
+
+  &[data-variant="confirm"] {
+    border-color: var(--color-error);
+    box-shadow:
+      0 20px 60px var(--color-bg-overlay),
+      0 0 40px var(--color-error-bg),
+      inset 0 0 20px var(--color-error-bg);
+  }
+
+  &[data-variant="info"] {
+    border-color: var(--color-info);
+    box-shadow:
+      0 20px 60px var(--color-bg-overlay),
+      0 0 40px var(--color-info-bg),
+      inset 0 0 20px var(--color-info-bg);
+  }
+}
+
+/* ==========================================================================
+   Icono circular
+   ========================================================================== */
+
+.modal-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  border: 2px solid currentColor;
+  box-shadow: 0 0 20px currentColor;
+  transition: all 0.3s ease;
+
+  /* Color del icono según variante del padre */
+  [data-variant="warning"] & {
+    color: var(--color-warning);
+    background: var(--color-warning-bg);
+    border-color: var(--color-warning);
+    box-shadow: 0 0 25px var(--color-warning-bg);
+  }
+
+  [data-variant="success"] & {
+    color: var(--color-success);
+    background: var(--color-success-bg);
+    border-color: var(--color-success);
+    box-shadow: 0 0 25px var(--color-success-bg);
+  }
+
+  [data-variant="error"] & {
+    color: var(--color-error);
+    background: var(--color-error-bg);
+    border-color: var(--color-error);
+    box-shadow: 0 0 25px var(--color-error-bg);
+  }
+
+  [data-variant="confirm"] & {
+    color: var(--color-warning);
+    background: var(--color-warning-bg);
+    border-color: var(--color-warning);
+    box-shadow: 0 0 25px var(--color-warning-bg);
+  }
+
+  [data-variant="info"] & {
+    color: var(--color-info);
+    background: var(--color-info-bg);
+    border-color: var(--color-info);
+    box-shadow: 0 0 25px var(--color-info-bg);
+  }
+}
+
+/* ==========================================================================
+   Título y Mensaje
+   ========================================================================== */
+
+.modal-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.35rem;
+  color: var(--color-gold);
+  margin: 0 0 0.75rem 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+
+.modal-message {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin: 0 0 1.75rem 0;
+  max-width: 320px;
+}
+
+/* ==========================================================================
+   Botones
+   ========================================================================== */
+
+.modal-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  &--dual {
+    flex-direction: column-reverse;
+  }
+}
+
+/* Botón base */
+.btn-modal {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/* Botón primario (acción única: warning, success, error, info) */
+.btn-modal--primary {
+  [data-variant="warning"] & {
+    background: linear-gradient(to bottom, var(--color-warning), var(--color-gold-dark));
+    color: var(--color-text-inverse);
+    box-shadow: 0 4px 20px var(--color-warning-bg);
+
+    &:hover {
+      box-shadow: 0 6px 25px var(--color-warning-bg);
+    }
+  }
+
+  [data-variant="success"] & {
+    background: linear-gradient(to bottom, var(--color-success), #1a7a3a);
+    color: var(--color-text-inverse);
+    box-shadow: 0 4px 20px var(--color-success-bg);
+
+    &:hover {
+      box-shadow: 0 6px 25px var(--color-success-bg);
+    }
+  }
+
+  [data-variant="error"] & {
+    background: linear-gradient(to bottom, var(--color-error), #8b1a1a);
+    color: var(--color-text-inverse);
+    box-shadow: 0 4px 20px var(--color-error-bg);
+
+    &:hover {
+      box-shadow: 0 6px 25px var(--color-error-bg);
+    }
+  }
+
+  [data-variant="info"] & {
+    background: linear-gradient(to bottom, var(--color-info), #1a5a8b);
+    color: var(--color-text-inverse);
+    box-shadow: 0 4px 20px var(--color-info-bg);
+
+    &:hover {
+      box-shadow: 0 6px 25px var(--color-info-bg);
+    }
+  }
+}
+
+/* Botón de cancelar (confirm) — dorado, acción segura */
+.btn-modal--cancel {
+  background: linear-gradient(to bottom, var(--color-gold), var(--color-gold-dark));
+  color: var(--color-text-inverse);
+  box-shadow: 0 4px 20px var(--color-gold-muted);
+
+  &:hover {
+    box-shadow: 0 6px 25px var(--color-gold-muted);
+    filter: brightness(1.1);
+  }
+}
+
+/* Botón de confirmar destructivo (confirm) — outlined rojo */
+.btn-modal--confirm-destructive {
+  background: transparent;
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+
+  &:hover {
+    background: var(--color-error-bg);
+    box-shadow: 0 0 15px var(--color-error-bg);
+  }
+}
+
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
+
+@keyframes scrimFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@include mobile {
+  .notification-modal {
+    width: 92%;
+    max-width: 340px;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .modal-icon {
+    width: 60px;
+    height: 60px;
+
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .modal-title {
+    font-size: 1.15rem;
+  }
+
+  .modal-message {
+    font-size: 0.9rem;
+  }
+}

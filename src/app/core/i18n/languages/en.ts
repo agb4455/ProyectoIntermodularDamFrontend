@@ -69,7 +69,9 @@ export const en = {
       DEFEAT: 'Defeat'
     },
     MESSAGES: {
+      CONFIRM_LEAVE_TITLE: 'LEAVE GAME?',
       CONFIRM_LEAVE: 'Are you sure you want to abandon this game? You will lose automatically.',
+      ERROR_TITLE: 'ERROR',
       LEAVE_ERROR: 'Could not abandon the game. Try from within the game.'
     },
     MODALS: {
@@ -146,10 +148,12 @@ export const en = {
     LANGUAGE_DESC: 'Battle language',
     EDIT_AVATAR: 'Edit avatar',
     CHOOSE_AVATAR: 'Choose your Avatar',
-    UPLOAD_CUSTOM: 'Upload Custom Photo'
+    UPLOAD_CUSTOM: 'Upload Custom Photo',
+    ERROR_TITLE: 'ERROR'
   },
   OR: 'or',
   GAME: {
+    SPECTATOR: 'SPECTATOR',
     VICTORY: 'VICTORY',
     DEFEAT: 'DEFEAT',
     PHASES: {
@@ -251,6 +255,8 @@ export const en = {
         NEXT_PAGE: 'Next page'
       },
       AVISO_TITLE: 'WARRIOR NOTICE!',
+      VICTORY_TITLE: 'VICTORY!',
+      DEFEAT_TITLE: 'DEFEAT',
       WAITING: {
         WAIT_TITLE: 'WAITING FOR THE HOST',
         HOST_TITLE: 'WARRIOR ASSEMBLY',
@@ -380,6 +386,13 @@ export const en = {
     DEPLOYED: 'Troops Deployed',
     ATTACKS: 'Attacks Launched',
     WINS: 'Victories'
+  },
+  SHARED: {
+    MODAL: {
+      BTN_OK: 'GOT IT',
+      BTN_CONFIRM: 'CONFIRM',
+      BTN_CANCEL: 'CANCEL'
+    }
   },
   DEBUG: {
     TITLE: 'Debug Tools',

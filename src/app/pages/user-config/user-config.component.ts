@@ -9,6 +9,7 @@ import { CambiarContrasenaModalComponent } from './modals/cambiar-contrasena.mod
 import { SelectorAvatarModalComponent } from './modals/selector-avatar.modal';
 import { AuthService } from '../../core/auth/auth.service';
 import { AuthApiService } from '../../core/auth/auth-api.service';
+import { NotificationModalService } from '../../shared/services/notification-modal.service';
 
 @Component({
   selector: 'app-user-config',
@@ -22,6 +23,7 @@ export class UserConfigComponent implements OnInit {
   public readonly authService = inject(AuthService);
   private readonly authApiService = inject(AuthApiService);
   private readonly router = inject(Router);
+  private readonly notificationModal = inject(NotificationModalService);
   
   // Datos reales del usuario autenticado
   readonly userName = computed(() => this.authService.username());
@@ -94,7 +96,10 @@ export class UserConfigComponent implements OnInit {
         },
         error: (err) => {
           const msg = err.status === 409 ? 'El email ya está registrado' : 'Error al actualizar email';
-          alert(msg);
+          this.notificationModal.showWarning(
+            this.i18n.translate('CONFIG.ERROR_TITLE'),
+            msg
+          );
         }
       });
     } else {

@@ -51,7 +51,7 @@
             <a [routerLink]="['/admin']" class="mobile-nav-link" (click)="closeMobileMenu()">{{ 'NAV.ADMIN' | translate }}</a>
           }
           <div class="mobile-user-divider faint"></div>
-          <a [routerLink]="['/signin']" class="mobile-nav-link danger" (click)="closeMobileMenu()" (click)="authService.clearSession()">{{ 'NAV.LOGOUT' | translate }}</a>
+          <a [routerLink]="['/signin']" class="mobile-nav-link danger" (click)="logout()">{{ 'NAV.LOGOUT' | translate }}</a>
         </div>
       } @else {
         <div class="mobile-user-header anonymous" (click)="handleUserClick()">
@@ -96,7 +96,7 @@
             <a [routerLink]="['/admin']" class="dropdown-item" (click)="closeDropdown()">{{ 'NAV.ADMIN' | translate }}</a>
           }
           <div class="dropdown-divider"></div>
-          <a [routerLink]="['/signin']" class="dropdown-item danger" (click)="closeDropdown()" (click)="authService.clearSession()">{{ 'NAV.LOGOUT' | translate }}</a>
+          <a [routerLink]="['/signin']" class="dropdown-item danger" (click)="logout()">{{ 'NAV.LOGOUT' | translate }}</a>
         </div>
       }
     </div>
