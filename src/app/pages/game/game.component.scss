@@ -716,8 +716,10 @@
     min-width: 800px;
   }
 
-  .topbar-left {
-    width: auto;
+  .topbar-left,
+  .topbar-center,
+  .topbar-right {
+    display: contents;
   }
 
   .game-logo,
@@ -728,11 +730,6 @@
   /* Ajustes del topbar para evitar solapamiento */
   .topbar {
     padding: 0 10px;
-    gap: 5px;
-  }
-
-  .topbar-right {
-    width: auto;
     gap: 5px;
   }
 
@@ -752,6 +749,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
+    justify-content: center;
 
     .text {
       display: none;
