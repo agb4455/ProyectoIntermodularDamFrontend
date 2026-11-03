@@ -1,63 +1,121 @@
-# Viking Clan Wars
+<div align="center">
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.3.
+# 🖥️ Viking Clan Wars · Frontend
 
-## Development server
+### El campo de batalla, en tus manos.
 
-To start a local development server, run:
+**La aplicación web para comandar tu clan y jugar en tiempo real.**
 
-```bash
-ng serve
+[![Angular](https://img.shields.io/badge/Angular-20.3-B52E31?style=for-the-badge&logo=angular&logoColor=white)](https://angular.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![PWA](https://img.shields.io/badge/PWA-Instalable-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)](https://web.dev/explore/progressive-web-apps)
+
+[Proyecto completo](https://github.com/agb4455/tfm) · [Motor de juego](https://github.com/agb4455/ProyectoIntermodularDamServidorIntermedio) · [Persistencia](https://github.com/agb4455/ProyectoIntermodularDamBackend)
+
+</div>
+
+---
+
+## ⚔️ La interfaz de la guerra
+
+Este repositorio contiene el cliente web de **Viking Clan Wars**. Desde aquí, los jugadores crean su identidad, se unen a partidas y gestionan sus acciones durante la batalla. La aplicación se comunica con el Middle Server mediante HTTP y Socket.IO.
+
+Incluye lobby, autenticación, selección de personajes y clanes, partida en tiempo real, estadísticas, ranking y vistas de administración. La aplicación también incorpora configuración PWA para su instalación en dispositivos compatibles.
+
+## 🧭 Cómo encaja en el sistema
+
+```mermaid
+flowchart LR
+    Player[Jugador] --> Front[Frontend<br/>Angular 20]
+    Front -->|HTTP /api| Middle[Middle Server<br/>Express]
+    Front <-->|Socket.IO| Middle
+    Middle --> DB[DB Server<br/>Spring Boot]
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+El cliente no accede directamente a PostgreSQL ni MongoDB. Las acciones de juego y la sincronización en tiempo real pasan por el Middle Server; la persistencia se realiza detrás de este, a través del DB Server.
 
-## Code scaffolding
+## 🛠️ Tecnologías
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Área | Tecnología |
+|---|---|
+| Aplicación | Angular 20.3, TypeScript 5.9, RxJS |
+| Tiempo real | Socket.IO Client 4.8 |
+| Interfaz | Angular standalone, estilos SCSS, traducciones ES/EN |
+| PWA | Angular Service Worker y Web App Manifest |
+| Pruebas | Karma, Jasmine y Angular CLI |
 
-```bash
-ng generate component component-name
-```
+## 🚀 Desarrollo local
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Requisitos
 
-```bash
-ng generate --help
-```
+- Node.js compatible con Angular 20 (recomendado: Node.js 22)
+- npm
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Instalar y arrancar
 
 ```bash
-ng test
+npm install
+npm start
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Abre [http://localhost:4200](http://localhost:4200). Para ejecutar el servidor de desarrollo accesible desde otros contenedores o dispositivos de la red:
 
 ```bash
-ng e2e
+npm start -- --host 0.0.0.0
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Para una experiencia integrada con API, motor e infraestructura, usa el [orquestador](https://github.com/agb4455/tfm) y su Compose de desarrollo. El servicio Angular del orquestador ya arranca el servidor escuchando en `0.0.0.0:4200`.
 
-## Additional Resources
+## 📜 Comandos
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+| Comando | Acción |
+|---|---|
+| `npm start` | Servidor de desarrollo Angular. |
+| `npm run build` | Compilación de producción en `dist/`. |
+| `npm test` | Tests unitarios con Karma/Jasmine. |
+| `npm run watch` | Compilación de desarrollo en modo observación. |
+| `npm run doc:build` | Genera documentación de código con Compodoc. |
+| `npm run doc:serve` | Sirve la documentación generada. |
+
+## 🗂️ Mapa del código
+
+```text
+src/
+├── app/
+│   ├── core/       # Autenticación, configuración, juego, sockets, i18n y estado
+│   ├── pages/      # Inicio, lobby, partida, ranking, estadísticas y administración
+│   └── shared/     # Componentes y servicios reutilizables
+├── assets/         # Configuración cargada por la aplicación
+└── styles/         # Tokens y variables de diseño
+public/
+├── icons/          # Iconos de la PWA
+├── avatars/        # Avatares disponibles
+└── manifest.webmanifest
+```
+
+## 🔌 Integración y configuración
+
+- La API HTTP y las conexiones Socket.IO pertenecen al **Middle Server**.
+- En el orquestador, el proxy Nginx enruta `/api/` y `/socket.io/` al motor y sirve la aplicación web.
+- `src/assets/config.json` contiene `middleServerUrl`; en el repositorio está vacío para que el cliente pueda usar la configuración del mismo origen. Si cambias la topología, revisa esta configuración y la del proxy antes de desplegar.
+- En desarrollo integrado, utiliza el `docker-compose.dev.yml` del orquestador, que levanta el frontend en el puerto `4200` junto con los servicios necesarios.
+
+## 📱 Aplicación instalable
+
+El proyecto incluye manifest, iconos y configuración de Service Worker para producción. La caché está pensada para recursos de la aplicación; las partidas requieren conexión activa para la sincronización en tiempo real. Para validar cambios de PWA, consulta `pwa-validation.mjs` y prueba una compilación de producción servida por HTTPS o `localhost`.
+
+## 🔗 Ecosistema
+
+- [Orquestador y despliegue](https://github.com/agb4455/tfm)
+- [Middle Server — motor y sockets](https://github.com/agb4455/ProyectoIntermodularDamServidorIntermedio)
+- [DB Server — persistencia](https://github.com/agb4455/ProyectoIntermodularDamBackend)
 
 ## 📄 Licencia
 
-Este proyecto está bajo la **Licencia MIT (Modificada para uso educativo)**. Consulta el archivo [LICENSE](./LICENSE) para más detalles.
+Consulta [`LICENSE`](./LICENSE) para las condiciones de uso del proyecto.
+
+<div align="center">
+
+**Estrategia en tiempo real. Estética de saga.**
+
+</div>
